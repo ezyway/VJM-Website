@@ -15,7 +15,7 @@
 }
 .footer-column {
     max-width: 400px;
-    width: 400px;
+    width: fit-content;
     text-align: left;
     /* border: 1px solid white; */
 }
