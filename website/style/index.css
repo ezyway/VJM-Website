@@ -336,7 +336,7 @@
     }
 
     .news-box {
-        max-width: 90%;
+        max-width: 80%;
     }
 
 
@@ -345,6 +345,9 @@
         padding: 15px;
         overflow-x: auto; /* Enable horizontal scrolling */
         max-width: 100%; /* Prevent container from exceeding screen */
+    }
+    .table-container h2{
+        width: 70%;
     }
 
     .achievements-table {
