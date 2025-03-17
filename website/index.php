@@ -27,7 +27,7 @@
             Your browser does not support the video tag.
         </video>
         <div class="video-overlay">
-            <h1>Welcome to Shri V.J. Modha College</h1>
+            <h1>Shri V.J. Modha College</h1>
             <p>Empowering students for a better future</p>
         </div>
     </section>
