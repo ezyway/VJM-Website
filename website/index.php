@@ -25,8 +25,8 @@
 		<h1>hello to thewe Page</h1>
 		<p>This is some sample content behind the navbar. Scroll to see the overlay effect.</p>
 	</div>
-    
 
+    <!-- Counter ---------------------------------------------------------------------------------------- -->
     <div class="counter-container">
         <div class="counter-item">
             <div class="counter-courses" data-target="13">0</div>
