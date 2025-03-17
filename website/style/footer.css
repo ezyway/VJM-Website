@@ -49,3 +49,9 @@
     width: 30px;
     margin-right: 10px;
 }
+
+.footer-column a:last-child span {
+    line-height: 1.2; /* Reduce space between lines */
+    display: inline-block; /* Keep inline formatting */
+    margin-top:20px
+}
