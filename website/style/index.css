@@ -58,39 +58,59 @@
    COUNTER SECTION
    - Displays counters with a number and a label.
 ==================================================== */
-
 /* Container for all counter items */
 .counter-container {
     display: flex;
     justify-content: space-around;
-    /* Evenly space items horizontally */
     align-items: center;
     flex-wrap: wrap;
-    /* Allow wrapping on smaller screens */
-    background-color: aqua;
+    background: rgba(31, 28, 44, 0.8); /* Dark semi-transparent background */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     margin: 100px 30px;
-    padding: 30px;
-    border-radius: 10px;
 }
 
-/* Each counter item stacks number and label vertically */
+/* Counter item container with modern styling */
 .counter-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    width: 180px;
+    margin: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease-in-out;
+    text-align: center;
 }
 
-/* Big number styling (first child element) */
+/* Hover effect for counter items */
+.counter-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Big number styling */
 .counter-item>div:first-child {
-    font-size: 3em;
+    font-size: 3rem;
     font-weight: bold;
-    margin-bottom: 5px;
-    /* Space between number and label */
+    color: #00c6ff;
+    text-shadow: 0 4px 12px rgba(0, 198, 255, 0.5);
+    margin-bottom: 10px;
 }
 
-/* Label styling (last child element) */
+/* Label styling */
 .counter-item>div:last-child {
-    font-size: 1.2em;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f1f1f1;
 }
 
 /* ====================================================
@@ -98,68 +118,80 @@
    - Showcases a chairman’s image, title, and a quote.
 ==================================================== */
 
-/* Section container with background */
+
 .chairman-section {
-    width: 100%;
     display: flex;
     justify-content: center;
     padding: 50px 20px;
-    background: #f4f4f4;
-    /* Light grey background */
+    background: #e3f2fd; /* Subtle light background */
+    flex-wrap: wrap;
 }
 
-/* Inner container for chairman details */
-.chairman-container {
-    display: flex;
-    align-items: center;
-    max-width: 1000px;
-    background: white;
+/* Container for chairman's message */
+.chairman-box {
+    flex: 1;
+    min-width: 350px;
+    max-width: 800px;
+    background: rgba(18, 18, 18, 0.85); /* Darker glassmorphism */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
-/* Chairman image styling */
-.chairman-image img {
-    width: 180px;
-    height: 180px;
+/* Hover animation for the box */
+.chairman-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 198, 255, 0.3);
+}
+
+/* Chairman's message title with gradient */
+.chairman-box h2 {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+/* Profile image styling */
+.chairman-image {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    /* Makes the image circular */
+    border: 4px solid #007bff;
+    margin-bottom: 15px;
     object-fit: cover;
-    border: 4px solid #007BFF;
-    /* Blue border */
 }
 
-/* Container for text content next to the image */
-.chairman-content {
-    margin-left: 30px;
-}
-
-/* Chairman name/title */
-.chairman-content h2 {
-    font-size: 2rem;
-    color: #333;
-}
-
-/* Chairman quote styling */
-.chairman-quote {
-    font-size: 1.2rem;
-    font-style: italic;
-    color: #555;
-    margin: 15px 0;
-}
-
-/* Additional heading in content */
-.chairman-content h3 {
+/* Name and designation with color enhancement */
+.chairman-name {
     font-size: 1.5rem;
-    color: #007BFF;
+    color: #f1f1f1;
     margin-top: 10px;
+    font-weight: bold;
 }
 
-/* Chairman sub-title or description */
-.chairman-title {
+.chairman-designation {
     font-size: 1rem;
-    color: #777;
+    color: #d1d1d1;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+/* Chairman's message text */
+.chairman-message {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #e3f2fd;
+    text-align: justify;
+    margin-bottom: 20px;
 }
 
 
@@ -168,89 +200,125 @@
    - Displays news boxes with a slider for news items.
 ==================================================== */
 
-/* Container for news boxes */
 .news-section {
     display: flex;
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    background: #f4f4f4;
+    background: #e3f2fd; /* Light background to contrast */
     flex-wrap: wrap;
 }
 
-/* Individual news box styling */
+/* Glassmorphism box with darker background for better contrast */
 .news-box {
     flex: 1;
     min-width: 350px;
     max-width: 500px;
-    background: white;
+    background: rgba(18, 18, 18, 0.8); /* Darker glass effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     text-align: center;
     overflow: hidden;
     position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
-/* News box title */
+/* Hover effect with subtle glow */
+.news-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 198, 255, 0.3);
+}
+
+/* News box title with vibrant gradient */
 .news-box h2 {
     font-size: 2rem;
-    color: #007BFF;
-    margin-bottom: 15px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
 }
 
-/* News slider container for vertical scrolling */
+/* News slider with custom scroll */
 .news-slider {
     display: flex;
     flex-direction: column;
     height: 400px;
-    /* Fixed height */
     overflow-y: auto;
-    /* Enables vertical scrolling */
     scrollbar-width: thin;
-    /* Firefox scrollbar styling */
-    scrollbar-color: #007BFF #e3f2fd;
-    /* Thumb and track colors */
+    scrollbar-color: #00c6ff #1e1e1e;
 }
 
-/* Scrollbar customization for WebKit browsers */
+/* WebKit scrollbar with custom styling */
 .news-slider::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .news-slider::-webkit-scrollbar-thumb {
-    background: #007BFF;
-    border-radius: 6px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 8px;
 }
 
 .news-slider::-webkit-scrollbar-track {
-    background: #e3f2fd;
+    background: #1e1e1e;
 }
 
-/* Individual news item styling */
+/* Individual news/event item with subtle glassmorphism */
 .news-item {
-    padding: 10px;
-    border-radius: 8px;
-    background: #e3f2fd;
-    margin: 5px 0;
-    transition: transform 0.5s ease-in-out;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1); /* Slight glassmorphism */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin: 8px 0;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
+
+/* News/event item heading */
 .news-item h3 {
     font-size: 1.4rem;
-    color: #333;
+    color: #f1f1f1;
     margin-bottom: 5px;
 }
 
+/* Date with improved contrast */
 .news-date {
     font-size: 1rem;
-    color: #666;
+    color: #d1d1d1;
     font-style: italic;
+    margin-bottom: 5px;
 }
 
+/* News/event description */
 .news-item p {
     font-size: 1rem;
-    color: #444;
+    color: #e3f2fd;
+    line-height: 1.5;
+}
+
+/* Button for view more or details */
+.view-more-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+/* Button hover effect */
+.view-more-btn:hover {
+    background: linear-gradient(135deg, #0072ff, #00c6ff);
+    box-shadow: 0 5px 20px rgba(0, 198, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 
@@ -262,32 +330,40 @@
 /* Overall container for table section */
 .table-section {
     width: 90%;
-    margin: 2rem auto;
-    background: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    background: rgba(18, 18, 18, 0.8); /* Darker glass effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 16px;
     text-align: center;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect to lift the section */
+.table-section:hover {
+    box-shadow: 0 12px 30px rgba(0, 123, 255, 0.2);
 }
 
 /* Heading container for the table section */
 .heading-container h2 {
-    background-color: #004080;
-    width: 40%;
-    margin: 20px auto;
-    padding: 15px;
-    border-radius: 10px;
-    color: white;
-    font-size: 1.5rem;
-    text-align: center;
+    padding: 12px 20px;
+    width: fit-content;
+    margin: 0 auto 20px auto;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
 }
 
-/* Container to allow horizontal scrolling for the table */
+/* Container for horizontal scroll */
 .table-container {
     overflow-x: auto;
     width: 100%;
-    margin-top: 1rem;
-    border-radius: 15px;
+    border-radius: 12px;
+    background: white;
 }
 
 /* Table styling */
@@ -295,51 +371,69 @@
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    min-width: 600px;
-    /* Prevent table from collapsing in smaller viewports */
+    min-width: 700px;
 }
 
 /* Table header styling */
 .achievements-table th {
-    background: #004080;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
     color: white;
     font-weight: bold;
-    padding: 12px;
+    padding: 15px;
     text-align: center;
     font-size: 1rem;
 }
 
-/* Table header and data cell styling */
+/* Table cell styling */
 .achievements-table th,
 .achievements-table td {
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 14px;
     text-align: center;
     font-size: 1rem;
 }
 
-/* Alternating row colors for improved readability */
+/* Alternating row colors */
 .achievements-table tr:nth-child(even) {
-    background: #f2f2f2;
+    background: #f9f9f9; /* Light grey */
+}
+
+.achievements-table tr:nth-child(odd) {
+    background: #ffffff; /* White */
 }
 
 /* Hover effect for table rows */
 .achievements-table tr:hover {
-    background: #d9e6ff;
-    transition: 0.3s;
+    background: #e3f2fd; /* Light blue on hover */
+    transition: 0.3s ease-in-out;
 }
 
 /* Rounded corners for first row header cells */
 .achievements-table tr:first-child th {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
-/* Rounded corners for the last row data cells */
+/* Rounded corners for last row data cells */
 .achievements-table tr:last-child td {
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
+
+/* Custom scrollbar for horizontal scroll */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #007BFF;
+    border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #e3f2fd;
+}
+
 
 
 /* ====================================================
@@ -355,9 +449,8 @@
     }
 
     .counter-item {
-        width: 100%;
-        text-align: center;
-        margin: 25px 0;
+        width: 90%;
+        max-width: 300px;
     }
 
     /* Video Overlay: Smaller text on mobile */
@@ -370,53 +463,71 @@
     }
 
     /* Chairman Section: Stack image and content vertically */
-    .chairman-container {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px;
+    .chairman-section {
+        padding: 30px 10px;
     }
 
-    .chairman-image img {
-        width: 150px;
-        height: 150px;
-        margin-bottom: 15px;
+    .chairman-box {
+        max-width: 100%;
+        padding: 25px;
     }
 
-    .chairman-content {
-        margin-left: 0;
+    .chairman-box h2 {
+        font-size: 1.8rem;
+    }
+
+    .chairman-name {
+        font-size: 1.3rem;
+    }
+
+    .chairman-designation {
+        font-size: 0.9rem;
+    }
+
+    .chairman-message {
+        font-size: 0.95rem;
     }
 
     /* News Section: Stack news boxes vertically */
     .news-section {
         flex-direction: column;
-        align-items: center;
+        padding: 30px 10px;
     }
 
     .news-box {
-        max-width: 80%;
+        max-width: 100%;
+    }
+
+    .news-box h2 {
+        font-size: 1.8rem;
+    }
+
+    .news-item h3 {
+        font-size: 1.3rem;
+    }
+
+    .news-item p {
+        font-size: 0.95rem;
+    }
+
+    .view-more-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 
     /* Table Section: Adjust padding and heading for mobile */
     .table-section {
         padding: 10px;
-        max-width: 100%;
-    }
-
-    .heading-container h2 {
-        width: 90%;
-        position: sticky;
-        top: 0;
-        z-index: 999;
-        background-color: #004080;
-        padding: 10px;
-        margin-bottom: 10px;
-        font-size: 1.25rem;
+        width: 95%;
     }
 
     .table-container {
         overflow-x: auto;
         max-width: 100%;
         border-radius: 10px;
+    }
+    .heading-container h2 {
+        font-size: 1.5rem;
     }
 
     .achievements-table {
@@ -428,7 +539,7 @@
 
     .achievements-table th,
     .achievements-table td {
-        padding: 8px;
+        padding: 10px;
         font-size: 0.9rem;
     }
 
@@ -447,5 +558,6 @@
     /* Highlight sticky first column on row hover */
     .achievements-table tr:hover td:first-child {
         background-color: #d9e6ff;
+        color: blue;
     }
 }

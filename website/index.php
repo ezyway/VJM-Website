@@ -71,7 +71,7 @@
         <!-- Counter for Currently Enrolled Students -->
         <div class="counter-item">
             <div class="counter-enrolled" data-target="1200">0</div>
-            <div class="counter-enrolled-label">Students Enrolled Currently</div>
+            <div class="counter-enrolled-label">Students Enrolled</div>
         </div>
         <!-- Counter for Pass Percentage -->
         <div class="counter-item">
@@ -89,23 +89,25 @@
          Chairman Section
          - Displays the chairman's image along with his message.
          =================================================== -->
-    <section class="chairman-section">
-        <div class="chairman-container">
-            <!-- Chairman's Image -->
-            <div class="chairman-image">
-                <img src="assets/photos/index/chairman.png" alt="Chairman">
-            </div>
-            <!-- Chairman's Message Content -->
-            <div class="chairman-content">
+         <section class="chairman-section">
+            <div class="chairman-box">
+                <!-- Chairman's Profile Picture -->
+                <img src="assets/photos/index/chairman.png" alt="Chairman Image" class="chairman-image" />
+
+                <!-- Chairman's Name and Title -->
                 <h2>Chairman's Message</h2>
-                <p class="chairman-quote">
+                <h3 class="chairman-name">Mr. Vallabhbhai Modha</h3>
+                <p class="chairman-designation">Chairman, Shri V.J. Modha College, Porbandar</p>
+
+                <!-- Chairman's Message -->
+                <p class="chairman-message">
                     "Knowledge is power &amp; with this power, I can visualize that the future of our nation is presently building in the classrooms, Today's students are the builders of our nation. For such building, our college has recorded a stupendous period in the history of this institute. We believe in quality education; time has wings &amp; it constantly flies, but now the time has come to pause and reflect on the modern system of education and harness the positive factors beneficial for the students."
                 </p>
-                <h3>- Mr. Vallabhbhai Modha</h3>
-                <p class="chairman-title">Chairman, Shri V.J. Modha College</p>
+
+                <!-- Read More Button -->
+                <!-- <a href="#" class="read-more-btn">Read Full Message</a> -->
             </div>
-        </div>
-    </section>
+        </section>
 
     <!-- ===================================================
          Events and News Section
