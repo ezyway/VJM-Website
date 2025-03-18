@@ -44,6 +44,7 @@
     list-style: none;
     display: flex;
     gap: 15px;
+    padding-right: 3em;
 }
 /* Dropdown Styles */
 .nav-links li {
@@ -226,7 +227,7 @@
     /* Show hamburger on mobile */
     .hamburger {
         display: flex;
-        margin-right: 3em;
+        margin-right: 1.5em;
     }
     /* Prevent body from scrolling when nav is open */
     body.nav-open {
