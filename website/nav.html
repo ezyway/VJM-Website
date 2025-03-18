@@ -1,22 +1,35 @@
 <head>
+	<!-- Linking external stylesheet for navbar styles -->
 	<link href="style/nav.css" rel="stylesheet">
+
+	<!-- Linking JavaScript for navbar interactivity (like dropdowns and hamburger menu) -->
 	<script src="scripts/nav.js"></script>
 </head>
 
+<!-- ============================================
+     Navigation Bar Section
+     ============================================ -->
 <nav class="navbar">
 	<div class="navbar-container">
 
+		<!-- Logo Section (Visible in Desktop View) -->
 		<div class="logo">
-			<img src="assets/navLogo.png" alt="SHri V.J. Modha Logo">
+			<img src="assets/navLogo.png" alt="Shri V.J. Modha Logo">
 		</div>
 
+		<!-- Navigation Links and Dropdowns -->
 		<ul class="nav-links">
+
+			<!-- Mobile Logo (Visible in Mobile View) -->
 			<div class="mobile-logo">
-				<img src="assets/navLogo.png" alt="SHri V.J. Modha Logo">
+				<img src="assets/navLogo.png" alt="Shri V.J. Modha Logo">
 			</div>
+
+			<!-- Main Navigation Links -->
 			<li><a href="#">Home</a></li>
 			<li><a href="#">About Us</a></li>
 
+			<!-- Dropdown Menu for Courses -->
 			<li class="dropdown">
 				<a href="#">Courses <span class="arrow">&#9662;</span></a>
 				<ul class="dropdown-menu">
@@ -33,6 +46,7 @@
 				</ul>
 			</li>
 
+			<!-- Dropdown Menu for Facilities -->
 			<li class="dropdown">
 				<a href="#">Facilities <span class="arrow">&#9662;</span></a>
 				<ul class="dropdown-menu">
@@ -45,10 +59,11 @@
 				</ul>
 			</li>
 
+			<!-- Dropdown Menu for Miscellaneous -->
 			<li class="dropdown">
 				<a href="#">Misc <span class="arrow">&#9662;</span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Pacement</a></li>
+					<li><a href="#">Placement</a></li>
 					<li><a href="#">Anti-Ragging</a></li>
 					<li><a href="#">Online Courses</a></li>
 					<li><a href="#">E-Magazine</a></li>
@@ -57,10 +72,13 @@
 				</ul>
 			</li>
 
+			<!-- Contact Us Link -->
 			<li><a href="#">Contact Us</a></li>
 		</ul>
 
+		<!-- Hamburger Menu (Visible in Mobile View) -->
 		<div class="hamburger">
+			<!-- Three bars for hamburger icon -->
 			<div class="bar"></div>
 			<div class="bar"></div>
 			<div class="bar"></div>
