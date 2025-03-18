@@ -16,7 +16,7 @@
 .footer-column {
     max-width: 400px;
     width: fit-content;
-    text-align: left;
+    text-align: center;
     /* border: 1px solid white; */
 }
 .map{
@@ -35,7 +35,10 @@
 }
 .footer span {
     font-size: 1em; /* Adjust text size */
-    line-height: 50px; /* Align with image */
+    line-height: 50px; /* Align with image */   
+}
+.footer-column span{
+    width: 100%;
 }
 
 .footer-column a{
