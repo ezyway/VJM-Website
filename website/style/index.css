@@ -1,4 +1,65 @@
-/* Counter Container */
+
+/* ====================================================
+   VIDEO BANNER SECTION
+   - Fullscreen video banner with overlay text.
+==================================================== */
+
+/* Container for the video banner */
+.video-banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    /* Full viewport height */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background video styling */
+.background-video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    z-index: -1;
+    /* Places video behind overlay */
+    object-fit: cover;
+    /* Ensures video covers container */
+}
+
+/* Overlay container with text */
+.video-overlay {
+    position: relative;
+    text-align: center;
+    color: white;
+    background: rgba(255, 0, 0, 0.5);
+    /* Semi-transparent red background */
+    padding: 1em 2em;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+/* Overlay title styling */
+.video-overlay h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Overlay paragraph styling */
+.video-overlay p {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* ====================================================
+   COUNTER SECTION
+   - Displays counters with a number and a label.
+==================================================== */
+
+/* Container for all counter items */
 .counter-container {
     display: flex;
     justify-content: space-around;
@@ -12,90 +73,42 @@
     border-radius: 10px;
 }
 
-/* Each counter item (using flex to stack number and label vertically) */
+/* Each counter item stacks number and label vertically */
 .counter-item {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Styling for the number (big text) */
+/* Big number styling (first child element) */
 .counter-item>div:first-child {
     font-size: 3em;
-    /* Big number */
     font-weight: bold;
     margin-bottom: 5px;
     /* Space between number and label */
 }
 
-/* Styling for the label (small text) */
+/* Label styling (last child element) */
 .counter-item>div:last-child {
     font-size: 1.2em;
-    /* Smaller text */
 }
 
+/* ====================================================
+   CHAIRMAN SECTION
+   - Showcases a chairman’s image, title, and a quote.
+==================================================== */
 
-
-
-/* Video Banner Section */
-.video-banner {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    /* Full viewport height */
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Background Video */
-.background-video {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    height: auto;
-    min-height: 100%;
-    z-index: -1;
-    object-fit: cover;
-}
-
-/* Overlay Text */
-.video-overlay {
-    position: relative;
-    text-align: center;
-    color: white;
-    background: rgba(255, 0, 0, 0.5);
-    padding: 1em 2em;
-    border-radius: 10px;
-    z-index: 1;
-}
-
-.video-overlay h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-.video-overlay p {
-    font-size: 1.5rem;
-    margin-top: 10px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-}
-
-
-
-/* Chairman Section */
+/* Section container with background */
 .chairman-section {
     width: 100%;
     display: flex;
     justify-content: center;
     padding: 50px 20px;
     background: #f4f4f4;
-    /* Light Grey Background */
+    /* Light grey background */
 }
 
-/* Chairman Container */
+/* Inner container for chairman details */
 .chairman-container {
     display: flex;
     align-items: center;
@@ -106,26 +119,29 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Image Styling */
+/* Chairman image styling */
 .chairman-image img {
     width: 180px;
     height: 180px;
     border-radius: 50%;
+    /* Makes the image circular */
     object-fit: cover;
     border: 4px solid #007BFF;
-    /* Nice Blue Border */
+    /* Blue border */
 }
 
-/* Content Styling */
+/* Container for text content next to the image */
 .chairman-content {
     margin-left: 30px;
 }
 
+/* Chairman name/title */
 .chairman-content h2 {
     font-size: 2rem;
     color: #333;
 }
 
+/* Chairman quote styling */
 .chairman-quote {
     font-size: 1.2rem;
     font-style: italic;
@@ -133,19 +149,26 @@
     margin: 15px 0;
 }
 
+/* Additional heading in content */
 .chairman-content h3 {
     font-size: 1.5rem;
     color: #007BFF;
     margin-top: 10px;
 }
 
+/* Chairman sub-title or description */
 .chairman-title {
     font-size: 1rem;
     color: #777;
 }
 
 
-/* News Section */
+/* ====================================================
+   NEWS SECTION
+   - Displays news boxes with a slider for news items.
+==================================================== */
+
+/* Container for news boxes */
 .news-section {
     display: flex;
     justify-content: center;
@@ -155,7 +178,7 @@
     flex-wrap: wrap;
 }
 
-/* News Box */
+/* Individual news box styling */
 .news-box {
     flex: 1;
     min-width: 350px;
@@ -169,14 +192,14 @@
     position: relative;
 }
 
-/* News Title */
+/* News box title */
 .news-box h2 {
     font-size: 2rem;
     color: #007BFF;
     margin-bottom: 15px;
 }
 
-/* News Slider */
+/* News slider container for vertical scrolling */
 .news-slider {
     display: flex;
     flex-direction: column;
@@ -185,12 +208,12 @@
     overflow-y: auto;
     /* Enables vertical scrolling */
     scrollbar-width: thin;
-    /* Firefox scrollbar */
+    /* Firefox scrollbar styling */
     scrollbar-color: #007BFF #e3f2fd;
-    /* Scrollbar colors */
+    /* Thumb and track colors */
 }
 
-/* Customize scrollbar for Chrome, Edge, Safari */
+/* Scrollbar customization for WebKit browsers */
 .news-slider::-webkit-scrollbar {
     width: 6px;
 }
@@ -204,7 +227,7 @@
     background: #e3f2fd;
 }
 
-/* Individual News Items */
+/* Individual news item styling */
 .news-item {
     padding: 10px;
     border-radius: 8px;
@@ -230,7 +253,13 @@
     color: #444;
 }
 
-/* General Styling */
+
+/* ====================================================
+   TABLE SECTION (ACHIEVEMENTS)
+   - Displays a responsive table with sticky headers/columns.
+==================================================== */
+
+/* Overall container for table section */
 .table-section {
     width: 90%;
     margin: 2rem auto;
@@ -241,7 +270,7 @@
     text-align: center;
 }
 
-/* Heading Container */
+/* Heading container for the table section */
 .heading-container h2 {
     background-color: #004080;
     width: 40%;
@@ -253,7 +282,7 @@
     text-align: center;
 }
 
-/* Table Container */
+/* Container to allow horizontal scrolling for the table */
 .table-container {
     overflow-x: auto;
     width: 100%;
@@ -261,16 +290,16 @@
     border-radius: 15px;
 }
 
-/* Table Styling */
+/* Table styling */
 .achievements-table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     min-width: 600px;
-    /* Prevent table from collapsing in smaller view */
+    /* Prevent table from collapsing in smaller viewports */
 }
 
-/* Table Header */
+/* Table header styling */
 .achievements-table th {
     background: #004080;
     color: white;
@@ -280,7 +309,7 @@
     font-size: 1rem;
 }
 
-/* Table Data */
+/* Table header and data cell styling */
 .achievements-table th,
 .achievements-table td {
     border: 1px solid #ddd;
@@ -289,32 +318,37 @@
     font-size: 1rem;
 }
 
-/* Alternating Row Colors for Readability */
+/* Alternating row colors for improved readability */
 .achievements-table tr:nth-child(even) {
     background: #f2f2f2;
 }
 
-/* Hover Effect for Rows */
+/* Hover effect for table rows */
 .achievements-table tr:hover {
     background: #d9e6ff;
     transition: 0.3s;
 }
 
-/* Rounded Corners for Table */
+/* Rounded corners for first row header cells */
 .achievements-table tr:first-child th {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
 
+/* Rounded corners for the last row data cells */
 .achievements-table tr:last-child td {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
 
 
-
-
+/* ====================================================
+   RESPONSIVE STYLES (MOBILE VIEWS)
+   - Adjust layout and font sizes for screens up to 768px wide.
+==================================================== */
 @media screen and (max-width: 768px) {
+
+    /* Counter Section: Stack items vertically */
     .counter-container {
         flex-direction: column;
         align-items: center;
@@ -323,10 +357,10 @@
     .counter-item {
         width: 100%;
         text-align: center;
-        margin: 25px 0px;
+        margin: 25px 0;
     }
 
-
+    /* Video Overlay: Smaller text on mobile */
     .video-overlay h1 {
         font-size: 2rem;
     }
@@ -335,8 +369,7 @@
         font-size: 1.2rem;
     }
 
-
-
+    /* Chairman Section: Stack image and content vertically */
     .chairman-container {
         flex-direction: column;
         text-align: center;
@@ -353,9 +386,7 @@
         margin-left: 0;
     }
 
-
-
-
+    /* News Section: Stack news boxes vertically */
     .news-section {
         flex-direction: column;
         align-items: center;
@@ -365,8 +396,7 @@
         max-width: 80%;
     }
 
-
-
+    /* Table Section: Adjust padding and heading for mobile */
     .table-section {
         padding: 10px;
         max-width: 100%;
@@ -385,7 +415,6 @@
 
     .table-container {
         overflow-x: auto;
-        /* Enables horizontal scrolling */
         max-width: 100%;
         border-radius: 10px;
     }
@@ -403,22 +432,20 @@
         font-size: 0.9rem;
     }
 
-    /* Sticky First Column */
+    /* Sticky first column for better mobile table navigation */
     .achievements-table th:first-child,
     .achievements-table td:first-child {
         position: sticky;
         left: 0;
         background-color: #004080;
         color: white;
-        /* Match table background */
         z-index: 1;
         font-weight: bold;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     }
 
-    /* Highlight First Column on Hover */
+    /* Highlight sticky first column on row hover */
     .achievements-table tr:hover td:first-child {
         background-color: #d9e6ff;
-        /* Highlight on hover */
     }
 }
