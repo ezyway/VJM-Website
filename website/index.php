@@ -14,7 +14,7 @@
     <title>Shri V.J. Modha College</title>
     
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/navLogo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
     
     <!-- ===================================================
          Fonts & Stylesheets
