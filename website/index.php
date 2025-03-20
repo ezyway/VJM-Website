@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Meta description for SEO -->
     <meta name="description" content="Shri V.J. Modha College - Empowering students for a better future.">
-    
+
     <!-- Document Title -->
     <title>Shri V.J. Modha College</title>
-    
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
-    
+
     <!-- ===================================================
          Fonts & Stylesheets
          =================================================== -->
@@ -25,7 +25,7 @@
     <link href="style/global.css" rel="stylesheet">
     <!-- Page-specific styles -->
     <link href="style/index.css" rel="stylesheet">
-    
+
     <!-- ===================================================
          Scripts
          =================================================== -->
@@ -89,25 +89,25 @@
          Chairman Section
          - Displays the chairman's image along with his message.
          =================================================== -->
-         <section class="chairman-section">
-            <div class="chairman-box">
-                <!-- Chairman's Profile Picture -->
-                <img src="assets/photos/index/chairman.png" alt="Chairman Image" class="chairman-image" />
+    <section class="chairman-section">
+        <div class="chairman-box">
+            <!-- Chairman's Profile Picture -->
+            <img src="assets/photos/index/chairman.png" alt="Chairman Image" class="chairman-image" />
 
-                <!-- Chairman's Name and Title -->
-                <h2>Chairman's Message</h2>
-                <h3 class="chairman-name">Mr. Vallabhbhai Modha</h3>
-                <p class="chairman-designation">Chairman, Shri V.J. Modha College, Porbandar</p>
+            <!-- Chairman's Name and Title -->
+            <h2>Chairman's Message</h2>
+            <h3 class="chairman-name">Mr. Vallabhbhai Modha</h3>
+            <p class="chairman-designation">Chairman, Shri V.J. Modha College, Porbandar</p>
 
-                <!-- Chairman's Message -->
-                <p class="chairman-message">
-                    "Knowledge is power &amp; with this power, I can visualize that the future of our nation is presently building in the classrooms, Today's students are the builders of our nation. For such building, our college has recorded a stupendous period in the history of this institute. We believe in quality education; time has wings &amp; it constantly flies, but now the time has come to pause and reflect on the modern system of education and harness the positive factors beneficial for the students."
-                </p>
+            <!-- Chairman's Message -->
+            <p class="chairman-message">
+                "Knowledge is power &amp; with this power, I can visualize that the future of our nation is presently building in the classrooms, Today's students are the builders of our nation. For such building, our college has recorded a stupendous period in the history of this institute. We believe in quality education; time has wings &amp; it constantly flies, but now the time has come to pause and reflect on the modern system of education and harness the positive factors beneficial for the students."
+            </p>
 
-                <!-- Read More Button -->
-                <!-- <a href="#" class="read-more-btn">Read Full Message</a> -->
-            </div>
-        </section>
+            <!-- Read More Button -->
+            <!-- <a href="#" class="read-more-btn">Read Full Message</a> -->
+        </div>
+    </section>
 
     <!-- ===================================================
          Events and News Section
@@ -418,20 +418,72 @@
     </section>
 
     <!-- ===================================================
-         Main Content Section
-         - Additional content that appears below the navbar.
-         =================================================== -->
-    <div class="content">
-        <h1>Welcome to taSSashe Page</h1>
-        <p>This is some sample content behind the navbar. Scroll to see the overlay effect.</p>
-    </div>
+        Testimonials Section
+        - Displays student testimonials with horizontal scroll.
+        =================================================== -->
+    <section class="testimonials-section">
+        <h2 class="section-title">Student Testimonials</h2>
+        <div class="testimonials-slider">
+            <div class="testimonial-item">
+                <p class="testimonial-text">
+                    "The practical approach and supportive faculty have transformed my learning experience!"
+                </p>
+                <h3 class="testimonial-name">Aisha Kumar</h3>
+                <span class="testimonial-course">B.Sc. IT</span>
+            </div>
+            <div class="testimonial-item">
+                <p class="testimonial-text">
+                    "The vibrant campus life and quality education have set me on the path to success."
+                </p>
+                <h3 class="testimonial-name">Rahul Sharma</h3>
+                <span class="testimonial-course">BBA</span>
+            </div>
+            <div class="testimonial-item">
+                <p class="testimonial-text">
+                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                </p>
+                <h3 class="testimonial-name">Sneha Patel</h3>
+                <span class="testimonial-course">MCA</span>
+            </div>
+            <div class="testimonial-item">
+                <p class="testimonial-text">
+                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                </p>
+                <h3 class="testimonial-name">Sneha Patel</h3>
+                <span class="testimonial-course">MCA</span>
+            </div>
+            <div class="testimonial-item">
+                <p class="testimonial-text">
+                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                </p>
+                <h3 class="testimonial-name">Sneha Patel</h3>
+                <span class="testimonial-course">MCA</span>
+            </div>
+            <div class="testimonial-item">
+                <p class="testimonial-text">
+                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                </p>
+                <h3 class="testimonial-name">Sneha Patel</h3>
+                <span class="testimonial-course">MCA</span>
+            </div>
+            <div class="testimonial-item">
+                <p class="testimonial-text">
+                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                </p>
+                <h3 class="testimonial-name">Sneha Patel</h3>
+                <span class="testimonial-course">MCA</span>
+            </div>
+            <!-- Add more testimonial items as needed -->
+        </div>
+    </section>
+
 
     <!-- ===================================================
          Footer Section
          - Included via PHP for consistency across pages.
          =================================================== -->
     <?php include("footer.html"); ?>
-    
+
 </body>
 
 </html>

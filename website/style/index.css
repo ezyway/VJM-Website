@@ -434,6 +434,91 @@
     background: #e3f2fd;
 }
 
+/* ====================================================
+   TESTIMONIALS SECTION
+   - Horizontal scroll section for student testimonials.
+==================================================== */
+.testimonials-section {
+    padding: 50px 20px;
+    background: #e3f2fd; /* Light background similar to News Section */
+    text-align: center;
+}
+
+.testimonials-section .section-title {
+    font-size: 2rem;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+/* Testimonials slider container with horizontal scroll */
+.testimonials-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar styling (WebKit browsers) */
+.testimonials-slider::-webkit-scrollbar {
+    height: 8px;
+}
+
+.testimonials-slider::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 8px;
+}
+
+.testimonials-slider::-webkit-scrollbar-track {
+    background: #e3f2fd;
+}
+
+/* Individual testimonial item styling */
+.testimonial-item {
+    flex: 0 0 auto;
+    width: 300px;
+    background: rgba(18, 18, 18, 0.8); /* Dark glass effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    text-align: left;
+}
+
+/* Hover effect for testimonial items */
+.testimonial-item:hover {
+    box-shadow: 0 15px 40px rgba(0, 198, 255, 0.3);
+}
+
+/* Testimonial text styling */
+.testimonial-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e3f2fd;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* Student name styling */
+.testimonial-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f1f1f1;
+    margin-bottom: 5px;
+}
+
+/* Student course or program styling */
+.testimonial-course {
+    font-size: 1rem;
+    color: #d1d1d1;
+    font-style: italic;
+}
+
 
 
 /* ====================================================
