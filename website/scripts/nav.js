@@ -8,4 +8,25 @@ document.addEventListener("DOMContentLoaded", () => {
       hamburger.classList.toggle("active");
       navLinks.classList.toggle("active");
   });
+
+  const modalOverlay = document.getElementById("modalOverlay");
+  const logoTrigger = document.getElementById("logoTrigger");
+  const closeBtn = document.getElementById("closeBtn");
+
+  // Show Modal
+  logoTrigger.addEventListener("click", () => {
+      modalOverlay.classList.add("active");
+  });
+
+  // Close Modal (Button Click)
+  closeBtn.addEventListener("click", () => {
+      modalOverlay.classList.remove("active");
+  });
+
+  // Close Modal (Click Outside)
+  modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) {
+          modalOverlay.classList.remove("active");
+      }
+  });
 });

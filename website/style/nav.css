@@ -45,6 +45,8 @@ textarea:focus {
 
 .logo img {
 	width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+	border-radius: 50%;
 }
 
 .logo:hover {
@@ -173,6 +175,96 @@ textarea:focus {
 	transform: rotate(-45deg) translate(5px, -9px);
 }
 
+
+
+/* College Logo */
+.college-logo {
+    width: 120px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.college-logo:hover {
+    transform: scale(1.1);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto; /* Allow scroll for modal content overflow */
+    opacity: 0;
+    visibility: hidden;
+    margin-top: 0; /* Remove margin to keep modal centered */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Modal Content (Glassmorphism) - Updated */
+.modal-content {
+    background: rgba(0, 0, 0, 0.6); /* Darker glassmorphic background */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px; /* Limit maximum width */
+    max-height: 80vh; /* Prevent modal from exceeding 80% of the viewport height */
+    text-align: center;
+    position: relative;
+    overflow-y: auto; /* Enable scroll if content exceeds height */
+    transform: scale(0.8);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    color: white;
+    height: auto;
+}
+/* Modal Logo - Add Background */
+.modal-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    width: 20em;
+    margin: 2em auto 1em auto;
+    /* padding: 2em; */
+    background: rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.8);
+	overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.modal-content p{
+	margin: 1em 2em 2em 2em;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+/* Modal Active State */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+
 /* --------- Animation --------- */
 @keyframes fadeIn {
 	from {
@@ -267,6 +359,11 @@ textarea:focus {
 	.mobile-logo:hover img {
 		transform: scale(1.1);
 	}
+	.modal-content {
+        width: 90%;
+        max-height: 70vh;
+        padding: 15px;
+    }
 }
 
 /* --------- Content Padding --------- */
