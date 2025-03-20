@@ -1,4 +1,3 @@
-
 /* ====================================================
    VIDEO BANNER SECTION
    - Fullscreen video banner with overlay text.
@@ -8,8 +7,7 @@
 .video-banner {
     position: relative;
     width: 100%;
-    height: 100vh;
-    /* Full viewport height */
+    height: 100vh; /* Full viewport height */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -22,19 +20,17 @@
     width: 100%;
     height: 100%;
     min-height: 100%;
-    z-index: -1;
-    /* Places video behind overlay */
-    object-fit: cover;
-    /* Ensures video covers container */
+    z-index: -1; /* Places video behind overlay */
+    object-fit: cover; /* Ensures video covers container */
 }
 
 /* Overlay container with text */
 .video-overlay {
     position: relative;
     text-align: center;
-    color: white;
-    background: rgba(255, 0, 0, 0.5);
-    /* Semi-transparent red background */
+    /* Use onPrimary for text and primary (with opacity) for overlay background */
+    color: #FFFFFF; /* onPrimary */
+    background: rgba(76, 102, 43, 0.5); /* primary (#4C662B) with 50% opacity */
     padding: 1em 2em;
     border-radius: 10px;
     z-index: 1;
@@ -54,6 +50,7 @@
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
+
 /* ====================================================
    COUNTER SECTION
    - Displays counters with a number and a label.
@@ -64,7 +61,8 @@
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    background: rgba(31, 28, 44, 0.8); /* Dark semi-transparent background */
+    /* Use secondary color converted to rgba for a dark semi-transparent background */
+    background: rgba(88, 98, 73, 0.8); /* secondary (#586249) */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -79,7 +77,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
+    /* A very subtle tint from the surface container */
+    background: rgba(201, 237, 163, 0.1); /* hint from primaryContainer (#CDEDA3) */
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 12px;
@@ -93,37 +92,39 @@
 /* Hover effect for counter items */
 .counter-item:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(201, 237, 163, 0.2);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Big number styling */
-.counter-item>div:first-child {
+.counter-item > div:first-child {
     font-size: 3rem;
     font-weight: bold;
-    color: #00c6ff;
-    text-shadow: 0 4px 12px rgba(0, 198, 255, 0.5);
+    /* Use primary color for the number */
+    color: #ffffff; /* primary */
+    text-shadow: 0 4px 12px rgba(76, 102, 43, 0.5);
     margin-bottom: 10px;
 }
 
 /* Label styling */
-.counter-item>div:last-child {
+.counter-item > div:last-child {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #f1f1f1;
+    color: #FFFFFF; /* onPrimary */
 }
+
 
 /* ====================================================
    CHAIRMAN SECTION
    - Showcases a chairman’s image, title, and a quote.
 ==================================================== */
 
-
 .chairman-section {
     display: flex;
     justify-content: center;
     padding: 50px 20px;
-    background: #e3f2fd; /* Subtle light background */
+    /* Use a light tone from primaryContainer */
+    background: #CDEDA3; /* primaryContainer */
     flex-wrap: wrap;
 }
 
@@ -132,7 +133,8 @@
     flex: 1;
     min-width: 350px;
     max-width: 800px;
-    background: rgba(18, 18, 18, 0.85); /* Darker glassmorphism */
+    /* Retaining a dark glassmorphism effect */
+    background: rgba(18, 18, 18, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -148,16 +150,15 @@
 /* Hover animation for the box */
 .chairman-box:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 198, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
 }
 
-/* Chairman's message title with gradient */
+/* Chairman's message title – updated to high contrast white for dark background */
 .chairman-box h2 {
     font-size: 2.2rem;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #FFFFFF;
     margin-bottom: 20px;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
 }
 
 /* Profile image styling */
@@ -165,7 +166,7 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    border: 4px solid #007bff;
+    border: 4px solid #4C662B; /* primary */
     margin-bottom: 15px;
     object-fit: cover;
 }
@@ -173,14 +174,14 @@
 /* Name and designation with color enhancement */
 .chairman-name {
     font-size: 1.5rem;
-    color: #f1f1f1;
+    color: #FFFFFF; /* onPrimary */
     margin-top: 10px;
     font-weight: bold;
 }
 
 .chairman-designation {
     font-size: 1rem;
-    color: #d1d1d1;
+    color: #ffffff; /* onSecondaryContainer */
     font-style: italic;
     margin-bottom: 15px;
 }
@@ -189,7 +190,7 @@
 .chairman-message {
     font-size: 1rem;
     line-height: 1.7;
-    color: #e3f2fd;
+    color: #FFFFFF; /* light tone for readability */
     text-align: justify;
     margin-bottom: 20px;
 }
@@ -205,7 +206,8 @@
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    background: #e3f2fd; /* Light background to contrast */
+    /* Use secondaryContainer as a light background */
+    background: #DCE7C8; /* secondaryContainer */
     flex-wrap: wrap;
 }
 
@@ -214,7 +216,7 @@
     flex: 1;
     min-width: 350px;
     max-width: 500px;
-    background: rgba(18, 18, 18, 0.8); /* Darker glass effect */
+    background: rgba(18, 18, 18, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -230,16 +232,15 @@
 /* Hover effect with subtle glow */
 .news-box:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 198, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
 }
 
-/* News box title with vibrant gradient */
+/* News box title – updated for contrast on dark background */
 .news-box h2 {
     font-size: 2rem;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #FFFFFF;
     margin-bottom: 20px;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
 }
 
 /* News slider with custom scroll */
@@ -249,7 +250,7 @@
     height: 400px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #00c6ff #1e1e1e;
+    scrollbar-color: #4C662B #2F312A;
 }
 
 /* WebKit scrollbar with custom styling */
@@ -258,19 +259,19 @@
 }
 
 .news-slider::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    background: linear-gradient(135deg, #4C662B, #586249);
     border-radius: 8px;
 }
 
 .news-slider::-webkit-scrollbar-track {
-    background: #1e1e1e;
+    background: #2F312A; /* inverseSurface */
 }
 
 /* Individual news/event item with subtle glassmorphism */
 .news-item {
     padding: 15px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.1); /* Slight glassmorphism */
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -278,18 +279,17 @@
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
-
 /* News/event item heading */
 .news-item h3 {
     font-size: 1.4rem;
-    color: #f1f1f1;
+    color: #FFFFFF; /* high contrast white */
     margin-bottom: 5px;
 }
 
 /* Date with improved contrast */
 .news-date {
     font-size: 1rem;
-    color: #d1d1d1;
+    color: #ffffff; /* onSecondaryContainer */
     font-style: italic;
     margin-bottom: 5px;
 }
@@ -297,7 +297,7 @@
 /* News/event description */
 .news-item p {
     font-size: 1rem;
-    color: #e3f2fd;
+    color: #FFFFFF;
     line-height: 1.5;
 }
 
@@ -306,8 +306,8 @@
     display: inline-block;
     padding: 12px 24px;
     margin-top: 15px;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: #fff;
+    background: linear-gradient(135deg, #4C662B, #586249);
+    color: #FFFFFF;
     text-decoration: none;
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
@@ -316,8 +316,8 @@
 
 /* Button hover effect */
 .view-more-btn:hover {
-    background: linear-gradient(135deg, #0072ff, #00c6ff);
-    box-shadow: 0 5px 20px rgba(0, 198, 255, 0.4);
+    background: linear-gradient(135deg, #586249, #4C662B);
+    box-shadow: 0 5px 20px rgba(76, 102, 43, 0.4);
     transform: translateY(-2px);
 }
 
@@ -331,7 +331,7 @@
 .table-section {
     width: 90%;
     margin: 50px auto;
-    background: rgba(18, 18, 18, 0.8); /* Darker glass effect */
+    background: rgba(18, 18, 18, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 30px;
@@ -343,18 +343,17 @@
 
 /* Hover effect to lift the section */
 .table-section:hover {
-    box-shadow: 0 12px 30px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 12px 30px rgba(76, 102, 43, 0.2);
 }
 
-/* Heading container for the table section */
+/* Heading container for the table section – updated to white for contrast */
 .heading-container h2 {
     padding: 12px 20px;
     width: fit-content;
     margin: 0 auto 20px auto;
     font-size: 2rem;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
     margin-bottom: 20px;
 }
 
@@ -363,7 +362,7 @@
     overflow-x: auto;
     width: 100%;
     border-radius: 12px;
-    background: white;
+    background: #F9FAEF; /* surface */
 }
 
 /* Table styling */
@@ -376,8 +375,8 @@
 
 /* Table header styling */
 .achievements-table th {
-    background: linear-gradient(135deg, #007BFF, #0056b3);
-    color: white;
+    background: linear-gradient(135deg, #4C662B, #586249);
+    color: #FFFFFF;
     font-weight: bold;
     padding: 15px;
     text-align: center;
@@ -395,16 +394,16 @@
 
 /* Alternating row colors */
 .achievements-table tr:nth-child(even) {
-    background: #f9f9f9; /* Light grey */
+    background: #E1E4D5; /* surfaceVariant */
 }
 
 .achievements-table tr:nth-child(odd) {
-    background: #ffffff; /* White */
+    background: #F9FAEF; /* surface */
 }
 
 /* Hover effect for table rows */
 .achievements-table tr:hover {
-    background: #e3f2fd; /* Light blue on hover */
+    background: #CDEDA3; /* primaryContainer */
     transition: 0.3s ease-in-out;
 }
 
@@ -426,13 +425,14 @@
 }
 
 .table-container::-webkit-scrollbar-thumb {
-    background: #007BFF;
+    background: #4C662B;
     border-radius: 10px;
 }
 
 .table-container::-webkit-scrollbar-track {
-    background: #e3f2fd;
+    background: #CDEDA3; /* primaryContainer */
 }
+
 
 /* ====================================================
    TESTIMONIALS SECTION
@@ -440,15 +440,15 @@
 ==================================================== */
 .testimonials-section {
     padding: 50px 20px;
-    background: #e3f2fd; /* Light background similar to News Section */
+    background: #DCE7C8; /* secondaryContainer */
     text-align: center;
 }
 
+/* Section title updated for high contrast */
 .testimonials-section .section-title {
     font-size: 2rem;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
     margin-bottom: 20px;
 }
 
@@ -467,19 +467,19 @@
 }
 
 .testimonials-slider::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    background: linear-gradient(135deg, #4C662B, #586249);
     border-radius: 8px;
 }
 
 .testimonials-slider::-webkit-scrollbar-track {
-    background: #e3f2fd;
+    background: #DCE7C8;
 }
 
 /* Individual testimonial item styling */
 .testimonial-item {
     flex: 0 0 auto;
     width: 300px;
-    background: rgba(18, 18, 18, 0.8); /* Dark glass effect */
+    background: rgba(18, 18, 18, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -492,14 +492,14 @@
 
 /* Hover effect for testimonial items */
 .testimonial-item:hover {
-    box-shadow: 0 15px 40px rgba(0, 198, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
 }
 
 /* Testimonial text styling */
 .testimonial-text {
     font-size: 1rem;
     line-height: 1.6;
-    color: #e3f2fd;
+    color: #FFFFFF;
     margin-bottom: 15px;
     text-align: justify;
 }
@@ -508,17 +508,16 @@
 .testimonial-name {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #f1f1f1;
+    color: #FFFFFF;
     margin-bottom: 5px;
 }
 
 /* Student course or program styling */
 .testimonial-course {
     font-size: 1rem;
-    color: #d1d1d1;
+    color: #404A33;
     font-style: italic;
 }
-
 
 
 /* ====================================================
@@ -617,8 +616,7 @@
 
     .achievements-table {
         display: block;
-        min-width: 600px;
-        /* Prevents columns from shrinking */
+        min-width: 600px; /* Prevents columns from shrinking */
         white-space: nowrap;
     }
 
@@ -633,8 +631,8 @@
     .achievements-table td:first-child {
         position: sticky;
         left: 0;
-        background-color: #004080;
-        color: white;
+        background-color: #4C662B;
+        color: #FFFFFF;
         z-index: 1;
         font-weight: bold;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -642,7 +640,7 @@
 
     /* Highlight sticky first column on row hover */
     .achievements-table tr:hover td:first-child {
-        background-color: #d9e6ff;
-        color: blue;
+        background-color: #CDEDA3;
+        color: #4C662B;
     }
 }
