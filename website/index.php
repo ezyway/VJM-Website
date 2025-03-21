@@ -20,14 +20,14 @@
          Fonts & Stylesheets
          =================================================== -->
 
-         <!-- GOOGLE FONT -->
+    <!-- GOOGLE FONT -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
-         <!-- Import Roboto font for a Material Design look -->
+
+    <!-- Import Roboto font for a Material Design look -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
-    
+
     <!-- Global styles -->
     <link href="style/global.css" rel="stylesheet">
     <!-- Page-specific styles -->
@@ -70,8 +70,8 @@
          - pass percentage, and total students passed out.
          =================================================== -->
     <section class="counter-container">
-        <!-- Counter for Courses -->
         <div class="counter-box">
+            <!-- Counter for Courses -->
             <div class="counter-item">
                 <div class="counter-courses" data-target="13">0</div>
                 <div class="counter-courses-label">Courses</div>
@@ -432,57 +432,67 @@
         =================================================== -->
     <section class="testimonials-section">
         <h2 class="section-title">Student Testimonials</h2>
-        <div class="testimonials-slider">
-            <div class="testimonial-item">
-                <p class="testimonial-text">
-                    "The practical approach and supportive faculty have transformed my learning experience!"
-                </p>
-                <h3 class="testimonial-name">Aisha Kumar</h3>
-                <span class="testimonial-course">B.Sc. IT</span>
+
+        <div class="testimonial-slider-container">
+            <!-- Left navigation button -->
+            <button class="testimonial-nav left">&lt;</button>
+
+            <div class="testimonials-slider">
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "The practical approach and supportive faculty have transformed my learning experience!"
+                    </p>
+                    <h3 class="testimonial-name">Aisha Kumar</h3>
+                    <span class="testimonial-course">B.Sc. IT</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "The vibrant campus life and quality education have set me on the path to success."
+                    </p>
+                    <h3 class="testimonial-name">Rahul Sharma</h3>
+                    <span class="testimonial-course">BBA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <!-- Add more testimonial items as needed -->
             </div>
-            <div class="testimonial-item">
-                <p class="testimonial-text">
-                    "The vibrant campus life and quality education have set me on the path to success."
-                </p>
-                <h3 class="testimonial-name">Rahul Sharma</h3>
-                <span class="testimonial-course">BBA</span>
-            </div>
-            <div class="testimonial-item">
-                <p class="testimonial-text">
-                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                </p>
-                <h3 class="testimonial-name">Sneha Patel</h3>
-                <span class="testimonial-course">MCA</span>
-            </div>
-            <div class="testimonial-item">
-                <p class="testimonial-text">
-                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                </p>
-                <h3 class="testimonial-name">Sneha Patel</h3>
-                <span class="testimonial-course">MCA</span>
-            </div>
-            <div class="testimonial-item">
-                <p class="testimonial-text">
-                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                </p>
-                <h3 class="testimonial-name">Sneha Patel</h3>
-                <span class="testimonial-course">MCA</span>
-            </div>
-            <div class="testimonial-item">
-                <p class="testimonial-text">
-                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                </p>
-                <h3 class="testimonial-name">Sneha Patel</h3>
-                <span class="testimonial-course">MCA</span>
-            </div>
-            <div class="testimonial-item">
-                <p class="testimonial-text">
-                    "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                </p>
-                <h3 class="testimonial-name">Sneha Patel</h3>
-                <span class="testimonial-course">MCA</span>
-            </div>
-            <!-- Add more testimonial items as needed -->
+
+            <!-- Right navigation button -->
+            <button class="testimonial-nav right">&gt;</button>
+        </div>
         </div>
     </section>
 

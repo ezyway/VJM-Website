@@ -7,7 +7,8 @@
 .video-banner {
     position: relative;
     width: 100%;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
+    /* Full viewport height */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -20,8 +21,10 @@
     width: 100%;
     height: 100%;
     min-height: 100%;
-    z-index: -1; /* Places video behind overlay */
-    object-fit: cover; /* Ensures video covers container */
+    z-index: -1;
+    /* Places video behind overlay */
+    object-fit: cover;
+    /* Ensures video covers container */
 }
 
 /* Overlay container with text */
@@ -29,8 +32,10 @@
     position: relative;
     text-align: center;
     /* Use onPrimary for text and primary (with opacity) for overlay background */
-    color: #FFFFFF; /* onPrimary */
-    background: rgba(76, 102, 43, 0.5); /* primary (#4C662B) with 50% opacity */
+    color: #FFFFFF;
+    /* onPrimary */
+    background: rgba(76, 102, 43, 0.5);
+    /* primary (#4C662B) with 50% opacity */
     padding: 1em 2em;
     border-radius: 10px;
     z-index: 1;
@@ -56,20 +61,24 @@
    - Displays counters with a number and a label.
 ==================================================== */
 /* Container for all counter items */
-.counter-container{
-    background: rgba(255, 255, 255, 0.1); /* Subtle white glass effect */
-    backdrop-filter: blur(12px); /* Softens background */
+.counter-container {
+    background: rgba(255, 255, 255, 0.1);
+    /* Subtle white glass effect */
+    backdrop-filter: blur(12px);
+    /* Softens background */
     -webkit-backdrop-filter: blur(12px);
     width: 100%;
     padding: 5em 3em;
 }
+
 .counter-box {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
     /* Use secondary color converted to rgba for a dark semi-transparent background */
-    background: rgba(88, 98, 73, 0.8); /* secondary (#586249) */
+    background: rgba(88, 98, 73, 0.8);
+    /* secondary (#586249) */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -86,7 +95,8 @@
     align-items: center;
     justify-content: center;
     /* A very subtle tint from the surface container */
-    background: rgba(201, 237, 163, 0.1); /* hint from primaryContainer (#CDEDA3) */
+    background: rgba(201, 237, 163, 0.1);
+    /* hint from primaryContainer (#CDEDA3) */
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 12px;
@@ -105,20 +115,22 @@
 }
 
 /* Big number styling */
-.counter-item > div:first-child {
+.counter-item>div:first-child {
     font-size: 3rem;
     font-weight: bold;
     /* Use primary color for the number */
-    color: #ffffff; /* primary */
+    color: #ffffff;
+    /* primary */
     text-shadow: 0 4px 12px rgba(76, 102, 43, 0.5);
     margin-bottom: 10px;
 }
 
 /* Label styling */
-.counter-item > div:last-child {
+.counter-item>div:last-child {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #FFFFFF; /* onPrimary */
+    color: #FFFFFF;
+    /* onPrimary */
 }
 
 
@@ -167,7 +179,7 @@
     font-size: 2.2rem;
     color: #FFFFFF;
     margin-bottom: 20px;
-    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
 }
 
 /* Profile image styling */
@@ -175,7 +187,8 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    border: 4px solid #4C662B; /* primary */
+    border: 4px solid #4C662B;
+    /* primary */
     margin-bottom: 15px;
     object-fit: cover;
 }
@@ -183,14 +196,16 @@
 /* Name and designation with color enhancement */
 .chairman-name {
     font-size: 1.5rem;
-    color: #FFFFFF; /* onPrimary */
+    color: #FFFFFF;
+    /* onPrimary */
     margin-top: 10px;
     font-weight: bold;
 }
 
 .chairman-designation {
     font-size: 1rem;
-    color: #ffffff; /* onSecondaryContainer */
+    color: #ffffff;
+    /* onSecondaryContainer */
     font-style: italic;
     margin-bottom: 15px;
 }
@@ -199,7 +214,8 @@
 .chairman-message {
     font-size: 1rem;
     line-height: 1.7;
-    color: #FFFFFF; /* light tone for readability */
+    color: #FFFFFF;
+    /* light tone for readability */
     text-align: justify;
     margin-bottom: 20px;
 }
@@ -215,8 +231,10 @@
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.1); /* Transparent white for glass effect */
-    backdrop-filter: blur(12px); /* Blur for glassmorphism */
+    background: rgba(255, 255, 255, 0.1);
+    /* Transparent white for glass effect */
+    backdrop-filter: blur(12px);
+    /* Blur for glassmorphism */
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
@@ -254,7 +272,7 @@
     font-size: 2rem;
     color: #FFFFFF;
     margin-bottom: 20px;
-    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
 }
 
 /* News slider with custom scroll */
@@ -278,7 +296,8 @@
 }
 
 .news-slider::-webkit-scrollbar-track {
-    background: #2F312A; /* inverseSurface */
+    background: #2F312A;
+    /* inverseSurface */
 }
 
 /* Individual news/event item with subtle glassmorphism */
@@ -296,14 +315,16 @@
 /* News/event item heading */
 .news-item h3 {
     font-size: 1.4rem;
-    color: #FFFFFF; /* high contrast white */
+    color: #FFFFFF;
+    /* high contrast white */
     margin-bottom: 5px;
 }
 
 /* Date with improved contrast */
 .news-date {
     font-size: 1rem;
-    color: #ffffff; /* onSecondaryContainer */
+    color: #ffffff;
+    /* onSecondaryContainer */
     font-style: italic;
     margin-bottom: 5px;
 }
@@ -367,7 +388,7 @@
     margin: 0 auto 20px auto;
     font-size: 2rem;
     color: #FFFFFF;
-    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
     margin-bottom: 20px;
 }
 
@@ -409,16 +430,19 @@
 
 /* Alternating row colors */
 .achievements-table tr:nth-child(even) {
-    background: #E1E4D5; /* surfaceVariant */
+    background: #E1E4D5;
+    /* surfaceVariant */
 }
 
 .achievements-table tr:nth-child(odd) {
-    background: #F9FAEF; /* surface */
+    background: #F9FAEF;
+    /* surface */
 }
 
 /* Hover effect for table rows */
 .achievements-table tr:hover {
-    background: #CDEDA3; /* primaryContainer */
+    background: #CDEDA3;
+    /* primaryContainer */
     transition: 0.3s ease-in-out;
 }
 
@@ -445,7 +469,8 @@
 }
 
 .table-container::-webkit-scrollbar-track {
-    background: #CDEDA3; /* primaryContainer */
+    background: #CDEDA3;
+    /* primaryContainer */
 }
 
 
@@ -453,9 +478,51 @@
    TESTIMONIALS SECTION
    - Horizontal scroll section for student testimonials.
 ==================================================== */
+/* Container for the slider and navigation buttons */
+/* Container for the slider and navigation buttons */
+.testimonial-slider-container {
+    position: relative;
+  }
+  
+  /* Navigation buttons styled as square buttons */
+  .testimonial-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(76, 102, 43, 0.8); /* Primary color with opacity */
+    border: none;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    /* For square buttons, no border-radius (or minimal if desired) */
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Positioning for left button */
+  .testimonial-nav.left {
+    left: 10px;
+  }
+  
+  /* Positioning for right button */
+  .testimonial-nav.right {
+    right: 10px;
+  }
+  
+  /* Hover effect */
+  .testimonial-nav:hover {
+    background-color: rgba(76, 102, 43, 1);
+  }
 .testimonials-section {
     padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.1); /* Transparent glass effect */
+    background: rgba(255, 255, 255, 0.1);
+    /* Transparent glass effect */
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -548,7 +615,7 @@
 @media screen and (max-width: 768px) {
 
     /* Counter Section: Stack items vertically */
-    .counter-container {
+    .counter-box {
         flex-direction: column;
         align-items: center;
     }
@@ -631,13 +698,15 @@
         max-width: 100%;
         border-radius: 10px;
     }
+
     .heading-container h2 {
         font-size: 1.5rem;
     }
 
     .achievements-table {
         display: block;
-        min-width: 600px; /* Prevents columns from shrinking */
+        min-width: 600px;
+        /* Prevents columns from shrinking */
         white-space: nowrap;
     }
 
