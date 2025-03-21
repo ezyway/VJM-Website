@@ -71,24 +71,26 @@
          =================================================== -->
     <section class="counter-container">
         <!-- Counter for Courses -->
-        <div class="counter-item">
-            <div class="counter-courses" data-target="13">0</div>
-            <div class="counter-courses-label">Courses</div>
-        </div>
-        <!-- Counter for Currently Enrolled Students -->
-        <div class="counter-item">
-            <div class="counter-enrolled" data-target="1200">0</div>
-            <div class="counter-enrolled-label">Students Enrolled</div>
-        </div>
-        <!-- Counter for Pass Percentage -->
-        <div class="counter-item">
-            <div class="counter-pass-percentage" data-target="98">0</div>
-            <div class="counter-pass-percentage-label">Pass Percentage</div>
-        </div>
-        <!-- Counter for Total Students Passed Out -->
-        <div class="counter-item">
-            <div class="counter-passouts" data-target="10607">0</div>
-            <div class="counter-passouts-label">Total Students Passed Out</div>
+        <div class="counter-box">
+            <div class="counter-item">
+                <div class="counter-courses" data-target="13">0</div>
+                <div class="counter-courses-label">Courses</div>
+            </div>
+            <!-- Counter for Currently Enrolled Students -->
+            <div class="counter-item">
+                <div class="counter-enrolled" data-target="1200">0</div>
+                <div class="counter-enrolled-label">Students Enrolled</div>
+            </div>
+            <!-- Counter for Pass Percentage -->
+            <div class="counter-item">
+                <div class="counter-pass-percentage" data-target="98">0</div>
+                <div class="counter-pass-percentage-label">Pass Percentage</div>
+            </div>
+            <!-- Counter for Total Students Passed Out -->
+            <div class="counter-item">
+                <div class="counter-passouts" data-target="10607">0</div>
+                <div class="counter-passouts-label">Total Students Passed Out</div>
+            </div>
         </div>
     </section>
 
