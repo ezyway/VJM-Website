@@ -547,11 +547,14 @@
     overflow-x: auto;
     padding-bottom: 10px;
     scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
 }
 
 /* Custom scrollbar styling (WebKit browsers) */
 .testimonials-slider::-webkit-scrollbar {
     height: 8px;
+    display: none; /* Chrome, Safari and Opera */
 }
 
 .testimonials-slider::-webkit-scrollbar-thumb {
