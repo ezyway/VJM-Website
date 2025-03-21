@@ -955,4 +955,13 @@
     .carousel-item {
         width: 256px;
     }
+
+    /* FOR COUNTER CONTAINER */
+    .counter-container {
+        padding: 5em 1em;
+    }
+
+    .counter-item {
+        max-width: 205px;
+    }
 }
