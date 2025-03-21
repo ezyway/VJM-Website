@@ -56,7 +56,14 @@
    - Displays counters with a number and a label.
 ==================================================== */
 /* Container for all counter items */
-.counter-container {
+.counter-container{
+    background: rgba(255, 255, 255, 0.1); /* Subtle white glass effect */
+    backdrop-filter: blur(12px); /* Softens background */
+    -webkit-backdrop-filter: blur(12px);
+    width: 100%;
+    padding: 5em 3em;
+}
+.counter-box {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -69,7 +76,6 @@
     padding: 40px 20px;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    margin: 100px 30px;
 }
 
 /* Counter item container with modern styling */
@@ -125,9 +131,6 @@
     display: flex;
     justify-content: center;
     padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.1); /* Subtle white glass effect */
-    backdrop-filter: blur(12px); /* Softens background */
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
