@@ -125,8 +125,12 @@
     display: flex;
     justify-content: center;
     padding: 50px 20px;
-    /* Use a light tone from primaryContainer */
-    background: #CDEDA3; /* primaryContainer */
+    background: rgba(255, 255, 255, 0.1); /* Subtle white glass effect */
+    backdrop-filter: blur(12px); /* Softens background */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     flex-wrap: wrap;
 }
 
@@ -208,10 +212,15 @@
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    /* Use secondaryContainer as a light background */
-    background: #DCE7C8; /* secondaryContainer */
+    background: rgba(255, 255, 255, 0.1); /* Transparent white for glass effect */
+    backdrop-filter: blur(12px); /* Blur for glassmorphism */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     flex-wrap: wrap;
 }
+
 
 /* Glassmorphism box with darker background for better contrast */
 .news-box {
@@ -443,15 +452,21 @@
 ==================================================== */
 .testimonials-section {
     padding: 50px 20px;
-    background: #DCE7C8; /* secondaryContainer */
+    background: rgba(255, 255, 255, 0.1); /* Transparent glass effect */
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
+
 
 /* Section title updated for high contrast */
 .testimonials-section .section-title {
     font-size: 2rem;
-    color: #FFFFFF;
-    text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
+    color: #000000;
+    text-shadow: 1px 1px 8px rgba(255, 255, 255, 1);
     margin-bottom: 20px;
 }
 
