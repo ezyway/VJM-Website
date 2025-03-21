@@ -844,4 +844,115 @@
         background-color: #CDEDA3;
         color: #4C662B;
     }
+
+    /* TESTIMONIALS SECTION */
+    .testimonials-slider {
+        gap: 10px;
+    }
+
+    .testimonial-item {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .testimonial-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+
+    .testimonial-text {
+        font-size: 0.9rem;
+    }
+
+    .testimonial-name {
+        font-size: 1.1rem;
+    }
+
+    /* Photo Carousel Section */
+    .photo-carousel-container {
+        padding: 5em 1em;
+    }
+
+    .carousel-wrapper {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 492px) {
+    /* Photo Carousel Section */
+    .carousel-nav.left {
+        left: -44px;
+    }
+
+    .carousel-nav.right {
+        right: -44px;
+    }
+}
+
+/* Small Screens (Mobile Phones) */
+@media (max-width: 480px) {
+    
+    /* TESTIMONIALS SECTION */
+    .testimonials-section {
+        padding: 30px 10px;
+    }
+
+    .testimonials-slider {
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .testimonial-item {
+        width: 95%;
+        max-width: 250px;
+    }
+
+    .testimonial-text {
+        font-size: 0.85rem;
+    }
+
+    .testimonial-name {
+        font-size: 1rem;
+    }
+
+    .testimonial-nav {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 425px) {
+    /* Photo Carousel Wrapper */
+    .carousel-wrapper {
+        padding: 5em 1em 2em 1em;
+    }
+}
+
+@media (max-width: 320px) {
+    /* Container for chairman's message */
+    .chairman-box {
+        min-width: 322px;
+    }
+
+    /* Glassmorphism box with darker background for better contrast */
+    .news-box {
+        min-width: 298px;
+    }
+
+    /* Video Overlay: Smaller text on mobile */
+    .video-overlay {
+        padding: 3em 2em;
+    }
+
+    /* Photo Carousel Wrapper */
+    .carousel-wrapper {
+        padding: 5em 1em 2em 1em;
+    }
+
+    /* Photo Carousel Item */
+    .carousel-item {
+        width: 256px;
+    }
 }
