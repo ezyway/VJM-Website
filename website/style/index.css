@@ -74,9 +74,11 @@
 
 /* Counter item container with modern styling */
 .counter-item {
+    height: 155px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     /* A very subtle tint from the surface container */
     background: rgba(201, 237, 163, 0.1); /* hint from primaryContainer (#CDEDA3) */
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -362,20 +364,21 @@
     overflow-x: auto;
     width: 100%;
     border-radius: 12px;
-    background: #F9FAEF; /* surface */
+    /* background: #F9FAEF;  */
+    /* surface */
 }
 
 /* Table styling */
 .achievements-table {
     width: 100%;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     border-spacing: 0;
     min-width: 700px;
 }
 
 /* Table header styling */
 .achievements-table th {
-    background: linear-gradient(135deg, #4C662B, #586249);
+    background: linear-gradient(135deg, #66662b, #586249);
     color: #FFFFFF;
     font-weight: bold;
     padding: 15px;
@@ -414,10 +417,10 @@
 }
 
 /* Rounded corners for last row data cells */
-.achievements-table tr:last-child td {
+/* .achievements-table tr:last-child td {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-}
+} */
 
 /* Custom scrollbar for horizontal scroll */
 .table-container::-webkit-scrollbar {
@@ -515,7 +518,7 @@
 /* Student course or program styling */
 .testimonial-course {
     font-size: 1rem;
-    color: #404A33;
+    color: #b09621;
     font-style: italic;
 }
 
