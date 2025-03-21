@@ -34,9 +34,9 @@
     /* Use onPrimary for text and primary (with opacity) for overlay background */
     color: #FFFFFF;
     /* onPrimary */
-    background: rgba(76, 102, 43, 0.5);
+    background: rgb(0, 0, 0, 0.6);
     /* primary (#4C662B) with 50% opacity */
-    padding: 1em 2em;
+    padding: 3em 5em;
     border-radius: 10px;
     z-index: 1;
 }
