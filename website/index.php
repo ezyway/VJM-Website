@@ -498,6 +498,39 @@
 
 
     <!-- ===================================================
+     Photo Carousel Section
+     =================================================== -->
+    <section class="photo-carousel-container">
+        <div class="carousel-wrapper">
+        <h2 class="carousel-title">Photos</h2>
+            <button class="carousel-nav left">&lt;</button>
+            <div class="carousel" id="carousel">
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/129.jpg" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/130.jpg" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/131.jpg" alt="Image 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/132.jpg" alt="Image 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/133.jpg" alt="Image 5">
+                </div>
+            </div>
+            <button class="carousel-nav right">&gt;</button>
+        </div>
+    </section>
+    <script>
+
+    </script>
+
+
+
+    <!-- ===================================================
          Footer Section
          - Included via PHP for consistency across pages.
          =================================================== -->

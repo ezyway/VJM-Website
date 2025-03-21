@@ -65,4 +65,30 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 	}
+
+
+	
+	const carousel = document.getElementById('carousel');
+	let scrollAmount = 0;
+	const scrollSpeed = 1; // Speed of auto-scroll
+	const scrollInterval = 30; // Interval in milliseconds
+
+	function autoScroll() {
+		scrollAmount += scrollSpeed;
+		if (scrollAmount >= carousel.scrollWidth - carousel.clientWidth) {
+			scrollAmount = 0;
+		}
+		carousel.scrollLeft = scrollAmount;
+	}
+
+	// Auto scroll every 30ms
+	let autoScrollInterval = setInterval(autoScroll, scrollInterval);
+
+	// Pause auto-scroll on hover
+	carousel.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
+	carousel.addEventListener('mouseleave', () => {
+		autoScrollInterval = setInterval(autoScroll, scrollInterval);
+	});
+
+	
 });

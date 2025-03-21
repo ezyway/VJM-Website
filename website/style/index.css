@@ -611,6 +611,114 @@
 }
 
 
+
+/* Photo Carousel Container */
+.photo-carousel-container {
+    padding: 5em 2em;
+    position: relative;
+    background: transparent;
+}
+
+/* Wrapper with Nav Buttons */
+.carousel-wrapper {
+    position: relative;
+    max-width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: rgba(88, 98, 73, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 5em 5em 2em 5em;
+    border-radius: 15px;
+}
+
+/* Centered Title */
+.carousel-title {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+/* Glassmorphic Nav Buttons */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 18px;
+    margin: 0 2.5em;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.carousel-nav:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Button positioning */
+.carousel-nav.left {
+    left: -30px;
+}
+.carousel-nav.right {
+    right: -30px;
+}
+
+/* Carousel Track */
+.carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar */
+.carousel::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual Carousel Item */
+.carousel-item {
+    flex: 0 0 auto;
+    width: 300px;
+    scroll-snap-align: start;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+}
+
+.carousel-item:hover {
+    transform: scale(1.05);
+}
+
+/* Carousel Images */
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+
 /* ====================================================
    RESPONSIVE STYLES (MOBILE VIEWS)
    - Adjust layout and font sizes for screens up to 768px wide.
