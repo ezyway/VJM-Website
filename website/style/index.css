@@ -7,8 +7,7 @@
 .video-banner {
     position: relative;
     width: 100%;
-    height: 100vh;
-    /* Full viewport height */
+    height: 100vh; /* Full viewport height */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -16,40 +15,35 @@
 }
 
 /* Background video styling */
-.background-video {
+.video-banner__background {
     position: absolute;
     width: 100%;
     height: 100%;
     min-height: 100%;
-    z-index: -1;
-    /* Places video behind overlay */
-    object-fit: cover;
-    /* Ensures video covers container */
+    z-index: -1; /* Places video behind overlay */
+    object-fit: cover; /* Ensures video covers container */
 }
 
 /* Overlay container with text */
-.video-overlay {
+.video-banner__overlay {
     position: relative;
     text-align: center;
-    /* Use onPrimary for text and primary (with opacity) for overlay background */
-    color: #FFFFFF;
-    /* onPrimary */
-    background: rgb(0, 0, 0, 0.6);
-    /* primary (#4C662B) with 50% opacity */
+    color: #FFFFFF; /* onPrimary */
+    background: rgb(0, 0, 0, 0.6); /* primary (#4C662B) with opacity */
     padding: 3em 5em;
     border-radius: 10px;
     z-index: 1;
 }
 
 /* Overlay title styling */
-.video-overlay h1 {
+.video-banner__overlay h1 {
     font-size: 3rem;
     font-weight: bold;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 /* Overlay paragraph styling */
-.video-overlay p {
+.video-banner__overlay p {
     font-size: 1.5rem;
     margin-top: 10px;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
@@ -61,24 +55,20 @@
    - Displays counters with a number and a label.
 ==================================================== */
 /* Container for all counter items */
-.counter-container {
-    background: rgba(255, 255, 255, 0.1);
-    /* Subtle white glass effect */
+.counter-section {
+    background: rgba(255, 255, 255, 0.1); /* Subtle white glass effect */
     backdrop-filter: blur(12px);
-    /* Softens background */
     -webkit-backdrop-filter: blur(12px);
     width: 100%;
     padding: 5em 3em;
 }
 
-.counter-box {
+.counter-section__box {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    /* Use secondary color converted to rgba for a dark semi-transparent background */
-    background: rgba(88, 98, 73, 0.8);
-    /* secondary (#586249) */
+    background: rgba(88, 98, 73, 0.8); /* secondary (#586249) */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -88,15 +78,13 @@
 }
 
 /* Counter item container with modern styling */
-.counter-item {
+.counter-section__item {
     height: 155px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* A very subtle tint from the surface container */
-    background: rgba(201, 237, 163, 0.1);
-    /* hint from primaryContainer (#CDEDA3) */
+    background: rgba(201, 237, 163, 0.1); /* hint from primaryContainer (#CDEDA3) */
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 12px;
@@ -108,53 +96,46 @@
 }
 
 /* Hover effect for counter items */
-.counter-item:hover {
+.counter-section__item:hover {
     transform: translateY(-5px);
     background: rgba(201, 237, 163, 0.2);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Big number styling */
-.counter-item>div:first-child {
+.counter-section__item > div:first-child {
     font-size: 3rem;
     font-weight: bold;
-    /* Use primary color for the number */
-    color: #ffffff;
-    /* primary */
+    color: #ffffff; /* primary */
     text-shadow: 0 4px 12px rgba(76, 102, 43, 0.5);
     margin-bottom: 10px;
 }
 
 /* Label styling */
-.counter-item>div:last-child {
+.counter-section__item > div:last-child {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #FFFFFF;
-    /* onPrimary */
+    color: #FFFFFF; /* onPrimary */
 }
 
 
 /* ====================================================
-   CHAIRMAN SECTION
-   - Showcases a chairman’s image, title, and a quote.
+   CHAIRMAN & PRIDE SECTIONS
+   - Showcases a chairman’s image, title, a message, and pride slider.
 ==================================================== */
-
+/* Shared styling for chairman profile and pride box */
 .chairman-section {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
     padding: 50px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Prevent wrapping on desktop */
 }
-
-/* Container for chairman's message */
-.chairman-box {
-    flex: 1;
+.chairman-section__profile,
+.pride-section {
     min-width: 350px;
-    max-width: 800px;
-    /* Retaining a dark glassmorphism effect */
+    max-width: 500px;
     background: rgba(18, 18, 18, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -167,57 +148,153 @@
     overflow: hidden;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
-
-/* Hover animation for the box */
-.chairman-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
+.chairman-section__profile {
+    flex: 2; /* 2x the size of pride-section */
+    max-width: 700px;
+}
+.pride-section {
+    flex: 1;
 }
 
-/* Chairman's message title – updated to high contrast white for dark background */
-.chairman-box h2 {
+/* Title Styling */
+.chairman-section__profile h2,
+.pride-section h2 {
     font-size: 2.2rem;
     color: #FFFFFF;
     margin-bottom: 20px;
     text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
 }
 
-/* Profile image styling */
-.chairman-image {
+/* Chairman Profile Picture */
+.chairman-section__image {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     border: 4px solid #4C662B;
-    /* primary */
     margin-bottom: 15px;
     object-fit: cover;
 }
 
-/* Name and designation with color enhancement */
-.chairman-name {
+/* Name and Designation */
+.chairman-section__name {
     font-size: 1.5rem;
     color: #FFFFFF;
-    /* onPrimary */
-    margin-top: 10px;
     font-weight: bold;
+    margin-top: 10px;
 }
 
-.chairman-designation {
+.chairman-section__designation {
     font-size: 1rem;
     color: #ffffff;
-    /* onSecondaryContainer */
     font-style: italic;
     margin-bottom: 15px;
 }
 
-/* Chairman's message text */
-.chairman-message {
+/* Message Styling */
+.chairman-section__message {
     font-size: 1rem;
     line-height: 1.7;
     color: #FFFFFF;
-    /* light tone for readability */
     text-align: justify;
     margin-bottom: 20px;
+}
+
+/* PRIDE SECTION */
+/* Slider Wrapper */
+.pride-section__slider {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Each Slide Content */
+.pride-section__slider-wrapper {
+    display: flex;
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Each Pride Item */
+.pride-section__item {
+    flex: 0 0 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Student Image */
+.pride-section__image {
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
+    border: 4px solid #4C662B;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* Student Name */
+.pride-section__name {
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+/* Course and Award Styling */
+.pride-section__course {
+    font-size: 1.1rem;
+    color: #FFFFFF;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.pride-section__award {
+    font-size: 1rem;
+    color: #FFD700; /* Gold for Award */
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* Navigation Buttons */
+.pride-section__nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Slider Navigation Buttons */
+.pride-section__nav-prev,
+.pride-section__nav-next {
+    background: rgba(76, 102, 43, 0.8);
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* Left Button */
+.pride-section__nav-prev {
+    left: 20px;
+    height: 3em;
+    width: 3em;
+}
+
+/* Right Button */
+.pride-section__nav-next {
+    right: 20px;
+    height: 3em;
+    width: 3em;
 }
 
 
@@ -225,16 +302,13 @@
    NEWS SECTION
    - Displays news boxes with a slider for news items.
 ==================================================== */
-
 .news-section {
     display: flex;
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    /* Transparent white for glass effect */
+    background: rgba(255, 255, 255, 0.1); /* Transparent white for glass effect */
     backdrop-filter: blur(12px);
-    /* Blur for glassmorphism */
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
@@ -242,9 +316,8 @@
     flex-wrap: wrap;
 }
 
-
-/* Glassmorphism box with darker background for better contrast */
-.news-box {
+/* News Box */
+.news-section__box {
     flex: 1;
     min-width: 350px;
     max-width: 500px;
@@ -261,22 +334,22 @@
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
-/* Hover effect with subtle glow */
-.news-box:hover {
+/* Hover effect for news boxes */
+.news-section__box:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
 }
 
-/* News box title – updated for contrast on dark background */
-.news-box h2 {
+/* News Box Title */
+.news-section__box h2 {
     font-size: 2rem;
     color: #FFFFFF;
     margin-bottom: 20px;
     text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
 }
 
-/* News slider with custom scroll */
-.news-slider {
+/* News Slider */
+.news-section__slider {
     display: flex;
     flex-direction: column;
     height: 400px;
@@ -285,23 +358,22 @@
     scrollbar-color: #4C662B #2F312A;
 }
 
-/* WebKit scrollbar with custom styling */
-.news-slider::-webkit-scrollbar {
+/* Custom Scrollbar for News Slider (WebKit) */
+.news-section__slider::-webkit-scrollbar {
     width: 8px;
 }
 
-.news-slider::-webkit-scrollbar-thumb {
+.news-section__slider::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #4C662B, #586249);
     border-radius: 8px;
 }
 
-.news-slider::-webkit-scrollbar-track {
+.news-section__slider::-webkit-scrollbar-track {
     background: #2F312A;
-    /* inverseSurface */
 }
 
-/* Individual news/event item with subtle glassmorphism */
-.news-item {
+/* Individual News/Event Item */
+.news-section__item {
     padding: 15px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.1);
@@ -312,31 +384,29 @@
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
-/* News/event item heading */
-.news-item h3 {
+/* News/Event Item Heading */
+.news-section__item h3 {
     font-size: 1.4rem;
     color: #FFFFFF;
-    /* high contrast white */
     margin-bottom: 5px;
 }
 
-/* Date with improved contrast */
-.news-date {
+/* News/Event Date */
+.news-section__date {
     font-size: 1rem;
     color: #ffffff;
-    /* onSecondaryContainer */
     font-style: italic;
     margin-bottom: 5px;
 }
 
-/* News/event description */
-.news-item p {
+/* News/Event Description */
+.news-section__item p {
     font-size: 1rem;
     color: #FFFFFF;
     line-height: 1.5;
 }
 
-/* Button for view more or details */
+/* Button for View More */
 .view-more-btn {
     display: inline-block;
     padding: 12px 24px;
@@ -349,7 +419,6 @@
     font-weight: bold;
 }
 
-/* Button hover effect */
 .view-more-btn:hover {
     background: linear-gradient(135deg, #586249, #4C662B);
     box-shadow: 0 5px 20px rgba(76, 102, 43, 0.4);
@@ -361,8 +430,6 @@
    TABLE SECTION (ACHIEVEMENTS)
    - Displays a responsive table with sticky headers/columns.
 ==================================================== */
-
-/* Overall container for table section */
 .table-section {
     width: 90%;
     margin: 50px auto;
@@ -376,12 +443,11 @@
     transition: all 0.3s ease-in-out;
 }
 
-/* Hover effect to lift the section */
 .table-section:hover {
     box-shadow: 0 12px 30px rgba(76, 102, 43, 0.2);
 }
 
-/* Heading container for the table section – updated to white for contrast */
+/* Table Heading */
 .heading-container h2 {
     padding: 12px 20px;
     width: fit-content;
@@ -392,24 +458,18 @@
     margin-bottom: 20px;
 }
 
-/* Container for horizontal scroll */
 .table-container {
     overflow-x: auto;
     width: 100%;
     border-radius: 12px;
-    /* background: #F9FAEF;  */
-    /* surface */
 }
 
-/* Table styling */
 .achievements-table {
     width: 100%;
-    /* border-collapse: collapse; */
     border-spacing: 0;
     min-width: 700px;
 }
 
-/* Table header styling */
 .achievements-table th {
     background: linear-gradient(135deg, #66662b, #586249);
     color: #FFFFFF;
@@ -419,7 +479,6 @@
     font-size: 1rem;
 }
 
-/* Table cell styling */
 .achievements-table th,
 .achievements-table td {
     border: 1px solid #ddd;
@@ -428,37 +487,25 @@
     font-size: 1rem;
 }
 
-/* Alternating row colors */
 .achievements-table tr:nth-child(even) {
-    background: #E1E4D5;
-    /* surfaceVariant */
+    background: #E1E4D5; /* surfaceVariant */
 }
 
 .achievements-table tr:nth-child(odd) {
-    background: #F9FAEF;
-    /* surface */
+    background: #F9FAEF; /* surface */
 }
 
-/* Hover effect for table rows */
 .achievements-table tr:hover {
-    background: #CDEDA3;
-    /* primaryContainer */
+    background: #CDEDA3; /* primaryContainer */
     transition: 0.3s ease-in-out;
 }
 
-/* Rounded corners for first row header cells */
 .achievements-table tr:first-child th {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
 
-/* Rounded corners for last row data cells */
-/* .achievements-table tr:last-child td {
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-} */
-
-/* Custom scrollbar for horizontal scroll */
+/* Custom Horizontal Scrollbar for Table */
 .table-container::-webkit-scrollbar {
     height: 8px;
 }
@@ -469,8 +516,7 @@
 }
 
 .table-container::-webkit-scrollbar-track {
-    background: #CDEDA3;
-    /* primaryContainer */
+    background: #CDEDA3; /* primaryContainer */
 }
 
 
@@ -479,13 +525,13 @@
    - Horizontal scroll section for student testimonials.
 ==================================================== */
 /* Container for the slider and navigation buttons */
-/* Container for the slider and navigation buttons */
-.testimonial-slider-container {
+.testimonials-section__container {
     position: relative;
-  }
-  
-  /* Navigation buttons styled as square buttons */
-  .testimonial-nav {
+}
+
+/* Navigation buttons for testimonials */
+.testimonials-section__nav-left,
+.testimonials-section__nav-right {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -494,7 +540,6 @@
     color: #fff;
     width: 40px;
     height: 40px;
-    /* For square buttons, no border-radius (or minimal if desired) */
     border-radius: 10px;
     cursor: pointer;
     display: flex;
@@ -503,71 +548,45 @@
     font-size: 1.5rem;
     z-index: 2;
     transition: background-color 0.3s ease;
-  }
-  
-  /* Positioning for left button */
-  .testimonial-nav.left {
-    left: 10px;
-  }
-  
-  /* Positioning for right button */
-  .testimonial-nav.right {
-    right: 10px;
-  }
-  
-  /* Hover effect */
-  .testimonial-nav:hover {
-    background-color: rgba(76, 102, 43, 1);
-  }
-.testimonials-section {
-    padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    /* Transparent glass effect */
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    text-align: center;
 }
 
+.testimonials-section__nav-left {
+    left: 10px;
+}
 
-/* Section title updated for high contrast */
-.testimonials-section .section-title {
+.testimonials-section__nav-right {
+    right: 10px;
+}
+
+.testimonials-section__nav-left:hover,
+.testimonials-section__nav-right:hover {
+    background-color: rgba(76, 102, 43, 1);
+}
+
+.testimonials-section__title {
     font-size: 2rem;
     color: #000000;
     text-shadow: 1px 1px 8px rgba(255, 255, 255, 1);
     margin-bottom: 20px;
 }
 
-/* Testimonials slider container with horizontal scroll */
-.testimonials-slider {
+/* Testimonials Slider */
+.testimonials-section__slider {
     display: flex;
     gap: 20px;
     overflow-x: auto;
     padding-bottom: 10px;
     scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/* Custom scrollbar styling (WebKit browsers) */
-.testimonials-slider::-webkit-scrollbar {
+.testimonials-section__slider::-webkit-scrollbar {
     height: 8px;
-    display: none; /* Chrome, Safari and Opera */
+    display: none;
 }
 
-.testimonials-slider::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #4C662B, #586249);
-    border-radius: 8px;
-}
-
-.testimonials-slider::-webkit-scrollbar-track {
-    background: #DCE7C8;
-}
-
-/* Individual testimonial item styling */
-.testimonial-item {
+.testimonials-section__item {
     flex: 0 0 auto;
     width: 300px;
     background: rgba(18, 18, 18, 0.8);
@@ -581,13 +600,11 @@
     text-align: left;
 }
 
-/* Hover effect for testimonial items */
-.testimonial-item:hover {
+.testimonials-section__item:hover {
     box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
 }
 
-/* Testimonial text styling */
-.testimonial-text {
+.testimonials-section__text {
     font-size: 1rem;
     line-height: 1.6;
     color: #FFFFFF;
@@ -595,32 +612,31 @@
     text-align: justify;
 }
 
-/* Student name styling */
-.testimonial-name {
+.testimonials-section__name {
     font-size: 1.2rem;
     font-weight: bold;
     color: #FFFFFF;
     margin-bottom: 5px;
 }
 
-/* Student course or program styling */
-.testimonial-course {
+.testimonials-section__course {
     font-size: 1rem;
     color: #b09621;
     font-style: italic;
 }
 
 
-
-/* Photo Carousel Container */
-.photo-carousel-container {
+/* ====================================================
+   PHOTO CAROUSEL SECTION
+   - Displays a photo carousel with unique navigation.
+==================================================== */
+.photo-carousel-section {
     padding: 5em 2em;
     position: relative;
     background: transparent;
 }
 
-/* Wrapper with Nav Buttons */
-.carousel-wrapper {
+.photo-carousel-section__wrapper {
     position: relative;
     max-width: 90%;
     margin: 0 auto;
@@ -634,8 +650,7 @@
     border-radius: 15px;
 }
 
-/* Centered Title */
-.carousel-title {
+.photo-carousel-section__title {
     position: absolute;
     top: 15px;
     left: 50%;
@@ -646,8 +661,9 @@
     z-index: 10;
 }
 
-/* Glassmorphic Nav Buttons */
-.carousel-nav {
+/* Nav Buttons */
+.photo-carousel-section__nav-left,
+.photo-carousel-section__nav-right {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -664,20 +680,20 @@
     z-index: 10;
 }
 
-.carousel-nav:hover {
+.photo-carousel-section__nav-left:hover,
+.photo-carousel-section__nav-right:hover {
     background: rgba(255, 255, 255, 0.25);
 }
 
-/* Button positioning */
-.carousel-nav.left {
+.photo-carousel-section__nav-left {
     left: -30px;
 }
-.carousel-nav.right {
+.photo-carousel-section__nav-right {
     right: -30px;
 }
 
 /* Carousel Track */
-.carousel {
+.photo-carousel-section__carousel {
     display: flex;
     gap: 20px;
     overflow-x: auto;
@@ -687,13 +703,11 @@
     -webkit-overflow-scrolling: touch;
 }
 
-/* Hide scrollbar */
-.carousel::-webkit-scrollbar {
+.photo-carousel-section__carousel::-webkit-scrollbar {
     display: none;
 }
 
-/* Individual Carousel Item */
-.carousel-item {
+.photo-carousel-section__item {
     flex: 0 0 auto;
     width: 300px;
     scroll-snap-align: start;
@@ -705,18 +719,15 @@
     transition: transform 0.3s;
 }
 
-.carousel-item:hover {
+.photo-carousel-section__item:hover {
     transform: scale(1.05);
 }
 
-/* Carousel Images */
-.carousel-item img {
+.photo-carousel-section__item img {
     width: 100%;
     height: auto;
     display: block;
 }
-
-
 
 
 /* ====================================================
@@ -726,49 +737,77 @@
 @media screen and (max-width: 768px) {
 
     /* Counter Section: Stack items vertically */
-    .counter-box {
+    .counter-section__box {
         flex-direction: column;
         align-items: center;
     }
 
-    .counter-item {
+    .counter-section__item {
         width: 90%;
         max-width: 300px;
     }
 
     /* Video Overlay: Smaller text on mobile */
-    .video-overlay h1 {
+    .video-banner__overlay h1 {
         font-size: 2rem;
     }
 
-    .video-overlay p {
+    .video-banner__overlay p {
         font-size: 1.2rem;
     }
 
     /* Chairman Section: Stack image and content vertically */
     .chairman-section {
+        flex-direction: column;
+        gap: 20px;
         padding: 30px 10px;
     }
 
-    .chairman-box {
+    /* Chairman Profile and Pride Section: Stack Vertically */
+    .chairman-section__profile,
+    .pride-section {
+        width: 100%;
         max-width: 100%;
-        padding: 25px;
     }
 
-    .chairman-box h2 {
+    /* Adjust Chairman Image for Mobile */
+    .chairman-section__image {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Adjust Pride Images for Mobile */
+    .pride-section__image {
+        width: 150px;
+        height: 150px;
+    }
+
+    /* Adjust Pride Slider Width */
+    .pride-section__slider {
+        width: 100%;
+    }
+
+    /* Adjust Text Size for Mobile */
+    .chairman-section__profile h2,
+    .pride-section h2 {
         font-size: 1.8rem;
     }
 
-    .chairman-name {
+    .chairman-section__name,
+    .pride-section__name {
         font-size: 1.3rem;
     }
 
-    .chairman-designation {
-        font-size: 0.9rem;
+    .chairman-section__designation,
+    .pride-section__course,
+    .pride-section__award {
+        font-size: 1rem;
     }
 
-    .chairman-message {
-        font-size: 0.95rem;
+    /* Reduce Box Shadow on Mobile */
+    .chairman-section__profile,
+    .pride-section {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     /* News Section: Stack news boxes vertically */
@@ -777,19 +816,19 @@
         padding: 30px 10px;
     }
 
-    .news-box {
+    .news-section__box {
         max-width: 100%;
     }
 
-    .news-box h2 {
+    .news-section__box h2 {
         font-size: 1.8rem;
     }
 
-    .news-item h3 {
+    .news-section__item h3 {
         font-size: 1.3rem;
     }
 
-    .news-item p {
+    .news-section__item p {
         font-size: 0.95rem;
     }
 
@@ -817,7 +856,6 @@
     .achievements-table {
         display: block;
         min-width: 600px;
-        /* Prevents columns from shrinking */
         white-space: nowrap;
     }
 
@@ -827,7 +865,6 @@
         font-size: 0.9rem;
     }
 
-    /* Sticky first column for better mobile table navigation */
     .achievements-table th:first-child,
     .achievements-table td:first-child {
         position: sticky;
@@ -839,48 +876,50 @@
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     }
 
-    /* Highlight sticky first column on row hover */
     .achievements-table tr:hover td:first-child {
         background-color: #CDEDA3;
         color: #4C662B;
     }
 
-    /* TESTIMONIALS SECTION */
-    .testimonials-slider {
+    /* Testimonials Section */
+    .testimonials-section__slider {
         gap: 10px;
     }
 
-    .testimonial-item {
+    .testimonials-section__item {
         width: 100%;
         max-width: 280px;
     }
 
-    .testimonial-nav {
+    .testimonials-section__nav-left,
+    .testimonials-section__nav-right {
         width: 5em;
         height: 2em;
         font-size: 1.2rem;
     }
-    .testimonial-nav.left{
+    
+    .testimonials-section__nav-left {
         left: -10px;
     }
-    .testimonial-nav.right{
+    
+    .testimonials-section__nav-right {
         right: -10px;
     }
 
-    .testimonial-text {
+    .testimonials-section__text {
         font-size: 0.9rem;
     }
 
-    .testimonial-name {
+    .testimonials-section__name {
         font-size: 1.1rem;
     }
 
     /* Photo Carousel Section */
-    .photo-carousel-container {
+    .photo-carousel-section {
         padding: 5em 1em;
     }
 
-    .carousel-wrapper {
+    .photo-carousel-section__wrapper {
         max-width: 100%;
     }
 }
