@@ -2,85 +2,128 @@
 <html lang="en">
 
 <head>
-    <title>Shri V.J. Modha College</title>
-
+    <!-- ===================================================
+         Metadata & Document Setup
+         =================================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Meta description for SEO -->
+    <meta name="description" content="Shri V.J. Modha College - Empowering students for a better future.">
 
-    <link rel="shortcut icon" type="image/x-icon" href="assets/navLogo.png">
+    <!-- Document Title -->
+    <title>Shri V.J. Modha College</title>
 
-    <!-- Import Roboto for Material Design Feel -->
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
+
+    <!-- ===================================================
+         Fonts & Stylesheets
+         =================================================== -->
+
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Import Roboto font for a Material Design look -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
 
+    <!-- Global styles -->
     <link href="style/global.css" rel="stylesheet">
+    <!-- Page-specific styles -->
     <link href="style/index.css" rel="stylesheet">
+
+    <!-- ===================================================
+         Scripts
+         =================================================== -->
+    <!-- Main JavaScript for page interactions -->
     <script src="scripts/index.js"></script>
 </head>
 
 <body>
+    <!-- ===================================================
+         Navigation Section
+         - Included via PHP to allow reusability across pages.
+         =================================================== -->
     <?php include("nav.html"); ?>
 
-    <!-- Banner Video ---------------------------------------------------------------------------------------- -->
+    <!-- ===================================================
+         Banner Video Section
+         - Fullscreen video banner with an overlay message.
+         =================================================== -->
     <section class="video-banner">
+        <!-- Background Video -->
         <video autoplay muted loop playsinline class="background-video">
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <!-- Overlay text displayed over the video -->
         <div class="video-overlay">
             <h1>Shri V.J. Modha College</h1>
             <p>Empowering students for a better future</p>
         </div>
     </section>
 
-
-    <!-- Counter ---------------------------------------------------------------------------------------- -->
+    <!-- ===================================================
+         Counter Section
+         - Displays dynamic counters for courses, enrolled students,
+         - pass percentage, and total students passed out.
+         =================================================== -->
     <section class="counter-container">
-        <div class="counter-item">
-            <div class="counter-courses" data-target="13">0</div>
-            <div class="counter-courses-label">Courses</div>
-        </div>
-
-        <div class="counter-item">
-            <div class="counter-enrolled" data-target="1200">0</div>
-            <div class="counter-enrolled-label">Students Enrolled Currently</div>
-        </div>
-
-        <div class="counter-item">
-            <div class="counter-pass-percentage" data-target="98">0</div>
-            <div class="counter-pass-percentage-label">Pass Percentage</div>
-        </div>
-
-        <div class="counter-item">
-            <div class="counter-passouts" data-target="10607">0</div>
-            <div class="counter-passouts-label">Total Students Passed Out</div>
+        <div class="counter-box">
+            <!-- Counter for Courses -->
+            <div class="counter-item">
+                <div class="counter-courses" data-target="13">0</div>
+                <div class="counter-courses-label">Courses</div>
+            </div>
+            <!-- Counter for Currently Enrolled Students -->
+            <div class="counter-item">
+                <div class="counter-enrolled" data-target="1200">0</div>
+                <div class="counter-enrolled-label">Students Enrolled</div>
+            </div>
+            <!-- Counter for Pass Percentage -->
+            <div class="counter-item">
+                <div class="counter-pass-percentage" data-target="98">0</div>
+                <div class="counter-pass-percentage-label">Pass Percentage</div>
+            </div>
+            <!-- Counter for Total Students Passed Out -->
+            <div class="counter-item">
+                <div class="counter-passouts" data-target="10607">0</div>
+                <div class="counter-passouts-label">Total Students Passed Out</div>
+            </div>
         </div>
     </section>
 
-
-    <!-- Chairman ---------------------------------------------------------------------------------------- -->
+    <!-- ===================================================
+         Chairman Section
+         - Displays the chairman's image along with his message.
+         =================================================== -->
     <section class="chairman-section">
-        <div class="chairman-container">
-            <!-- Image of the Chairman -->
-            <div class="chairman-image">
-                <img src="assets/photos/index/chairman.png" alt="Chairman">
-            </div>
+        <div class="chairman-box">
+            <!-- Chairman's Profile Picture -->
+            <img src="assets/photos/index/chairman.png" alt="Chairman Image" class="chairman-image" />
 
-            <!-- Message Content -->
-            <div class="chairman-content">
-                <h2>Chairman's Message</h2>
-                <p class="chairman-quote">
-                    "Knowledge is power & with this power, I can visualize that the future of our nation is presently building in the classrooms, Todays's students are the builders of our nation. For such building our college has recorded the stupendous period in the history of this institute we believe in the quality education time has wings & it constantly files but now the time has come to stop for a while and look back at the Morden system of education & him force the positive factors that are beneficial for the Students."
-                </p>
-                <h3>- Mr. Vallabhbhai Modha</h3>
-                <p class="chairman-title">Chairman, Shri V.J. Modha College</p>
-            </div>
+            <!-- Chairman's Name and Title -->
+            <h2>Chairman's Message</h2>
+            <h3 class="chairman-name">Mr. Vallabhbhai Modha</h3>
+            <p class="chairman-designation">Chairman, Shri V.J. Modha College, Porbandar</p>
+
+            <!-- Chairman's Message -->
+            <p class="chairman-message">
+                "Knowledge is power &amp; with this power, I can visualize that the future of our nation is presently building in the classrooms, Today's students are the builders of our nation. For such building, our college has recorded a stupendous period in the history of this institute. We believe in quality education; time has wings &amp; it constantly flies, but now the time has come to pause and reflect on the modern system of education and harness the positive factors beneficial for the students."
+            </p>
+
+            <!-- Read More Button -->
+            <!-- <a href="#" class="read-more-btn">Read Full Message</a> -->
         </div>
     </section>
 
-
-    <!-- Events and News ---------------------------------------------------------------------------------------- -->
+    <!-- ===================================================
+         Events and News Section
+         - Displays upcoming events and recent results in separate news boxes.
+         =================================================== -->
     <section class="news-section">
-        <!-- Events Section -->
+        <!-- Upcoming Events News Box -->
         <div class="news-box">
             <h2>Upcoming Events</h2>
             <div class="news-slider events-slider">
@@ -112,7 +155,7 @@
             </div>
         </div>
 
-        <!-- Results ---------------------------------------------------------------------------------------- -->
+        <!-- Recent Results News Box -->
         <div class="news-box">
             <h2>Recent Results</h2>
             <div class="news-slider results-slider">
@@ -145,14 +188,21 @@
         </div>
     </section>
 
+    <!-- ===================================================
+         Academic Pass Rates Table Section
+         - Displays a responsive table showing pass rates for various courses over the years.
+         =================================================== -->
     <section class="table-section">
+        <!-- Table Heading Container -->
         <div class="heading-container">
             <h2>Academic Pass Rates</h2>
+            <!-- Additional headings can be uncommented if needed -->
             <!-- <h2>Graduation Performance Data</h2> -->
             <!-- <h2>Historical Passout Rates</h2> -->
             <!-- <h2>Annual Passout Rate</h2> -->
             <!-- <h2>Graduation Success Rates</h2> -->
         </div>
+        <!-- Table Container with Horizontal Scroll -->
         <div class="table-container">
             <table class="achievements-table">
                 <tr>
@@ -167,6 +217,7 @@
                     <th>M.Com.</th>
                     <th>M.Sc.<br>(Chem)</th>
                 </tr>
+                <!-- Table rows: Some older rows are commented out -->
                 <!-- <tr>
                     <td><b>2007</b></td>
                     <td>95.23 %</td>
@@ -354,7 +405,7 @@
                     <td>96.00 %</td>
                     <td>97.17 %</td>
                     <td>100.00 %</td>
-                    <td>- </td>
+                    <td>-</td>
                     <td>100.00 %</td>
                     <td>98.33 %</td>
                     <td>96.61 %</td>
@@ -366,7 +417,7 @@
                     <td>97.57 %</td>
                     <td>98.00 %</td>
                     <td>100.00 %</td>
-                    <td>- </td>
+                    <td>-</td>
                     <td>100.00 %</td>
                     <td>98.00 %</td>
                     <td>97.00 %</td>
@@ -375,14 +426,114 @@
         </div>
     </section>
 
+    <!-- ===================================================
+        Testimonials Section
+        - Displays student testimonials with horizontal scroll.
+        =================================================== -->
+    <section class="testimonials-section">
+        <h2 class="section-title">Student Testimonials</h2>
+
+        <div class="testimonial-slider-container">
+            <!-- Left navigation button -->
+            <button class="testimonial-nav left">&lt;</button>
+
+            <div class="testimonials-slider">
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "The practical approach and supportive faculty have transformed my learning experience!"
+                    </p>
+                    <h3 class="testimonial-name">Aisha Kumar</h3>
+                    <span class="testimonial-course">B.Sc. IT</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "The vibrant campus life and quality education have set me on the path to success."
+                    </p>
+                    <h3 class="testimonial-name">Rahul Sharma</h3>
+                    <span class="testimonial-course">BBA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
+                    </p>
+                    <h3 class="testimonial-name">Sneha Patel</h3>
+                    <span class="testimonial-course">MCA</span>
+                </div>
+                <!-- Add more testimonial items as needed -->
+            </div>
+
+            <!-- Right navigation button -->
+            <button class="testimonial-nav right">&gt;</button>
+        </div>
+        </div>
+    </section>
+
+
+    <!-- ===================================================
+     Photo Carousel Section
+     =================================================== -->
+    <section class="photo-carousel-container">
+        <div class="carousel-wrapper">
+        <h2 class="carousel-title">Photos</h2>
+            <button class="carousel-nav left">&lt;</button>
+            <div class="carousel" id="carousel">
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/129.jpg" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/130.jpg" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/131.jpg" alt="Image 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/132.jpg" alt="Image 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="assets/photos/index/photo_carousel/133.jpg" alt="Image 5">
+                </div>
+            </div>
+            <button class="carousel-nav right">&gt;</button>
+        </div>
+    </section>
+    <script>
+
+    </script>
 
 
 
-    <div class="content">
-        <h1>Welcome to taSSashe Page</h1>
-        <p>This is some sample content behind the navbar. Scroll to see the overlay effect.</p>
-    </div>
-
+    <!-- ===================================================
+         Footer Section
+         - Included via PHP for consistency across pages.
+         =================================================== -->
     <?php include("footer.html"); ?>
 
 </body>

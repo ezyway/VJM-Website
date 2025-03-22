@@ -1,4 +1,4 @@
-.footer{
+.footer {
     width: 100%;
     background-color: black;
     color: white;
@@ -6,6 +6,7 @@
     padding: 15px;
     bottom: 0;
 }
+
 .footer-container {
     display: flex;
     justify-content: center;
@@ -13,45 +14,97 @@
     gap: 50px;
     flex-wrap: wrap;
 }
+
 .footer-column {
     max-width: 400px;
     width: fit-content;
-    text-align: left;
-    /* border: 1px solid white; */
-}
-.map{
     text-align: center;
 }
-.footer a{
+
+.footer a {
     text-decoration: none;
     color: white;
+    transition: 0.5s ease;
 }
-.footer h2{
+
+.footer a:hover {
+    color: #009cc7;
+}
+
+.footer h2 {
     margin: 20px;
 }
-.footer iframe{
+
+.footer iframe {
     border-radius: 20px;
     text-align: center;
 }
-.footer span {
-    font-size: 1em; /* Adjust text size */
-    line-height: 50px; /* Align with image */
+
+/* Footer column content */
+.footer-column span {
+    width: 100%;
+    font-size: 1em;
+    line-height: 50px;
 }
 
-.footer-column a{
+.footer-column a {
     display: flex;
     align-items: center;
     font-size: 1.3em;
 }
 
-.footer img{
+.footer-column .address {
+    line-height: 1.2;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+/* Footer images */
+.footer img {
     height: 30px;
     width: 30px;
     margin-right: 10px;
 }
 
-.footer-column a:last-child span {
-    line-height: 1.2; /* Reduce space between lines */
-    display: inline-block; /* Keep inline formatting */
-    margin-top:20px
+/* Footer credits */
+.footer-credits {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+    color: #f1f1f1;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+}
+
+/* Align text properly in credits */
+.footer-credits .copyright,
+.footer-credits .developed-by {
+    margin: 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Add hover effect to footer links */
+.footer-credits a {
+    color: #00c6ff;
+    font-weight: 600;
+}
+
+/* Mobile Styles */
+@media (min-width: 769px) {
+    .footer-credits .copyright {
+        text-align: left;
+    }
+    .footer-credits .developed-by {
+        text-align: right;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-credits {
+        flex-direction: column;
+    }
 }

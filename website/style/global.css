@@ -1,10 +1,37 @@
 /* Global Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Remove the '.' to apply background scroll */
+.body {
+  font-family: "Montserrat";
+  margin: 0;
+  padding: 0;
+  background-image: url('../assets/background.jpg');
+  background-repeat: repeat-y;
+  /* Repeat vertically */
+  background-size: 100% auto;
+  /* Width fits screen, height scales */
+  background-position: top left;
+  background-attachment: scroll;
+  /* Background scrolls with content */
+}
+
+
 body {
-    font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
+  font-family: "Montserrat";
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  /* Ensures the background covers the whole viewport */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* Keeps the background from scrolling */
 }
