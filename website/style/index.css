@@ -538,8 +538,8 @@
     background-color: rgba(111, 168, 35, 0.8); /* Primary color with opacity */
     border: none;
     color: #fff;
-    width: 40px;
-    height: 40px;
+    width: 2em;
+    height: 2em;
     border-radius: 10px;
     cursor: pointer;
     display: flex;
@@ -893,17 +893,17 @@
 
     .testimonials-section__nav-left,
     .testimonials-section__nav-right {
-        width: 5em;
+        width: 2em;
         height: 2em;
         font-size: 1.2rem;
     }
     
     .testimonials-section__nav-left {
-        left: -10px;
+        left: 5px;
     }
     
     .testimonials-section__nav-right {
-        right: -10px;
+        right: 5px;
     }
 
     .testimonials-section__text {
