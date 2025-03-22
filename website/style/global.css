@@ -4,7 +4,11 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 /* Remove the '.' to apply background scroll */
 .body {
   font-family: "Montserrat";
