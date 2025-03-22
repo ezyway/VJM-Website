@@ -914,12 +914,48 @@
         font-size: 1.1rem;
     }
 
-    /* Photo Carousel Section */
+    /* Make the carousel wrapper full-width with reduced horizontal padding */
     .photo-carousel-section {
-        padding: 5em 1em;
+        padding: 0;
+    }
+    .photo-carousel-section__wrapper {
+        position: relative; /* Ensure it's a positioning context */
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 4em 0 2em 0; /* Vertical padding only */
+        border-radius: 0;
     }
 
-    .photo-carousel-section__wrapper {
-        max-width: 100%;
+    /* Position title and nav buttons in the same row at the top */
+    .photo-carousel-section__title {
+        position: absolute;
+        top: 15px; /* Adjust as needed */
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        z-index: 10;
+    }
+
+    /* Position nav buttons flush with the left and right edges at the same top position as the title */
+    .photo-carousel-section__nav-left,
+    .photo-carousel-section__nav-right {
+        position: absolute;
+        top: 2em; /* Same as title */
+        z-index: 10;
+        margin: 0;
+    }
+
+    .photo-carousel-section__nav-left {
+        left: 1em;
+    }
+    .photo-carousel-section__nav-right {
+        right: 1em;
+    }
+
+    /* Adjust the carousel track for mobile */
+    .photo-carousel-section__carousel {
+        margin: 0 1em; 
+        gap: 10px;
     }
 }
