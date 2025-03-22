@@ -524,10 +524,6 @@
             <button class="carousel-nav right">&gt;</button>
         </div>
     </section>
-    <script>
-
-    </script>
-
 
 
     <!-- ===================================================
