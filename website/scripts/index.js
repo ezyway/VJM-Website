@@ -1,159 +1,164 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // --------------------------
+    // Animate Counters
+    // --------------------------
+    const counters = document.querySelectorAll('[data-target]');
 
-	// Select all elements that should animate (they have the data-target attribute)
-	const counters = document.querySelectorAll('[data-target]');
+    function animateCount(el, duration) {
+        const target = parseInt(el.getAttribute('data-target'));
+        let startTime = null;
 
-	// Function to animate count from 0 to the target value over a given duration
-	function animateCount(el, duration) {
-		const target = parseInt(el.getAttribute('data-target'));
-		let startTime = null;
+        function updateCount(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const currentCount = Math.min(Math.floor((progress / duration) * target), target);
+            el.textContent = currentCount;
+            if (progress < duration) {
+                requestAnimationFrame(updateCount);
+            }
+        }
+        requestAnimationFrame(updateCount);
+    }
 
-		function updateCount(timestamp) {
-			if (!startTime) startTime = timestamp;
-			const progress = timestamp - startTime;
-			const currentCount = Math.min(Math.floor((progress / duration) * target), target);
-			el.textContent = currentCount;
-			if (progress < duration) {
-				requestAnimationFrame(updateCount);
-			}
-		}
-		requestAnimationFrame(updateCount);
-	}
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCount(entry.target, 2000); // 2000 ms duration for the animation
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
 
-	// Use Intersection Observer to trigger the count-up when the element is in view
-	const observer = new IntersectionObserver((entries, observer) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				animateCount(entry.target, 2000); // 2000 ms duration for the animation
-				observer.unobserve(entry.target); // Stop observing once the animation starts
-			}
-		});
-	}, { threshold: 0.5 }); // Trigger when 50% of the element is visible
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
 
-	// Observe each counter element
-	counters.forEach(counter => {
-		observer.observe(counter);
-	});
+    // --------------------------
+    // Testimonials Slider Script
+    // --------------------------
+    const testimonialsSlider = document.querySelector('.testimonials-section__slider');
+    const testimonialBtnLeft = document.querySelector('.testimonials-section__nav-left');
+    const testimonialBtnRight = document.querySelector('.testimonials-section__nav-right');
 
-	// --------------------------
-	// Testimonial Slider Script
-	// --------------------------
+    if (testimonialsSlider && testimonialBtnLeft && testimonialBtnRight) {
+        // Calculate scroll amount dynamically
+        function getScrollAmount() {
+            return Math.min(testimonialsSlider.clientWidth * 0.75, 300); // 75% of container width or max 300px
+        }
 
-	// Select the testimonials slider and navigation buttons
-	const slider = document.querySelector('.testimonials-slider');
-	const btnLeft = document.querySelector('.testimonial-nav.left');
-	const btnRight = document.querySelector('.testimonial-nav.right');
+        // Center the active slide if one exists
+        function centerActiveSlide() {
+            const activeItem = testimonialsSlider.querySelector('.testimonials-section__item.active');
+            if (activeItem) {
+                const offsetLeft = activeItem.offsetLeft;
+                const itemWidth = activeItem.offsetWidth;
+                const centerPosition = offsetLeft - (testimonialsSlider.clientWidth / 2) + (itemWidth / 2);
+                testimonialsSlider.scrollTo({
+                    left: centerPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
 
-	// Check if slider and buttons exist
-	if (slider && btnLeft && btnRight) {
-		// Dynamically calculate scroll amount based on viewport width
-		function getScrollAmount() {
-			return Math.min(slider.clientWidth * 0.75, 300); // 80% of container width or max 300px
-		}
+        testimonialBtnLeft.addEventListener('click', () => {
+            testimonialsSlider.scrollBy({
+                left: -getScrollAmount(),
+                behavior: 'smooth'
+            });
+            setTimeout(centerActiveSlide, 300);
+            updateTestimonialNavButtons();
+        });
 
-		// Function to center the active slide
-		function centerActiveSlide() {
-			const activeItem = slider.querySelector('.testimonial-item.active');
-			if (activeItem) {
-				const offsetLeft = activeItem.offsetLeft;
-				const itemWidth = activeItem.offsetWidth;
-				const centerPosition = offsetLeft - (slider.clientWidth / 2) + (itemWidth / 2);
-				slider.scrollTo({
-					left: centerPosition,
-					behavior: 'smooth'
-				});
-			}
-		}
+        testimonialBtnRight.addEventListener('click', () => {
+            testimonialsSlider.scrollBy({
+                left: getScrollAmount(),
+                behavior: 'smooth'
+            });
+            setTimeout(centerActiveSlide, 300);
+            updateTestimonialNavButtons();
+        });
 
-		// Scroll left on clicking the left button
-		btnLeft.addEventListener('click', () => {
-			slider.scrollBy({
-				left: -getScrollAmount(),
-				behavior: 'smooth'
-			});
-			setTimeout(centerActiveSlide, 300); // Center after the scroll
-			updateNavButtons();
-		});
+        function updateTestimonialNavButtons() {
+            setTimeout(() => {
+                testimonialBtnLeft.disabled = testimonialsSlider.scrollLeft <= 0;
+                testimonialBtnRight.disabled = testimonialsSlider.scrollLeft + testimonialsSlider.clientWidth >= testimonialsSlider.scrollWidth;
+            }, 300);
+        }
 
-		// Scroll right on clicking the right button
-		btnRight.addEventListener('click', () => {
-			slider.scrollBy({
-				left: getScrollAmount(),
-				behavior: 'smooth'
-			});
-			setTimeout(centerActiveSlide, 300); // Center after the scroll
-			updateNavButtons();
-		});
+        updateTestimonialNavButtons();
+        testimonialsSlider.addEventListener('scroll', updateTestimonialNavButtons);
+        window.addEventListener('resize', updateTestimonialNavButtons);
+    }
 
-		// Disable buttons when at the start or end
-		function updateNavButtons() {
-			setTimeout(() => {
-				btnLeft.disabled = slider.scrollLeft <= 0;
-				btnRight.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth;
-			}, 300);
-		}
+    // --------------------------
+    // Carousel Button Controls
+    // --------------------------
+    const carousel = document.getElementById('carousel');
+    const carouselBtnLeft = document.querySelector('.photo-carousel-section__nav-left');
+    const carouselBtnRight = document.querySelector('.photo-carousel-section__nav-right');
 
-		// Initialize button states
-		updateNavButtons();
+    const carouselItems = carousel.querySelectorAll('.photo-carousel-section__item');
+    let itemWidth = carouselItems[0]?.offsetWidth || 300;
 
-		// Update button state on scroll
-		slider.addEventListener('scroll', updateNavButtons);
+    window.addEventListener('resize', () => {
+        itemWidth = carouselItems[0]?.offsetWidth || 300;
+    });
 
-		// Resize event to adjust scroll amount dynamically
-		window.addEventListener('resize', updateNavButtons);
-	}
+    carouselBtnLeft.addEventListener('click', () => {
+        carousel.scrollBy({
+            left: -itemWidth,
+            behavior: 'smooth'
+        });
+        updateCarouselNavButtons();
+    });
 
-	// --------------------------
-	// Carousel Button Controls
-	// --------------------------
+    carouselBtnRight.addEventListener('click', () => {
+        carousel.scrollBy({
+            left: itemWidth,
+            behavior: 'smooth'
+        });
+        updateCarouselNavButtons();
+    });
 
-	const carousel = document.getElementById('carousel');
-	const btnCarouselLeft = document.querySelector('.carousel-nav.left');
-	const btnCarouselRight = document.querySelector('.carousel-nav.right');
+    function updateCarouselNavButtons() {
+        setTimeout(() => {
+            carouselBtnLeft.disabled = carousel.scrollLeft <= 0;
+            carouselBtnRight.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
+        }, 200);
+    }
 
-	const carouselItems = carousel.querySelectorAll('.carousel-item'); // Assuming class name
-	let itemWidth = carouselItems[0]?.offsetWidth || 300; // Get the width of one item or fallback to 300px
+    updateCarouselNavButtons();
+    carousel.addEventListener('scroll', updateCarouselNavButtons);
+    window.addEventListener('resize', updateCarouselNavButtons);
 
-	// Dynamically update item width on resize
-	window.addEventListener('resize', () => {
-		itemWidth = carouselItems[0]?.offsetWidth || 300;
-	});
+    // --------------------------
+    // Pride Slider Script
+    // --------------------------
+    const prideSliderWrapper = document.querySelector(".pride-section__slider-wrapper");
+    const prideSlides = document.querySelectorAll(".pride-section__item");
+    const pridePrevBtn = document.querySelector(".pride-section__nav-prev");
+    const prideNextBtn = document.querySelector(".pride-section__nav-next");
 
-	// Scroll left when left button is clicked
-	btnCarouselLeft.addEventListener('click', () => {
-		carousel.scrollBy({
-			left: -itemWidth, // Scroll by exact width of one item
-			behavior: 'smooth',
-		});
-		updateCarouselNavButtons();
-	});
+    let prideCurrentIndex = 0;
 
-	// Scroll right when right button is clicked
-	btnCarouselRight.addEventListener('click', () => {
-		carousel.scrollBy({
-			left: itemWidth, // Scroll by exact width of one item
-			behavior: 'smooth',
-		});
-		updateCarouselNavButtons();
-	});
+    function showNextPrideSlide() {
+        prideCurrentIndex = (prideCurrentIndex + 1) % prideSlides.length;
+        updatePrideSlider();
+    }
 
-	// Disable buttons when at the start or end of scroll
-	function updateCarouselNavButtons() {
-		setTimeout(() => {
-			btnCarouselLeft.disabled = carousel.scrollLeft <= 0;
-			btnCarouselRight.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1; // Prevent overscroll
-		}, 200);
-	}
+    function showPrevPrideSlide() {
+        prideCurrentIndex = (prideCurrentIndex - 1 + prideSlides.length) % prideSlides.length;
+        updatePrideSlider();
+    }
 
-	// Initialize carousel button states
-	updateCarouselNavButtons();
+    function updatePrideSlider() {
+        const offset = -prideCurrentIndex * 100;
+        prideSliderWrapper.style.transform = `translateX(${offset}%)`;
+    }
 
-	// Update button state on scroll
-	carousel.addEventListener('scroll', updateCarouselNavButtons);
+    prideNextBtn.addEventListener("click", showNextPrideSlide);
+    pridePrevBtn.addEventListener("click", showPrevPrideSlide);
 
-	// Resize event to adjust scroll dynamically
-	window.addEventListener('resize', updateCarouselNavButtons);
-
-
-
+    // Auto slide every 5 seconds
+    setInterval(showNextPrideSlide, 5000);
 });
