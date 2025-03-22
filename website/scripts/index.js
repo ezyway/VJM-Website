@@ -40,93 +40,120 @@ document.addEventListener("DOMContentLoaded", () => {
 	// --------------------------
 
 	// Select the testimonials slider and navigation buttons
-const slider = document.querySelector('.testimonials-slider');
-const btnLeft = document.querySelector('.testimonial-nav.left');
-const btnRight = document.querySelector('.testimonial-nav.right');
+	const slider = document.querySelector('.testimonials-slider');
+	const btnLeft = document.querySelector('.testimonial-nav.left');
+	const btnRight = document.querySelector('.testimonial-nav.right');
 
-// Check if slider and buttons exist
-if (slider && btnLeft && btnRight) {
-    // Dynamically calculate scroll amount based on viewport width
-    function getScrollAmount() {	
-        return Math.min(slider.clientWidth * 0.75, 300); // 80% of container width or max 300px
-    }
-
-    // Function to center the active slide
-    function centerActiveSlide() {
-        const activeItem = slider.querySelector('.testimonial-item.active');
-        if (activeItem) {
-            const offsetLeft = activeItem.offsetLeft;
-            const itemWidth = activeItem.offsetWidth;
-            const centerPosition = offsetLeft - (slider.clientWidth / 2) + (itemWidth / 2);
-            slider.scrollTo({
-                left: centerPosition,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-    // Scroll left on clicking the left button
-    btnLeft.addEventListener('click', () => {
-        slider.scrollBy({
-            left: -getScrollAmount(),
-            behavior: 'smooth'
-        });
-        setTimeout(centerActiveSlide, 300); // Center after the scroll
-        updateNavButtons();
-    });
-
-    // Scroll right on clicking the right button
-    btnRight.addEventListener('click', () => {
-        slider.scrollBy({
-            left: getScrollAmount(),
-            behavior: 'smooth'
-        });
-        setTimeout(centerActiveSlide, 300); // Center after the scroll
-        updateNavButtons();
-    });
-
-    // Disable buttons when at the start or end
-    function updateNavButtons() {
-        setTimeout(() => {
-            btnLeft.disabled = slider.scrollLeft <= 0;
-            btnRight.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth;
-        }, 300);
-    }
-
-    // Initialize button states
-    updateNavButtons();
-
-    // Update button state on scroll
-    slider.addEventListener('scroll', updateNavButtons);
-
-    // Resize event to adjust scroll amount dynamically
-    window.addEventListener('resize', updateNavButtons);
-}
-
-
-
-	
-	const carousel = document.getElementById('carousel');
-	let scrollAmount = 0;
-	const scrollSpeed = 1; // Speed of auto-scroll
-	const scrollInterval = 30; // Interval in milliseconds
-
-	function autoScroll() {
-		scrollAmount += scrollSpeed;
-		if (scrollAmount >= carousel.scrollWidth - carousel.clientWidth) {
-			scrollAmount = 0;
+	// Check if slider and buttons exist
+	if (slider && btnLeft && btnRight) {
+		// Dynamically calculate scroll amount based on viewport width
+		function getScrollAmount() {
+			return Math.min(slider.clientWidth * 0.75, 300); // 80% of container width or max 300px
 		}
-		carousel.scrollLeft = scrollAmount;
+
+		// Function to center the active slide
+		function centerActiveSlide() {
+			const activeItem = slider.querySelector('.testimonial-item.active');
+			if (activeItem) {
+				const offsetLeft = activeItem.offsetLeft;
+				const itemWidth = activeItem.offsetWidth;
+				const centerPosition = offsetLeft - (slider.clientWidth / 2) + (itemWidth / 2);
+				slider.scrollTo({
+					left: centerPosition,
+					behavior: 'smooth'
+				});
+			}
+		}
+
+		// Scroll left on clicking the left button
+		btnLeft.addEventListener('click', () => {
+			slider.scrollBy({
+				left: -getScrollAmount(),
+				behavior: 'smooth'
+			});
+			setTimeout(centerActiveSlide, 300); // Center after the scroll
+			updateNavButtons();
+		});
+
+		// Scroll right on clicking the right button
+		btnRight.addEventListener('click', () => {
+			slider.scrollBy({
+				left: getScrollAmount(),
+				behavior: 'smooth'
+			});
+			setTimeout(centerActiveSlide, 300); // Center after the scroll
+			updateNavButtons();
+		});
+
+		// Disable buttons when at the start or end
+		function updateNavButtons() {
+			setTimeout(() => {
+				btnLeft.disabled = slider.scrollLeft <= 0;
+				btnRight.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth;
+			}, 300);
+		}
+
+		// Initialize button states
+		updateNavButtons();
+
+		// Update button state on scroll
+		slider.addEventListener('scroll', updateNavButtons);
+
+		// Resize event to adjust scroll amount dynamically
+		window.addEventListener('resize', updateNavButtons);
 	}
 
-	// Auto scroll every 30ms
-	let autoScrollInterval = setInterval(autoScroll, scrollInterval);
+	// --------------------------
+	// Carousel Button Controls
+	// --------------------------
 
-	// Pause auto-scroll on hover
-	carousel.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
-	carousel.addEventListener('mouseleave', () => {
-		autoScrollInterval = setInterval(autoScroll, scrollInterval);
+	const carousel = document.getElementById('carousel');
+	const btnCarouselLeft = document.querySelector('.carousel-nav.left');
+	const btnCarouselRight = document.querySelector('.carousel-nav.right');
+
+	const carouselItems = carousel.querySelectorAll('.carousel-item'); // Assuming class name
+	let itemWidth = carouselItems[0]?.offsetWidth || 300; // Get the width of one item or fallback to 300px
+
+	// Dynamically update item width on resize
+	window.addEventListener('resize', () => {
+		itemWidth = carouselItems[0]?.offsetWidth || 300;
 	});
 
-	
+	// Scroll left when left button is clicked
+	btnCarouselLeft.addEventListener('click', () => {
+		carousel.scrollBy({
+			left: -itemWidth, // Scroll by exact width of one item
+			behavior: 'smooth',
+		});
+		updateCarouselNavButtons();
+	});
+
+	// Scroll right when right button is clicked
+	btnCarouselRight.addEventListener('click', () => {
+		carousel.scrollBy({
+			left: itemWidth, // Scroll by exact width of one item
+			behavior: 'smooth',
+		});
+		updateCarouselNavButtons();
+	});
+
+	// Disable buttons when at the start or end of scroll
+	function updateCarouselNavButtons() {
+		setTimeout(() => {
+			btnCarouselLeft.disabled = carousel.scrollLeft <= 0;
+			btnCarouselRight.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1; // Prevent overscroll
+		}, 200);
+	}
+
+	// Initialize carousel button states
+	updateCarouselNavButtons();
+
+	// Update button state on scroll
+	carousel.addEventListener('scroll', updateCarouselNavButtons);
+
+	// Resize event to adjust scroll dynamically
+	window.addEventListener('resize', updateCarouselNavButtons);
+
+
+
 });
