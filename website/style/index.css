@@ -34,7 +34,7 @@
     /* onPrimary */
     background: rgb(0, 0, 0, 0.6);
     /* primary (#4C662B) with opacity */
-    padding: 3em 5em;
+    padding: 0.5em 3em;
     border-radius: 10px;
     z-index: 1;
     height: fit-content;
