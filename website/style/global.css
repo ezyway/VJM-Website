@@ -4,11 +4,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
 }
+
+
 /* Remove the '.' to apply background scroll */
 .body {
   font-family: "Montserrat";
@@ -33,9 +34,7 @@ body {
   height: 100vh;
   background-image: url('../assets/background.jpg');
   background-size: cover;
-  /* Ensures the background covers the whole viewport */
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  /* Keeps the background from scrolling */
 }
