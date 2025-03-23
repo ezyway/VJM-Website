@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+    
+    // --------------------------
+    // Click for Scroll Down Icon
+    // --------------------------
+
+    document.querySelector('.scroll-down').addEventListener('click', function () {
+        document.getElementById('counter-section').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    
     // --------------------------
     // Animate Counters
     // --------------------------

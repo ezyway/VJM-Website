@@ -57,11 +57,17 @@
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+
         <div class="video-banner__overlay">
             <h1>Shri V.J. Modha College</h1>
             <p>॥ विद्यार्थी लभते विद्यां ॥</p>
         </div>
         
+        <div class="scroll-down">
+            <span class="arrow"></span>
+            <span class="arrow"></span>
+        </div>
+
     </section>
 
     <!-- ===================================================
@@ -69,7 +75,7 @@
          - Displays dynamic counters for courses, enrolled students,
          - pass percentage, and total students passed out.
          =================================================== -->
-    <section class="counter-section">
+    <section class="counter-section" id="counter-section">
         <div class="counter-section__box">
             <div class="counter-section__item">
                 <div class="counter-section__courses" data-target="13">0</div>

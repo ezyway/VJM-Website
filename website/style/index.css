@@ -7,7 +7,8 @@
 .video-banner {
     position: relative;
     width: 100%;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
+    /* Full viewport height */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -19,16 +20,20 @@
     width: 100%;
     height: 100%;
     min-height: 100%;
-    z-index: -1; /* Places video behind overlay */
-    object-fit: cover; /* Ensures video covers container */
+    z-index: -1;
+    /* Places video behind overlay */
+    object-fit: cover;
+    /* Ensures video covers container */
 }
 
 /* Overlay container with text */
 .video-banner__overlay {
     position: relative;
     text-align: center;
-    color: #FFFFFF; /* onPrimary */
-    background: rgb(0, 0, 0, 0.6); /* primary (#4C662B) with opacity */
+    color: #FFFFFF;
+    /* onPrimary */
+    background: rgb(0, 0, 0, 0.6);
+    /* primary (#4C662B) with opacity */
     padding: 3em 5em;
     border-radius: 10px;
     z-index: 1;
@@ -50,6 +55,45 @@
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
+.scroll-down {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+/* Basic arrow styling */
+.scroll-down .arrow {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0) rotate(45deg);
+    }
+
+    40% {
+        transform: translateY(10px) rotate(45deg);
+    }
+
+    60% {
+        transform: translateY(5px) rotate(45deg);
+    }
+}
 
 
 /* ====================================================
@@ -58,7 +102,8 @@
 ==================================================== */
 /* Container for all counter items */
 .counter-section {
-    background: rgba(255, 255, 255, 0.1); /* Subtle white glass effect */
+    background: rgba(255, 255, 255, 0.1);
+    /* Subtle white glass effect */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     width: 100%;
@@ -70,7 +115,8 @@
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    background: rgba(88, 98, 73, 0.8); /* secondary (#586249) */
+    background: rgba(88, 98, 73, 0.8);
+    /* secondary (#586249) */
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -86,7 +132,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(201, 237, 163, 0.1); /* hint from primaryContainer (#CDEDA3) */
+    background: rgba(201, 237, 163, 0.1);
+    /* hint from primaryContainer (#CDEDA3) */
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 12px;
@@ -105,19 +152,21 @@
 }
 
 /* Big number styling */
-.counter-section__item > div:first-child {
+.counter-section__item>div:first-child {
     font-size: 3rem;
     font-weight: bold;
-    color: #ffffff; /* primary */
+    color: #ffffff;
+    /* primary */
     text-shadow: 0 4px 12px rgba(76, 102, 43, 0.5);
     margin-bottom: 10px;
 }
 
 /* Label styling */
-.counter-section__item > div:last-child {
+.counter-section__item>div:last-child {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #FFFFFF; /* onPrimary */
+    color: #FFFFFF;
+    /* onPrimary */
 }
 
 
@@ -132,8 +181,10 @@
     align-items: flex-start;
     gap: 30px;
     padding: 50px 20px;
-    flex-wrap: nowrap; /* Prevent wrapping on desktop */
+    flex-wrap: nowrap;
+    /* Prevent wrapping on desktop */
 }
+
 .chairman-section__profile,
 .pride-section {
     min-width: 350px;
@@ -150,10 +201,13 @@
     overflow: hidden;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
+
 .chairman-section__profile {
-    flex: 2; /* 2x the size of pride-section */
+    flex: 2;
+    /* 2x the size of pride-section */
     max-width: 700px;
 }
+
 .pride-section {
     flex: 1;
 }
@@ -255,7 +309,8 @@
 
 .pride-section__award {
     font-size: 1rem;
-    color: #FFD700; /* Gold for Award */
+    color: #FFD700;
+    /* Gold for Award */
     margin-top: 5px;
     font-style: italic;
 }
@@ -309,7 +364,8 @@
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.1); /* Transparent white for glass effect */
+    background: rgba(255, 255, 255, 0.1);
+    /* Transparent white for glass effect */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -490,15 +546,18 @@
 }
 
 .achievements-table tr:nth-child(even) {
-    background: #E1E4D5; /* surfaceVariant */
+    background: #E1E4D5;
+    /* surfaceVariant */
 }
 
 .achievements-table tr:nth-child(odd) {
-    background: #F9FAEF; /* surface */
+    background: #F9FAEF;
+    /* surface */
 }
 
 .achievements-table tr:hover {
-    background: #CDEDA3; /* primaryContainer */
+    background: #CDEDA3;
+    /* primaryContainer */
     transition: 0.3s ease-in-out;
 }
 
@@ -518,7 +577,8 @@
 }
 
 .table-container::-webkit-scrollbar-track {
-    background: #CDEDA3; /* primaryContainer */
+    background: #CDEDA3;
+    /* primaryContainer */
 }
 
 
@@ -528,15 +588,18 @@
 ==================================================== */
 /* Container for the slider and navigation buttons */
 .testimonials-section {
-    background: rgba(255, 255, 255, 0.1); /* Transparent white for glass effect */
+    background: rgba(255, 255, 255, 0.1);
+    /* Transparent white for glass effect */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 2em;
 }
-.testimonials-section__title{
+
+.testimonials-section__title {
     width: 100%;
     text-align: center;
 }
+
 .testimonials-section__container {
     position: relative;
 }
@@ -547,7 +610,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(111, 168, 35, 0.8); /* Primary color with opacity */
+    background-color: rgba(111, 168, 35, 0.8);
+    /* Primary color with opacity */
     border: none;
     color: #fff;
     width: 2em;
@@ -699,6 +763,7 @@
 .photo-carousel-section__nav-left {
     left: -30px;
 }
+
 .photo-carousel-section__nav-right {
     right: -30px;
 }
@@ -752,9 +817,11 @@
         padding: 1em;
         margin: 8em 1em auto 1em;
     }
+
     .video-banner__overlay h1 {
         font-size: 2rem;
     }
+
     .video-banner__overlay p {
         font-size: 1.2rem;
     }
@@ -764,6 +831,7 @@
         flex-direction: column;
         align-items: center;
     }
+
     .counter-section__item {
         width: 90%;
         max-width: 300px;
@@ -775,12 +843,14 @@
         gap: 20px;
         padding: 30px 10px;
     }
+
     /* Chairman Profile and Pride Section: Stack Vertically */
     .chairman-section__profile,
     .pride-section {
         width: 100%;
         max-width: 100%;
     }
+
     /* Adjust Chairman Image for Mobile */
     .chairman-section__image {
         width: 100px;
@@ -792,6 +862,7 @@
         width: 150px;
         height: 150px;
     }
+
     /* Adjust Pride Slider Width */
     .pride-section__slider {
         width: 100%;
@@ -802,15 +873,18 @@
     .pride-section h2 {
         font-size: 1.8rem;
     }
+
     .chairman-section__name,
     .pride-section__name {
         font-size: 1.3rem;
     }
+
     .chairman-section__designation,
     .pride-section__course,
     .pride-section__award {
         font-size: 1rem;
     }
+
     /* Reduce Box Shadow on Mobile */
     .chairman-section__profile,
     .pride-section {
@@ -822,18 +896,23 @@
         flex-direction: column;
         padding: 30px 10px;
     }
+
     .news-section__box {
         max-width: 100%;
     }
+
     .news-section__box h2 {
         font-size: 1.8rem;
     }
+
     .news-section__item h3 {
         font-size: 1.3rem;
     }
+
     .news-section__item p {
         font-size: 0.95rem;
     }
+
     .view-more-btn {
         padding: 10px 20px;
         font-size: 0.9rem;
@@ -844,24 +923,29 @@
         padding: 10px;
         width: 95%;
     }
+
     .table-container {
         overflow-x: auto;
         max-width: 100%;
         border-radius: 10px;
     }
+
     .heading-container h2 {
         font-size: 1.5rem;
     }
+
     .achievements-table {
         display: block;
         min-width: 600px;
         white-space: nowrap;
     }
+
     .achievements-table th,
     .achievements-table td {
         padding: 10px;
         font-size: 0.9rem;
     }
+
     .achievements-table th:first-child,
     .achievements-table td:first-child {
         position: sticky;
@@ -872,6 +956,7 @@
         font-weight: bold;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     }
+
     .achievements-table tr:hover td:first-child {
         background-color: #CDEDA3;
         color: #4C662B;
@@ -881,25 +966,31 @@
     .testimonials-section__slider {
         gap: 10px;
     }
+
     .testimonials-section__item {
         width: 100%;
         max-width: 280px;
     }
+
     .testimonials-section__nav-left,
     .testimonials-section__nav-right {
         width: 2em;
         height: 2em;
         font-size: 1.2rem;
     }
+
     .testimonials-section__nav-left {
         left: -1.5em;
     }
+
     .testimonials-section__nav-right {
         right: -1.5em;
     }
+
     .testimonials-section__text {
         font-size: 0.9rem;
     }
+
     .testimonials-section__name {
         font-size: 1.1rem;
     }
@@ -908,40 +999,50 @@
     .photo-carousel-section {
         padding: 0;
     }
+
     .photo-carousel-section__wrapper {
-        position: relative; /* Ensure it's a positioning context */
+        position: relative;
+        /* Ensure it's a positioning context */
         max-width: 100%;
         width: 100%;
         margin: 0;
-        padding: 4em 0 2em 0; /* Vertical padding only */
+        padding: 4em 0 2em 0;
+        /* Vertical padding only */
         border-radius: 0;
     }
+
     /* Position title and nav buttons in the same row at the top */
     .photo-carousel-section__title {
         position: absolute;
-        top: 15px; /* Adjust as needed */
+        top: 15px;
+        /* Adjust as needed */
         left: 50%;
         transform: translateX(-50%);
         font-size: 2rem;
         z-index: 10;
     }
+
     /* Position nav buttons flush with the left and right edges at the same top position as the title */
     .photo-carousel-section__nav-left,
     .photo-carousel-section__nav-right {
         position: absolute;
-        top: 2em; /* Same as title */
+        top: 2em;
+        /* Same as title */
         z-index: 10;
         margin: 0;
     }
+
     .photo-carousel-section__nav-left {
         left: 1em;
     }
+
     .photo-carousel-section__nav-right {
         right: 1em;
     }
+
     /* Adjust the carousel track for mobile */
     .photo-carousel-section__carousel {
-        margin: 0 1em; 
+        margin: 0 1em;
         gap: 10px;
     }
 }
