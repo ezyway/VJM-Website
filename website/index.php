@@ -59,8 +59,9 @@
         </video>
         <div class="video-banner__overlay">
             <h1>Shri V.J. Modha College</h1>
-            <p>Empowering students for a better future</p>
+            <p>॥ विद्यार्थी लभते विद्यां ॥</p>
         </div>
+        
     </section>
 
     <!-- ===================================================
