@@ -335,7 +335,7 @@ textarea:focus {
 
 	/* Indent dropdown items on mobile */
 	.nav-links li .dropdown-menu li {
-		margin-left: 20px;
+		margin-left: auto;
 	}
 
 	/* Display hamburger menu icon */
