@@ -61,7 +61,7 @@
     left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
-    z-index: 1000;
+    z-index: 1;
 }
 
 /* Basic arrow styling */
