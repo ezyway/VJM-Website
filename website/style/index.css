@@ -11,7 +11,6 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 /* Background video styling */
@@ -33,6 +32,8 @@
     padding: 3em 5em;
     border-radius: 10px;
     z-index: 1;
+    height: fit-content;
+    margin-top: 8em;
 }
 
 /* Overlay title styling */
@@ -48,6 +49,7 @@
     margin-top: 10px;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
+
 
 
 /* ====================================================
@@ -745,24 +747,26 @@
 ==================================================== */
 @media screen and (max-width: 768px) {
 
+    /* Video Overlay: Smaller text on mobile */
+    .video-banner__overlay {
+        padding: 1em;
+        margin: 8em 1em auto 1em;
+    }
+    .video-banner__overlay h1 {
+        font-size: 2rem;
+    }
+    .video-banner__overlay p {
+        font-size: 1.2rem;
+    }
+
     /* Counter Section: Stack items vertically */
     .counter-section__box {
         flex-direction: column;
         align-items: center;
     }
-
     .counter-section__item {
         width: 90%;
         max-width: 300px;
-    }
-
-    /* Video Overlay: Smaller text on mobile */
-    .video-banner__overlay h1 {
-        font-size: 2rem;
-    }
-
-    .video-banner__overlay p {
-        font-size: 1.2rem;
     }
 
     /* Chairman Section: Stack image and content vertically */
@@ -771,14 +775,12 @@
         gap: 20px;
         padding: 30px 10px;
     }
-
     /* Chairman Profile and Pride Section: Stack Vertically */
     .chairman-section__profile,
     .pride-section {
         width: 100%;
         max-width: 100%;
     }
-
     /* Adjust Chairman Image for Mobile */
     .chairman-section__image {
         width: 100px;
@@ -790,7 +792,6 @@
         width: 150px;
         height: 150px;
     }
-
     /* Adjust Pride Slider Width */
     .pride-section__slider {
         width: 100%;
@@ -801,18 +802,15 @@
     .pride-section h2 {
         font-size: 1.8rem;
     }
-
     .chairman-section__name,
     .pride-section__name {
         font-size: 1.3rem;
     }
-
     .chairman-section__designation,
     .pride-section__course,
     .pride-section__award {
         font-size: 1rem;
     }
-
     /* Reduce Box Shadow on Mobile */
     .chairman-section__profile,
     .pride-section {
@@ -824,23 +822,18 @@
         flex-direction: column;
         padding: 30px 10px;
     }
-
     .news-section__box {
         max-width: 100%;
     }
-
     .news-section__box h2 {
         font-size: 1.8rem;
     }
-
     .news-section__item h3 {
         font-size: 1.3rem;
     }
-
     .news-section__item p {
         font-size: 0.95rem;
     }
-
     .view-more-btn {
         padding: 10px 20px;
         font-size: 0.9rem;
@@ -851,29 +844,24 @@
         padding: 10px;
         width: 95%;
     }
-
     .table-container {
         overflow-x: auto;
         max-width: 100%;
         border-radius: 10px;
     }
-
     .heading-container h2 {
         font-size: 1.5rem;
     }
-
     .achievements-table {
         display: block;
         min-width: 600px;
         white-space: nowrap;
     }
-
     .achievements-table th,
     .achievements-table td {
         padding: 10px;
         font-size: 0.9rem;
     }
-
     .achievements-table th:first-child,
     .achievements-table td:first-child {
         position: sticky;
@@ -884,7 +872,6 @@
         font-weight: bold;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     }
-
     .achievements-table tr:hover td:first-child {
         background-color: #CDEDA3;
         color: #4C662B;
@@ -894,31 +881,25 @@
     .testimonials-section__slider {
         gap: 10px;
     }
-
     .testimonials-section__item {
         width: 100%;
         max-width: 280px;
     }
-
     .testimonials-section__nav-left,
     .testimonials-section__nav-right {
         width: 2em;
         height: 2em;
         font-size: 1.2rem;
     }
-
     .testimonials-section__nav-left {
         left: -1.5em;
     }
     .testimonials-section__nav-right {
         right: -1.5em;
     }
-    
-
     .testimonials-section__text {
         font-size: 0.9rem;
     }
-
     .testimonials-section__name {
         font-size: 1.1rem;
     }
@@ -935,7 +916,6 @@
         padding: 4em 0 2em 0; /* Vertical padding only */
         border-radius: 0;
     }
-
     /* Position title and nav buttons in the same row at the top */
     .photo-carousel-section__title {
         position: absolute;
@@ -945,7 +925,6 @@
         font-size: 2rem;
         z-index: 10;
     }
-
     /* Position nav buttons flush with the left and right edges at the same top position as the title */
     .photo-carousel-section__nav-left,
     .photo-carousel-section__nav-right {
@@ -954,14 +933,12 @@
         z-index: 10;
         margin: 0;
     }
-
     .photo-carousel-section__nav-left {
         left: 1em;
     }
     .photo-carousel-section__nav-right {
         right: 1em;
     }
-
     /* Adjust the carousel track for mobile */
     .photo-carousel-section__carousel {
         margin: 0 1em; 
