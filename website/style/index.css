@@ -371,8 +371,7 @@
     cursor: pointer;
     transition: background 0.3s;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 4%;
 }
 
 
