@@ -52,7 +52,7 @@
          - Fullscreen video banner with an overlay message.
          =================================================== -->
 
-    <section class="video-banner">
+    <section class="video-banner" id="video-banner">
         <video autoplay muted loop playsinline class="video-banner__background">
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -62,7 +62,7 @@
             <h1>Shri V.J. Modha College</h1>
             <p>॥ विद्यार्थी लभते विद्यां ॥</p>
         </div>
-        
+
         <div class="scroll-down">
             <span class="arrow"></span>
             <span class="arrow"></span>
@@ -547,6 +547,42 @@
             <button class="photo-carousel-section__nav-right">&gt;</button>
         </div>
     </section>
+
+    <!-- Back to Top Button with a modern arrow icon -->
+    <button id="backToTop" aria-label="Back to top">
+        <!-- Inline SVG arrow icon -->
+        <svg viewBox="0 0 24 24">
+            <path d="M12 4l-8 8h6v8h4v-8h6z"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Get the button and the first section
+        const backToTopButton = document.getElementById("backToTop");
+        const section1 = document.getElementById("video-banner");
+
+        // Function to check if section1 is out of view
+        function toggleBackToTop() {
+            const rect = section1.getBoundingClientRect();
+            // Check if the bottom of section1 is above the viewport
+            if (rect.bottom <= 0) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        // Listen for scroll events
+        window.addEventListener("scroll", toggleBackToTop);
+
+        // Smooth scroll to top when button is clicked
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
 
     <!-- ===================================================
          Footer Section

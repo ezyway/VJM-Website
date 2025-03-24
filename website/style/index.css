@@ -75,6 +75,44 @@
     animation: bounce 2s infinite;
 }
 
+
+/* Style for the Back to Top button */
+#backToTop {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    background: rgba(31, 28, 44, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#backToTop:hover {
+    background-color: #555;
+}
+
+#backToTop svg {
+    fill: #fff;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    top: 25%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+
+
 /* Bounce animation */
 @keyframes bounce {
 
