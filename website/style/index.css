@@ -31,7 +31,7 @@
     position: relative;
     text-align: center;
     color: #FFFFFF;
-    background: rgba(31, 28, 44, 0.1);
+    background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     padding: 0.5em 3em;
