@@ -31,9 +31,9 @@
     position: relative;
     text-align: center;
     color: #FFFFFF;
-    /* onPrimary */
-    background: rgb(0, 0, 0, 0.6);
-    /* primary (#4C662B) with opacity */
+    background: rgba(31, 28, 44, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     padding: 0.5em 3em;
     border-radius: 10px;
     z-index: 1;
@@ -90,12 +90,10 @@
     border-radius: 10px;
     cursor: pointer;
     z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s;
     background: rgba(31, 28, 44, 0.95);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s;
 }
 
 #backToTop:hover {
