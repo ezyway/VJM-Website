@@ -1,16 +1,17 @@
+/* =======================================================
+   :root Variables
+========================================================== */
 :root {
 	--primary-green-light: 39, 165, 136;
 	--primary-green: 21, 92, 79;
-	--primary-green-dark: 15,65, 56;
+	--primary-green-dark: 15, 65, 56;
 	--primary-yellow: 255, 237, 0;
 }
-  
 
 
-/* ============================================
-   Modern Glassmorphism Navbar Styles
-   ============================================ */
-
+/* =======================================================
+   Focus Styles
+========================================================== */
 a:focus,
 button:focus,
 input:focus,
@@ -18,6 +19,11 @@ textarea:focus {
 	outline: none !important;
 	box-shadow: none !important;
 }
+
+
+/* =======================================================
+   Navbar Styles
+========================================================== */
 
 /* --------- Navbar Container --------- */
 .navbar {
@@ -29,12 +35,11 @@ textarea:focus {
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 	border-radius: 12px;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 	z-index: 1000;
 	transition: all 0.3s ease;
 }
 
-/* Inner container to align navbar contents */
 .navbar-container {
 	display: flex;
 	align-items: center;
@@ -52,7 +57,7 @@ textarea:focus {
 
 .logo img {
 	width: 100%;
-    background: rgba(255, 255, 255, 0.8);
+	background: rgba(255, 255, 255, 0.5);
 	border-radius: 50%;
 	display: block;
 }
@@ -66,22 +71,21 @@ textarea:focus {
 	display: none;
 }
 
-/* --------- Navigation Links --------- */
+
+/* =======================================================
+   Navigation Links
+========================================================== */
+
 .nav-links {
 	list-style: none;
 	display: flex;
 	gap: 15px;
-	padding-right: 3em;
+	padding-right: 1em;
 }
 
-.nav-links li {
-	position: relative;
-}
-
-/* Main navigation link style with glass effect */
 .nav-links li a {
 	display: block;
-	padding: 12px 20px;
+	padding: 10px 20px;
 	color: #f1f1f1;
 	text-decoration: none;
 	transition: all 0.4s ease;
@@ -90,9 +94,6 @@ textarea:focus {
 	background: rgba(39, 165, 136, 0.5);
 }
 
-
-
-/* Hover effect for main navigation links */
 .nav-links li a:hover {
 	font-weight: 500;
 	background: rgba(255, 255, 255, 0.1);
@@ -101,23 +102,17 @@ textarea:focus {
 /* --------- Dropdown Menu --------- */
 .dropdown-menu {
 	position: absolute;
-	top: 100;
-	/* Place directly below parent link */
-	left: 100;
-	background: rgb(0 0 0 / 90%);
+	background: rgb(var(--primary-green-dark), 1);
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
-	border-radius: 8px;
-	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
 	list-style: none;
 	padding: 5px 0;
 	display: none;
 	z-index: 1000;
 }
 
-/* Dropdown menu items */
 .dropdown-menu li {
-	width: 170px;
 	padding: 2px 5px;
 }
 
@@ -128,21 +123,23 @@ textarea:focus {
 	transition: all 0.3s ease;
 }
 
-/* Hover effect for dropdown items */
 .dropdown-menu li a:hover {
 	color: #ae992c;
 	background: rgba(255, 255, 255, 0.1);
-	border-radius: 8px;
+	border-radius: 10px;
 }
 
-/* Show dropdown when hovering over parent or nested dropdown */
-.nav-links li:hover>.dropdown-menu,
+/* Show dropdown on hover */
+.nav-links li:hover > .dropdown-menu,
 .nav-links .dropdown:hover .dropdown-menu {
 	display: block;
 	animation: fadeIn 0.3s ease-in-out;
 }
 
-/* --------- Hamburger Menu --------- */
+
+/* =======================================================
+   Hamburger Menu
+========================================================== */
 .hamburger {
 	display: none;
 	flex-direction: column;
@@ -158,7 +155,6 @@ textarea:focus {
 	border-radius: 5px;
 }
 
-/* Hamburger menu animation for active state */
 .hamburger.active .bar:nth-child(1) {
 	transform: rotate(45deg) translate(5px, 9px);
 }
@@ -172,112 +168,119 @@ textarea:focus {
 }
 
 
-
-/* College Logo */
+/* =======================================================
+   College Logo
+========================================================== */
 .college-logo {
-    width: 120px;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
+	width: 120px;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
 }
 
 .college-logo:hover {
-    transform: scale(1.1);
+	transform: scale(1.1);
 }
+
+
+/* =======================================================
+   Modal Styles
+========================================================== */
 
 /* Modal Overlay */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto; /* Allow scroll for modal content overflow */
-    opacity: 0;
-    visibility: hidden;
-    margin-top: 0; /* Remove margin to keep modal centered */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    z-index: 1000;
-    padding: 20px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow-y: auto;
+	opacity: 0;
+	visibility: hidden;
+	margin-top: 0;
+	transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+	z-index: 1000;
+	padding: 20px;
 }
 
-/* Modal Content (Glassmorphism) - Updated */
+/* Modal Content */
 .modal-content {
-    background: rgba(0, 0, 0, 0.6); /* Darker glassmorphic background */
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px; /* Limit maximum width */
-    max-height: 80vh; /* Prevent modal from exceeding 80% of the viewport height */
-    text-align: center;
-    position: relative;
-    overflow-y: auto; /* Enable scroll if content exceeds height */
-    transform: scale(0.8);
-    transition: transform 0.3s ease-in-out;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    color: white;
-    height: auto;
+	background: rgba(var(--primary-green-dark), 0.6);
+	backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 12px;
+	width: 90%;
+	max-width: 500px;
+	max-height: 80vh;
+	text-align: center;
+	position: relative;
+	overflow-y: auto;
+	transition: transform 0.3s ease-in-out;
+	color: white;
 }
-/* Modal Logo - Add Background */
+
+/* Modal Logo */
 .modal-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 50%;
-    width: 20em;
-    margin: 2em auto 1em auto;
-    /* padding: 2em; */
-    background: rgba(0, 0, 0, 0.5);
-    background: rgba(255, 255, 255, 0.8);
+	max-width: 100%;
+	height: auto;
+	border-radius: 50%;
+	width: 20em;
+	margin: 2em auto 1em auto;
+	background: rgba(0, 0, 0, 0.5);
 	overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-.modal-content p{
+
+.modal-content p {
 	margin: 1em 2em 2em 2em;
 }
 
 /* Close Button */
 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: white;
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 20px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: white;
 }
 
-/* Modal Active State */
+/* Active Modal State */
 .modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
+	opacity: 1;
+	visibility: visible;
 }
 
 .modal-overlay.active .modal-content {
-    transform: scale(1);
+	transform: scale(1);
 }
 
 
-/* --------- Animation --------- */
+/* =======================================================
+   Animations
+========================================================== */
 @keyframes fadeIn {
 	from {
 		opacity: 0;
 		transform: translateY(10px);
 	}
-
 	to {
 		opacity: 1;
 		transform: translateY(0);
 	}
 }
 
-/* --------- Mobile Styles --------- */
+
+/* =======================================================
+   Mobile Styles
+========================================================== */
 @media (max-width: 768px) {
 
-	/* Convert nav-links into a sliding sidebar */
+	/* Mobile Navigation Sidebar */
 	.nav-links {
 		position: fixed;
 		top: 0;
@@ -295,47 +298,41 @@ textarea:focus {
 		padding: 20px 0;
 		gap: 0px;
 	}
-
-	/* When nav is active, slide it into view */
 	.nav-links.active {
 		left: 0;
 	}
-
-	/* Mobile nav link styling */
 	.nav-links li {
 		margin: 5px 30px;
 		text-align: center;
 	}
-
 	.nav-links li .dropdown-menu li {
-		margin:auto;
+		margin: auto;
 	}
 
-	/* Display hamburger menu icon */
+	/* Display Hamburger Menu Icon */
 	.hamburger {
 		display: flex;
 		margin-right: 1.5em;
 	}
 
-	/* Show mobile logo on small screens */
+	/* Mobile Logo */
 	.mobile-logo {
 		display: flex;
 		justify-content: center;
 		margin: 20px auto;
 		border-radius: 50%;
 	}
-
 	.mobile-logo img {
 		width: 120px;
 		transition: transform 0.3s ease;
 	}
-
 	.mobile-logo:hover img {
 		transform: scale(1.1);
 	}
+
 	.modal-content {
-        width: 90%;
-        max-height: 70vh;
-        padding: 15px;
-    }
+		width: 90%;
+		max-height: 70vh;
+		padding: 15px;
+	}
 }
