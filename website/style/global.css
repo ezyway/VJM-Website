@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+/* =======================================================
+   :root Variables
+========================================================== */
+:root {
+	--primary-green-light: 39, 165, 136;
+	--primary-green: 21, 92, 79;
+	--primary-green-dark: 15, 65, 56;
+	--primary-yellow: 255, 237, 0;
+}
+
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar {
