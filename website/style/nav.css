@@ -1,3 +1,12 @@
+:root {
+	--primary-green-light: 39, 165, 136;
+	--primary-green: 21, 92, 79;
+	--primary-green-dark: 15,65, 56;
+	--primary-yellow: 255, 237, 0;
+}
+  
+
+
 /* ============================================
    Modern Glassmorphism Navbar Styles
    ============================================ */
@@ -16,12 +25,9 @@ textarea:focus {
 	top: 10px;
 	left: 10px;
 	right: 10px;
-	/* background: rgba(31, 28, 44, 0.8); */
-	background: rgba(0, 0, 0, 0.8);
-	/* Subtle dark transparency */
+	background: rgba(var(--primary-green), 0.8);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
-	border: 1px solid rgba(255, 255, 255, 0.05);
 	border-radius: 12px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 	z-index: 1000;
@@ -48,6 +54,7 @@ textarea:focus {
 	width: 100%;
     background: rgba(255, 255, 255, 0.8);
 	border-radius: 50%;
+	display: block;
 }
 
 .logo:hover {
@@ -76,35 +83,19 @@ textarea:focus {
 	display: block;
 	padding: 12px 20px;
 	color: #f1f1f1;
-	font-weight: 500;
 	text-decoration: none;
-	background: rgba(255, 255, 255, 0.05);
-	/* Subtle glass effect */
-	/* backdrop-filter: blur(3px); */
-	/* -webkit-backdrop-filter: blur(3px); */
-	/* border: 1px solid rgba(255, 255, 255, 0.1); */
-	border: 1px solid rgb(255 255 255 / 4%);
-	border-radius: 8px;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 	transition: all 0.4s ease;
 	cursor: pointer;
+	border-radius: 10px;
+	background: rgba(39, 165, 136, 0.5);
 }
 
-/* Arrow icon inside links */
-.nav-links li a .arrow {
-	font-size: 12px;
-	margin-left: 5px;
-}
+
 
 /* Hover effect for main navigation links */
 .nav-links li a:hover {
-	/* color: #00c6ff; */
-	color: #ae992c;
 	font-weight: 500;
 	background: rgba(255, 255, 255, 0.1);
-	/* box-shadow: 0 0 15px rgba(0, 198, 255, 0.2); */
-	box-shadow: 0 0 15px rgb(190 157 86 / 20%);
-	transform: translateY(-2px);
 }
 
 /* --------- Dropdown Menu --------- */
@@ -291,15 +282,12 @@ textarea:focus {
 		position: fixed;
 		top: 0;
 		left: -100%;
-		/* Hidden off-screen by default */
-		height: 85vh;
+		height: 90vh;
 		width: 70%;
 		flex-direction: column;
-		background: rgba(31, 28, 44, 0.95);
+		background: rgba(var(--primary-green-dark), 0.95);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
-		border-right: 1px solid rgba(255, 255, 255, 0.05);
-		box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
 		overflow-y: auto;
 		transition: left 0.3s ease;
 		z-index: 999;
@@ -315,27 +303,12 @@ textarea:focus {
 
 	/* Mobile nav link styling */
 	.nav-links li {
-		margin: 10px 30px;
-		text-align: left;
+		margin: 5px 30px;
+		text-align: center;
 	}
 
-	.nav-links li a {
-		width: 100%;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-	}
-
-	/* Adjust dropdown menu for mobile */
-	.dropdown-menu {
-		position: relative;
-		top: auto;
-		left: auto;
-		margin-top: 5px;
-		box-shadow: none;
-	}
-
-	/* Indent dropdown items on mobile */
 	.nav-links li .dropdown-menu li {
-		margin-left: auto;
+		margin:auto;
 	}
 
 	/* Display hamburger menu icon */
@@ -344,16 +317,12 @@ textarea:focus {
 		margin-right: 1.5em;
 	}
 
-	/* Prevent body scroll when nav sidebar is open */
-	body.nav-open {
-		overflow: hidden;
-	}
-
 	/* Show mobile logo on small screens */
 	.mobile-logo {
 		display: flex;
 		justify-content: center;
 		margin: 20px auto;
+		border-radius: 50%;
 	}
 
 	.mobile-logo img {
@@ -369,11 +338,4 @@ textarea:focus {
         max-height: 70vh;
         padding: 15px;
     }
-}
-
-/* --------- Content Padding --------- */
-/* Prevent main content from being overlapped by the fixed navbar */
-.content {
-	margin-top: 150px;
-	padding: 20px;
 }
