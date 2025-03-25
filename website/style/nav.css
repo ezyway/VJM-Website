@@ -27,6 +27,7 @@ textarea:focus {
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 	z-index: 1000;
 	transition: all 0.3s ease;
+	font-weight: bold;
 }
 
 .navbar-container {
