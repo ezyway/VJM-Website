@@ -786,16 +786,16 @@ This block is here for auto complete */
 
     /* Video Overlay: Smaller text on mobile */
     .video-banner__overlay {
-        padding: 1em;
+        padding: 0.5em;
         margin: 8em 1em auto 1em;
     }
 
     .video-banner__overlay h1 {
-        font-size: 2rem;
+        font-size: 1.5em;
     }
 
     .video-banner__overlay p {
-        font-size: 1.2rem;
+        font-size: 1.2em;
     }
 
     /* Counter Section: Stack items vertically */
@@ -806,7 +806,8 @@ This block is here for auto complete */
 
     .counter-section__item {
         width: 90%;
-        max-width: 300px;
+        margin: 0.5em;
+        padding: 0.5em;
     }
 
     /* Chairman Section: Stack image and content vertically */
