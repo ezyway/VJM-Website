@@ -47,6 +47,7 @@
          =================================================== -->
     <?php include("nav.html"); ?>
 
+
     <!-- ===================================================
          Banner Video Section
          - Fullscreen video banner with an overlay message.
@@ -68,6 +69,7 @@
         </div>
 
     </section>
+
 
     <!-- ===================================================
          Counter Section
@@ -94,6 +96,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- ===================================================
          Chairman Section
@@ -454,6 +457,7 @@
         </div>
     </section>
 
+
     <!-- ===================================================
         Testimonials Section
         - Displays student testimonials with horizontal scroll.
@@ -546,6 +550,7 @@
         </div>
     </section>
 
+    
     <!-- Back to Top Button with a modern arrow icon -->
     <button id="backToTop" aria-label="Back to top">
         <!-- Inline SVG arrow icon -->
