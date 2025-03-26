@@ -464,9 +464,12 @@
         =================================================== -->
     <section class="testimonials-section">
         <h2 class="testimonials-section__title">Student Testimonials</h2>
+
         <div class="testimonials-section__container">
             <button class="testimonials-section__nav-left">&lt;</button>
+            
             <div class="testimonials-section__slider">
+                
                 <div class="testimonials-section__item">
                     <p class="testimonials-section__text">
                         "The practical approach and supportive faculty have transformed my learning experience!"
@@ -474,6 +477,7 @@
                     <h3 class="testimonials-section__name">Aisha Kumar</h3>
                     <span class="testimonials-section__course">B.Sc. IT</span>
                 </div>
+
                 <div class="testimonials-section__item">
                     <p class="testimonials-section__text">
                         "The vibrant campus life and quality education have set me on the path to success."
@@ -481,6 +485,7 @@
                     <h3 class="testimonials-section__name">Rahul Sharma</h3>
                     <span class="testimonials-section__course">BBA</span>
                 </div>
+
                 <div class="testimonials-section__item">
                     <p class="testimonials-section__text">
                         "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
@@ -488,6 +493,23 @@
                     <h3 class="testimonials-section__name">Sneha Patel</h3>
                     <span class="testimonials-section__course">MCA</span>
                 </div>
+
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
+                        "The practical approach and supportive faculty have transformed my learning experience!"
+                    </p>
+                    <h3 class="testimonials-section__name">Aisha Kumar</h3>
+                    <span class="testimonials-section__course">B.Sc. IT</span>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
+                        "The vibrant campus life and quality education have set me on the path to success."
+                    </p>
+                    <h3 class="testimonials-section__name">Rahul Sharma</h3>
+                    <span class="testimonials-section__course">BBA</span>
+                </div>
+
                 <div class="testimonials-section__item">
                     <p class="testimonials-section__text">
                         "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
@@ -495,28 +517,9 @@
                     <h3 class="testimonials-section__name">Sneha Patel</h3>
                     <span class="testimonials-section__course">MCA</span>
                 </div>
-                <div class="testimonials-section__item">
-                    <p class="testimonials-section__text">
-                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                    </p>
-                    <h3 class="testimonials-section__name">Sneha Patel</h3>
-                    <span class="testimonials-section__course">MCA</span>
-                </div>
-                <div class="testimonials-section__item">
-                    <p class="testimonials-section__text">
-                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                    </p>
-                    <h3 class="testimonials-section__name">Sneha Patel</h3>
-                    <span class="testimonials-section__course">MCA</span>
-                </div>
-                <div class="testimonials-section__item">
-                    <p class="testimonials-section__text">
-                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                    </p>
-                    <h3 class="testimonials-section__name">Sneha Patel</h3>
-                    <span class="testimonials-section__course">MCA</span>
-                </div>
+
             </div>
+            
             <button class="testimonials-section__nav-right">&gt;</button>
         </div>
     </section>
