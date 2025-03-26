@@ -51,7 +51,6 @@
          Banner Video Section
          - Fullscreen video banner with an overlay message.
          =================================================== -->
-
     <section class="video-banner" id="video-banner">
         <video autoplay muted loop playsinline class="video-banner__background">
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
