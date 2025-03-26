@@ -571,10 +571,7 @@ This block is here for auto complete */
 ==================================================== */
 /* Container for the slider and navigation buttons */
 .testimonials-section {
-    background: rgba(255, 255, 255, 0.1);
-    /* Transparent white for glass effect */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.6);
     padding: 2em;
 }
 
@@ -649,8 +646,6 @@ This block is here for auto complete */
     flex: 0 0 auto;
     width: 300px;
     background: rgba(18, 18, 18, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 16px;
@@ -663,23 +658,22 @@ This block is here for auto complete */
 }
 
 .testimonials-section__text {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1em;
+    line-height: 1.5;
     color: #FFFFFF;
-    margin-bottom: 15px;
+    margin-bottom: 1em;
     text-align: justify;
 }
 
 .testimonials-section__name {
-    font-size: 1.2rem;
+    font-size: 1.5em;
     font-weight: bold;
     color: #FFFFFF;
-    margin-bottom: 5px;
 }
 
 .testimonials-section__course {
-    font-size: 1rem;
-    color: #b09621;
+    font-size: 1em;
+    color: rgba(var(--primary-yellow));
     font-style: italic;
 }
 
