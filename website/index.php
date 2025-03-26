@@ -102,7 +102,6 @@
     <section class="chairman-section">
         <div class="chairman-section__profile">
             <img src="assets/photos/index/chairman.png" alt="Chairman Image" class="chairman-section__image" />
-            <h2>Chairman's Message</h2>
             <h3 class="chairman-section__name">Mr. Vallabhbhai Modha</h3>
             <p class="chairman-section__designation">Chairman, Shri V.J. Modha College, Porbandar</p>
             <p class="chairman-section__message">
