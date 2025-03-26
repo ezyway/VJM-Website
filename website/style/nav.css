@@ -1,3 +1,16 @@
+/* Comment or Remove in Prod
+Colors are declared in styles/global.css
+This block is here for auto complete */
+:root {
+	--primary-green-light: 39, 165, 136;
+	--primary-green: 21, 92, 79;
+	--primary-green-dark: 15, 65, 56;
+	--primary-yellow: 255, 237, 0;
+	--temp-white: 255, 255, 255;
+	--temp-black: 0, 0, 0;
+}
+
+
 /* =======================================================
    Focus Styles
 ========================================================== */
