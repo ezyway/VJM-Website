@@ -7,7 +7,7 @@
     bottom: 0;
 }
 
-.footer-container {
+.footer__container {
     display: flex;
     justify-content: center;
     align-items: start;
@@ -15,7 +15,11 @@
     flex-wrap: wrap;
 }
 
-.footer-column {
+/* Shared styles for all footer columns */
+.footer__contact,
+.footer__social,
+.footer__links,
+.footer__map {
     max-width: 400px;
     width: fit-content;
     text-align: center;
@@ -40,24 +44,30 @@
     text-align: center;
 }
 
-/* Footer column content */
-.footer-column span {
+/* Footer column content for all columns */
+.footer__contact span,
+.footer__social span,
+.footer__links span,
+.footer__map span {
     width: 100%;
     font-size: 1em;
     line-height: 50px;
 }
 
-.footer-column a {
+.footer__contact a,
+.footer__social a,
+.footer__links a,
+.footer__map a {
     display: flex;
     align-items: center;
     font-size: 1.3em;
 }
 
-.footer-column .address {
-    line-height: 1.2;
-    display: inline-block;
-    margin-top: 20px;
+/* Address styling */
+.footer__contact .footer__address {
+    line-height: normal;
 }
+
 
 /* Footer images */
 .footer img {
@@ -66,8 +76,20 @@
     margin-right: 10px;
 }
 
+.footer__social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Adjust spacing as needed */
+    align-items: center;
+    transition: transform 0.5s;
+}
+
+.footer__social-icons img:hover {
+    transform: scale(1.1);
+}
+
 /* Footer credits */
-.footer-credits {
+.footer__credits {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -79,32 +101,28 @@
     flex-wrap: wrap;
 }
 
-/* Align text properly in credits */
-.footer-credits .copyright,
-.footer-credits .developed-by {
-    margin: 0;
+.footer__credits .footer__copyright,
+.footer__credits .footer__developed-by {
     text-align: center;
-    margin-bottom: 10px;
 }
 
-/* Add hover effect to footer links */
-.footer-credits a {
+.footer__credits a {
     color: #00c6ff;
     font-weight: 600;
 }
 
 /* Mobile Styles */
 @media (min-width: 769px) {
-    .footer-credits .copyright {
+    .footer__credits .footer__copyright {
         text-align: left;
     }
-    .footer-credits .developed-by {
+    .footer__credits .footer__developed-by {
         text-align: right;
     }
 }
 
 @media (max-width: 768px) {
-    .footer-credits {
+    .footer__credits {
         flex-direction: column;
     }
 }
