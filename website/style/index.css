@@ -489,10 +489,8 @@ This block is here for auto complete */
     width: 90%;
     margin: 50px auto;
     background: rgba(18, 18, 18, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 16px;
+    padding: 2em;
+    border-radius: 10px;
     text-align: center;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
@@ -504,19 +502,16 @@ This block is here for auto complete */
 
 /* Table Heading */
 .heading-container h2 {
-    padding: 12px 20px;
     width: fit-content;
-    margin: 0 auto 20px auto;
-    font-size: 2rem;
+    margin: 0 auto 1em auto;
+    font-size: 2em;
     color: #FFFFFF;
-    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
-    margin-bottom: 20px;
 }
 
 .table-container {
     overflow-x: auto;
     width: 100%;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 .achievements-table {
@@ -526,46 +521,38 @@ This block is here for auto complete */
 }
 
 .achievements-table th {
-    background: linear-gradient(135deg, #66662b, #586249);
+    background: linear-gradient(135deg, rgba(var(--primary-green-light)), rgba(var(--primary-green)));
     color: #FFFFFF;
     font-weight: bold;
-    padding: 15px;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .achievements-table th,
 .achievements-table td {
     border: 1px solid #ddd;
-    padding: 14px;
+    padding: 0.5em;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .achievements-table tr:nth-child(even) {
     background: #E1E4D5;
-    /* surfaceVariant */
 }
 
 .achievements-table tr:nth-child(odd) {
     background: #F9FAEF;
-    /* surface */
 }
 
 .achievements-table tr:hover {
     background: #CDEDA3;
-    /* primaryContainer */
     transition: 0.3s ease-in-out;
 }
 
-.achievements-table tr:first-child th {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-}
 
 /* Custom Horizontal Scrollbar for Table */
 .table-container::-webkit-scrollbar {
-    height: 8px;
+    height: 10px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
@@ -575,7 +562,6 @@ This block is here for auto complete */
 
 .table-container::-webkit-scrollbar-track {
     background: #CDEDA3;
-    /* primaryContainer */
 }
 
 
