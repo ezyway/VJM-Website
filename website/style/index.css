@@ -393,13 +393,7 @@ This block is here for auto complete */
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    /* Transparent white for glass effect */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: rgba(var(--primary-green-dark), 1);
     flex-wrap: wrap;
 }
 
@@ -408,12 +402,9 @@ This block is here for auto complete */
     flex: 1;
     min-width: 350px;
     max-width: 500px;
-    background: rgba(18, 18, 18, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(var(--primary-green), 1);
     padding: 25px;
-    border-radius: 16px;
+    border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     text-align: center;
     overflow: hidden;
@@ -423,7 +414,6 @@ This block is here for auto complete */
 
 /* Hover effect for news boxes */
 .news-section__box:hover {
-    transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
 }
 
@@ -462,10 +452,8 @@ This block is here for auto complete */
 /* Individual News/Event Item */
 .news-section__item {
     padding: 15px;
-    border-radius: 12px;
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.05);
     margin: 8px 0;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
@@ -473,45 +461,25 @@ This block is here for auto complete */
 
 /* News/Event Item Heading */
 .news-section__item h3 {
-    font-size: 1.4rem;
+    font-size: 1.5em;
     color: #FFFFFF;
     margin-bottom: 5px;
 }
 
 /* News/Event Date */
 .news-section__date {
-    font-size: 1rem;
-    color: #ffffff;
+    font-size: 1em;
+    color: rgba(var(--primary-yellow));
     font-style: italic;
     margin-bottom: 5px;
 }
 
 /* News/Event Description */
 .news-section__item p {
-    font-size: 1rem;
+    font-size: 1em;
     color: #FFFFFF;
     line-height: 1.5;
 }
-
-/* Button for View More */
-.view-more-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    margin-top: 15px;
-    background: linear-gradient(135deg, #4C662B, #586249);
-    color: #FFFFFF;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-    font-weight: bold;
-}
-
-.view-more-btn:hover {
-    background: linear-gradient(135deg, #586249, #4C662B);
-    box-shadow: 0 5px 20px rgba(76, 102, 43, 0.4);
-    transform: translateY(-2px);
-}
-
 
 /* ====================================================
    TABLE SECTION (ACHIEVEMENTS)
