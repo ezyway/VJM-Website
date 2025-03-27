@@ -1,3 +1,15 @@
+/* --------------------------------------------------
+   Variables (Green Colors from :root remain unchanged)
+----------------------------------------------------- */
+:root {
+	--primary-green-light: 39, 165, 136;
+	--primary-green: 21, 92, 79;
+	--primary-green-dark: 15, 65, 56;
+	--primary-yellow: 255, 237, 0;
+	--temp-white: 255, 255, 255;
+	--temp-black: 0, 0, 0;
+}
+
 /* =======================================================
    Focus Styles
 ========================================================== */
@@ -11,7 +23,7 @@ textarea:focus {
 
 
 /* =======================================================
-   Navbar Styles
+   Navbar Styles (White background with glass morphic effect)
 ========================================================== */
 
 /* --------- Navbar Container --------- */
@@ -20,7 +32,8 @@ textarea:focus {
 	top: 10px;
 	left: 10px;
 	right: 10px;
-	background: rgba(var(--primary-green), 0.8);
+	/* white background with slight opacity to keep glass effect */
+	background: rgba(255, 255, 255, 0.8);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 	border-radius: 12px;
@@ -63,7 +76,7 @@ textarea:focus {
 
 
 /* =======================================================
-   Navigation Links
+   Navigation Links (Green text on white background)
 ========================================================== */
 
 .nav-links {
@@ -76,22 +89,28 @@ textarea:focus {
 .nav-links li a {
 	display: block;
 	padding: 10px 20px;
-	color: #f1f1f1;
+	/* use primary green for text */
+	color: rgb(var(--primary-green));
 	text-decoration: none;
 	transition: all 0.4s ease;
 	cursor: pointer;
 	border-radius: 10px;
-	background: rgba(var(--primary-green-light), 0.5);
+	/* subtle white background for links */
+	background: rgba(255, 255, 255, 0.5);
+	/* optional: add a light border using primary green light */
+	border: 1px solid rgba(var(--primary-green-light), 0.5);
 }
 
 .nav-links li a:hover {
-	background: rgba(255, 255, 255, 0.1);
+	/* subtle green tint on hover */
+	background: rgba(var(--primary-green-light), 0.2);
 }
 
-/* --------- Dropdown Menu --------- */
+/* --------- Dropdown Menu (White with glass morphic effect) --------- */
 .dropdown-menu {
 	position: absolute;
-	background: rgb(var(--primary-green-dark), 1);
+	/* white background with slight opacity */
+	background: rgba(255, 255, 255, 0.9);
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
 	border-radius: 10px;
@@ -108,13 +127,16 @@ textarea:focus {
 .dropdown-menu li a {
 	display: block;
 	text-decoration: none;
-	color: #f1f1f1;
+	/* use primary green for text */
+	color: rgb(var(--primary-green));
 	transition: all 0.3s ease;
+	padding: 8px 15px;
 }
 
 .dropdown-menu li a:hover {
-	color: #ae992c;
-	background: rgba(255, 255, 255, 0.1);
+	/* change to a slightly darker green on hover */
+	color: rgb(var(--primary-green-dark));
+	background: rgba(var(--primary-green-light), 0.2);
 	border-radius: 10px;
 }
 
@@ -138,7 +160,8 @@ textarea:focus {
 .hamburger .bar {
 	height: 4px;
 	width: 30px;
-	background-color: #f1f1f1;
+	/* using primary green for the hamburger bars */
+	background-color: rgb(var(--primary-green));
 	margin: 3px 0;
 	transition: 0.4s;
 	border-radius: 5px;
@@ -172,7 +195,7 @@ textarea:focus {
 
 
 /* =======================================================
-   Modal Styles
+   Modal Styles (Glassmorphic Popup remains unchanged)
 ========================================================== */
 
 /* Modal Overlay */
@@ -196,6 +219,7 @@ textarea:focus {
 
 /* Modal Content */
 .modal-content {
+	/* preserve glass morphic look with green tint if desired */
 	background: rgba(var(--primary-green-dark), 0.6);
 	backdrop-filter: blur(15px);
 	border: 1px solid rgba(255, 255, 255, 0.1);
@@ -277,7 +301,8 @@ textarea:focus {
 		height: 90vh;
 		width: 70%;
 		flex-direction: column;
-		background: rgba(var(--primary-green-dark), 0.95);
+		/* use white background with transparency for mobile sidebar */
+		background: rgba(255, 255, 255, 0.95);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
 		overflow-y: auto;
