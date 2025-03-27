@@ -48,7 +48,7 @@ textarea:focus {
 
 .logo img {
 	width: 100%;
-	background: rgba(255, 255, 255, 0.5);
+	background: rgba(255, 255, 255, 1);
 	border-radius: 50%;
 	display: block;
 	transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
@@ -83,21 +83,18 @@ textarea:focus {
 .nav-links li a {
 	display: block;
 	padding: 10px 20px;
-	/* use primary green for text */
 	color: rgb(var(--primary-green));
 	text-decoration: none;
 	transition: all 0.4s ease;
 	cursor: pointer;
 	border-radius: 10px;
-	/* subtle white background for links */
-	background: rgba(255, 255, 255, 0.5);
-	/* optional: add a light border using primary green light */
-	border: 1px solid rgba(var(--primary-green-light), 0.5);
+	background: rgba(255, 255, 255, 1);
 }
 
 .nav-links li a:hover {
 	/* subtle green tint on hover */
-	background: rgba(var(--primary-green-light), 0.2);
+	background: rgba(var(--primary-green-light), 1);
+	color: white;
 }
 
 /* --------- Dropdown Menu (White with glass morphic effect) --------- */
@@ -214,7 +211,7 @@ textarea:focus {
 /* Modal Content */
 .modal-content {
 	/* preserve glass morphic look with green tint if desired */
-	background: rgba(var(--primary-green-dark), 0.6);
+	background: rgba(var(--primary-green-light), 0.6);
 	backdrop-filter: blur(15px);
 	border: 1px solid rgba(255, 255, 255, 0.1);
 	border-radius: 12px;
@@ -235,9 +232,8 @@ textarea:focus {
 	border-radius: 50%;
 	width: 20em;
 	margin: 2em auto 1em auto;
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(255, 255, 255, 1);
 	overflow: hidden;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content p {
