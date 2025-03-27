@@ -1,1 +1,6 @@
 move the script of BackToTop button to .js file
+Put this at the end before footer --> <p>॥ विद्यार्थी लभते विद्यां ॥</p>
+Change color of footer
+Change background to support doodles
+Increase size of Logo and minimize logo on scroll
+NavBar modification on mobile
