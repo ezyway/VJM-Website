@@ -58,10 +58,10 @@
             Your browser does not support the video tag.
         </video>
 
-        <div class="video-banner__overlay">
+        <!-- <div class="video-banner__overlay">
             <h1>Shri V.J. Modha College</h1>
             <p>॥ विद्यार्थी लभते विद्यां ॥</p>
-        </div>
+        </div> -->
 
         <div class="scroll-down">
             <span class="arrow"></span>
