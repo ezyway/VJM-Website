@@ -47,146 +47,177 @@
          =================================================== -->
     <?php include("nav.html"); ?>
 
+
     <!-- ===================================================
          Banner Video Section
          - Fullscreen video banner with an overlay message.
          =================================================== -->
-    <section class="video-banner">
-        <!-- Background Video -->
-        <video autoplay muted loop playsinline class="background-video">
+    <section class="video-banner" id="video-banner">
+        <video autoplay muted loop playsinline class="video-banner__background">
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <!-- Overlay text displayed over the video -->
-        <div class="video-overlay">
+
+        <div class="video-banner__overlay">
             <h1>Shri V.J. Modha College</h1>
-            <p>Empowering students for a better future</p>
+            <p>॥ विद्यार्थी लभते विद्यां ॥</p>
         </div>
+
+        <div class="scroll-down">
+            <span class="arrow"></span>
+            <span class="arrow"></span>
+        </div>
+
     </section>
+
 
     <!-- ===================================================
          Counter Section
          - Displays dynamic counters for courses, enrolled students,
          - pass percentage, and total students passed out.
          =================================================== -->
-    <section class="counter-container">
-        <div class="counter-box">
-            <!-- Counter for Courses -->
-            <div class="counter-item">
-                <div class="counter-courses" data-target="13">0</div>
-                <div class="counter-courses-label">Courses</div>
+    <section class="counter-section" id="counter-section">
+        <div class="counter-section__box">
+            <div class="counter-section__item">
+                <div class="counter-section__courses" data-target="13">0</div>
+                <div class="counter-section__label">Courses</div>
             </div>
-            <!-- Counter for Currently Enrolled Students -->
-            <div class="counter-item">
-                <div class="counter-enrolled" data-target="1200">0</div>
-                <div class="counter-enrolled-label">Students Enrolled</div>
+            <div class="counter-section__item">
+                <div class="counter-section__enrolled" data-target="1200">0</div>
+                <div class="counter-section__label">Students Enrolled</div>
             </div>
-            <!-- Counter for Pass Percentage -->
-            <div class="counter-item">
-                <div class="counter-pass-percentage" data-target="98">0</div>
-                <div class="counter-pass-percentage-label">Pass Percentage</div>
+            <div class="counter-section__item">
+                <div class="counter-section__pass-percentage" data-target="98">0</div>
+                <div class="counter-section__label">Pass Percentage</div>
             </div>
-            <!-- Counter for Total Students Passed Out -->
-            <div class="counter-item">
-                <div class="counter-passouts" data-target="10607">0</div>
-                <div class="counter-passouts-label">Total Students Passed Out</div>
+            <div class="counter-section__item">
+                <div class="counter-section__passouts" data-target="10607">0</div>
+                <div class="counter-section__label">Total Students Passed Out</div>
             </div>
         </div>
     </section>
+
 
     <!-- ===================================================
          Chairman Section
          - Displays the chairman's image along with his message.
          =================================================== -->
     <section class="chairman-section">
-        <div class="chairman-box">
-            <!-- Chairman's Profile Picture -->
-            <img src="assets/photos/index/chairman.png" alt="Chairman Image" class="chairman-image" />
-
-            <!-- Chairman's Name and Title -->
-            <h2>Chairman's Message</h2>
-            <h3 class="chairman-name">Mr. Vallabhbhai Modha</h3>
-            <p class="chairman-designation">Chairman, Shri V.J. Modha College, Porbandar</p>
-
-            <!-- Chairman's Message -->
-            <p class="chairman-message">
-                "Knowledge is power &amp; with this power, I can visualize that the future of our nation is presently building in the classrooms, Today's students are the builders of our nation. For such building, our college has recorded a stupendous period in the history of this institute. We believe in quality education; time has wings &amp; it constantly flies, but now the time has come to pause and reflect on the modern system of education and harness the positive factors beneficial for the students."
+        <div class="chairman-section__profile">
+            <img src="assets/photos/index/chairman.png" alt="Chairman Image" class="chairman-section__image" />
+            <h3 class="chairman-section__name">Mr. Vallabhbhai Modha</h3>
+            <p class="chairman-section__designation">Chairman, Shri V.J. Modha College, Porbandar</p>
+            <p class="chairman-section__message">
+                "Knowledge is power &amp; with this power, I can visualize that the future of our nation is presently building in the classrooms. Today's students are the builders of our nation. For such building, our college has recorded a stupendous period in the history of this institute. We believe in quality education; time has wings &amp; it constantly flies, but now the time has come to pause and reflect on the modern system of education and harness the positive factors beneficial for the students."
             </p>
+        </div>
 
-            <!-- Read More Button -->
-            <!-- <a href="#" class="read-more-btn">Read Full Message</a> -->
+        <!-- Pride of the College Section with Slider -->
+        <div class="pride-section">
+            <h2>Pride of the College</h2>
+            <div class="pride-section__slider">
+                <div class="pride-section__slider-wrapper">
+                    <div class="pride-section__item">
+                        <img src="assets/photos/index/pride_of_college/1-CHAMADIYA CHIRAG-MUKESHBHAI.jpg" alt="Student 1" class="pride-section__image" />
+                        <h3 class="pride-section__name">Mr. Chirag Mukeshbhai</h3>
+                        <p class="pride-section__course">B.Sc. Computer Science</p>
+                        <p class="pride-section__award">Gold Medalist</p>
+                    </div>
+                    <div class="pride-section__item">
+                        <img src="assets/photos/index/pride_of_college/1-Karavadara Ram Bhima.jpg" alt="Student 2" class="pride-section__image" />
+                        <h3 class="pride-section__name">Mr. Ram Bhima Karavadara</h3>
+                        <p class="pride-section__course">B.Com</p>
+                        <p class="pride-section__award">University Rank 2</p>
+                    </div>
+                    <div class="pride-section__item">
+                        <img src="assets/photos/index/pride_of_college/1-Sonigra Jayesh harishkumar.jpg" alt="Student 3" class="pride-section__image" />
+                        <h3 class="pride-section__name">Mr. Jayesh Harishkumar Sonigra</h3>
+                        <p class="pride-section__course">M.Sc. Mathematics</p>
+                        <p class="pride-section__award">Best Research Paper Award</p>
+                    </div>
+                    <div class="pride-section__item">
+                        <img src="assets/photos/index/pride_of_college/1-Sonigra Jayesh harishkumar.jpg" alt="Student 3" class="pride-section__image" />
+                        <h3 class="pride-section__name">XXXX</h3>
+                        <p class="pride-section__course">M.Sc. Mathematics</p>
+                        <p class="pride-section__award">Best Research Paper Award</p>
+                    </div>
+                </div>
+            </div>
+            <div class="pride-section__nav">
+                <button class="pride-section__nav-prev">&#10094;</button>
+                <button class="pride-section__nav-next">&#10095;</button>
+            </div>
         </div>
     </section>
+
 
     <!-- ===================================================
          Events and News Section
          - Displays upcoming events and recent results in separate news boxes.
          =================================================== -->
     <section class="news-section">
-        <!-- Upcoming Events News Box -->
-        <div class="news-box">
+        <div class="news-section__box news-section__events">
             <h2>Upcoming Events</h2>
-            <div class="news-slider events-slider">
-                <div class="news-item">
+            <div class="news-section__slider news-section__slider--events">
+                <div class="news-section__item">
                     <h3>Annual Tech Fest</h3>
-                    <span class="news-date">March 25, 2025</span>
+                    <span class="news-section__date">March 25, 2025</span>
                     <p>Join us for an exciting showcase of innovation and technology.</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>Guest Lecture on AI</h3>
-                    <span class="news-date">April 10, 2025</span>
+                    <span class="news-section__date">April 10, 2025</span>
                     <p>Industry expert will discuss the latest trends in AI.</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>Sports Meet</h3>
-                    <span class="news-date">April 20, 2025</span>
+                    <span class="news-section__date">April 20, 2025</span>
                     <p>Compete and enjoy a variety of sports activities.</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>Coding Hackathon</h3>
-                    <span class="news-date">May 5, 2025</span>
+                    <span class="news-section__date">May 5, 2025</span>
                     <p>Showcase your coding skills and win exciting prizes.</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>Alumni Meet</h3>
-                    <span class="news-date">June 1, 2025</span>
+                    <span class="news-section__date">June 1, 2025</span>
                     <p>Reconnect with old friends and share your experiences.</p>
                 </div>
             </div>
         </div>
-
-        <!-- Recent Results News Box -->
-        <div class="news-box">
+        <div class="news-section__box news-section__results">
             <h2>Recent Results</h2>
-            <div class="news-slider results-slider">
-                <div class="news-item">
+            <div class="news-section__slider news-section__slider--results">
+                <div class="news-section__item">
                     <h3>B.Sc. IT Semester 5</h3>
-                    <span class="news-date">March 15, 2025</span>
+                    <span class="news-section__date">March 15, 2025</span>
                     <p>Pass percentage: 96%. Congratulations to all!</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>MCA Final Year</h3>
-                    <span class="news-date">April 1, 2025</span>
+                    <span class="news-section__date">April 1, 2025</span>
                     <p>Topper: Raj Patel with 9.8 CGPA. Great job!</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>Commerce Dept. Results</h3>
-                    <span class="news-date">April 10, 2025</span>
+                    <span class="news-section__date">April 10, 2025</span>
                     <p>98% students passed with distinction.</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>HSC Science Results</h3>
-                    <span class="news-date">April 20, 2025</span>
+                    <span class="news-section__date">April 20, 2025</span>
                     <p>Top Scorer: Meera Shah - 97.2%</p>
                 </div>
-                <div class="news-item">
+                <div class="news-section__item">
                     <h3>Engineering Semester 7</h3>
-                    <span class="news-date">May 5, 2025</span>
+                    <span class="news-section__date">May 5, 2025</span>
                     <p>75% of students secured first class.</p>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- ===================================================
          Academic Pass Rates Table Section
@@ -426,73 +457,70 @@
         </div>
     </section>
 
+
     <!-- ===================================================
         Testimonials Section
         - Displays student testimonials with horizontal scroll.
         =================================================== -->
     <section class="testimonials-section">
-        <h2 class="section-title">Student Testimonials</h2>
+        <h2 class="testimonials-section__title">Student Testimonials</h2>
 
-        <div class="testimonial-slider-container">
-            <!-- Left navigation button -->
-            <button class="testimonial-nav left">&lt;</button>
-
-            <div class="testimonials-slider">
-                <div class="testimonial-item">
-                    <p class="testimonial-text">
+        <div class="testimonials-section__container">
+            <button class="testimonials-section__nav-left">&lt;</button>
+            
+            <div class="testimonials-section__slider">
+                
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
                         "The practical approach and supportive faculty have transformed my learning experience!"
                     </p>
-                    <h3 class="testimonial-name">Aisha Kumar</h3>
-                    <span class="testimonial-course">B.Sc. IT</span>
+                    <h3 class="testimonials-section__name">Aisha Kumar</h3>
+                    <span class="testimonials-section__course">B.Sc. IT</span>
                 </div>
-                <div class="testimonial-item">
-                    <p class="testimonial-text">
+
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
                         "The vibrant campus life and quality education have set me on the path to success."
                     </p>
-                    <h3 class="testimonial-name">Rahul Sharma</h3>
-                    <span class="testimonial-course">BBA</span>
+                    <h3 class="testimonials-section__name">Rahul Sharma</h3>
+                    <span class="testimonials-section__course">BBA</span>
                 </div>
-                <div class="testimonial-item">
-                    <p class="testimonial-text">
+
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
                         "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
                     </p>
-                    <h3 class="testimonial-name">Sneha Patel</h3>
-                    <span class="testimonial-course">MCA</span>
+                    <h3 class="testimonials-section__name">Sneha Patel</h3>
+                    <span class="testimonials-section__course">MCA</span>
                 </div>
-                <div class="testimonial-item">
-                    <p class="testimonial-text">
+
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
+                        "The practical approach and supportive faculty have transformed my learning experience!"
+                    </p>
+                    <h3 class="testimonials-section__name">Aisha Kumar</h3>
+                    <span class="testimonials-section__course">B.Sc. IT</span>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
+                        "The vibrant campus life and quality education have set me on the path to success."
+                    </p>
+                    <h3 class="testimonials-section__name">Rahul Sharma</h3>
+                    <span class="testimonials-section__course">BBA</span>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <p class="testimonials-section__text">
                         "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
                     </p>
-                    <h3 class="testimonial-name">Sneha Patel</h3>
-                    <span class="testimonial-course">MCA</span>
+                    <h3 class="testimonials-section__name">Sneha Patel</h3>
+                    <span class="testimonials-section__course">MCA</span>
                 </div>
-                <div class="testimonial-item">
-                    <p class="testimonial-text">
-                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                    </p>
-                    <h3 class="testimonial-name">Sneha Patel</h3>
-                    <span class="testimonial-course">MCA</span>
-                </div>
-                <div class="testimonial-item">
-                    <p class="testimonial-text">
-                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                    </p>
-                    <h3 class="testimonial-name">Sneha Patel</h3>
-                    <span class="testimonial-course">MCA</span>
-                </div>
-                <div class="testimonial-item">
-                    <p class="testimonial-text">
-                        "I appreciate the focus on both academic and personal growth at Shri V.J. Modha College."
-                    </p>
-                    <h3 class="testimonial-name">Sneha Patel</h3>
-                    <span class="testimonial-course">MCA</span>
-                </div>
-                <!-- Add more testimonial items as needed -->
+
             </div>
 
-            <!-- Right navigation button -->
-            <button class="testimonial-nav right">&gt;</button>
-        </div>
+            <button class="testimonials-section__nav-right">&gt;</button>
         </div>
     </section>
 
@@ -500,35 +528,93 @@
     <!-- ===================================================
      Photo Carousel Section
      =================================================== -->
-    <section class="photo-carousel-container">
-        <div class="carousel-wrapper">
-        <h2 class="carousel-title">Photos</h2>
-            <button class="carousel-nav left">&lt;</button>
-            <div class="carousel" id="carousel">
-                <div class="carousel-item">
+    <section class="photo-carousel-section">
+        <div class="photo-carousel-section__wrapper">
+            <h2 class="photo-carousel-section__title">Photos</h2>
+            <button class="photo-carousel-section__nav-left">&lt;</button>
+
+            <div class="photo-carousel-section__carousel" id="carousel">
+                <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/129.jpg" alt="Image 1">
                 </div>
-                <div class="carousel-item">
+
+                <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/130.jpg" alt="Image 2">
                 </div>
-                <div class="carousel-item">
+
+                <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/131.jpg" alt="Image 3">
                 </div>
-                <div class="carousel-item">
+
+                <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/132.jpg" alt="Image 4">
                 </div>
-                <div class="carousel-item">
+
+                <div class="photo-carousel-section__item">
+                    <img src="assets/photos/index/photo_carousel/133.jpg" alt="Image 5">
+                </div>
+
+                <div class="photo-carousel-section__item">
+                    <img src="assets/photos/index/photo_carousel/129.jpg" alt="Image 1">
+                </div>
+
+                <div class="photo-carousel-section__item">
+                    <img src="assets/photos/index/photo_carousel/130.jpg" alt="Image 2">
+                </div>
+
+                <div class="photo-carousel-section__item">
+                    <img src="assets/photos/index/photo_carousel/131.jpg" alt="Image 3">
+                </div>
+
+                <div class="photo-carousel-section__item">
+                    <img src="assets/photos/index/photo_carousel/132.jpg" alt="Image 4">
+                </div>
+                
+                <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/133.jpg" alt="Image 5">
                 </div>
             </div>
-            <button class="carousel-nav right">&gt;</button>
+
+            <button class="photo-carousel-section__nav-right">&gt;</button>
         </div>
     </section>
+
+    
+    <!-- Back to Top Button with a modern arrow icon -->
+    <button id="backToTop" aria-label="Back to top">
+        <!-- Inline SVG arrow icon -->
+        <svg viewBox="0 0 24 24">
+            <path d="M12 4l-8 8h6v8h4v-8h6z"></path>
+        </svg>
+    </button>
+
     <script>
+        // Get the button and the first section
+        const backToTopButton = document.getElementById("backToTop");
+        const section1 = document.getElementById("video-banner");
 
+        // Function to check if section1 is out of view
+        function toggleBackToTop() {
+            const rect = section1.getBoundingClientRect();
+            // Check if the bottom of section1 is above the viewport
+            if (rect.bottom <= 0) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        // Listen for scroll events
+        window.addEventListener("scroll", toggleBackToTop);
+
+        // Smooth scroll to top when button is clicked
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
     </script>
-
-
 
     <!-- ===================================================
          Footer Section

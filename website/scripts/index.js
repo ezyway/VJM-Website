@@ -1,132 +1,174 @@
 document.addEventListener("DOMContentLoaded", () => {
+    
+    // --------------------------
+    // Click for Scroll Down Icon
+    // --------------------------
 
-	// Select all elements that should animate (they have the data-target attribute)
-	const counters = document.querySelectorAll('[data-target]');
+    document.querySelector('.scroll-down').addEventListener('click', function () {
+        document.getElementById('counter-section').scrollIntoView({ behavior: 'smooth' });
+    });
 
-	// Function to animate count from 0 to the target value over a given duration
-	function animateCount(el, duration) {
-		const target = parseInt(el.getAttribute('data-target'));
-		let startTime = null;
+    
+    // --------------------------
+    // Animate Counters
+    // --------------------------
+    const counters = document.querySelectorAll('[data-target]');
 
-		function updateCount(timestamp) {
-			if (!startTime) startTime = timestamp;
-			const progress = timestamp - startTime;
-			const currentCount = Math.min(Math.floor((progress / duration) * target), target);
-			el.textContent = currentCount;
-			if (progress < duration) {
-				requestAnimationFrame(updateCount);
-			}
-		}
-		requestAnimationFrame(updateCount);
-	}
+    function animateCount(el, duration) {
+        const target = parseInt(el.getAttribute('data-target'));
+        let startTime = null;
 
-	// Use Intersection Observer to trigger the count-up when the element is in view
-	const observer = new IntersectionObserver((entries, observer) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				animateCount(entry.target, 2000); // 2000 ms duration for the animation
-				observer.unobserve(entry.target); // Stop observing once the animation starts
-			}
-		});
-	}, { threshold: 0.5 }); // Trigger when 50% of the element is visible
-
-	// Observe each counter element
-	counters.forEach(counter => {
-		observer.observe(counter);
-	});
-
-	// --------------------------
-	// Testimonial Slider Script
-	// --------------------------
-
-	// Select the testimonials slider and navigation buttons
-const slider = document.querySelector('.testimonials-slider');
-const btnLeft = document.querySelector('.testimonial-nav.left');
-const btnRight = document.querySelector('.testimonial-nav.right');
-
-// Check if slider and buttons exist
-if (slider && btnLeft && btnRight) {
-    // Dynamically calculate scroll amount based on viewport width
-    function getScrollAmount() {	
-        return Math.min(slider.clientWidth * 0.75, 300); // 80% of container width or max 300px
+        function updateCount(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const currentCount = Math.min(Math.floor((progress / duration) * target), target);
+            el.textContent = currentCount;
+            if (progress < duration) {
+                requestAnimationFrame(updateCount);
+            }
+        }
+        requestAnimationFrame(updateCount);
     }
 
-    // Function to center the active slide
-    function centerActiveSlide() {
-        const activeItem = slider.querySelector('.testimonial-item.active');
-        if (activeItem) {
-            const offsetLeft = activeItem.offsetLeft;
-            const itemWidth = activeItem.offsetWidth;
-            const centerPosition = offsetLeft - (slider.clientWidth / 2) + (itemWidth / 2);
-            slider.scrollTo({
-                left: centerPosition,
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCount(entry.target, 2000); // 2000 ms duration for the animation
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+
+    // --------------------------
+    // Testimonials Slider Script
+    // --------------------------
+    const testimonialsSlider = document.querySelector('.testimonials-section__slider');
+    const testimonialBtnLeft = document.querySelector('.testimonials-section__nav-left');
+    const testimonialBtnRight = document.querySelector('.testimonials-section__nav-right');
+
+    if (testimonialsSlider && testimonialBtnLeft && testimonialBtnRight) {
+        // Calculate scroll amount dynamically
+        function getScrollAmount() {
+            return Math.min(testimonialsSlider.clientWidth * 0.75, 300); // 75% of container width or max 300px
+        }
+
+        // Center the active slide if one exists
+        function centerActiveSlide() {
+            const activeItem = testimonialsSlider.querySelector('.testimonials-section__item.active');
+            if (activeItem) {
+                const offsetLeft = activeItem.offsetLeft;
+                const itemWidth = activeItem.offsetWidth;
+                const centerPosition = offsetLeft - (testimonialsSlider.clientWidth / 2) + (itemWidth / 2);
+                testimonialsSlider.scrollTo({
+                    left: centerPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        testimonialBtnLeft.addEventListener('click', () => {
+            testimonialsSlider.scrollBy({
+                left: -getScrollAmount(),
                 behavior: 'smooth'
             });
+            setTimeout(centerActiveSlide, 300);
+            updateTestimonialNavButtons();
+        });
+
+        testimonialBtnRight.addEventListener('click', () => {
+            testimonialsSlider.scrollBy({
+                left: getScrollAmount(),
+                behavior: 'smooth'
+            });
+            setTimeout(centerActiveSlide, 300);
+            updateTestimonialNavButtons();
+        });
+
+        function updateTestimonialNavButtons() {
+            setTimeout(() => {
+                testimonialBtnLeft.disabled = testimonialsSlider.scrollLeft <= 0;
+                testimonialBtnRight.disabled = testimonialsSlider.scrollLeft + testimonialsSlider.clientWidth >= testimonialsSlider.scrollWidth;
+            }, 300);
         }
+
+        updateTestimonialNavButtons();
+        testimonialsSlider.addEventListener('scroll', updateTestimonialNavButtons);
+        window.addEventListener('resize', updateTestimonialNavButtons);
     }
 
-    // Scroll left on clicking the left button
-    btnLeft.addEventListener('click', () => {
-        slider.scrollBy({
-            left: -getScrollAmount(),
-            behavior: 'smooth'
-        });
-        setTimeout(centerActiveSlide, 300); // Center after the scroll
-        updateNavButtons();
+    // --------------------------
+    // Carousel Button Controls
+    // --------------------------
+    const carousel = document.getElementById('carousel');
+    const carouselBtnLeft = document.querySelector('.photo-carousel-section__nav-left');
+    const carouselBtnRight = document.querySelector('.photo-carousel-section__nav-right');
+
+    const carouselItems = carousel.querySelectorAll('.photo-carousel-section__item');
+    let itemWidth = carouselItems[0]?.offsetWidth || 300;
+
+    window.addEventListener('resize', () => {
+        itemWidth = carouselItems[0]?.offsetWidth || 300;
     });
 
-    // Scroll right on clicking the right button
-    btnRight.addEventListener('click', () => {
-        slider.scrollBy({
-            left: getScrollAmount(),
+    carouselBtnLeft.addEventListener('click', () => {
+        carousel.scrollBy({
+            left: -itemWidth,
             behavior: 'smooth'
         });
-        setTimeout(centerActiveSlide, 300); // Center after the scroll
-        updateNavButtons();
+        updateCarouselNavButtons();
     });
 
-    // Disable buttons when at the start or end
-    function updateNavButtons() {
+    carouselBtnRight.addEventListener('click', () => {
+        carousel.scrollBy({
+            left: itemWidth,
+            behavior: 'smooth'
+        });
+        updateCarouselNavButtons();
+    });
+
+    function updateCarouselNavButtons() {
         setTimeout(() => {
-            btnLeft.disabled = slider.scrollLeft <= 0;
-            btnRight.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth;
-        }, 300);
+            carouselBtnLeft.disabled = carousel.scrollLeft <= 0;
+            carouselBtnRight.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
+        }, 200);
     }
 
-    // Initialize button states
-    updateNavButtons();
+    updateCarouselNavButtons();
+    carousel.addEventListener('scroll', updateCarouselNavButtons);
+    window.addEventListener('resize', updateCarouselNavButtons);
 
-    // Update button state on scroll
-    slider.addEventListener('scroll', updateNavButtons);
+    // --------------------------
+    // Pride Slider Script
+    // --------------------------
+    const prideSliderWrapper = document.querySelector(".pride-section__slider-wrapper");
+    const prideSlides = document.querySelectorAll(".pride-section__item");
+    const pridePrevBtn = document.querySelector(".pride-section__nav-prev");
+    const prideNextBtn = document.querySelector(".pride-section__nav-next");
 
-    // Resize event to adjust scroll amount dynamically
-    window.addEventListener('resize', updateNavButtons);
-}
+    let prideCurrentIndex = 0;
 
+    function showNextPrideSlide() {
+        prideCurrentIndex = (prideCurrentIndex + 1) % prideSlides.length;
+        updatePrideSlider();
+    }
 
+    function showPrevPrideSlide() {
+        prideCurrentIndex = (prideCurrentIndex - 1 + prideSlides.length) % prideSlides.length;
+        updatePrideSlider();
+    }
 
-	
-	const carousel = document.getElementById('carousel');
-	let scrollAmount = 0;
-	const scrollSpeed = 1; // Speed of auto-scroll
-	const scrollInterval = 30; // Interval in milliseconds
+    function updatePrideSlider() {
+        const offset = -prideCurrentIndex * 100;
+        prideSliderWrapper.style.transform = `translateX(${offset}%)`;
+    }
 
-	function autoScroll() {
-		scrollAmount += scrollSpeed;
-		if (scrollAmount >= carousel.scrollWidth - carousel.clientWidth) {
-			scrollAmount = 0;
-		}
-		carousel.scrollLeft = scrollAmount;
-	}
+    prideNextBtn.addEventListener("click", showNextPrideSlide);
+    pridePrevBtn.addEventListener("click", showPrevPrideSlide);
 
-	// Auto scroll every 30ms
-	let autoScrollInterval = setInterval(autoScroll, scrollInterval);
-
-	// Pause auto-scroll on hover
-	carousel.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
-	carousel.addEventListener('mouseleave', () => {
-		autoScrollInterval = setInterval(autoScroll, scrollInterval);
-	});
-
-	
+    // Auto slide every 5 seconds
+    setInterval(showNextPrideSlide, 5000);
 });
