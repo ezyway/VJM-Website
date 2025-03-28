@@ -8,7 +8,7 @@
 	--green-dark: 15, 65, 56;
 
 	--yellow-light: 248, 218, 128;
-	--grey-light: 144, 144, 144;
+	--grey-light: 220, 220, 220;
 	--grey-dark: 55, 55, 55;
 
 }
@@ -17,10 +17,6 @@
 .footer {
     width: 100%;
     background-color: rgb(var(--grey-light));
-    color: rgb(var(--grey-dark));
-    text-align: center;
-    padding: 15px;
-    bottom: 0;
 }
 
 .footer__container {
@@ -29,6 +25,7 @@
     align-items: start;
     gap: 50px;
     flex-wrap: wrap;
+    margin-bottom: 1em;
 }
 
 /* Shared styles for all footer columns */
@@ -36,26 +33,6 @@
     text-align: left;
 }
 
-.socialWrapper{
-    display: flex;
-    margin-right: 20px;
-    background: rgb(var(--grey-light));
-    border-radius: 50%;
-    box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
-        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    padding: 10px;
-}
-
-.socialWrapper:hover {
-    transform: scale(1.1);
-    box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
-      inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
-      -0.5px -0.5px 0px rgba(255, 255, 255, 1),
-      0.5px 0.5px 0px rgba(0, 0, 0, 0.15), 
-      0px 12px 10px -10px rgba(0, 0, 0, 0.05),
-      0px 0px 15px rgba(255, 255, 255, 0.4); /* Added glow effect */
-}
 
 .footer__social,
 .footer__links,
@@ -67,30 +44,35 @@
 
 .footer a {
     text-decoration: none;
-    color: white;
+    color: black;
     transition: 0.5s ease;
 }
 
 .footer a:hover {
-    color: rgb(var(--yellow-light));
+    color: rgb(var(--green-light));
 }
 
-/* .footer h2 {
-    margin: 20px;
-} */
-.footer__contact h2,
-.footer__social h2,
-.footer__links h2,
-.footer__map h2 {
+
+.footer h2 {
+    position: relative;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #222;
     margin-top: 20px;
     margin-bottom: 20px;
+    font-size: 1.8em;
 }
 
-
-.footer iframe {
-    border-radius: 20px;
-    text-align: center;
+.footer h2::after {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 3px;
+    background-color: rgb(var(--green));
+    margin-top: 3px;
+    border-radius: 2px;
 }
+
 
 /* Footer column content for all columns */
 .footer__contact span,
@@ -102,6 +84,13 @@
     line-height: 50px;
     text-align: left;
 }
+
+.footer iframe {
+    border-radius: 10px;
+    text-align: center;
+    border: none;
+}
+
 
 .footer__contact a,
 .footer__social a,
@@ -121,30 +110,67 @@
 
 /* Footer images */
 .footer img {
-    height: 20px;
-    width: 20px;
+    height: 40px;
+    width: 40px;
+    margin-right: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    padding: 10px;
+    transition: transform 0.5s;
+}
+
+.footer img:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
 }
 
 .footer__social-icons {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Adjust spacing as needed */
+    gap: 15px;
     align-items: center;
-    transition: transform 0.5s;
 }
 
-.footer__social-icons img:hover {
-    transform: scale(1.1);
+
+/* =====SLOGAN===== */
+.college_slogan {
+    text-align: center;
+    color: white;
+    position: relative;
+    font-weight: bold;
+    color: #222;
+    font-size: 1em;
+    width: fit-content;
+    margin: auto auto 1em auto;
+    padding-top: 1em
 }
+
+.college_slogan::after {
+    content: "";
+    display: block;
+    width: 2em;
+    height: 3px;
+    background-color: rgb(var(--green));
+    margin-top: 3px;
+    margin-left: 2em;
+    border-radius: 2px;
+}
+
+hr.customHR {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0));
+}
+
 
 /* Footer credits */
 .footer__credits {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 20px;
+    padding: 0.5em;
     border-top: 1px double rgb(255, 255, 255, 0.1);
-    margin-top: 20px;
     color: #000000;
     font-size: 0.9rem;
     flex-wrap: wrap;
@@ -160,43 +186,6 @@
     font-weight: 600;
 }
 
-/* =====SLOGAN===== */
-.college_slogan{
-    margin: auto;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    width: 410px;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-
-    h1{
-        color: #fff;
-    }
-}
-
-hr.customHR {
-    margin-top: 2rem;
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0));
-}
-
-.footer h2 {
-    position: relative;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #222; /* Adjust to match your theme */
-}
-
-.footer h2::after {
-    content: "";
-    display: block;
-    width: 24px; /* Adjust width as needed */
-    height: 3px; /* Adjust thickness */
-    background-color: rgb(var(--green)); /* Professional dark color */
-    margin-top: 3px;
-    border-radius: 2px;
-}
 
 /* Mobile Styles */
 @media (min-width: 769px) {
