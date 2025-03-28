@@ -161,7 +161,7 @@
 }
 
 /* =====SLOGAN===== */
-.clg_slogan{
+.college_slogan{
     margin: auto;
     border-radius: 10px;
     padding: 20px;
@@ -229,7 +229,7 @@ hr.customHR {
         margin-right: 0px;
     }
 
-    .clg_slogan {
+    .college_slogan {
         padding: 15px;
         h1 {
             font-size: 24px;
