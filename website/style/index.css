@@ -124,6 +124,9 @@ This block is here for auto complete */
 .counter-section {
     background: none;
     padding: 5em 3em;
+    background: rgba(var(--primary-green-dark), 0.6);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
 }
 
 .counter-section__box {
@@ -131,7 +134,7 @@ This block is here for auto complete */
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    background: rgba(var(--primary-green-dark), 0.6);
+    background: rgba(var(--primary-green-dark), 0.5);
     padding: 40px 20px;
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -144,12 +147,13 @@ This block is here for auto complete */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(var(--primary-green-dark), 0.6);
+    background: rgba(var(--primary-green-dark), 1);
     padding: 1em;
     border-radius: 10px;
     width: 20em;
     transition: all 0.3s ease-in-out;
     text-align: center;
+    cursor: pointer;
 }
 
 /* Hover effect for counter items */
