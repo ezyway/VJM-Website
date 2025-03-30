@@ -36,20 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const mobileLogo = document.querySelector('.mobile-logo');
 
     window.addEventListener('scroll', function () {
-        if (window.scrollY > 50) { // Adjust the scroll threshold as needed
-            if (logo) {
-                logo.classList.add('scrolled');
-            }
-            if (mobileLogo) {
-                mobileLogo.classList.add('scrolled');
-            }
+        if (window.scrollY > 300) { // Adjust the scroll threshold as needed
+            logo.classList.add('scrolled');
         } else {
-            if (logo) {
-                logo.classList.remove('scrolled');
-            }
-            if (mobileLogo) {
-                mobileLogo.classList.remove('scrolled');
-            }
+            logo.classList.remove('scrolled');
         }
     });
 });
