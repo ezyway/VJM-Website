@@ -550,11 +550,17 @@ This block is here for auto complete */
 .testimonials-section {
     background: rgba(255, 255, 255, 0.6);
     padding: 2em;
+    background: rgba(var(--primary-green-dark), 0.5);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
 }
 
 .testimonials-section__title {
     width: 100%;
     text-align: center;
+    font-size: 2em;
+    margin-bottom: 1em;
+    color: white;
 }
 
 .testimonials-section__container {
@@ -594,13 +600,6 @@ This block is here for auto complete */
 .testimonials-section__nav-left:hover,
 .testimonials-section__nav-right:hover {
     background-color: rgba(76, 102, 43, 1);
-}
-
-.testimonials-section__title {
-    font-size: 2rem;
-    color: #000000;
-    text-shadow: 1px 1px 8px rgba(255, 255, 255, 1);
-    margin-bottom: 20px;
 }
 
 /* Testimonials Slider */
@@ -662,7 +661,9 @@ This block is here for auto complete */
 .photo-carousel-section {
     padding: 5em 2em;
     position: relative;
-    background: transparent;
+    background: rgba(var(--primary-green-dark), 0.7);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
 }
 
 .photo-carousel-section__wrapper {
@@ -671,7 +672,6 @@ This block is here for auto complete */
     overflow: hidden;
     display: flex;
     align-items: center;
-    background: rgba(var(--primary-green), 0.8);
     padding: 5em 5em 2em 5em;
     border-radius: 10px;
 }
