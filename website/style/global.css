@@ -28,14 +28,10 @@ body::-webkit-scrollbar {
   font-family: "Montserrat";
   margin: 0;
   padding: 0;
-  background-image: url('../assets/background.jpg');
   background-repeat: repeat-y;
-  /* Repeat vertically */
   background-size: 100% auto;
-  /* Width fits screen, height scales */
   background-position: top left;
   background-attachment: scroll;
-  /* Background scrolls with content */
 }
 
 
@@ -45,4 +41,9 @@ body {
   margin: 0;
   padding: 0;
   background: rgba(var(--primary-green-light));
+  background-image: url('../assets/background.png');
+  background-repeat: repeat-x;
+  background-size: contain;
+  background-position: top left;
+  background-attachment: fixed;
 }
