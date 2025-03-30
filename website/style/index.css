@@ -40,37 +40,8 @@ This block is here for auto complete */
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 0;
-}
-
-/* Overlay container with text */
-.video-banner__overlay {
-    position: relative;
-    text-align: center;
-    color: #FFFFFF;
-    background: rgba(var(--primary-green-light), 0.2);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    padding: 0.5em 3em;
-    border-radius: 10px;
-    z-index: 1;
-    height: fit-content;
-    margin-top: 8em;
-}
-
-/* Overlay title styling */
-.video-banner__overlay h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-/* Overlay paragraph styling */
-.video-banner__overlay p {
-    font-size: 1.5rem;
-    margin-top: 10px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 .scroll-down {
@@ -151,7 +122,7 @@ This block is here for auto complete */
 ==================================================== */
 /* Container for all counter items */
 .counter-section {
-    background: rgba(255, 255, 255, 0.6);
+    background: none;
     padding: 5em 3em;
 }
 
@@ -393,7 +364,7 @@ This block is here for auto complete */
     justify-content: center;
     gap: 40px;
     padding: 50px 20px;
-    background: rgba(var(--primary-green-dark), 1);
+    background: rgba(var(--primary-green-dark), 0.8);
     flex-wrap: wrap;
 }
 
