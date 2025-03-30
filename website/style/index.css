@@ -498,8 +498,8 @@ This block is here for auto complete */
 }
 
 .achievements-table th {
-    background: linear-gradient(135deg, rgba(var(--primary-green-light)), rgba(var(--primary-green)));
-    color: #FFFFFF;
+    background: rgba(var(--primary-green-light), 0.7);
+    color: black;
     font-weight: bold;
     text-align: center;
     font-size: 1em;
