@@ -31,15 +31,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // Nav Image Shrink on Scroll
-    const logo = document.querySelector('.logo');
-    const mobileLogo = document.querySelector('.mobile-logo');
-
-    window.addEventListener('scroll', function () {
-        if (window.scrollY > 300) { // Adjust the scroll threshold as needed
-            logo.classList.add('scrolled');
-        } else {
-            logo.classList.remove('scrolled');
-        }
-    });
 });

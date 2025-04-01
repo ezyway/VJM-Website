@@ -122,11 +122,10 @@ This block is here for auto complete */
 ==================================================== */
 /* Container for all counter items */
 .counter-section {
-    background: none;
-    padding: 5em 3em;
     background: rgba(var(--primary-green-dark), 0.6);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
+    padding: 5em 3em;
 }
 
 .counter-section__box {
@@ -135,7 +134,7 @@ This block is here for auto complete */
     align-items: center;
     flex-wrap: wrap;
     background: rgba(var(--primary-green-dark), 0.5);
-    padding: 40px 20px;
+    padding: 2em 2em;
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
@@ -148,9 +147,9 @@ This block is here for auto complete */
     align-items: center;
     justify-content: center;
     background: rgba(var(--primary-green-dark), 1);
-    padding: 1em;
+    padding: 2em;
+    margin: 1em;
     border-radius: 10px;
-    width: 20em;
     transition: all 0.3s ease-in-out;
     text-align: center;
     cursor: pointer;

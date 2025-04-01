@@ -83,12 +83,12 @@
                 <div class="counter-section__label">Courses</div>
             </div>
             <div class="counter-section__item">
-                <div class="counter-section__enrolled" data-target="1200">0</div>
-                <div class="counter-section__label">Students Enrolled</div>
-            </div>
-            <div class="counter-section__item">
                 <div class="counter-section__pass-percentage" data-target="98">0</div>
                 <div class="counter-section__label">Pass Percentage</div>
+            </div>
+            <div class="counter-section__item">
+                <div class="counter-section__enrolled" data-target="1200">0</div>
+                <div class="counter-section__label">Students Enrolled</div>
             </div>
             <div class="counter-section__item">
                 <div class="counter-section__passouts" data-target="10607">0</div>

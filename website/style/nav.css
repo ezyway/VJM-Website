@@ -72,9 +72,6 @@ textarea:focus {
 	height: auto;
 }
 
-.logo.scrolled img {
-	width: 80px;
-}
 .logo:hover {
 	transform: scale(1.05);
 }
@@ -351,9 +348,6 @@ textarea:focus {
 		height: auto;
 	}
 
-	.mobile-logo.scrolled img {
-		width: 80px;
-	}
 	.mobile-logo:hover img {
 		transform: scale(1.1);
 	}
