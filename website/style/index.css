@@ -2,21 +2,25 @@
 Colors are declared in styles/global.css
 This block is here for auto complete */
 :root {
+    /* Primary */
     --primary-light: 255, 255, 255;
     --primary: 224, 224, 224;
-    --primary-dark: 200, 200, 200;
+    --primary-dark: 180, 180, 180;
     --on-primary: 0, 0, 0;
 
-    --secondary-light: 218, 242, 217;
+    /* Secondary */
+    --secondary-light: 231, 255, 230;
     --secondary: 181, 229, 179;
-    --secondary-dark: 181, 255, 179;
+    --secondary-dark: 130, 180, 128;
     --on-secondary: 0, 0, 0;
 
-    --tertiary-light: 255, 249, 226;
+    /* Tertiary */
+    --tertiary-light: 255, 255, 230;
     --tertiary: 255, 242, 196;
-    --tertiary-dark: 228, 228, 146;
+    --tertiary-dark: 200, 190, 120;
     --on-tertiary: 0, 0, 0;
 }
+
 
 /* ====================================================
    VIDEO BANNER SECTION
@@ -202,12 +206,12 @@ This block is here for auto complete */
 .pride-section {
     min-width: 350px;
     max-width: 500px;
-    background: rgba(var(--primary-green-dark), 0.85);
+    background: rgba(var(--primary-dark), 0.80);
+    color: rgba(var(--on-primary), 1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 16px;
+    padding: 2em;
+    border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     text-align: center;
     position: relative;
@@ -226,9 +230,7 @@ This block is here for auto complete */
 
 .pride-section h2 {
     font-size: 2.2rem;
-    color: #FFFFFF;
     margin-bottom: 20px;
-    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
 }
 
 /* Chairman Profile Picture */
@@ -236,32 +238,30 @@ This block is here for auto complete */
     width: 120px;
     height: 120px;
     border-radius: 10px;
-    border: 4px solid #4C662B;
+    border: 2px solid rgba(var(--on-primary));
     object-fit: cover;
 }
 
 /* Name and Designation */
 .chairman-section__name {
     font-size: 2em;
-    color: #FFFFFF;
     font-weight: bold;
     margin: 0.5em auto;
 }
 
 .chairman-section__designation {
     font-size: 1rem;
-    color: rgba(var(--primary-yellow));
+    color: rgba(var(--on-primary));
     font-style: italic;
+    font-weight: bold;
     margin-bottom: 1em;
 }
 
 /* Message Styling */
 .chairman-section__message {
     font-size: 1rem;
-    line-height: 1.7;
-    color: #FFFFFF;
+    line-height: 1.3;
     text-align: justify;
-    margin-bottom: 20px;
 }
 
 /* PRIDE SECTION */
@@ -284,9 +284,6 @@ This block is here for auto complete */
 /* Each Pride Item */
 .pride-section__item {
     flex: 0 0 100%;
-    min-width: 100%;
-    box-sizing: border-box;
-    padding: 20px;
     text-align: center;
     transition: transform 0.5s ease-in-out;
 }
@@ -296,29 +293,25 @@ This block is here for auto complete */
     width: 200px;
     height: 200px;
     border-radius: 10px;
-    border: 4px solid darkgray;
+    border: 2px solid rgba(var(--on-primary));
     object-fit: cover;
-    margin-bottom: 15px;
 }
 
 /* Student Name */
 .pride-section__name {
     font-size: 1.5em;
-    color: #FFFFFF;
     font-weight: bold;
 }
 
 /* Course and Award Styling */
 .pride-section__course {
     font-size: 1em;
-    color: #FFFFFF;
     margin-top: 10px;
     font-weight: bold;
 }
 
 .pride-section__award {
     font-size: 1em;
-    color: rgba(var(--primary-yellow));
     font-style: italic;
 }
 
@@ -327,15 +320,13 @@ This block is here for auto complete */
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 20px;
 }
 
 /* Slider Navigation Buttons */
 .pride-section__nav-prev,
 .pride-section__nav-next {
-    background: rgba(76, 102, 43, 0.8);
+    background: rgba(var(--secondary-dark), 0.8);
     border: none;
-    color: #fff;
     padding: 10px 20px;
     font-size: 1.2rem;
     border-radius: 8px;
@@ -346,8 +337,8 @@ This block is here for auto complete */
 }
 .pride-section__nav-prev:hover,
 .pride-section__nav-next:hover {
-    background: rgba(158, 211, 89, 0.8);
-    color: #000000;
+    background: rgba(var(--secondary), 0.8);
+    color: rgba(var(--on-secondary), 0.8);
 }
 
 
