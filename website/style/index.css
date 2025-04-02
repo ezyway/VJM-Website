@@ -559,8 +559,8 @@ This block is here for auto complete */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(111, 168, 35, 0.8);
-    /* Primary color with opacity */
+    background: rgba(var(--secondary-dark), 0.6);
+    color: rgba(var(--on-secondary), 1);
     border: none;
     width: 2em;
     height: 2em;
@@ -584,7 +584,7 @@ This block is here for auto complete */
 
 .testimonials-section__nav-left:hover,
 .testimonials-section__nav-right:hover {
-    background-color: rgba(76, 102, 43, 1);
+    background: rgba(var(--secondary-dark), 1);
 }
 
 /* Testimonials Slider */
@@ -632,7 +632,6 @@ This block is here for auto complete */
 
 .testimonials-section__course {
     font-size: 1em;
-    color: rgba(var(--primary-yellow));
     font-style: italic;
 }
 
@@ -642,11 +641,8 @@ This block is here for auto complete */
    - Displays a photo carousel with unique navigation.
 ==================================================== */
 .photo-carousel-section {
-    padding: 5em 2em;
+    padding: 2em 0em;
     position: relative;
-    background: rgba(var(--primary-green-dark), 0.7);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
 }
 
 .photo-carousel-section__wrapper {
