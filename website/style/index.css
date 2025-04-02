@@ -9,10 +9,12 @@ This block is here for auto complete */
     --on-primary: 0, 0, 0;
 
     /* Secondary */
-    --secondary-light: 231, 255, 230;
-    --secondary: 181, 229, 179;
-    --secondary-dark: 130, 180, 128;
+
+	--secondary-light: 39, 165, 136;
+	--secondary: 21, 92, 79;
+	--secondary-dark: 15, 65, 56;
     --on-secondary: 0, 0, 0;
+    --on-secondary-dark: 255, 255, 255;
 
     /* Tertiary */
     --tertiary-light: 255, 255, 230;
@@ -112,12 +114,12 @@ This block is here for auto complete */
     border-radius: 10px;
     cursor: pointer;
     z-index: 1000;
-    background: rgba(var(--primary-green-dark), 0.9);
+    background: rgba(var(--secondary-dark), 0.9);
     transition: background-color 0.3s;
 }
 
 #backToTop:hover {
-    background: rgba(var(--primary-green-light), 0.9);
+    background: rgba(var(--secondary-light), 0.9);
 }
 
 #backToTop svg {
@@ -148,7 +150,6 @@ This block is here for auto complete */
     align-items: center;
     flex-wrap: wrap;
     background: rgba(var(--primary), 0.8);
-    color: rgba(var(--on-primary), 1);
     padding: 2em 2em;
     border-radius: 10px;
 }
@@ -160,7 +161,8 @@ This block is here for auto complete */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(var(--primary-dark), 1);
+    background: rgba(var(--secondary-dark), 1);
+    color: rgba(var(--on-secondary-dark), 1);
     padding: 2em;
     margin: 1em;
     border-radius: 10px;
@@ -171,7 +173,7 @@ This block is here for auto complete */
 
 /* Hover effect for counter items */
 .counter-section__item:hover {
-    background: rgba(201, 237, 163, 0.2);
+    background: rgba(var(--secondary-dark), 0.7);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
