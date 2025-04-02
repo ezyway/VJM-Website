@@ -537,9 +537,8 @@ This block is here for auto complete */
 ==================================================== */
 /* Container for the slider and navigation buttons */
 .testimonials-section {
-    background: rgba(255, 255, 255, 0.6);
     padding: 2em;
-    background: rgba(var(--primary-green-dark), 0.5);
+    background: rgba(var(--primary), 0.5);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 }
@@ -548,8 +547,6 @@ This block is here for auto complete */
     width: 100%;
     text-align: center;
     font-size: 2em;
-    margin-bottom: 1em;
-    color: white;
 }
 
 .testimonials-section__container {
@@ -565,7 +562,6 @@ This block is here for auto complete */
     background-color: rgba(111, 168, 35, 0.8);
     /* Primary color with opacity */
     border: none;
-    color: #fff;
     width: 2em;
     height: 2em;
     border-radius: 10px;
@@ -596,22 +592,22 @@ This block is here for auto complete */
     display: flex;
     gap: 20px;
     overflow-x: auto;
-    padding-bottom: 10px;
+    padding: 3em;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
 .testimonials-section__slider::-webkit-scrollbar {
-    height: 8px;
     display: none;
 }
 
 .testimonials-section__item {
     flex: 0 0 auto;
     width: 300px;
-    background: rgba(18, 18, 18, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(var(--primary-light), 1);
+    color: rgba(var(--on-primary), 1);
+    box-shadow: 0 0px 30px rgba(var(--secondary-dark), 0.6);
     padding: 20px;
     border-radius: 16px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
@@ -619,13 +615,12 @@ This block is here for auto complete */
 }
 
 .testimonials-section__item:hover {
-    box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
+    box-shadow: 0 0px 30px rgba(var(--secondary-dark), 1);
 }
 
 .testimonials-section__text {
     font-size: 1em;
     line-height: 1.5;
-    color: #FFFFFF;
     margin-bottom: 1em;
     text-align: justify;
 }
@@ -633,7 +628,6 @@ This block is here for auto complete */
 .testimonials-section__name {
     font-size: 1.5em;
     font-weight: bold;
-    color: #FFFFFF;
 }
 
 .testimonials-section__course {
