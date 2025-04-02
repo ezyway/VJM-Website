@@ -148,7 +148,7 @@ This block is here for auto complete */
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    background: rgba(var(--primary), 0.8);
+    background: rgba(var(--primary-dark), 0.8);
     padding: 2em 2em;
     border-radius: 10px;
 }
@@ -160,8 +160,8 @@ This block is here for auto complete */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(var(--secondary-dark), 1);
-    color: rgba(var(--on-secondary), 1);
+    background: rgba(var(--primary-light), 1);
+    color: rgba(var(--on-primary), 1);
     padding: 2em;
     margin: 1em;
     border-radius: 10px;
@@ -172,7 +172,7 @@ This block is here for auto complete */
 
 /* Hover effect for counter items */
 .counter-section__item:hover {
-    background: rgba(var(--secondary-dark), 0.7);
+    background: rgba(var(--primary-light), 0.5);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -367,7 +367,7 @@ This block is here for auto complete */
     gap: 40px;
     padding: 5em 1em;
     flex-wrap: wrap;
-    background: rgba(var(--primary-green-dark), 0.6);
+    background: rgba(var(--primary-light), 0.4);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 }
@@ -377,7 +377,8 @@ This block is here for auto complete */
     flex: 1;
     min-width: 350px;
     max-width: 500px;
-    background: rgba(var(--primary-green), 1);
+    background: rgba(var(--primary-light), 1);
+    color: rgba(var(--on-primary), 1);
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -387,17 +388,11 @@ This block is here for auto complete */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
 }
 
-/* Hover effect for news boxes */
-.news-section__box:hover {
-    box-shadow: 0 15px 40px rgba(76, 102, 43, 0.3);
-}
 
 /* News Box Title */
 .news-section__box h2 {
     font-size: 2rem;
-    color: #FFFFFF;
     margin-bottom: 20px;
-    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
 }
 
 /* News Slider */
@@ -413,11 +408,11 @@ This block is here for auto complete */
 /* Custom Scrollbar for News Slider (WebKit) */
 .news-section__slider::-webkit-scrollbar {
     width: 8px;
+    border-radius: 10px;
 }
 
 .news-section__slider::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #4C662B, #586249);
-    border-radius: 8px;
 }
 
 .news-section__slider::-webkit-scrollbar-track {
@@ -428,7 +423,7 @@ This block is here for auto complete */
 .news-section__item {
     padding: 15px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(var(--primary), 1);
     border: 1px solid rgba(255, 255, 255, 0.05);
     margin: 8px 0;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s;
@@ -437,7 +432,6 @@ This block is here for auto complete */
 /* News/Event Item Heading */
 .news-section__item h3 {
     font-size: 1.5em;
-    color: #FFFFFF;
     margin-bottom: 5px;
 }
 
@@ -452,7 +446,6 @@ This block is here for auto complete */
 /* News/Event Description */
 .news-section__item p {
     font-size: 1em;
-    color: #FFFFFF;
     line-height: 1.5;
 }
 
