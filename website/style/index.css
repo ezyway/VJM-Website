@@ -647,22 +647,23 @@ This block is here for auto complete */
 
 .photo-carousel-section__wrapper {
     position: relative;
-    margin: 0 auto;
+    margin: 2em 1em;
     overflow: hidden;
     display: flex;
     align-items: center;
+    background: rgba(var(--primary-dark), 0.5);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
     padding: 5em 5em 2em 5em;
     border-radius: 10px;
 }
 
 .photo-carousel-section__title {
     position: absolute;
-    top: 15px;
+    top: 0.5em;
     left: 50%;
     transform: translateX(-50%);
     font-size: 2.5em;
-    color: #fff;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     z-index: 10;
 }
 
@@ -672,20 +673,21 @@ This block is here for auto complete */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(var(--primary-light), 1);
+    color: rgba(var(--on-primary), 1);
     padding: 12px 18px;
     margin: 0 2.5em;
     border-radius: 50%;
     cursor: pointer;
     font-size: 18px;
-    color: #fff;
     transition: 0.3s;
     z-index: 10;
+    border: none;
 }
 
 .photo-carousel-section__nav-left:hover,
 .photo-carousel-section__nav-right:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(var(--secondary-light), 1);
 }
 
 .photo-carousel-section__nav-left {
@@ -702,7 +704,7 @@ This block is here for auto complete */
     gap: 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 10px;
+    padding: 2em;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
 }
@@ -713,13 +715,11 @@ This block is here for auto complete */
 
 .photo-carousel-section__item {
     flex: 0 0 auto;
-    width: 300px;
+    width: 400px;
     scroll-snap-align: start;
     border-radius: 20px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 30px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s;
 }
 
