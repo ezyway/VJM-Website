@@ -1,49 +1,63 @@
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-/* =======================================================
-   :root Variables
-========================================================== */
+/* Comment or Remove in Prod
+Colors are declared in styles/global.css
+This block is here for auto complete */
 :root {
-	--green-light: 39, 165, 136;
-	--green: 21, 92, 79;
-	--green-dark: 15, 65, 56;
+	/* Primary */
+	--primary-light: 255, 255, 255;
+	--primary: 224, 224, 224;
+	--primary-dark: 180, 180, 180;
+	--on-primary: 0, 0, 0;
 
-	--yellow-light: 248, 218, 128;
-	--grey-light: 144, 144, 144;
-	--grey-dark: 55, 55, 55;
+	/* Secondary */
 
+	--secondary-light: 39, 165, 136;
+	--secondary: 21, 92, 79;
+	--secondary-dark: 15, 65, 56;
+	--on-secondary: 255, 255, 255;
+
+	/* Tertiary */
+	--tertiary-light: 255, 255, 230;
+	--tertiary: 255, 242, 196;
+	--tertiary-dark: 200, 190, 120;
+	--on-tertiary: 0, 0, 0;
 }
+
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 
 /* Remove the '.' to apply background scroll */
 .body {
-  font-family: "Montserrat";
-  margin: 0;
-  padding: 0;
-  background-repeat: repeat-y;
-  background-size: 100% auto;
-  background-position: top left;
-  background-attachment: scroll;
+	font-family: "Montserrat";
+	margin: 0;
+	padding: 0;
+	background-repeat: repeat-y;
+	background-size: 100% auto;
+	background-position: top left;
+	background-attachment: scroll;
 }
 
 
 body {
-  /* font-family: 'Roboto', sans-serif; */
-  font-family: "Montserrat";
-  margin: 0;
-  padding: 0;
-  background: rgba(var(--primary-green-light));
-  background-image: url('../assets/background.png');
-  background-repeat: repeat-x;
-  background-size: contain;
-  background-position: top left;
-  background-attachment: fixed;
+	/* font-family: 'Roboto', sans-serif; */
+	font-family: "Montserrat";
+	margin: 0;
+	padding: 0;
+	background: rgba(var(--primary-green-light));
+	background-image: url('../assets/background.png');
+	background-repeat: repeat-x;
+	background-size: contain;
+	background-position: top left;
+	background-attachment: fixed;
 }
