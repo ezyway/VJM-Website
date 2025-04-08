@@ -1,16 +1,25 @@
-
-/* =======================================================
-   :root Variables
-========================================================== */
+/* Comment or Remove in Prod
+Colors are declared in styles/global.css
+This block is here for auto complete */
 :root {
-	--green-light: 39, 165, 136;
-	--green: 21, 92, 79;
-	--green-dark: 15, 65, 56;
+    /* Primary */
+    --primary-light: 255, 255, 255;
+    --primary: 224, 224, 224;
+    --primary-dark: 180, 180, 180;
+    --on-primary: 0, 0, 0;
 
-	--yellow-light: 248, 218, 128;
-	--grey-light: 144, 144, 144;
-	--grey-dark: 55, 55, 55;
+    /* Secondary */
 
+	--secondary-light: 39, 165, 136;
+	--secondary: 21, 92, 79;
+	--secondary-dark: 15, 65, 56;
+    --on-secondary: 255, 255, 255;
+
+    /* Tertiary */
+    --tertiary-light: 255, 255, 230;
+    --tertiary: 255, 242, 196;
+    --tertiary-dark: 200, 190, 120;
+    --on-tertiary: 0, 0, 0;
 }
 
 
@@ -36,10 +45,9 @@ textarea:focus {
 	top: 10px;
 	left: 10px;
 	right: 10px;
-	/* white background with slight opacity to keep glass effect */
-	background: rgba(255, 255, 255, 0.5);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
+	background: rgba(var(--primary-light), 0.2);
+	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(15px);
 	border-radius: 12px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 	z-index: 1000;
@@ -102,6 +110,7 @@ textarea:focus {
 	cursor: pointer;
 	border-radius: 10px;
 	background: rgba(255, 255, 255, 1);
+	border: 1px solid green;
 }
 
 .nav-links li a:hover {
