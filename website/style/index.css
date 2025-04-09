@@ -861,6 +861,7 @@ This block is here for auto complete */
 
     .heading-container h2 {
         font-size: 1.5rem;
+        margin-top: 1em;
     }
 
     .achievements-table {
@@ -949,6 +950,9 @@ This block is here for auto complete */
         transform: translateX(-50%);
         font-size: 2rem;
         z-index: 10;
+    }
+    .photo-carousel-section__item{
+        width: 20em;
     }
 
     /* Position nav buttons flush with the left and right edges at the same top position as the title */
