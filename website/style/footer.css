@@ -218,13 +218,15 @@ hr.customHR {
     .footer__credits {
         flex-direction: column;
     }
-
-    .footer h2::after{
-        margin: auto;
-    }
-
     .footer h2{
         text-align: center;
+        width: fit-content;
+    }
+    .footer__title{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .footer__contact span,
@@ -235,12 +237,5 @@ hr.customHR {
 
     .socialWrapper {
         margin-right: 0px;
-    }
-
-    .college_slogan {
-        padding: 15px;
-        h1 {
-            font-size: 24px;
-        }
     }
 }
