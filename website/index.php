@@ -5,6 +5,29 @@
     <!-- ===================================================
          Metadata & Document Setup
          =================================================== -->
+    <!-- Add Schema.org structured data for SEO benefits -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "College",
+            "name": "Shri V.J. Modha College",
+            "url": "https://shrivjmodhacollege.com",
+            "logo": "https://shrivjmodhacollege.com/assets/logo.ico",
+            "description": "Shri V.J. Modha College - Empowering students for a better future.",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Vidhyadham, Chhaya-Birla Road, Nr. Pakshi Abhiyaran, Porbandar, Gujarat, 360575",
+                "addressLocality": "Porbandar",
+                "addressRegion": "Gujarat",
+                "postalCode": "360575",
+                "addressCountry": "IN"
+            }
+        }
+    </script>
+
+    <!-- ===================================================
+         Metadata & Document Setup
+         =================================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Meta description for SEO -->
@@ -463,9 +486,9 @@
 
         <div class="testimonials-section__container">
             <button class="testimonials-section__nav-left">&lt;</button>
-            
+
             <div class="testimonials-section__slider">
-                
+
                 <div class="testimonials-section__item">
                     <p class="testimonials-section__text">
                         "The practical approach and supportive faculty have transformed my learning experience!"
@@ -565,7 +588,7 @@
                 <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/132.jpg" alt="Image 4">
                 </div>
-                
+
                 <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/133.jpg" alt="Image 5">
                 </div>
@@ -575,7 +598,7 @@
         </div>
     </section>
 
-    
+
     <!-- Back to Top Button with a modern arrow icon -->
     <button id="backToTop" aria-label="Back to top">
         <!-- Inline SVG arrow icon -->
