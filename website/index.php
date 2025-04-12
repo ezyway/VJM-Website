@@ -20,24 +20,20 @@
          Fonts & Stylesheets
          =================================================== -->
 
-    <!-- GOOGLE FONT -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <!-- Import Roboto font for a Material Design look -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
-
-    <!-- Global styles -->
+    <!-- Custom Styles -->
     <link href="style/global.css" rel="stylesheet">
-    <!-- Page-specific styles -->
     <link href="style/index.css" rel="stylesheet">
 
     <!-- ===================================================
          Scripts
          =================================================== -->
-    <!-- Main JavaScript for page interactions -->
-    <script src="scripts/index.js"></script>
+    <!-- <script src="scripts/index.js"></script> -->
+    <script src="scripts/index.js" defer></script>
 </head>
 
 <body>
@@ -53,7 +49,7 @@
          - Fullscreen video banner with an overlay message.
          =================================================== -->
     <section class="video-banner" id="video-banner">
-        <video autoplay muted loop playsinline class="video-banner__background">
+        <video autoplay muted loop playsinline class="video-banner__background" preload="metadata">
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
