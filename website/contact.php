@@ -67,12 +67,12 @@
                     </a>
 
                     <a href="mailto:shrivjmodha@gmail.com">
-                         <img src="assets/icons/footer/envelope.png" alt="Email icon">
+                         <img src="assets/icons/footer/email.png" alt="Email icon">
                          <span>shrivjmodha@gmail.com</span>
                     </a>
 
                     <a href="https://maps.app.goo.gl/1KuyRCNiCoc7pfun9">
-                         <img src="assets/icons/footer/location2.png" alt="Location icon">
+                         <img src="assets/icons/footer/location.png" alt="Location icon">
                          <span class="contact__address">
                               "Vidhyadham", Chhaya-Birla Road, <br>
                               Nr. Pakshi Abhiyaran, <br>
@@ -101,13 +101,13 @@
                     </div>
                     <div class="contact__social-icons">
                          <a href="https://www.instagram.com/vjmodhacollege/">
-                              <img src="assets/icons/footer/instagram2.png" alt="Instagram icon">
+                              <img src="assets/icons/footer/instagram.png" alt="Instagram icon">
                          </a>
                          <a href="https://www.facebook.com/vjmodhacollege/">
-                              <img src="assets/icons/footer/facebook2.png" alt="Facebook icon">
+                              <img src="assets/icons/footer/facebook.png" alt="Facebook icon">
                          </a>
                          <a href="https://www.linkedin.com/school/vjmodhacollege/">
-                              <img src="assets/icons/footer/linkedin2.png" alt="LinkedIn icon">
+                              <img src="assets/icons/footer/linkedin.png" alt="LinkedIn icon">
                          </a>
                     </div>
                </div>
