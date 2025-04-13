@@ -68,20 +68,22 @@ textarea:focus {
 	width: 180px;
 	cursor: pointer;
 	transition: transform 0.3s ease;
+	border-radius: 50%;
+	transition: 0.3s ease-in-out;
 }
 
 .logo img {
 	width: 100%;
 	background: rgba(255, 255, 255, 1);
-	border-radius: 50%;
 	display: block;
-	transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 	width: 180px;
 	height: auto;
+	border-radius: 50%;
 }
 
 .logo:hover {
 	transform: scale(1.05);
+	box-shadow: 0px 0px 20px grey;
 }
 
 /* Mobile Logo (hidden on desktop) */
