@@ -33,7 +33,6 @@
     <!-- ===================================================
          Scripts
          =================================================== -->
-    <!-- <script src="scripts/index.js"></script> -->
     <script src="scripts/template.js" defer></script>
 </head>
 
