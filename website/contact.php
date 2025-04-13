@@ -12,7 +12,7 @@
      <meta name="description" content="Shri V.J. Modha College - Empowering students for a better future.">
 
      <!-- Document Title -->
-     <title>Template Title</title>
+     <title>Contact Us</title>
 
      <!-- Favicon -->
      <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
