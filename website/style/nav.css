@@ -196,18 +196,6 @@ textarea:focus {
 }
 
 
-/* =======================================================
-   College Logo
-========================================================== */
-.college-logo {
-	width: 120px;
-	cursor: pointer;
-	transition: transform 0.3s ease-in-out;
-}
-
-.college-logo:hover {
-	transform: scale(1.1);
-}
 
 
 /* =======================================================
@@ -235,10 +223,9 @@ textarea:focus {
 
 /* Modal Content */
 .modal-content {
-	/* preserve glass morphic look with green tint if desired */
-	background: rgba(var(--green-light), 0.6);
-	backdrop-filter: blur(15px);
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgba(var(--primary-light), 0.6);
+	backdrop-filter: blur(10px);
+	box-shadow: 0px 0px 50px grey;
 	border-radius: 12px;
 	width: 90%;
 	max-width: 500px;
@@ -247,7 +234,6 @@ textarea:focus {
 	position: relative;
 	overflow-y: auto;
 	transition: transform 0.3s ease-in-out;
-	color: white;
 }
 
 /* Modal Logo */
@@ -270,11 +256,14 @@ textarea:focus {
 	position: absolute;
 	top: 10px;
 	right: 15px;
-	font-size: 20px;
+	font-size: 2em;
 	background: none;
 	border: none;
 	cursor: pointer;
-	color: white;
+	transition: 0.5s;
+}
+.close-btn:hover {
+	transform: scale(1.2);
 }
 
 /* Active Modal State */
