@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // --------------------------
     // Click for Scroll Down Icon
     // --------------------------
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('counter-section').scrollIntoView({ behavior: 'smooth' });
     });
 
-    
+
     // --------------------------
     // Animate Counters
     // --------------------------
@@ -144,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------
     // Pride Slider Script
     // --------------------------
+    const prideSection = document.querySelector(".pride-section");
     const prideSliderWrapper = document.querySelector(".pride-section__slider-wrapper");
     const prideSlides = document.querySelectorAll(".pride-section__item");
     const pridePrevBtn = document.querySelector(".pride-section__nav-prev");
@@ -170,5 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
     pridePrevBtn.addEventListener("click", showPrevPrideSlide);
 
     // Auto slide every 5 seconds
-    setInterval(showNextPrideSlide, 5000);
+    let prideInterval = setInterval(showNextPrideSlide, 5000);
+
+    prideSection.addEventListener("mouseenter", () => clearInterval(prideInterval));
+    prideSection.addEventListener("mouseleave", () => {
+        prideInterval = setInterval(showNextPrideSlide, 5000);
+    });
+
 });

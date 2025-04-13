@@ -5,6 +5,29 @@
     <!-- ===================================================
          Metadata & Document Setup
          =================================================== -->
+    <!-- Add Schema.org structured data for SEO benefits -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "College",
+            "name": "Shri V.J. Modha College",
+            "url": "https://shrivjmodhacollege.com",
+            "logo": "https://shrivjmodhacollege.com/assets/logo.ico",
+            "description": "Shri V.J. Modha College - Empowering students for a better future.",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Vidhyadham, Chhaya-Birla Road, Nr. Pakshi Abhiyaran, Porbandar, Gujarat, 360575",
+                "addressLocality": "Porbandar",
+                "addressRegion": "Gujarat",
+                "postalCode": "360575",
+                "addressCountry": "IN"
+            }
+        }
+    </script>
+
+    <!-- ===================================================
+         Metadata & Document Setup
+         =================================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Meta description for SEO -->
@@ -20,24 +43,20 @@
          Fonts & Stylesheets
          =================================================== -->
 
-    <!-- GOOGLE FONT -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <!-- Import Roboto font for a Material Design look -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
-
-    <!-- Global styles -->
+    <!-- Custom Styles -->
     <link href="style/global.css" rel="stylesheet">
-    <!-- Page-specific styles -->
     <link href="style/index.css" rel="stylesheet">
 
     <!-- ===================================================
          Scripts
          =================================================== -->
-    <!-- Main JavaScript for page interactions -->
-    <script src="scripts/index.js"></script>
+    <!-- <script src="scripts/index.js"></script> -->
+    <script src="scripts/index.js" defer></script>
 </head>
 
 <body>
@@ -53,7 +72,7 @@
          - Fullscreen video banner with an overlay message.
          =================================================== -->
     <section class="video-banner" id="video-banner">
-        <video autoplay muted loop playsinline class="video-banner__background">
+        <video autoplay muted loop playsinline class="video-banner__background" preload="metadata">
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -467,9 +486,9 @@
 
         <div class="testimonials-section__container">
             <button class="testimonials-section__nav-left">&lt;</button>
-            
+
             <div class="testimonials-section__slider">
-                
+
                 <div class="testimonials-section__item">
                     <p class="testimonials-section__text">
                         "The practical approach and supportive faculty have transformed my learning experience!"
@@ -569,7 +588,7 @@
                 <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/132.jpg" alt="Image 4">
                 </div>
-                
+
                 <div class="photo-carousel-section__item">
                     <img src="assets/photos/index/photo_carousel/133.jpg" alt="Image 5">
                 </div>
@@ -579,7 +598,7 @@
         </div>
     </section>
 
-    
+
     <!-- Back to Top Button with a modern arrow icon -->
     <button id="backToTop" aria-label="Back to top">
         <!-- Inline SVG arrow icon -->

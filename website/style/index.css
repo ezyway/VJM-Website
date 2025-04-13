@@ -230,7 +230,6 @@ This block is here for auto complete */
 
 .pride-section h2 {
     font-size: 2.2rem;
-    margin-bottom: 20px;
 }
 
 /* Chairman Profile Picture */
@@ -268,24 +267,32 @@ This block is here for auto complete */
 /* Slider Wrapper */
 .pride-section__slider {
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     max-width: 500px;
     overflow: hidden;
     position: relative;
+    margin: 0 auto;
 }
+
 
 /* Each Slide Content */
 .pride-section__slider-wrapper {
     display: flex;
-    width: 100%;
     transition: transform 0.5s ease-in-out;
 }
 
 /* Each Pride Item */
 .pride-section__item {
     flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    transition: transform 0.5s ease-in-out;
+    padding: 2em;
+    box-sizing: border-box;
 }
 
 /* Student Image */
@@ -301,6 +308,7 @@ This block is here for auto complete */
 .pride-section__name {
     font-size: 1.5em;
     font-weight: bold;
+    margin-top: 1em;
 }
 
 /* Course and Award Styling */
@@ -861,6 +869,7 @@ This block is here for auto complete */
 
     .heading-container h2 {
         font-size: 1.5rem;
+        margin-top: 1em;
     }
 
     .achievements-table {
@@ -949,6 +958,9 @@ This block is here for auto complete */
         transform: translateX(-50%);
         font-size: 2rem;
         z-index: 10;
+    }
+    .photo-carousel-section__item{
+        width: 20em;
     }
 
     /* Position nav buttons flush with the left and right edges at the same top position as the title */

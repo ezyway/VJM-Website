@@ -68,20 +68,22 @@ textarea:focus {
 	width: 180px;
 	cursor: pointer;
 	transition: transform 0.3s ease;
+	border-radius: 50%;
+	transition: 0.3s ease-in-out;
 }
 
 .logo img {
 	width: 100%;
 	background: rgba(255, 255, 255, 1);
-	border-radius: 50%;
 	display: block;
-	transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 	width: 180px;
 	height: auto;
+	border-radius: 50%;
 }
 
 .logo:hover {
 	transform: scale(1.05);
+	box-shadow: 0px 0px 20px grey;
 }
 
 /* Mobile Logo (hidden on desktop) */
@@ -196,18 +198,6 @@ textarea:focus {
 }
 
 
-/* =======================================================
-   College Logo
-========================================================== */
-.college-logo {
-	width: 120px;
-	cursor: pointer;
-	transition: transform 0.3s ease-in-out;
-}
-
-.college-logo:hover {
-	transform: scale(1.1);
-}
 
 
 /* =======================================================
@@ -235,10 +225,9 @@ textarea:focus {
 
 /* Modal Content */
 .modal-content {
-	/* preserve glass morphic look with green tint if desired */
-	background: rgba(var(--green-light), 0.6);
-	backdrop-filter: blur(15px);
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgba(var(--primary-light), 0.6);
+	backdrop-filter: blur(10px);
+	box-shadow: 0px 0px 50px grey;
 	border-radius: 12px;
 	width: 90%;
 	max-width: 500px;
@@ -247,7 +236,6 @@ textarea:focus {
 	position: relative;
 	overflow-y: auto;
 	transition: transform 0.3s ease-in-out;
-	color: white;
 }
 
 /* Modal Logo */
@@ -267,14 +255,20 @@ textarea:focus {
 
 /* Close Button */
 .close-btn {
+	height: 1em;
+	width: 1em;
+	border-radius: 50%;
 	position: absolute;
-	top: 10px;
-	right: 15px;
-	font-size: 20px;
+	top: 0.5em;
+	right: 0.5em;
+	font-size: 2em;
 	background: none;
 	border: none;
 	cursor: pointer;
-	color: white;
+	transition: 0.5s;
+}
+.close-btn:hover {
+	transform: scale(1.2);
 }
 
 /* Active Modal State */
