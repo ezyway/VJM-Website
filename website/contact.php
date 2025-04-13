@@ -30,15 +30,6 @@
      <link href="style/global.css" rel="stylesheet">
      <link href="style/contact.css" rel="stylesheet">
 
-     <!-- ===================================================
-         Scripts
-         =================================================== -->
-     <!-- <script src="scripts/template.js" defer></script> -->
-
-
-     <!-- ===================================================
-         Styles
-         =================================================== -->
 </head>
 
 <body>
