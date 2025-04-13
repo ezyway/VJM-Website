@@ -19,7 +19,6 @@
 }
 .table-container{
     overflow-x: auto;
-    width: 100%;
     border-radius: 10px;
     width: 80%;
     margin: auto;
@@ -55,7 +54,11 @@ tr:hover {
     background: #CDEDA3;
     transition: 0.3s ease-in-out;
 }
-
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 td a{
     text-decoration: none;
     margin: auto 1em;
@@ -68,4 +71,19 @@ td a{
 td a:hover{
     color: rgba(var(--primary-light), 1);
     background-color: black;
+}
+
+@media screen and (max-width: 768px) {
+    .wrapper{
+        padding: 1em;
+    }
+    .table-container{
+        width: 100%;
+    }
+    th, td{
+        padding: 0.4em;
+    }
+    td a{
+        padding: 0.2em;
+    }
 }

@@ -54,8 +54,10 @@
                               <td>Mag 1</td>
                               <td>2020</td>
                               <td>
-                                   <a href="assets/e_mags/mag_2020.pdf" target="_blank">View</a>
-                                   <a href="assets/e_mags/mag_2020.pdf" download="College_Magazine_2020.pdf">Download</a>
+                                   <div class="buttons">
+                                        <a href="assets/e_mags/mag_2020.pdf" target="_blank">View</a>
+                                        <a href="assets/e_mags/mag_2020.pdf" download="College_Magazine_2020.pdf">Download</a>
+                                   </div>
                               </td>
                          </tr>
                          <tr>
@@ -63,8 +65,10 @@
                               <td>Mag 2</td>
                               <td>2021</td>
                               <td>
-                                   <a href="assets/e_mags/mag_2021.pdf" target="_blank">View</a>
-                                   <a href="assets/e_mags/mag_2021.pdf" download="College_Magazine_2021.pdf">Download</a>
+                                   <div class="buttons">
+                                        <a href="assets/e_mags/mag_2021.pdf" target="_blank">View</a>
+                                        <a href="assets/e_mags/mag_2021.pdf" download="College_Magazine_2021.pdf">Download</a>
+                                   </div>
                               </td>
                          </tr>
                     </table>
