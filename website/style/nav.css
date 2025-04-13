@@ -259,8 +259,8 @@ textarea:focus {
 	width: 1em;
 	border-radius: 50%;
 	position: absolute;
-	top: 1em;
-	right: 1em;
+	top: 0.5em;
+	right: 0.5em;
 	font-size: 2em;
 	background: none;
 	border: none;
