@@ -55,7 +55,7 @@
     <section class="video-banner" id="video-banner">
         <video autoplay muted loop playsinline class="video-banner__background">
             <source src="assets/videos/banner-video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
+            Your browser does not support the video tag.::
         </video>
 
         <!-- <div class="video-banner__overlay">
