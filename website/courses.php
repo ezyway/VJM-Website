@@ -235,7 +235,7 @@ if (isset($_GET["course"])) {
                     echo "<h3>Quick Info</h3>";
                     echo "<ul>";
                     foreach ($courses[$_GET["course"]]['quick_info'] as $info) {
-                         echo "<p>$info</p>";
+                         echo "<li>$info</li>";
                     }
                     echo "</ul>";
                     echo "</div>";
