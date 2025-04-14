@@ -85,6 +85,67 @@
                          </tr>
                     </table>
                </div>
+               <div class="table-container">
+                    <table>
+                         <tr>
+                              <th>Name of the Scholarship</th>
+                              <th>Form Type</th>
+                         </tr>
+                         <tr>
+                              <td>Vicharti or Vimukt Jati</td>
+                              <td>
+                                   <div class="buttons">
+                                        <a href="" target="_blank">New</a>
+                                        <a href="" target="_blank">Renew</a>
+                                   </div>
+                              </td>
+                         </tr>
+                         <tr>
+                              <td>Physical Handicaped</td>
+                              <td>
+                                   <div class="buttons">
+                                        <a href="" target="_blank">View</a>
+                                   </div>
+                              </td>
+                         </tr>
+                         <tr>
+                              <td>Scheduled Caste</td>
+                              <td>
+                                   <div class="buttons">
+                                        <a href="" target="_blank">New</a>
+                                        <a href="" target="_blank">Renew</a>
+                                   </div>
+                              </td>
+                         </tr>
+                         <tr>
+                              <td>Scheduled Tribe</td>
+                              <td>
+                                   <div class="buttons">
+                                        <a href="" target="_blank">New</a>
+                                        <a href="" target="_blank">Renew</a>
+                                   </div>
+                              </td>
+                         </tr>
+                         <tr>
+                              <td>Minority</td>
+                              <td>
+                                   <div class="buttons">
+                                        <a href="" target="_blank">New</a>
+                                        <a href="" target="_blank">Renew</a>
+                                   </div>
+                              </td>
+                         </tr>
+                         <tr>
+                              <td>MYSY</td>
+                              <td>
+                                   <div class="buttons">
+                                        <a href="" target="_blank">New</a>
+                                        <a href="" target="_blank">Renew</a>
+                                   </div>
+                              </td>
+                         </tr>
+                    </table>
+               </div>
           </div>
      </div>
 
