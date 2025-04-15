@@ -9,8 +9,8 @@
     width: 95%;
     margin: auto;
     background-color: rgba(var(--primary), 0.7);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     padding: 2em 1em;
     border-radius: 20px;
     font-size: 1.2em;
