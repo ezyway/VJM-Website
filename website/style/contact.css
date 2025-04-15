@@ -61,6 +61,15 @@
     background-color: rgb(var(--green));
     margin-top: 3px;
     border-radius: 2px;
+    transform: scaleX(0.6);
+    transform-origin: left;
+    transition: transform 0.4s ease-in-out;
+}
+
+.contact__info:hover .section__title h2::after,
+.contact__links:hover .section__title h2::after,
+.contact__map:hover .section__title h2::after {
+    transform: scaleX(1.6);
 }
 
 .contact__info span,

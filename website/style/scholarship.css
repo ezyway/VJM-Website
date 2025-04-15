@@ -56,16 +56,19 @@ tr:hover {
 }
 td a{
     text-decoration: none;
+    font-size: 18px;
     margin: auto 1em;
     color: black;
     background-color: rgba(var(--primary-light), 1);
-    padding: 0.4em 1em;
-    border-radius: 10px;
+    padding: 0.2em 0.5em;
+    border-radius: 6px;
     transition: 0.3s ease-in-out;
+    border: 1px solid lightgray;
 }
 td a:hover{
     color: rgba(var(--primary-light), 1);
     background-color: black;
+    border: 1px solid black;
 }
 
 @media screen and (max-width: 768px) {

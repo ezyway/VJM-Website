@@ -232,7 +232,7 @@ if (isset($_GET["course"])) {
           <?php
                if (isset($courses[$_GET["course"]])) {
                     echo "<div class='info-snippet'>";
-                    echo "<h3>Quick Info</h3>";
+                    echo "<h3 class='course_title'>Quick Info</h3>";
                     echo "<ul>";
                     foreach ($courses[$_GET["course"]]['quick_info'] as $info) {
                          echo "<li>$info</li>";
@@ -242,7 +242,7 @@ if (isset($_GET["course"])) {
 
                     
                     echo "<div class='info-snippet'>";
-                    echo "<h3>Job Roles</h3>";
+                    echo "<h3 class='course_title'>Job Roles</h3>";
                     echo "<ul>";
                     foreach ($courses[$_GET["course"]]['job_roles'] as $role) {
                          echo "<li>$role</li>";
@@ -252,7 +252,7 @@ if (isset($_GET["course"])) {
 
                     
                     echo "<div class='info-snippet'>";
-                    echo "<h2>FAQs</h2>";
+                    echo "<h3 class='course_title'>FAQs</h3>";
                     echo "<ul>";
                     foreach ($courses[$_GET["course"]]['faq'] as $faq) {
                          echo "<li>$faq</li>";
