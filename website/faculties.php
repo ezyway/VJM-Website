@@ -42,7 +42,9 @@
          TRUSTEE Section with Slider
          =================================================== -->
     <div class="container">
-        <div class="trustee-section">
+
+        <div class="wrapper">
+            <h2>Faculties</h2>
             <div class="tabs">
                 <!-- Radio Inputs -->
                 <input type="radio" name="tabset" id="tab1" checked>
@@ -59,8 +61,8 @@
                     <label for="tab2">Data Administrators</label>
                     <label for="tab3">B.C.A. / M.Sc.(IT) & C.A.</label>
                     <label for="tab4">B.Sc. / M.Sc.(Chem.)</label>
-                    <label for="tab5">B.B.A.</label>
                     <label for="tab6">B.Com. / M.Com.</label>
+                    <label for="tab5">B.B.A.</label>
                     <label for="tab7">B.S.W.</label>
                 </div>
 
@@ -77,11 +79,6 @@
                             <img src="assets/photos/faculties/Vishal_Pandya.jpg" alt="">
                             <p>Director</p>
                         </div>
-
-                        <div>
-                            <img src="assets/photos/faculties/Thakrar_Zalak.jpg" alt="">
-                            <p>Academic Head</p>
-                        </div>
                     </div>
 
                     <!-- Data Administrators -->
@@ -96,7 +93,7 @@
                     <div class="tab-content" id="content3">
                         <div>
                             <img src="assets/photos/faculties/Paresh_Savjani.jpg" alt="">
-                            <p>I/c Principal & Associate Professor</p>
+                            <p>I/c Principal <br>&<br> Associate Professor</p>
                         </div>
 
                         <div>
