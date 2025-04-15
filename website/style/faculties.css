@@ -22,13 +22,14 @@
 
 .tab-labels {
     display: flex;
-    overflow-x: auto;
+    /* overflow-x: auto; */
     gap: 10px;
     margin-bottom: 20px;
     border-bottom: 1px solid #27a588b3;
     padding-bottom: 10px;
     scroll-behavior: smooth;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
   .tab-labels::-webkit-scrollbar {
