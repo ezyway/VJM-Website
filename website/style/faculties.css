@@ -1,8 +1,6 @@
 .container {
 	width: 100%;
 	margin: 15em auto 2em auto;
-	padding: 20px;
-
 }
 
 .wrapper {
@@ -10,14 +8,39 @@
 	background-color: rgba(var(--primary), 0.7);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
-	padding: 1em 1em;
+    padding: 0em 8em 2em 8em;
 	border-radius: 10px;
 	font-size: 1.2em;
 }
-.wrapper h2{
-	text-align: center;
-	margin-bottom: 1em;
-	font-size: 2em;
+.page_title{
+    color: #000;
+    background: rgba(var(--primary), 1);
+    width: 280px;
+    padding: 8px 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.page_title::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: rgb(var(--green));
+    margin: auto;
+    border-radius: 2px;
+    transform: scaleX(0.5);
+    transform-origin: center;
+    transition: transform 0.4s ease-in-out;
+}
+.container:hover .page_title::after {
+    transform: scaleX(1.5);
 }
 
 .tabs input[type="radio"] {
@@ -28,7 +51,7 @@
 	display: flex;
 	gap: 10px;
 	border-bottom: 1px solid #27a588b3;
-	padding-bottom: 1em;
+	padding: 1em 8em;
 	scroll-behavior: smooth;
 	justify-content: center;
 	flex-wrap: wrap;
@@ -111,6 +134,13 @@ input#tab7:checked~.content #content7 {
 }
 
 @media screen and (max-width: 768px) {
+	.wrapper{
+        padding: 0em 1.5em 1.5em 1.5em;
+        font-size: 1em;
+    }
+	.tab-labels {
+		padding: 1em 1em;
+	}
 	.tab-labels label {
 		padding: 10px 15px;
 	}
