@@ -64,6 +64,9 @@
     border-radius: 10px;
     margin-bottom: 1em;
 }
+.trustee-section h2 {
+    margin-bottom: 1em;
+}
 
 .trustee-section__slider {
     width: 100%;

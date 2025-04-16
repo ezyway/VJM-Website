@@ -1,16 +1,4 @@
-.container{
-    width: 100%;
-    margin: 15em auto 2em auto;
-}
 .wrapper{
-    width: 95%;
-    margin: auto;
-    background-color: rgba(var(--primary), 0.7);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
-    padding: 2em 5em;
-    border-radius: 20px;
-    font-size: 1.3em;
     display: flex;
     flex-wrap: wrap;
     gap: 2em;
@@ -18,17 +6,13 @@
     align-items: flex-start;
     flex-direction: row;
 }
-.wrapper h2{
-    text-align: center;
-    font-size: 2em;
-    width: 100%;
-}
 .info-snippet{
     background-color: rgba(var(--primary-dark), 1);
     border-radius: 10px;
     width: 45%;
     box-sizing: border-box;
     transition: box-shadow 0.4s ease-in-out;
+    text-align: left;
 }
 .info-snippet h3{
     text-align: center;
@@ -79,7 +63,6 @@
 
 @media screen and (max-width: 768px) {
     .wrapper {
-        padding: 1em 0.2em;
         flex-direction: column;
         align-items: stretch;
     }
