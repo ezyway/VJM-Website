@@ -47,7 +47,7 @@
 
     <div class="container">
         <div class="wrapper">
-            <h2>About Us</h2>
+            <h2 class="page_title">About Us</h2>
 
             <div class="trustee-section">
                 <h2>Board of Trustees</h2>
