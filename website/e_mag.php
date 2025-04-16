@@ -40,7 +40,7 @@
 
      <div class="container">
           <div class="wrapper">
-               <h2>E-Magazines</h2>
+               <h2 class="page_title">E-Magazines</h2>
                <div class="table-container">
                     <table>
                          <tr>
