@@ -12,7 +12,7 @@
      <meta name="description" content="Shri V.J. Modha College - Empowering students for a better future.">
 
      <!-- Document Title -->
-     <title>Scholarships</title>
+     <title>Placement</title>
 
      <!-- Favicon -->
      <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
