@@ -1,21 +1,3 @@
-.container{
-    width: 100%;
-    margin: 15em auto 2em auto;
-}
-.wrapper{
-    width: 95%;
-    margin: auto;
-    background-color: rgba(var(--primary), 0.7);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
-    padding: 2em 5em;
-    border-radius: 20px;
-    font-size: 1.3em;
-}
-.wrapper h2{
-    text-align: center;
-    font-size: 2em;
-}
 .table-container{
     overflow-x: auto;
     border-radius: 10px;
@@ -70,7 +52,7 @@ td a:hover{
 
 @media screen and (max-width: 768px) {
     .wrapper{
-        padding: 1em 0.2em;
+        padding: 0em 0.5em 0.5em 0.5em;
     }
     .table-container{
         width: 100%;
