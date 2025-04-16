@@ -9,23 +9,16 @@
     background-color: rgba(var(--primary), 0.7);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
-    padding-top: 0em;
-    padding-right: 5em;
-    padding-bottom: 2em;
-    padding-left: 5em;
+    padding: 0em 5em 2em 5em;
     border-radius: 20px;
     font-size: 1.3em;
 }
-.wrapper h2{
-    text-align: center;
-    margin-bottom: 1em;
-    font-size: 2em;
-}
+
 .wrapper a{
     text-decoration: none;
     color: green;
     font-weight: bold;
-    transition: 0.5s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 .wrapper a:hover{
     color: blue;
@@ -42,6 +35,8 @@
     border-bottom-right-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     margin: auto;
+    text-align: center;
+    margin-bottom: 1em;
 }
 
 .page_title::after {
@@ -62,10 +57,7 @@
 
 @media (max-width: 768px) {
     .wrapper{
-        padding: 1em;
+        padding: 0em 1.5em 1.5em 1.5em;
         font-size: 1em;
-    }
-    .wrapper h2{
-        margin: 0.5em;
     }
 }
