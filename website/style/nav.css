@@ -9,10 +9,9 @@ This block is here for auto complete */
     --on-primary: 0, 0, 0;
 
     /* Secondary */
-
-	--secondary-light: 39, 165, 136;
-	--secondary: 21, 92, 79;
-	--secondary-dark: 15, 65, 56;
+    --secondary-light: 39, 165, 136;
+    --secondary: 21, 92, 79;
+    --secondary-dark: 15, 65, 56;
     --on-secondary: 255, 255, 255;
 
     /* Tertiary */
@@ -40,7 +39,7 @@ textarea:focus {
 ========================================================== */
 
 /* --------- Navbar Container --------- */
-.navbar {
+.navbar_container {
 	position: fixed;
 	top: 10px;
 	left: 10px;
@@ -55,7 +54,7 @@ textarea:focus {
 	font-weight: bold;
 }
 
-.navbar-container {
+.navbar_container__inner {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -64,7 +63,7 @@ textarea:focus {
 
 /* --------- Logo Styles --------- */
 /* Desktop Logo */
-.logo {
+.navbar_logo {
 	width: 180px;
 	cursor: pointer;
 	transition: transform 0.3s ease;
@@ -72,7 +71,7 @@ textarea:focus {
 	transition: 0.3s ease-in-out;
 }
 
-.logo img {
+.navbar_logo__image {
 	width: 100%;
 	background: rgba(255, 255, 255, 1);
 	display: block;
@@ -81,13 +80,13 @@ textarea:focus {
 	border-radius: 50%;
 }
 
-.logo:hover {
+.navbar_logo:hover {
 	transform: scale(1.05);
 	box-shadow: 0px 0px 20px grey;
 }
 
 /* Mobile Logo (hidden on desktop) */
-.mobile-logo {
+.navbar_logo--mobile {
 	display: none;
 }
 
@@ -96,14 +95,14 @@ textarea:focus {
    Navigation Links (Green text on white background)
 ========================================================== */
 
-.nav-links {
+.navbar_nav {
 	list-style: none;
 	display: flex;
 	gap: 15px;
 	padding-right: 1em;
 }
 
-.nav-links li a {
+.navbar_nav__link {
 	display: block;
 	padding: 10px 20px;
 	color: rgb(var(--green));
@@ -115,17 +114,16 @@ textarea:focus {
 	border: 1px solid green;
 }
 
-.nav-links li a:hover {
+.navbar_nav__link:hover {
 	/* subtle green tint on hover */
 	background: rgba(var(--green-light), 1);
 	color: rgba(var(--yellow-light));
 }
 
 /* --------- Dropdown Menu (White with glass morphic effect) --------- */
-.dropdown-menu {
+.navbar_dropdown {
 	position: absolute;
-	/* white background with slight opacity */
-	background: rgba(255, 255, 255, 0.9);
+	background: rgba(var(--primary), 0.5);
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
 	border-radius: 10px;
@@ -135,29 +133,30 @@ textarea:focus {
 	z-index: 1000;
 }
 
-.dropdown-menu li {
+.navbar_dropdown__item {
 	padding: 2px 5px;
 }
 
-.dropdown-menu li a {
+.navbar_dropdown__link {
 	display: block;
 	text-decoration: none;
-	/* use primary green for text */
+	background: rgba(var(--primary-light), 1);
 	color: rgb(var(--green));
 	transition: all 0.3s ease;
 	padding: 8px 15px;
-}
-
-.dropdown-menu li a:hover {
-	/* change to a slightly darker green on hover */
-	color: rgb(var(--green-dark));
-	background: rgba(var(--green-light), 0.2);
+	border: 1px solid green;
 	border-radius: 10px;
 }
 
+.navbar_dropdown__link:hover {
+	/* change to a slightly darker green on hover */
+	color: rgb(var(--primary-light));
+	background: rgba(var(--secondary-light), 0.8);
+}
+
 /* Show dropdown on hover */
-.nav-links li:hover > .dropdown-menu,
-.nav-links .dropdown:hover .dropdown-menu {
+.navbar_nav__item:hover > .navbar_dropdown,
+.navbar_nav__item--dropdown:hover .navbar_dropdown {
 	display: block;
 	animation: fadeIn 0.3s ease-in-out;
 }
@@ -166,7 +165,7 @@ textarea:focus {
 /* =======================================================
    Hamburger Menu
 ========================================================== */
-.hamburger {
+.navbar_hamburger {
 	display: none;
 	flex-direction: column;
 	cursor: pointer;
@@ -175,7 +174,7 @@ textarea:focus {
 	border-radius: 10px;
 }
 
-.hamburger .bar {
+.navbar_hamburger__bar {
 	height: 4px;
 	width: 30px;
 	/* using primary green for the hamburger bars */
@@ -185,15 +184,15 @@ textarea:focus {
 	border-radius: 5px;
 }
 
-.hamburger.active .bar:nth-child(1) {
+.navbar_hamburger--active .navbar_hamburger__bar:nth-child(1) {
 	transform: rotate(45deg) translate(5px, 9px);
 }
 
-.hamburger.active .bar:nth-child(2) {
+.navbar_hamburger--active .navbar_hamburger__bar:nth-child(2) {
 	opacity: 0;
 }
 
-.hamburger.active .bar:nth-child(3) {
+.navbar_hamburger--active .navbar_hamburger__bar:nth-child(3) {
 	transform: rotate(-45deg) translate(5px, -9px);
 }
 
@@ -205,7 +204,7 @@ textarea:focus {
 ========================================================== */
 
 /* Modal Overlay */
-.modal-overlay {
+.navbar_modal {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -224,7 +223,7 @@ textarea:focus {
 }
 
 /* Modal Content */
-.modal-content {
+.navbar_modal__content {
 	background: rgba(var(--primary-light), 0.6);
 	backdrop-filter: blur(10px);
 	box-shadow: 0px 0px 50px grey;
@@ -239,7 +238,7 @@ textarea:focus {
 }
 
 /* Modal Logo */
-.modal-content img {
+.navbar_modal__image {
 	max-width: 100%;
 	height: auto;
 	border-radius: 50%;
@@ -249,12 +248,12 @@ textarea:focus {
 	overflow: hidden;
 }
 
-.modal-content p {
+.navbar_modal__content p {
 	margin: 1em 2em 2em 2em;
 }
 
 /* Close Button */
-.close-btn {
+.navbar_modal__close {
 	height: 1em;
 	width: 1em;
 	border-radius: 50%;
@@ -267,17 +266,17 @@ textarea:focus {
 	cursor: pointer;
 	transition: 0.5s;
 }
-.close-btn:hover {
+.navbar_modal__close:hover {
 	transform: scale(1.2);
 }
 
 /* Active Modal State */
-.modal-overlay.active {
+.navbar_modal--active {
 	opacity: 1;
 	visibility: visible;
 }
 
-.modal-overlay.active .modal-content {
+.navbar_modal--active .navbar_modal__content {
 	transform: scale(1);
 }
 
@@ -303,7 +302,7 @@ textarea:focus {
 @media (max-width: 768px) {
 
 	/* Mobile Navigation Sidebar */
-	.nav-links {
+	.navbar_nav {
 		position: fixed;
 		top: 0;
 		left: -100%;
@@ -321,41 +320,41 @@ textarea:focus {
 		padding: 20px 0;
 		gap: 0px;
 	}
-	.nav-links.active {
+	.navbar_nav--active {
 		left: 0;
 	}
-	.nav-links li {
+	.navbar_nav__item {
 		margin: 5px 30px;
 		text-align: center;
 	}
-	.nav-links li .dropdown-menu li {
+	.navbar_nav__item .navbar_dropdown__item {
 		margin: auto;
 	}
 
 	/* Display Hamburger Menu Icon */
-	.hamburger {
+	.navbar_hamburger {
 		display: flex;
 		margin-right: 1.5em;
 	}
 
 	/* Mobile Logo */
-	.mobile-logo {
+	.navbar_logo--mobile {
 		display: flex;
 		justify-content: center;
 		margin: 20px auto;
 		border-radius: 50%;
 	}
-	.mobile-logo img {
+	.navbar_logo--mobile img {
 		transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 		width: 120px;
 		height: auto;
 	}
 
-	.mobile-logo:hover img {
+	.navbar_logo--mobile:hover img {
 		transform: scale(1.1);
 	}
 
-	.modal-content {
+	.navbar_modal__content {
 		width: 90%;
 		max-height: 70vh;
 		padding: 15px;
