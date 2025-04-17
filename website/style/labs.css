@@ -1,0 +1,30 @@
+.lab-section {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.lab-section__image-wrapper {
+    background-color: #f9f9f9;
+    padding: 2em;
+    display: flex;
+    gap: 1em;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+}
+
+.lab-section__image {
+    max-width: 31%;
+    margin: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.lab-section__description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}

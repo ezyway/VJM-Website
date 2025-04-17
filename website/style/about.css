@@ -1,40 +1,88 @@
-.container{
-    width: 100%;
-    margin: 15em auto 2em auto;
-}
-.wrapper{
-    width: 95%;
-    margin: auto;
-    text-align: justify;
-    background-color: rgba(var(--primary), 0.7);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
-    padding: 2em 5em;
-    border-radius: 20px;
-    font-size: 1.3em;
-}
-.wrapper h2{
-    text-align: center;
-    margin-bottom: 1em;
-    font-size: 2em;
-}
-.wrapper a{
+.wrapper a {
     text-decoration: none;
     color: green;
     font-weight: bold;
     transition: 0.5s ease-in-out;
 }
-.wrapper a:hover{
+
+.wrapper a:hover {
     color: blue;
 }
 
+.trustee-section {
+    background-color: #f9f9f9;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 1em;
+}
+.trustee-section h2 {
+    margin-bottom: 1em;
+}
+
+.trustee-section__slider {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.trustee-section__slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+}
+
+.trustee-section__item {
+    flex: 0 0 auto;
+    width: 10em;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+
+.trustee-section__image {
+    height: 10em;
+    width: 8em;
+    max-width: 100%;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+}
+
+.trustee-section__name,
+.trustee-section__title {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+}
+
+
+/* Float trustee section on larger screens */
+@media (min-width: 769px) {
+    .trustee-section {
+        float: left;
+        width: 50%;
+        margin-right: 2em;
+        padding: 1em;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .wrapper::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+
 
 @media (max-width: 768px) {
-    .wrapper{
+
+    .trustee-section {
+        float: none;
+        width: 100%;
+        margin: 2em 0;
         padding: 1em;
-        font-size: 1em;
     }
-    .wrapper h2{
-        margin: 0.5em;
+    .trustee-section__item {
+        padding: 0 0.5rem;
     }
 }

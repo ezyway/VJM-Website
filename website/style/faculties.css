@@ -1,0 +1,98 @@
+.tabs input[type="radio"] {
+	display: none;
+}
+
+.tab-labels {
+	display: flex;
+	gap: 10px;
+	border-bottom: 1px solid #27a588b3;
+	padding: 1em 8em;
+	scroll-behavior: smooth;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.tab-labels label {
+	flex: 0 0 auto;
+	padding: 10px 20px;
+	background: #bcc2c7;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	white-space: nowrap;
+}
+
+.tab-labels label:hover {
+	background: #d0d9e0;
+}
+
+input#tab1:checked~.tab-labels label[for="tab1"],
+input#tab2:checked~.tab-labels label[for="tab2"],
+input#tab3:checked~.tab-labels label[for="tab3"],
+input#tab4:checked~.tab-labels label[for="tab4"],
+input#tab5:checked~.tab-labels label[for="tab5"],
+input#tab6:checked~.tab-labels label[for="tab6"],
+input#tab7:checked~.tab-labels label[for="tab7"] {
+	background-color: rgba(var(--secondary-light), 0.7);
+	color: white;
+	font-weight: bold;
+}
+
+.content {
+	margin-top: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tab-content {
+	display: none;
+	animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content div {
+	width: 8em;
+}
+
+input#tab1:checked~.content #content1,
+input#tab2:checked~.content #content2,
+input#tab3:checked~.content #content3,
+input#tab4:checked~.content #content4,
+input#tab5:checked~.content #content5,
+input#tab6:checked~.content #content6,
+input#tab7:checked~.content #content7 {
+	display: flex;
+	text-align: center;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	img {
+		width: 8em;
+		height: 8em;
+		object-fit: cover;
+		object-position: 50% 0;
+		border-radius: 2em;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(5px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.tab-labels {
+		padding: 1em 1em;
+	}
+	.tab-labels label {
+		padding: 10px 15px;
+	}
+}

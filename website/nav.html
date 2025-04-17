@@ -1,102 +1,90 @@
 <head>
-	<!-- Linking external stylesheet for navbar styles -->
-	<link href="style/nav.css" rel="stylesheet">
-
-	<!-- Linking JavaScript for navbar interactivity (like dropdowns and hamburger menu) -->
-	<script src="scripts/nav.js"></script>
+    <!-- Linking external stylesheet for navbar styles -->
+    <link href="style/nav.css" rel="stylesheet">
+    <!-- Linking JavaScript for navbar interactivity (like dropdowns and hamburger menu) -->
+    <script src="scripts/nav.js"></script>
 </head>
-
 <!-- ============================================
      Navigation Bar Section
      ============================================ -->
-<nav class="navbar">
-	<div class="navbar-container">
-
-		<!-- Logo Section (Visible in Desktop View) -->
-		<div class="logo">
-			<!-- <img src="assets/logoHD.png" alt="Shri V.J. Modha Logo"> -->
-			<img src="assets/logoHD.png" alt="College Logo" class="college-logo" id="logoTrigger">
-		</div>
-
-		<!-- Navigation Links and Dropdowns -->
-		<ul class="nav-links">
-
-			<!-- Mobile Logo (Visible in Mobile View) -->
-			<div class="mobile-logo">
-				<img src="assets/logoHD.png" alt="Shri V.J. Modha Logo">
-			</div>
-
-			<!-- Main Navigation Links -->
-			<li><a href="index.php">Home</a></li>
-			<li><a href="about.php">About Us</a></li>
-			<li><a href="faculties.php">Faculties</a></li>
-
-			<!-- Dropdown Menu for Courses -->
-			<li class="dropdown">
-				<a href="#">Courses <span class="arrow">&#9662;</span></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">BCA</a></li>
-					<li><a href="#">B.Sc.</a></li>
-					<li><a href="#">BBA</a></li>
-					<li><a href="#">B.Com</a></li>
-					<li><a href="#">BSW</a></li>
-					<!-- <li><a href="#">PGDCA</a></li> -->
-					<li><a href="#">M.Com</a></li>
-					<li><a href="#">M.Sc IT</a></li>
-					<li><a href="#">M.Sc CA</a></li>
-					<li><a href="#">M.Sc Org Chem</a></li>
-				</ul>
-			</li>
-
-			<!-- Dropdown Menu for Facilities -->
-			<li class="dropdown">
-				<a href="#">Facilities <span class="arrow">&#9662;</span></a>
-				<ul class="dropdown-menu">
-					<li><a href="scholarship.php">Scholarships</a></li>
-					<li><a href="#">Photo Gallery</a></li>
-					<li><a href="#"></a></li>
-					<li><a href="#">Computer Lab</a></li>
-					<li><a href="#">Chemistry Lab</a></li>
-					<li><a href="#">Biology Lab</a></li>
-				</ul>
-			</li>
-
-			<!-- Dropdown Menu for Miscellaneous -->
-			<li class="dropdown">
-				<a href="#">Misc <span class="arrow">&#9662;</span></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Placement</a></li>
-					<li><a href="#">Anti-Ragging</a></li>
-					<li><a href="#">Online Courses</a></li>
-					<li><a href="e_mag.php">E-Magazine</a></li>
-					<li><a href="#">Careers</a></li>
-					<li><a href="disclaimer.php">Disclaimer</a></li>
-				</ul>
-			</li>
-
-			<!-- Contact Us Link -->
-			<li><a href="contact.php">Contact Us</a></li>
-		</ul>
-
-		<!-- Hamburger Menu (Visible in Mobile View) -->
-		<div class="hamburger">
-			<!-- Three bars for hamburger icon -->
-			<div class="bar"></div>
-			<div class="bar"></div>
-			<div class="bar"></div>
-		</div>
-	</div>
+<nav class="navbar_container">
+    <div class="navbar_container__inner">
+        <!-- Logo Section (Visible in Desktop View) -->
+        <div class="navbar_logo">
+            <!-- <img src="assets/logoHD.png" alt="Shri V.J. Modha Logo"> -->
+            <img src="assets/logoHD.png" alt="College Logo" class="navbar_logo__image" id="logoTrigger">
+        </div>
+        <!-- Navigation Links and Dropdowns -->
+        <ul class="navbar_nav">
+            <!-- Mobile Logo (Visible in Mobile View) -->
+            <div class="navbar_logo--mobile">
+                <img src="assets/logoHD.png" alt="Shri V.J. Modha Logo">
+            </div>
+            <!-- Main Navigation Links -->
+            <li class="navbar_nav__item"><a href="index.php" class="navbar_nav__link">Home</a></li>
+            <li class="navbar_nav__item"><a href="about.php" class="navbar_nav__link">About Us</a></li>
+            <li class="navbar_nav__item"><a href="faculties.php" class="navbar_nav__link">Faculties</a></li>
+            <!-- Dropdown Menu for Courses -->
+            <li class="navbar_nav__item navbar_nav__item--dropdown">
+                <a href="#" class="navbar_nav__link">Courses <span class="navbar_nav__arrow">&#9662;</span></a>
+                <ul class="navbar_dropdown">
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=bca" class="navbar_dropdown__link">BCA</a></li>
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=bsc" class="navbar_dropdown__link">B.Sc.</a></li>
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=bba" class="navbar_dropdown__link">BBA</a></li>
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=bcom" class="navbar_dropdown__link">B.Com</a></li>
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=bsw" class="navbar_dropdown__link">BSW</a></li>
+                    <li class="navbar_dropdown__item"><a class="navbar_dropdown__link"></a></li>
+                    <!-- <li><a href="#">PGDCA</a></li> -->
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=mcom" class="navbar_dropdown__link">M.Com</a></li>
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=mscit" class="navbar_dropdown__link">M.Sc IT & CA</a></li>
+                    <li class="navbar_dropdown__item"><a href="courses.php?course=mscorgchem" class="navbar_dropdown__link">M.Sc Org Chem</a></li>
+                </ul>
+            </li>
+            <!-- Dropdown Menu for Facilities -->
+            <li class="navbar_nav__item navbar_nav__item--dropdown">
+                <a href="#" class="navbar_nav__link">Facilities <span class="navbar_nav__arrow">&#9662;</span></a>
+                <ul class="navbar_dropdown">
+                    <li class="navbar_dropdown__item"><a href="scholarship.php" class="navbar_dropdown__link">Scholarships</a></li>
+                    <li class="navbar_dropdown__item"><a href="gallery.php" class="navbar_dropdown__link">Photo Gallery</a></li>
+                    <li class="navbar_dropdown__item"><a href="#" class="navbar_dropdown__link"></a></li>
+                    <li class="navbar_dropdown__item"><a href="labs.php?lab=computer" class="navbar_dropdown__link">Computer Lab</a></li>
+                    <li class="navbar_dropdown__item"><a href="labs.php?lab=chemistry" class="navbar_dropdown__link">Chemistry Lab</a></li>
+                    <li class="navbar_dropdown__item"><a href="labs.php?lab=biology" class="navbar_dropdown__link">Biology Lab</a></li>
+                </ul>
+            </li>
+            <!-- Dropdown Menu for Miscellaneous -->
+            <li class="navbar_nav__item navbar_nav__item--dropdown">
+                <a href="#" class="navbar_nav__link">Misc <span class="navbar_nav__arrow">&#9662;</span></a>
+                <ul class="navbar_dropdown">
+                    <li class="navbar_dropdown__item"><a href="placement.php" class="navbar_dropdown__link">Placement</a></li>
+                    <li class="navbar_dropdown__item"><a href="anti_ragging.php" class="navbar_dropdown__link">Anti-Ragging</a></li>
+                    <li class="navbar_dropdown__item"><a href="online_courses.php" class="navbar_dropdown__link">Online Courses</a></li>
+                    <li class="navbar_dropdown__item"><a href="e_mag.php" class="navbar_dropdown__link">E-Magazine</a></li>
+                    <li class="navbar_dropdown__item"><a href="https://forms.gle/onWVowyburaXaAbC7" target="_blank" class="navbar_dropdown__link">Careers</a></li>
+                    <li class="navbar_dropdown__item"><a href="disclaimer.php" class="navbar_dropdown__link">Disclaimer</a></li>
+                </ul>
+            </li>
+            <!-- Contact Us Link -->
+            <li class="navbar_nav__item"><a href="contact.php" class="navbar_nav__link">Contact Us</a></li>
+        </ul>
+        <!-- Hamburger Menu (Visible in Mobile View) -->
+        <div class="navbar_hamburger">
+            <!-- Three bars for hamburger icon -->
+            <div class="navbar_hamburger__bar"></div>
+            <div class="navbar_hamburger__bar"></div>
+            <div class="navbar_hamburger__bar"></div>
+        </div>
+    </div>
 </nav>
-
 <!-- Glassmorphic Popup Modal -->
-<div class="modal-overlay" id="modalOverlay">
-	<div class="modal-content">
-		<button class="close-btn" id="closeBtn">&times;</button>
-		<img src="assets/logoHD.png" alt="College Logo" class="modal-logo">
-		<h2>Shri V.J. Modha College</h2>
-		<p>Empowering bright futures since 2007 in Porbandar,
-			Our campus blends rich tradition with cutting-edge innovation.
-			Passionate faculty and dynamic programs ignite creativity and growth,
-			Join Shri V J Modha College—where your dreams take flight!</p>
-	</div>
+<div class="navbar_modal" id="modalOverlay">
+    <div class="navbar_modal__content">
+        <button class="navbar_modal__close" id="closeBtn">&times;</button>
+        <img src="assets/logoHD.png" alt="College Logo" class="navbar_modal__image">
+        <h2 class="navbar_modal__title">Shri V.J. Modha College</h2>
+        <p class="navbar_modal__text">Empowering bright futures since 2007 in Porbandar,
+            Our campus blends rich tradition with cutting-edge innovation.
+            Passionate faculty and dynamic programs ignite creativity and growth,
+            Join Shri V J Modha College—where your dreams take flight!</p>
+    </div>
 </div>

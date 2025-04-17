@@ -1,0 +1,22 @@
+.img-container{
+    text-align: center;
+}
+.img-container img{
+    height: 6em;
+    width: 6em;
+    margin: 2em 2em;
+    border-radius: 10px;
+    transition: transform 0.5s ease-in-out;
+    cursor: pointer;
+}
+.img-container img:hover{
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .img-container img{
+        height: 5em;
+        width: 5em;
+        margin: 1em 1em;
+    }
+}
