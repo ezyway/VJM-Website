@@ -28,7 +28,7 @@
 
      <!-- Custom Styles -->
      <link href="style/global.css" rel="stylesheet">
-     <link href="style/scholarship.css" rel="stylesheet">
+     <!-- <link href="style/scholarship.css" rel="stylesheet"> -->
 </head>
 
 <body>
