@@ -44,7 +44,7 @@ if (isset($_GET["lab"])) {
          =================================================== -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="description" content="Explore the facilities at Shri V.J. Modha College - <?php echo $lab["name"]; ?>">
+        <meta name="description" content="Shri V.J. Modha College - Empowering students for a better future.">
 
         <!-- Page Title -->
         <title><?php echo $lab["name"]; ?> - Facilities</title>
