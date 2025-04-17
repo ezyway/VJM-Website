@@ -27,6 +27,7 @@ if (isset($_GET['album']) && isset($_GET['action']) && $_GET['action'] === 'json
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Metadata & Document Setup -->
     <meta charset="UTF-8">
@@ -34,23 +35,30 @@ if (isset($_GET['album']) && isset($_GET['action']) && $_GET['action'] === 'json
     <meta name="description" content="Shri V.J. Modha College - Empowering students for a better future.">
     <title>Gallery</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
-   
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <!-- Custom Stylesheet -->
     <link href="style/global.css" rel="stylesheet">
     <link href="style/gallery.css" rel="stylesheet">
+
     <!-- Scripts -->
     <script src="scripts/gallery.js" defer></script>
 </head>
+
 <body>
     <!-- Navigation Section (assuming nav.html exists) -->
     <?php include("nav.html"); ?>
     <div class="container">
         <div class="wrapper">
-            <h2 class="page_title">Gallery</h2>
+
+            <div class="page_title_wrapper">
+                <h2 class="page_title">Gallery</h2>
+            </div>
+            
             <div class="gallery_albums" id="album-grid">
                 <?php foreach ($albums as $album): ?>
                     <?php
@@ -86,4 +94,5 @@ if (isset($_GET['album']) && isset($_GET['action']) && $_GET['action'] === 'json
     <!-- Footer Section (assuming footer.html exists) -->
     <?php include("footer.html"); ?>
 </body>
+
 </html>

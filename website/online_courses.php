@@ -41,7 +41,9 @@
 
      <div class="container">
           <div class="wrapper">
-               <h2 class='page_title'>Free Online Courses</h2>
+               <div class="page_title_wrapper">
+                    <h2 class='page_title'>Free Online Courses</h2>
+               </div>
                <div class="img-container">
                     <img src="assets/photos/online_courses/AICTE.png">
                     <img src="assets/photos/online_courses/ATAL.png">

@@ -40,7 +40,9 @@
 
      <div class="container">
           <div class="wrapper">
-               <h2 class="page_title">Anti-Ragging Committee</h2>
+               <div class="page_title_wrapper">
+                    <h2 class="page_title">Anti-Ragging Committee</h2>
+               </div>
                <div class="table-container">
                     <table>
                          <tr>

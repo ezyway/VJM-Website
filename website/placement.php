@@ -40,7 +40,9 @@
 
      <div class="container">
           <div class="wrapper">
-               <h2 class="page_title"2>Placements</h2>
+               <div class="page_title_wrapper">
+                    <h2 class="page_title">Placements</h2>
+               </div>
                <div class="table-container">
                     <table>
                          <tr>

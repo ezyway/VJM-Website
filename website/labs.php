@@ -34,67 +34,70 @@ if (isset($_GET["lab"])) {
 
     $lab = $labs[$_GET["lab"]];
 ?>
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    
-    <!-- ===================================================
+    <head>
+
+        <!-- ===================================================
          Metadata & Document Setup
          =================================================== -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Explore the facilities at Shri V.J. Modha College - <?php echo $lab["name"]; ?>">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="description" content="Explore the facilities at Shri V.J. Modha College - <?php echo $lab["name"]; ?>">
 
-    <!-- Page Title -->
-    <title><?php echo $lab["name"]; ?> - Facilities</title>
+        <!-- Page Title -->
+        <title><?php echo $lab["name"]; ?> - Facilities</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
 
-    <!-- ===================================================
+        <!-- ===================================================
          Fonts & Stylesheets
          =================================================== -->
-         
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="style/global.css" rel="stylesheet">
-    <link href="style/labs.css" rel="stylesheet">
-</head>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-<body>
+        <!-- Styles -->
+        <link href="style/global.css" rel="stylesheet">
+        <link href="style/labs.css" rel="stylesheet">
+    </head>
 
-    <!-- Navigation -->
-    <?php include("nav.html"); ?>
+    <body>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="wrapper">
-            <h2 class="page_title"><?php echo $lab["name"]; ?></h2>
+        <!-- Navigation -->
+        <?php include("nav.html"); ?>
 
-            <div class="lab-section">
-                <div class="lab-section__image-wrapper">
-                    <!-- Display multiple images in a gallery style -->
-                    <?php foreach ($lab["images"] as $image): ?>
-                        <img src="<?php echo $image; ?>" alt="<?php echo $lab["name"]; ?>" class="lab-section__image" />
-                    <?php endforeach; ?>
+        <!-- Main Content -->
+        <div class="container">
+            <div class="wrapper">
+                <div class="page_title_wrapper">
+                    <h2 class="page_title"><?php echo $lab["name"]; ?></h2>
                 </div>
-                <div class="lab-section__description">
-                    <p><?php echo $lab["description"]; ?></p>
+
+                <div class="lab-section">
+                    <div class="lab-section__image-wrapper">
+                        <!-- Display multiple images in a gallery style -->
+                        <?php foreach ($lab["images"] as $image): ?>
+                            <img src="<?php echo $image; ?>" alt="<?php echo $lab["name"]; ?>" class="lab-section__image" />
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="lab-section__description">
+                        <p><?php echo $lab["description"]; ?></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Footer -->
-    <?php include("footer.html"); ?>
+        <!-- Footer -->
+        <?php include("footer.html"); ?>
 
-</body>
-</html>
+    </body>
+
+    </html>
 <?php
 } else {
     header("Location: index.php");

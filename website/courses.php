@@ -228,7 +228,10 @@ if (isset($_GET["course"])) {
 
      <div class="container">
           <div class="wrapper">
-               <h2 class="page_title"><?php echo $fullforms[$_GET['course']]; ?></h2>
+               
+               <div class="page_title_wrapper">
+                    <h2 class="page_title"><?php echo $fullforms[$_GET['course']]; ?></h2>
+               </div>
           <?php
                if (isset($courses[$_GET["course"]])) {
                     echo "<div class='info-snippet'>";

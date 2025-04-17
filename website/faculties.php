@@ -44,7 +44,9 @@
     <div class="container">
 
         <div class="wrapper">
-            <h2 class="page_title">Faculties</h2>
+            <div class="page_title_wrapper">
+                <h2 class="page_title">Faculties</h2>
+            </div>
             <div class="tabs">
                 <!-- Radio Inputs -->
                 <input type="radio" name="tabset" id="tab1" checked>
