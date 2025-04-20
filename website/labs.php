@@ -80,11 +80,14 @@ if (isset($_GET["lab"])) {
 
                 <div class="lab-section">
                     <div class="lab-section__image-wrapper">
-                        <!-- Display multiple images in a gallery style -->
-                        <?php foreach ($lab["images"] as $image): ?>
-                            <img src="<?php echo $image; ?>" alt="<?php echo $lab["name"]; ?>" class="lab-section__image" />
-                        <?php endforeach; ?>
+                        <div class="carousel-track">
+                            <?php foreach ($lab["images"] as $image): ?>
+                                <img src="<?php echo $image; ?>" alt="<?php echo $lab["name"]; ?>" class="lab-section__image" />
+                            <?php endforeach; ?>
+                        </div>
                     </div>
+
+
                     <div class="lab-section__description">
                         <p><?php echo $lab["description"]; ?></p>
                     </div>
@@ -98,6 +101,19 @@ if (isset($_GET["lab"])) {
     </body>
 
     </html>
+    <script>
+        const track = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.lab-section__image');
+        let index = 0;
+
+        function showNextSlide() {
+            index = (index + 1) % slides.length;
+            track.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        setInterval(showNextSlide, 3000);
+    </script>
+
 <?php
 } else {
     header("Location: index.php");
