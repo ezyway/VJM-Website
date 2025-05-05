@@ -176,7 +176,7 @@
          =================================================== -->
     <section class="news-section">
         <div class="news-section__box news-section__events">
-            <h2>Upcoming Events</h2>
+            <h2 class="component_title">Upcoming Events</h2>
             <div class="news-section__slider news-section__slider--events">
                 <div class="news-section__item">
                     <h3>Annual Tech Fest</h3>
@@ -206,7 +206,7 @@
             </div>
         </div>
         <div class="news-section__box news-section__results">
-            <h2>Recent Results</h2>
+            <h2 class="component_title">Recent Results</h2>
             <div class="news-section__slider news-section__slider--results">
                 <div class="news-section__item">
                     <h3>B.Sc. IT Semester 5</h3>
@@ -245,12 +245,12 @@
     <section class="table-section">
         <!-- Table Heading Container -->
         <div class="heading-container">
-            <h2>Academic Pass Rates</h2>
+            <h2 class="component_title">Academic Pass Rates</h2>
             <!-- Additional headings can be uncommented if needed -->
-            <!-- <h2>Graduation Performance Data</h2> -->
-            <!-- <h2>Historical Passout Rates</h2> -->
-            <!-- <h2>Annual Passout Rate</h2> -->
-            <!-- <h2>Graduation Success Rates</h2> -->
+            <!-- <h2 class="component_title">Graduation Performance Data</h2> -->
+            <!-- <h2 class="component_title">Historical Passout Rates</h2> -->
+            <!-- <h2 class="component_title">Annual Passout Rate</h2> -->
+            <!-- <h2 class="component_title">Graduation Success Rates</h2> -->
         </div>
         <!-- Table Container with Horizontal Scroll -->
         <div class="table-container">
@@ -482,7 +482,7 @@
         - Displays student testimonials with horizontal scroll.
         =================================================== -->
     <section class="testimonials-section">
-        <h2 class="testimonials-section__title">Student Testimonials</h2>
+        <h2 class="testimonials-section__title component_title">Student Testimonials</h2>
 
         <div class="testimonials-section__container">
             <button class="testimonials-section__nav-left">&lt;</button>
@@ -549,7 +549,7 @@
      =================================================== -->
     <section class="photo-carousel-section">
         <div class="photo-carousel-section__wrapper">
-            <h2 class="photo-carousel-section__title">Photos</h2>
+            <h2 class="photo-carousel-section__title component_title">Photos</h2>
             <button class="photo-carousel-section__nav-left">&lt;</button>
 
             <div class="photo-carousel-section__carousel" id="carousel">
