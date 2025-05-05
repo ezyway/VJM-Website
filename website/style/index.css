@@ -22,6 +22,40 @@ This block is here for auto complete */
     --on-tertiary: 0, 0, 0;
 }
 
+/* Component Title */
+/* News Box Title */
+.component_title{
+    color: #000;
+    background: rgba(var(--primary), 1);
+    width: fit-content;
+    padding: 8px 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin: 0em auto 1em auto;
+    font-size: 2em;
+}
+
+.component_title::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: rgb(var(--green));
+    margin: auto;
+    border-radius: 5px;
+    transform: scaleX(0.5);
+    transform-origin: center;
+    transition: transform 0.4s ease-in-out;
+}
+
+.news-section__box:hover .component_title::after,
+.table-section:hover .component_title::after,
+.testimonials-section:hover .component_title::after,
+.photo-carousel-section:hover .component_title::after {
+    transform: scaleX(1.5);
+}
 
 /* ====================================================
    VIDEO BANNER SECTION
@@ -387,19 +421,12 @@ This block is here for auto complete */
     max-width: 500px;
     background: rgba(var(--primary-light), 1);
     color: rgba(var(--on-primary), 1);
-    padding: 25px;
     border-radius: 10px;
     box-shadow: 0 0px 30px rgba(var(--secondary-dark), 0.6);
     text-align: center;
     overflow: hidden;
     position: relative;
-}
-
-
-/* News Box Title */
-.news-section__box h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    padding: 0em 1em 1em 1em;
 }
 
 /* News Slider */
@@ -467,7 +494,7 @@ This block is here for auto complete */
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
     box-shadow: 0 0px 30px rgba(var(--secondary-dark), 0.6);
-    padding: 2em;
+    padding: 0em 1em 1em 1em;
     border-radius: 10px;
     text-align: center;
     overflow: hidden;
@@ -545,16 +572,16 @@ This block is here for auto complete */
 ==================================================== */
 /* Container for the slider and navigation buttons */
 .testimonials-section {
-    padding: 2em;
+    padding: 0em 1em 1em 1em;
     background: rgba(var(--primary), 0.5);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 }
 
 .testimonials-section__title {
-    width: 100%;
     text-align: center;
     font-size: 2em;
+    background: rgba(var(--primary-light), 1);
 }
 
 .testimonials-section__container {
@@ -600,7 +627,7 @@ This block is here for auto complete */
     display: flex;
     gap: 20px;
     overflow-x: auto;
-    padding: 3em;
+    padding: 0em 2em 2em 2em;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -668,7 +695,8 @@ This block is here for auto complete */
 
 .photo-carousel-section__title {
     position: absolute;
-    top: 0.5em;
+    background: rgba(var(--primary-light), 1);
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     font-size: 2.5em;
@@ -857,7 +885,7 @@ This block is here for auto complete */
 
     /* Table Section: Adjust padding and heading for mobile */
     .table-section {
-        padding: 10px;
+        padding: 0em 0.5em 0.5em 0.5em;
         width: 95%;
     }
 
@@ -869,7 +897,6 @@ This block is here for auto complete */
 
     .heading-container h2 {
         font-size: 1.5rem;
-        margin-top: 1em;
     }
 
     .achievements-table {
@@ -903,6 +930,7 @@ This block is here for auto complete */
     /* Testimonials Section */
     .testimonials-section__slider {
         gap: 10px;
+        padding-top: 0em;
     }
 
     .testimonials-section__item {
@@ -915,14 +943,6 @@ This block is here for auto complete */
         width: 2em;
         height: 2em;
         font-size: 1.2rem;
-    }
-
-    .testimonials-section__nav-left {
-        left: -1.5em;
-    }
-
-    .testimonials-section__nav-right {
-        right: -1.5em;
     }
 
     .testimonials-section__text {
@@ -952,8 +972,7 @@ This block is here for auto complete */
     /* Position title and nav buttons in the same row at the top */
     .photo-carousel-section__title {
         position: absolute;
-        top: 15px;
-        /* Adjust as needed */
+        top: 0;
         left: 50%;
         transform: translateX(-50%);
         font-size: 2rem;
