@@ -299,7 +299,7 @@ textarea:focus {
 /* =======================================================
    Mobile Styles
 ========================================================== */
-@media (max-width: 768px) {
+@media (max-width: 1150px) {
 
 	/* Mobile Navigation Sidebar */
 	.navbar_nav {
@@ -309,7 +309,6 @@ textarea:focus {
 		height: 90vh;
 		width: 70%;
 		flex-direction: column;
-		/* use white background with transparency for mobile sidebar */
 		background: rgba(255, 255, 255, 0.95);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
