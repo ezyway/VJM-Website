@@ -236,6 +236,9 @@ hr.customHR {
         justify-content: center;
         align-items: center;
     }
+    .footer img {
+        margin: 0em 0.5em 0em 0em;
+    }
 
     .footer__contact,
     .footer__links,
@@ -243,9 +246,9 @@ hr.customHR {
         width: 95%;
         max-width: 95%;
         box-sizing: border-box;
+        padding: 2em 0.5em;
     }
 
-    .footer__contact span,
     .footer__links span,
     .footer__map span {
         text-align: center;
@@ -260,5 +263,9 @@ hr.customHR {
 
     .socialWrapper {
         margin-right: 0px;
+    }
+
+    .footer__map iframe {
+        width: 100%;
     }
 }

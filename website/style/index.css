@@ -812,6 +812,7 @@ This block is here for auto complete */
     /* Chairman Profile and Pride Section: Stack Vertically */
     .chairman-section__profile,
     .pride-section {
+        min-width: 0%;
         width: 100%;
         max-width: 100%;
     }
@@ -863,6 +864,7 @@ This block is here for auto complete */
     }
 
     .news-section__box {
+        min-width: 0%;
         max-width: 100%;
     }
 
