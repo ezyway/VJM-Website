@@ -12,15 +12,15 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Technical Support Specialist",
+                    "Computer Programmer",
+                    "Software Developer",
+                    "Software Tester",
+                    "Web Developer/Designer",
                     "System Analyst",
-                    "Web Developer",
-                    "Database Administrator",
                     "Lab Assistant",
-                    "Professor",
-                    "Computer Teacher",
-                    "Indian Armed Forces",
-                    "Indian Paramilitary Forces"
+                    "Network Administrator",
+                    "Academic Work",
+                    "Government Work"
                ],
                "faq" => [
                     "To be added"
@@ -36,11 +36,14 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Doctor",
-                    "Fharmacist",
-                    "Scientist",
-                    "Indian Armed Forces",
-                    "Indian Paramilitary Forces"
+                    "Lab Technician",
+                    "Chemical Industry",
+                    "Research Centre",
+                    "Radiologist",
+                    "Health Care Providers",
+                    "Academic Sector",
+                    "Research & Develop Dept.",
+                    "Government Sector"
                ],
                "faq" => [
                     "To be added"
@@ -56,11 +59,15 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Management",
-                    "International Business",
-                    "Enterepreneurship",
-                    "Real Estate",
-                    "Consultancy"
+                    "Finance / HR Department",
+                    "Healthcare Management",
+                    "Business Consultant",
+                    "Marketing Department",
+                    "Business Operation",
+                    "Project Analyst",
+                    "E-Commerce",
+                    "Banking Sector",
+                    "Event Management"
                ],
                "faq" => [
                     "To be added"
@@ -76,11 +83,15 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Trading",
-                    "Consultancy",
-                    "Business",
-                    "Banking",
-                    "Teaching"
+                    "Asst. to CA / CS / CFA",
+                    "Financial Risk Manager",
+                    "General Manager",
+                    "Business Accountant",
+                    "Insurance Agent",
+                    "Certified Public",
+                    "Certified Mgmt. Accountant",
+                    "Marketing Manager",
+                    "Accountant"
                ],
                "faq" => [
                     "To be added"
@@ -96,12 +107,15 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Hospitals",
-                    "Prisons",
-                    "Correction Cells",
-                    "Disaster Management",
-                    "Counseling Centers",
-                    "Clinics"
+                    "Education Dept.",
+                    "Health Dept.",
+                    "Municipal Dept.",
+                    "Human Resource Dept.",
+                    "Social Defence",
+                    "Labour Dept.",
+                    "Social Welfare Dept.",
+                    "Government Dept.",
+                    "NGO"
                ],
                "faq" => [
                     "To be added"
@@ -117,11 +131,15 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Trading",
-                    "Consultancy",
-                    "Business",
-                    "Banking",
-                    "Teaching"
+                    "Accountant",
+                    "Banking Sector",
+                    "Wealth Management",
+                    "Financial Analyst",
+                    "Lecturer",
+                    "Stock Broker",
+                    "Tax Consultant",
+                    "Insurance",
+                    "RBI Grade B Officer"
                ],
                "faq" => [
                     "To be added"
@@ -137,15 +155,15 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Technical Support Specialist",
+                    "Software Developer",
+                    "Network Administrator",
+                    "Software Tester",
+                    "Computer Programmer",
                     "System Analyst",
-                    "Web Developer",
-                    "Database Administrator",
                     "Lab Assistant",
-                    "Professor",
-                    "Computer Teacher",
-                    "Indian Armed Forces",
-                    "Indian Paramilitary Forces"
+                    "Web Developer/Designer",
+                    "Academic Work",
+                    "Government Sector"
                ],
                "faq" => [
                     "To be added"
@@ -161,11 +179,15 @@ if (isset($_GET["course"])) {
                     "Syllabus: To be included"
                ],
                "job_roles" => [
-                    "Doctor",
-                    "Fharmacist",
-                    "Scientist",
-                    "Indian Armed Forces",
-                    "Indian Paramilitary Forces"
+                    "Lab Technician",
+                    "Academic Sector",
+                    "Government Sector",
+                    "Pharma Industry",
+                    "Chemical Industry",
+                    "Research Centre",
+                    "Agrochemical Industries",
+                    "Forensic Science Dept.",
+                    "Health Care Providers"
                ],
                "faq" => [
                     "To be added"
