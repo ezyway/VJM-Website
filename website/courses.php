@@ -23,7 +23,12 @@ if (isset($_GET["course"])) {
                     "Government Work"
                ],
                "faq" => [
-                    "To be added"
+                    "12<sup>th</sup> Pass (Any Stream)",
+                    "English",
+                    "4 Years",
+                    "6 to 7",
+                    "M.Sc. IT / MCA",
+                    "Morning"
                ]
           ],
           "bsc" => [
@@ -46,7 +51,12 @@ if (isset($_GET["course"])) {
                     "Government Sector"
                ],
                "faq" => [
-                    "To be added"
+                    "12<sup>th</sup> Pass (Science Stream)",
+                    "English",
+                    "4 Years",
+                    "5",
+                    "M. Sc. Chemistry",
+                    "Afternoon"
                ]
           ],
           "bba" => [
@@ -70,7 +80,12 @@ if (isset($_GET["course"])) {
                     "Event Management"
                ],
                "faq" => [
-                    "To be added"
+                    "12<sup>th</sup> Pass (Any Stream)",
+                    "English",
+                    "4 Years",
+                    "7 to 8",
+                    "M.Com. / MBA",
+                    "Morning"
                ]
           ],
           "bcom" => [
@@ -94,7 +109,12 @@ if (isset($_GET["course"])) {
                     "Accountant"
                ],
                "faq" => [
-                    "To be added"
+                    "12<sup>th</sup> Pass (Any Stream)",
+                    "English / Gujarati",
+                    "4 Years",
+                    "7 to 8",
+                    "MSc. IT / MCA",
+                    "English: Morning <br> Gujarati: Afternoon"
                ]
           ],
           "bsw" => [
@@ -118,7 +138,12 @@ if (isset($_GET["course"])) {
                     "NGO"
                ],
                "faq" => [
-                    "To be added"
+                    "12<sup>th</sup> Pass (Any Stream)",
+                    "Gujarati",
+                    "4 Years",
+                    "5",
+                    "MSW",
+                    "Morning"
                ]
           ],
           "mcom" => [
@@ -142,7 +167,12 @@ if (isset($_GET["course"])) {
                     "RBI Grade B Officer"
                ],
                "faq" => [
-                    "To be added"
+                    "Commerce / Management Graduate",
+                    "English / Gujarati",
+                    "2 Years",
+                    "5",
+                    "Ph.D.",
+                    "Morning"
                ]
           ],
           "mscit" => [
@@ -166,7 +196,12 @@ if (isset($_GET["course"])) {
                     "Government Sector"
                ],
                "faq" => [
-                    "To be added"
+                    "Computer Graduate",
+                    "English",
+                    "2 Years",
+                    "3",
+                    "Ph.D.",
+                    "Morning"
                ]
           ],
           "mscorgchem" => [
@@ -190,7 +225,12 @@ if (isset($_GET["course"])) {
                     "Health Care Providers"
                ],
                "faq" => [
-                    "To be added"
+                    "Chemistry Graduate",
+                    "English",
+                    "2 Years",
+                    "3 to 4",
+                    "Ph.D.",
+                    "Afternoon"
                ]
           ]
      ];
