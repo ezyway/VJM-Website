@@ -607,34 +607,6 @@
         </svg>
     </button>
 
-    <script>
-        // Get the button and the first section
-        const backToTopButton = document.getElementById("backToTop");
-        const section1 = document.getElementById("video-banner");
-
-        // Function to check if section1 is out of view
-        function toggleBackToTop() {
-            const rect = section1.getBoundingClientRect();
-            // Check if the bottom of section1 is above the viewport
-            if (rect.bottom <= 0) {
-                backToTopButton.style.display = "block";
-            } else {
-                backToTopButton.style.display = "none";
-            }
-        }
-
-        // Listen for scroll events
-        window.addEventListener("scroll", toggleBackToTop);
-
-        // Smooth scroll to top when button is clicked
-        backToTopButton.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    </script>
-
     <!-- ===================================================
          Footer Section
          - Included via PHP for consistency across pages.
