@@ -44,6 +44,7 @@
 }
 
 .snippet_title::after {
+.snippet_title::after {
     content: "";
     display: block;
     width: 50px;
