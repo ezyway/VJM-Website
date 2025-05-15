@@ -202,6 +202,14 @@
 		'bsw' => 'Bachelor in Social Work',
 		'mcom' => 'Master in Commerse',
 		'mscit' => 'Master in Information Technology',
-		'mscorgchem' => 'Master in Science (Chemistry)',
+		'mscorgchem' => 'Master in Science (Chemistry)'
+	];
+	$faq_questions = [
+		'Eligibility: ',
+		'Medium of Instruction: ',
+		'Course Duration: ',
+		'Subjects Every Semester: ',
+		'Higher Education Options: ',
+		'Session Timing: '
 	];
 ?>

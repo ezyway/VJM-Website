@@ -77,8 +77,9 @@ if (isset($_GET["course"])) {
 					echo "<div class='faq-snippet snippet'>";
 						echo "<h3 class='snippet_title'>FAQs</h3>";
 						echo "<ul>";
-							foreach ($courses[$_GET["course"]]['faq'] as $faq) {
-								echo "<li>$faq</li>";
+							$faq = $courses[$_GET["course"]]['faq'];
+							for($i = 0; $i < count($faq); $i++){
+								echo "<li><b>$faq_questions[$i]</b>$faq[$i]</li>";
 							}
 						echo "</ul>";
 					echo "</div>";
