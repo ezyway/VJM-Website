@@ -27,7 +27,7 @@
     margin-bottom:1em;
 }
 
-.course_title{
+.snippet_title{
     color: #000;
     background: rgba(var(--primary), 1);
     width: 170px;
@@ -40,7 +40,7 @@
     margin: auto;
 }
 
-.course_title::after {
+.snippet_title::after {
     content: "";
     display: block;
     width: 50px;
@@ -53,7 +53,7 @@
     transition: transform 0.4s ease-in-out;
 }
 
-.info-snippet:hover .course_title::after {
+.info-snippet:hover .snippet_title::after {
     transform: scaleX(1.5);
 }
 
