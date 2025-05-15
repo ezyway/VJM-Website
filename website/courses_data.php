@@ -21,7 +21,8 @@
 				"4 Years",
 				"6 to 7",
 				"M.Sc. IT / MCA",
-				"Morning"
+				"Morning",
+				""
 			]
 		],
 		"bsc" => [
@@ -44,7 +45,8 @@
 				"4 Years",
 				"5",
 				"M. Sc. Chemistry",
-				"Afternoon"
+				"Afternoon",
+				""
 			]
 		],
 		"bba" => [
@@ -68,7 +70,8 @@
 				"4 Years",
 				"7 to 8",
 				"M.Com. / MBA",
-				"Morning"
+				"Morning",
+				""
 			]
 		],
 		"bcom" => [
@@ -92,7 +95,8 @@
 				"4 Years",
 				"7 to 8",
 				"MSc. IT / MCA",
-				"English: Morning <br> Gujarati: Afternoon"
+				"English: Morning <br><b style='color: transparent; user-select: none;'>Session Timing: </b> Gujarati: Afternoon",
+				""
 			]
 		],
 		"bsw" => [
@@ -116,7 +120,8 @@
 				"4 Years",
 				"5",
 				"MSW",
-				"Morning"
+				"Morning",
+				""
 			]
 		],
 		"mcom" => [
@@ -140,7 +145,8 @@
 				"2 Years",
 				"5",
 				"Ph.D.",
-				"Morning"
+				"Morning",
+				""
 			]
 		],
 		"mscit" => [
@@ -164,7 +170,8 @@
 				"2 Years",
 				"3",
 				"Ph.D.",
-				"Morning"
+				"Morning",
+				""
 			]
 		],
 		"mscorgchem" => [
@@ -188,11 +195,11 @@
 				"2 Years",
 				"3 to 4",
 				"Ph.D.",
-				"Afternoon"
+				"Afternoon",
+				""
 			]
 		]
 	];
-
 
 	$fullforms = [
 		'bca' => 'Bachelor in Computer Applications',
@@ -204,12 +211,14 @@
 		'mscit' => 'Master in Information Technology',
 		'mscorgchem' => 'Master in Science (Chemistry)'
 	];
+
 	$faq_questions = [
 		'Eligibility: ',
 		'Medium of Instruction: ',
 		'Course Duration: ',
 		'Subjects Every Semester: ',
 		'Higher Education Options: ',
-		'Session Timing: '
+		'Session Timing: ',
+		'Syllabus Link: '
 	];
 ?>
