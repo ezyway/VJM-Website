@@ -75,4 +75,7 @@
     .snippet {
         width: 100%;
     }
+    .quick-info-snippet {
+        padding: 0em;
+    }
 }
