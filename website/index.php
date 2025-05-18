@@ -1,3 +1,8 @@
+<?php
+    // Use this to add 
+    $meta_description = "Scholarships available for merit and need-based students."; 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,9 +28,6 @@
     </script>
 
     <?php include("header.php"); ?>
-    
-    <!-- Document Title -->
-    <title>Shri V.J. Modha College</title>
 </head>
 
 <body>

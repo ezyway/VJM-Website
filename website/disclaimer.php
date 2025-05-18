@@ -3,9 +3,6 @@
 
 <head>
     <?php include("header.php"); ?>
-    
-    <!-- Document Title -->
-    <title>Disclaimer</title>
 </head>
 
 <body>

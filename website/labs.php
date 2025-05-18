@@ -10,10 +10,6 @@ if (isset($_GET["lab"])) {
 
     <head>
         <?php include("header.php"); ?>
-        
-        <!-- Document Title -->
-        <title><?php echo $lab["name"]; ?> - Facilities</title>
-
     </head>
 
     <body>

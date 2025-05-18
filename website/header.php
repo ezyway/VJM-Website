@@ -1,6 +1,24 @@
 <?php
     $currentFileName = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+    $title_data = [
+        "index" => "Shri V.J. Modha College",
+        "about" => "About Us",
+        "anti_ragging" => "Anti-Ragging Committee",
+        "contact" => "Contact Us",
+        "courses" => "Courses",
+        "disclaimer" => "Disclaimer",
+        "e_mag" => "E-Magazines",
+        "faculties" => "Faculties",
+        "gallery" => "Gallery",
+        "labs" => $lab["name"]." - Facilities",
+        "online_courses" => "Free Online Courses",
+        "placement" => "Placement",
+        "scholarship" => "Scholarships"
+    ]
 ?>
+
+<!-- Document Title -->
+<title> <?php echo $title_data[$currentFileName]; ?> </title>
 
 <!-- ===================================================
 Metadata & Document Setup

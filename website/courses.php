@@ -10,9 +10,6 @@ if (isset($_GET["course"])) {
 
 	<head>
 		<?php include("header.php"); ?>
-		
-		<!-- Document Title -->
-		<title>Courses</title>
 	</head>
 
 	<body>

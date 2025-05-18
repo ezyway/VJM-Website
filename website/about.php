@@ -3,9 +3,6 @@
 
 <head>
     <?php include("header.php"); ?>
-
-    <!-- Document Title -->
-    <title>About Us</title>
 </head>
 
 <body>

@@ -30,9 +30,6 @@
 
 <head>
     <?php include("header.php"); ?>
-    
-    <!-- Document Title -->
-    <title>Gallery</title>
 </head>
 
 <body>
