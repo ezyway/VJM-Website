@@ -10,7 +10,7 @@
         "e_mag" => "E-Magazines",
         "faculties" => "Faculties",
         "gallery" => "Gallery",
-        "labs" => $lab["name"]." - Facilities",
+        "labs" => isset($lab["name"]) ? $lab["name"] : null." - Facilities",
         "online_courses" => "Free Online Courses",
         "placement" => "Placement",
         "scholarship" => "Scholarships"
