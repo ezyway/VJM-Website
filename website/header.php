@@ -14,7 +14,7 @@
         "online_courses" => "Free Online Courses",
         "placement" => "Placement",
         "scholarship" => "Scholarships"
-    ]
+    ];
 ?>
 
 <!-- Document Title -->
