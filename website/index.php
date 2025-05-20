@@ -69,8 +69,8 @@
     <?php include("components/academic_pass_rates.html"); ?>
 
     <?php include("components/testimonials.html"); ?>
-    
-    <?php include("components/photos.html"); ?>
+
+    <?php include("components/photos.php"); ?>
 
 
     <!-- Back to Top Button with a modern arrow icon -->
