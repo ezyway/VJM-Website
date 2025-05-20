@@ -18,15 +18,18 @@
 ?>
 
 <!-- Document Title -->
-<title> <?php echo $title_data[$currentFileName]; ?> </title>
+<title> <?= $title_data[$currentFileName]; ?> </title>
 
 <!-- ===================================================
 Metadata & Document Setup
 =================================================== -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 <!-- Meta description for SEO -->
-<meta name="description" content="Shri V.J. Modha College - Empowering students for a better future.">
+<meta name="description" content="<?= isset($meta_description) ? htmlspecialchars($meta_description) : 'Shri V.J. Modha College - Empowering students for a better future.' ?>">
+
+
 
 <!-- Favicon -->
 <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
