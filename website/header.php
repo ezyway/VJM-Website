@@ -41,7 +41,9 @@ Fonts & Stylesheets
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 <!-- Custom Styles -->
-<link href="style/global.css" rel="stylesheet">
+<link href="styles/global.css" rel="stylesheet">
+<link href="styles/nav.css" rel="stylesheet">
+<link href="styles/footer.css" rel="stylesheet">
 <?php
     $path = "styles/".$currentFileName.".css";
     if(file_exists($path)){
@@ -53,6 +55,7 @@ Fonts & Stylesheets
 <!-- ===================================================
 Scripts
 =================================================== -->
+<script src='nav.js' defer></script>
 <?php
     $path = "scripts/".$currentFileName.".js";
     if(file_exists($path)){
