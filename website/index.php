@@ -1,5 +1,5 @@
 <?php
-    // Use this to add 
+    // Use this to add meta descriptions individually in each page
     $meta_description = "Scholarships available for merit and need-based students."; 
 ?>
 
