@@ -14,17 +14,51 @@ document.addEventListener("DOMContentLoaded", () => {
     // --------------------------
     const counters = document.querySelectorAll('[data-target]');
 
-    function animateCount(el, duration) {
-        const target = parseInt(el.getAttribute('data-target'));
+    function animateCount(element, duration) {
+        const targetString = element.getAttribute('data-target');
+        const isFloat = targetString.includes('.');
+        // Check if the element's class indicates it needs a '+' suffix
+        const percentSuffix = element.classList.contains('counter-section__pass-percentage');
+        const plusSuffix = element.classList.contains('counter-section__enrolled') || 
+                                element.classList.contains('counter-section__passouts');
+
+        const target = isFloat ? parseFloat(targetString) : parseInt(targetString, 10);
         let startTime = null;
 
         function updateCount(timestamp) {
             if (!startTime) startTime = timestamp;
             const progress = timestamp - startTime;
-            const currentCount = Math.min(Math.floor((progress / duration) * target), target);
-            el.textContent = currentCount;
+            let displayValue;
+
             if (progress < duration) {
+                if (isFloat) {
+                    const currentValue = (progress / duration) * target;
+                    // Determine decimal places from the target string, e.g., "97.63" has 2
+                    const decimalPlaces = (targetString.split('.')[1] || '').length;
+                    displayValue = Math.min(currentValue, target).toFixed(decimalPlaces);
+                } else {
+                    const currentValue = Math.floor((progress / duration) * target);
+                    displayValue = Math.min(currentValue, target);
+                }
+                element.textContent = displayValue;
                 requestAnimationFrame(updateCount);
+            } else {
+                // Animation finished, set the final target value
+                if (isFloat) {
+                    const decimalPlaces = (targetString.split('.')[1] || '').length;
+                    displayValue = target.toFixed(decimalPlaces);
+                } else {
+                    displayValue = target;
+                }
+                element.textContent = displayValue;
+
+                // Add '+ and %' suffix if needed
+                if (plusSuffix) {
+                    element.textContent += '+';
+                }
+                if (percentSuffix) {
+                    element.textContent += '%';
+                }
             }
         }
         requestAnimationFrame(updateCount);
