@@ -18,7 +18,7 @@
     display: block;
     width: 50px;
     height: 3px;
-    background-color: rgb(var(--green));
+    background-color: rgb(var(--secondary));
     margin: auto;
     border-radius: 5px;
     transform: scaleX(0.5);
@@ -399,7 +399,6 @@
     color: rgba(var(--on-primary), 1);
     border-radius: 10px;
     box-shadow: 0 0px 30px rgba(var(--secondary-dark), 0.6);
-    text-align: center;
     overflow: hidden;
     position: relative;
     padding: 0em 1em 1em 1em;
@@ -443,6 +442,7 @@
 .news-section__item h3 {
     font-size: 1.5em;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 /* News/Event Date */
@@ -451,12 +451,15 @@
     color: rgba(var(--primary-yellow));
     font-style: italic;
     margin-bottom: 5px;
+    display: block;
+    text-align: right;
 }
 
 /* News/Event Description */
 .news-section__item p {
     font-size: 1em;
     line-height: 1.5;
+    text-align: left;
 }
 
 /* ====================================================
