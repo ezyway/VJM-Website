@@ -730,7 +730,8 @@
 
 .photo-carousel-section__item {
     flex: 0 0 auto;
-    width: 400px;
+    height: 20em;
+    width: 30em;
     scroll-snap-align: start;
     border-radius: 20px;
     overflow: hidden;
