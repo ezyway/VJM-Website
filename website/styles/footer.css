@@ -1,22 +1,6 @@
-
-/* =======================================================
-   :root Variables
-========================================================== */
-:root {
-	--green-light: 39, 165, 136;
-	--green: 21, 92, 79;
-	--green-dark: 15, 65, 56;
-
-	--yellow-light: 248, 218, 128;
-	--grey-light: 220, 220, 220;
-	--grey-dark: 55, 55, 55;
-
-}
-
-
 .footer {
     width: 100%;
-    background: rgba(var(--grey-light), 0.8);
+    background: rgba(var(--primary-dark), 0.8);
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 }
@@ -66,7 +50,7 @@
 }
 
 .footer a:hover {
-    color: rgb(var(--green-light));
+    color: rgb(var(--secondary));
 }
 
 
@@ -85,7 +69,7 @@
     display: block;
     width: 24px;
     height: 3px;
-    background-color: rgb(var(--green));
+    background-color: rgb(var(--secondary));
     margin-top: 3px;
     border-radius: 2px;
 }
@@ -170,7 +154,7 @@
     display: block;
     width: 2em;
     height: 3px;
-    background-color: rgb(var(--green));
+    background-color: rgb(var(--secondary));
     margin-top: 3px;
     margin-left: 2em;
     border-radius: 2px;
@@ -203,8 +187,8 @@ hr.customHR {
 }
 
 .footer__credits a {
-    color: rgb(var(--green));
-    font-weight: 600;
+    color: rgb(var(--secondary));
+    font-weight: bold;
 }
 
 

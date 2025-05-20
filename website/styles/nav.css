@@ -1,27 +1,3 @@
-/* Comment or Remove in Prod
-Colors are declared in styles/global.css
-This block is here for auto complete */
-:root {
-    /* Primary */
-    --primary-light: 255, 255, 255;
-    --primary: 224, 224, 224;
-    --primary-dark: 180, 180, 180;
-    --on-primary: 0, 0, 0;
-
-    /* Secondary */
-    --secondary-light: 39, 165, 136;
-    --secondary: 21, 92, 79;
-    --secondary-dark: 15, 65, 56;
-    --on-secondary: 255, 255, 255;
-
-    /* Tertiary */
-    --tertiary-light: 255, 255, 230;
-    --tertiary: 255, 242, 196;
-    --tertiary-dark: 200, 190, 120;
-    --on-tertiary: 0, 0, 0;
-}
-
-
 /* =======================================================
    Focus Styles
 ========================================================== */

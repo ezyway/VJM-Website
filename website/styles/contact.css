@@ -1,16 +1,6 @@
-:root {
-    --green-light: 39, 165, 136;
-    --green: 21, 92, 79;
-    --green-dark: 15, 65, 56;
-
-    --yellow-light: 248, 218, 128;
-    --grey-light: 220, 220, 220;
-    --grey-dark: 55, 55, 55;
-}
-
 .contact {
     width: 100%;
-    background: rgba(var(--grey-light), 1);
+    background: rgba(var(--primary-dark), 0.5);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 }
@@ -39,7 +29,7 @@
 }
 
 .contact a:hover {
-    color: rgb(var(--green-light));
+    color: rgb(var(--secondary-dark), 1);
 }
 
 .section__title h2 {
@@ -58,7 +48,7 @@
     display: block;
     width: 24px;
     height: 3px;
-    background-color: rgb(var(--green));
+    background-color: rgb(var(--secondary-dark));
     margin-top: 3px;
     border-radius: 2px;
     transform: scaleX(0.6);
@@ -144,7 +134,7 @@
 }
 
 .credits a {
-    color: rgb(var(--green));
+    color: rgb(var(--secondary-dark));
     font-weight: bold;
     text-decoration: none;
 }
