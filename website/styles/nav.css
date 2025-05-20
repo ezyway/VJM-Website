@@ -68,7 +68,7 @@ textarea:focus {
 
 
 /* =======================================================
-   Navigation Links (Green text on white background)
+   Navigation Links
 ========================================================== */
 
 .navbar_nav {
@@ -81,7 +81,7 @@ textarea:focus {
 .navbar_nav__link {
 	display: block;
 	padding: 10px 20px;
-	color: rgb(var(--green));
+	color: rgb(var(--secondary-dark));
 	text-decoration: none;
 	transition: all 0.4s ease;
 	cursor: pointer;
@@ -91,9 +91,8 @@ textarea:focus {
 }
 
 .navbar_nav__link:hover {
-	/* subtle green tint on hover */
-	background: rgba(var(--green-light), 1);
-	color: rgba(var(--yellow-light));
+	background: rgba(var(--secondary-light), 1);
+	color: yellow;
 }
 
 /* --------- Dropdown Menu (White with glass morphic effect) --------- */
@@ -117,7 +116,7 @@ textarea:focus {
 	display: block;
 	text-decoration: none;
 	background: rgba(var(--primary-light), 1);
-	color: rgb(var(--green));
+	color: rgb(var(--secondary));
 	transition: all 0.3s ease;
 	padding: 8px 15px;
 	border: 1px solid green;
@@ -125,7 +124,6 @@ textarea:focus {
 }
 
 .navbar_dropdown__link:hover {
-	/* change to a slightly darker green on hover */
 	color: rgb(var(--primary-light));
 	background: rgba(var(--secondary-light), 0.8);
 }
@@ -153,8 +151,7 @@ textarea:focus {
 .navbar_hamburger__bar {
 	height: 4px;
 	width: 30px;
-	/* using primary green for the hamburger bars */
-	background-color: rgb(var(--green));
+	background-color: rgb(var(--secondary-dark));
 	margin: 3px 0;
 	transition: 0.4s;
 	border-radius: 5px;
