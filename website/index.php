@@ -62,7 +62,7 @@
 
     <?php include("components/counter.html"); ?>
 
-    <?php include("components/chairman_pride.html"); ?>
+    <?php include("components/chairman_pride.php"); ?>
 
     <?php include("components/events_news.html"); ?>
 
