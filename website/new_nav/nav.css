@@ -128,38 +128,6 @@ textarea:focus {
 }
 
 
-/* =======================================================
-   Hamburger Menu
-========================================================== */
-.navbar_hamburger {
-	display: none;
-	flex-direction: column;
-	cursor: pointer;
-	padding: 0.5em;
-	background-color: white;
-	border-radius: 10px;
-}
-
-.navbar_hamburger__bar {
-	height: 4px;
-	width: 30px;
-	background-color: rgb(var(--secondary-dark));
-	margin: 3px 0;
-	transition: 0.4s;
-	border-radius: 5px;
-}
-
-.navbar_hamburger--active .navbar_hamburger__bar:nth-child(1) {
-	transform: rotate(45deg) translate(5px, 9px);
-}
-
-.navbar_hamburger--active .navbar_hamburger__bar:nth-child(2) {
-	opacity: 0;
-}
-
-.navbar_hamburger--active .navbar_hamburger__bar:nth-child(3) {
-	transform: rotate(-45deg) translate(5px, -9px);
-}
 
 
 
@@ -265,6 +233,43 @@ textarea:focus {
    Mobile Styles
 ========================================================== */
 @media (max-width: 1150px) {
+	/* Hamburger Menu */
+	.navbar_hamburger {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		top: 0em;
+		right: 0em;
+		cursor: pointer;
+		padding: 1em;
+		background-color: white;
+		border-bottom-left-radius: 10px;
+		width: fit-content;
+		height: 4em;
+		width: 4em;
+	}
+
+	.navbar_hamburger__bar {
+		height: 5px;
+		width: 100%;
+		margin: 3px 0px;
+		background-color: rgb(var(--secondary-dark));
+		transition: 0.3s;
+		border-radius: 5px;
+	}
+
+	.navbar_hamburger--active .navbar_hamburger__bar:nth-child(1) {
+		transform: rotate(45deg) translate(5px, 9px);
+	}
+
+	.navbar_hamburger--active .navbar_hamburger__bar:nth-child(2) {
+		opacity: 0;
+	}
+
+	.navbar_hamburger--active .navbar_hamburger__bar:nth-child(3) {
+		transform: rotate(-45deg) translate(5px, -9px);
+	}
+
 
 	/* Mobile Navigation Sidebar */
 	.navbar_nav {
@@ -293,12 +298,6 @@ textarea:focus {
 	}
 	.navbar_nav__item .navbar_dropdown__item {
 		margin: auto;
-	}
-
-	/* Display Hamburger Menu Icon */
-	.navbar_hamburger {
-		display: flex;
-		margin-right: 1.5em;
 	}
 
 	/* Mobile Logo */
