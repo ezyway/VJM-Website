@@ -65,3 +65,24 @@ Scripts
         echo "<script src='$path' defer></script>";
     }
 ?>
+
+
+<!-- ===================================================
+Google Analytics
+=================================================== -->
+<?php
+    $host = $_SERVER['HTTP_HOST'];
+    if ($host !== 'localhost' && !preg_match('/^192\.168\./', $host)) {
+        // Production only: output GA script
+        ?>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TPLVFB56YC"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-TPLVFB56YC');
+        </script>
+        <?php
+    }
+?>
