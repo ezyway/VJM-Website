@@ -247,8 +247,6 @@
 
 .chairman-section__profile,
 .pride-section {
-    min-width: 350px;
-    max-width: 500px;
     color: rgba(var(--on-primary), 1);
     backdrop-filter: blur(50px);
     -webkit-backdrop-filter: blur(50px);
@@ -262,12 +260,12 @@
 }
 
 .chairman-section__profile {
-    flex: 2;
-    max-width: 700px;
+    max-width: 600px;
 }
 
 .pride-section {
-    flex: 1;
+    min-width: 300px;
+    padding: 1em;
 }
 
 .pride-section h2 {
@@ -344,6 +342,7 @@
     border-radius: 10px;
     border: 2px solid rgba(var(--on-primary));
     object-fit: cover;
+    object-position: 50% 0%;
 }
 
 /* Student Name */
