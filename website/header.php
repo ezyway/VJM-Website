@@ -58,7 +58,7 @@ Fonts & Stylesheets
 <!-- ===================================================
 Scripts
 =================================================== -->
-<script src='nav.js' defer></script>
+<script src='scripts/nav.js' defer></script>
 <?php
     $path = "scripts/".$currentFileName.".js";
     if(file_exists($path)){

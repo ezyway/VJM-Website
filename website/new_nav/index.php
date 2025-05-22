@@ -36,7 +36,7 @@
     <!-- ===================================================
     Scripts
     =================================================== -->
-    <script src='../nav.js' defer></script>
+    <script src='../scripts/nav.js' defer></script>
     <script src='../index.js' defer></script>
 
 </head>
