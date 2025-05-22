@@ -1,5 +1,37 @@
+.video-banner__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+.video-banner__content {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 3em 6em;
+    text-align: center;
+    border-radius: 1em;
+}
+.video-banner__content h1{
+    font-size: 2em;
+}
+.video-banner__content p{
+    font-size: 1.3em;
+}
+
+.video-banner__overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
 /* Component Title */
-/* News Box Title */
 .component_title{
     color: #000;
     background: rgba(var(--primary), 1);
@@ -755,19 +787,14 @@
    - Adjust layout and font sizes for screens up to 768px wide.
 ==================================================== */
 @media screen and (max-width: 768px) {
-
-    /* Video Overlay: Smaller text on mobile */
-    .video-banner__overlay {
-        padding: 0.5em;
-        margin: 8em 1em auto 1em;
+    .video-banner__content {
+        padding: 2em;
     }
-
-    .video-banner__overlay h1 {
+    .video-banner__content h1{
         font-size: 1.5em;
     }
-
-    .video-banner__overlay p {
-        font-size: 1.2em;
+    .video-banner__content p{
+        font-size: 1em;
     }
 
     /* Counter Section: Stack items vertically */

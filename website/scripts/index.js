@@ -1,6 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // --------------------------
+    // Video Overlay Toggle
+    // --------------------------
+    const video = document.querySelector(".video-banner__background");
+    const overlay = document.querySelector(".video-banner__overlay");
+
+    if (video && overlay) {
+        const hideOverlay = () => {
+            overlay.classList.add("hidden");
+        };
+
+        const showOverlay = () => {
+            overlay.classList.remove("hidden");
+        };
+
+        // Hide overlay when video starts playing
+        video.addEventListener("playing", hideOverlay);
+
+        // (Optional) Show overlay again if video is paused
+        video.addEventListener("pause", showOverlay);
+
+        // Check the initial state of the video.
+        // If `autoplay` has already started the video, the `playing` event might have been missed.
+        if (!video.paused) {
+            hideOverlay(); // Video is already playing, so hide the overlay.
+        } else {
+            showOverlay(); // Video is not playing yet, ensure overlay is visible.
+        }
+    }
+
+    // --------------------------
     // Click for Scroll Down Icon
     // --------------------------
 
@@ -19,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const isFloat = targetString.includes('.');
         // Check if the element's class indicates it needs a '+' suffix
         const percentSuffix = element.classList.contains('counter-section__pass-percentage');
-        const plusSuffix = element.classList.contains('counter-section__enrolled') || 
-                                element.classList.contains('counter-section__passouts');
+        const plusSuffix = element.classList.contains('counter-section__enrolled') ||
+            element.classList.contains('counter-section__passouts');
 
         const target = isFloat ? parseFloat(targetString) : parseInt(targetString, 10);
         let startTime = null;
