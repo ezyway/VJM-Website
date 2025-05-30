@@ -24,6 +24,22 @@
 						<th>Amount</th>
 					</tr>
 					<tr>
+						<td>2024 - 2025</td>
+						<td>₹ 21,22,000</td>
+					</tr>
+					<tr>
+						<td>2023 - 2024</td>
+						<td>₹ 19,38,000</td>
+					</tr>
+					<tr>
+						<td>2022 - 2023</td>
+						<td>₹ 17,20,000</td>
+					</tr>
+					<tr>
+						<td>2021 - 2022</td>
+						<td>₹ 16,50,000</td>
+					</tr>
+					<tr>
 						<td>2020 - 2021</td>
 						<td>₹ 14,82,000</td>
 					</tr>
@@ -65,49 +81,13 @@
 				<table>
 					<tr>
 						<th>Name of the Scholarship</th>
-						<th>Form Type</th>
+						<th>Links</th>
 					</tr>
 					<tr>
-						<td>Vicharti or Vimukt Jati</td>
+						<td>Digital Gujarat</td>
 						<td>
 							<div class="buttons">
-								<a href="" target="_blank">New</a>
-								<a href="" target="_blank">Renew</a>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Physical Handicaped</td>
-						<td>
-							<div class="buttons">
-								<a href="" target="_blank">View</a>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Scheduled Caste</td>
-						<td>
-							<div class="buttons">
-								<a href="" target="_blank">New</a>
-								<a href="" target="_blank">Renew</a>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Scheduled Tribe</td>
-						<td>
-							<div class="buttons">
-								<a href="" target="_blank">New</a>
-								<a href="" target="_blank">Renew</a>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>Minority</td>
-						<td>
-							<div class="buttons">
-								<a href="" target="_blank">New</a>
-								<a href="" target="_blank">Renew</a>
+								<a href="https://www.digitalgujarat.gov.in/" target="_blank">Go to Website</a>
 							</div>
 						</td>
 					</tr>
@@ -115,8 +95,7 @@
 						<td>MYSY</td>
 						<td>
 							<div class="buttons">
-								<a href="" target="_blank">New</a>
-								<a href="" target="_blank">Renew</a>
+								<a href="https://mysy.guj.nic.in/" target="_blank">Go to Website</a>
 							</div>
 						</td>
 					</tr>
