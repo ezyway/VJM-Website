@@ -22,28 +22,25 @@
 					<tr>
 						<th>No.</th>
 						<th>Name</th>
-						<th>Year</th>
 						<th>Actions</th>
 					</tr>
 					<tr>
 						<td>1</td>
-						<td>Mag 1</td>
-						<td>2020</td>
+						<td>E-Magazine 2021</td>
 						<td>
 							<div class="buttons">
-								<a href="assets/e_mags/mag_2020.pdf" target="_blank">View</a>
-								<a href="assets/e_mags/mag_2020.pdf" download="College_Magazine_2020.pdf">Download</a>
+								<a href="assets/e_mags/mag_2021.pdf" target="_blank">View</a>
+								<a href="assets/e_mags/mag_2021.pdf" download="College_Magazine_2021.pdf">Download</a>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td>2</td>
-						<td>Mag 2</td>
-						<td>2021</td>
+						<td>E-Magazine 2020</td>
 						<td>
 							<div class="buttons">
-								<a href="assets/e_mags/mag_2021.pdf" target="_blank">View</a>
-								<a href="assets/e_mags/mag_2021.pdf" download="College_Magazine_2021.pdf">Download</a>
+								<a href="assets/e_mags/mag_2020.pdf" target="_blank">View</a>
+								<a href="assets/e_mags/mag_2020.pdf" download="College_Magazine_2020.pdf">Download</a>
 							</div>
 						</td>
 					</tr>
