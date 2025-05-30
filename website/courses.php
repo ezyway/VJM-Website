@@ -52,7 +52,16 @@ if (isset($_GET["course"])) {
 						echo "<ul>";
 							$faq = $courses[$_GET["course"]]['faq'];
 							for($i = 0; $i < count($faq); $i++){
-								echo "<li><b>$faq_questions[$i]</b>$faq[$i]</li>";
+								if($faq_questions[$i] == "Syllabus Link: "){
+									echo<<<HTML
+										<li>
+											<b>$faq_questions[$i]</b>
+											<a href='{$faq[$i]}' target="_blank"> Link</a>
+										</li>
+									HTML;
+								} else {
+									echo "<li><b>$faq_questions[$i]</b>$faq[$i]</li>";
+								}
 							}
 						echo "</ul>";
 					echo "</div>";

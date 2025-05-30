@@ -22,7 +22,7 @@
 				"6 to 7",
 				"M.Sc. IT / MCA",
 				"Morning",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
 		"bsc" => [
@@ -46,7 +46,7 @@
 				"5",
 				"M. Sc. Chemistry",
 				"Afternoon",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
 		"bba" => [
@@ -71,7 +71,7 @@
 				"7 to 8",
 				"M.Com. / MBA",
 				"Morning",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
 		"bcom" => [
@@ -96,7 +96,7 @@
 				"7 to 8",
 				"MSc. IT / MCA",
 				"English: Morning <br><b style='color: transparent; user-select: none;'>Session Timing: </b> Gujarati: Afternoon",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
 		"bsw" => [
@@ -121,7 +121,7 @@
 				"5",
 				"MSW",
 				"Morning",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
 		"mcom" => [
@@ -146,7 +146,7 @@
 				"5",
 				"Ph.D.",
 				"Morning",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
 		"mscit" => [
@@ -171,7 +171,7 @@
 				"3",
 				"Ph.D.",
 				"Morning",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
 		"mscorgchem" => [
@@ -196,7 +196,7 @@
 				"3 to 4",
 				"Ph.D.",
 				"Afternoon",
-				""
+				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		]
 	];
