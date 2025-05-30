@@ -18,11 +18,21 @@
 				<h2 class='page_title'>Free Online Courses</h2>
 			</div>
 			<div class="img-container">
-				<img src="assets/photos/online_courses/AICTE.png">
-				<img src="assets/photos/online_courses/ATAL.png">
-				<img src="assets/photos/online_courses/CEC.png">
-				<img src="assets/photos/online_courses/NCERT.png">
-				<img src="assets/photos/online_courses/Swayam.png">
+				<a href='https://free.aicte-india.org/' target='_blank'>
+					<img src="assets/photos/online_courses/AICTE.png">
+				</a>
+				<a href='https://atalacademy.aicte.gov.in/' target='_blank'>
+					<img src="assets/photos/online_courses/ATAL.png">
+				</a>
+				<a href='https://swayam.gov.in/CEC' target='_blank'>
+					<img src="assets/photos/online_courses/CEC.png">
+				</a>
+				<a href='https://swayam.gov.in/NCERT' target='_blank'>
+					<img src="assets/photos/online_courses/NCERT.png">
+				</a>
+				<a href='https://swayam.gov.in/' target='_blank'>
+					<img src="assets/photos/online_courses/Swayam.png">
+				</a>
 			</div>
 
 		</div>
