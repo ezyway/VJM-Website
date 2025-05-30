@@ -21,10 +21,6 @@
 					<h2>Reach Us</h2>
 				</div>
 
-				<a href="tel:+919825673093">
-					<img src="assets/icons/footer/telephone.png" alt="Phone icon">
-					<span>+91 9825 673 093</span>
-				</a>
 				<a href="tel:+919978818009">
 					<img src="assets/icons/footer/telephone.png" alt="Phone icon">
 					<span>+91 997 8818 009</span>
