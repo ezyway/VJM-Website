@@ -20,14 +20,14 @@
             ],
             "description" => "The Chemistry Lab provides all necessary chemicals, safety gear, and modern equipment to ensure hands-on learning for budding scientists."
         ],
-        "biology" => [
-            "name" => "Biology Lab",
+        "physics" => [
+            "name" => "Physics Lab",
             "images" => [
                 "assets/photos/labs/biology/lab.jpg",
                 "assets/photos/labs/biology/specimen.jpg",
                 "assets/photos/labs/biology/students.jpg"
             ],
-            "description" => "In the Biology Lab, students explore anatomy, microbiology, and ecosystems through microscopes and preserved specimens."
+            "description" => "In the Physics Lab, students investigate mechanics, electricity, and optics through hands-on experiments with circuits, motion sensors, and lasers."
         ]
     ];
 ?>
