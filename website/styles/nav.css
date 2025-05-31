@@ -301,6 +301,11 @@ textarea:focus {
 		margin: auto;
 	}
 
+	.navbar_logo {
+		top: 0.3em;
+		left: 0.3em;
+	}
+
 	/* Mobile Logo */
 	.navbar_logo--mobile {
 		display: flex;
