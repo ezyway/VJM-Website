@@ -9,41 +9,76 @@
     display: flex;
     justify-content: space-around;
     align-items: start;
-    gap: 50px;
     flex-wrap: wrap;
-    margin-bottom: 1em;
 }
 
-/* Shared styles for all footer columns */
-.footer__contact, .footer__links h2, .footer__map h2{
-    text-align: left;
+
+/* =====SLOGAN===== */
+.college_slogan {
+    text-align: center;
+    color: white;
+    position: relative;
+    font-weight: bold;
+    color: #222;
+    font-size: 1em;
+    width: fit-content;
+    margin: auto auto 1em auto;
+    padding-top: 1em
 }
 
+.college_slogan::after {
+    content: "";
+    display: block;
+    width: 2em;
+    height: 3px;
+    background-color: rgb(var(--secondary));
+    margin-top: 3px;
+    margin-left: 2em;
+    border-radius: 2px;
+}
+
+hr.customHR {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0));
+}
+
+
+/* Styles for all footer columns */
 .footer__contact,
 .footer__links,
 .footer__map {
     background-color: white;
-    padding: 2em;
+    padding: 1em;
     border-radius: 10px;
-}
-
-.footer__contact,
-.footer__map {
-    flex: 0 1 33%; /* Take up 33% of the width, don't grow */
+    margin: 1em auto;
 }
 
 .footer__links {
-    flex: 0 1 25%; /* Slightly smaller, 25% of the width */
+    white-space: nowrap;
 }
 
-.footer__links,
-.footer__map {
-    max-width: 400px;
-    width: fit-content;
-    text-align: center;
+.footer__contact h2,
+.footer__links h2,
+.footer__map h2{
+    text-align: left;
 }
 
-.footer a {
+.footer__contact span,
+.footer__links span,
+.footer__map span {
+    width: 100%;
+    font-size: 1em;
+    line-height: 50px;
+    text-align: left;
+}
+
+.footer__contact a,
+.footer__links a,
+.footer__map a {
+    display: flex;
+    align-items: center;
+    font-size: 1.3em;
     text-decoration: none;
     color: black;
     transition: 0.5s ease;
@@ -53,14 +88,28 @@
     color: rgb(var(--secondary));
 }
 
+.footer__contact,
+.footer__map {
+    flex: 0 1 33%;
+}
+
+.footer__links {
+    flex: 0 1 25%;
+}
+
+.footer__links,
+.footer__map {
+    max-width: 400px;
+    width: fit-content;
+    text-align: center;
+}
 
 .footer h2 {
     position: relative;
     font-weight: bold;
     font-size: 1.2rem;
     color: #222;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 1em;
     font-size: 1.8em;
 }
 
@@ -76,28 +125,10 @@
 
 
 /* Footer column content for all columns */
-.footer__contact span,
-.footer__links span,
-.footer__map span {
-    width: 100%;
-    font-size: 1em;
-    line-height: 50px;
-    text-align: left;
-}
-
-.footer iframe {
+.footer__map iframe {
     border-radius: 10px;
     text-align: center;
     border: none;
-}
-
-
-.footer__contact a,
-.footer__links a,
-.footer__map a {
-    display: flex;
-    align-items: center;
-    font-size: 1.3em;
 }
 
 /* Address styling */
@@ -136,37 +167,6 @@
     margin-top: 3em;
 }
 
-
-/* =====SLOGAN===== */
-.college_slogan {
-    text-align: center;
-    color: white;
-    position: relative;
-    font-weight: bold;
-    color: #222;
-    font-size: 1em;
-    width: fit-content;
-    margin: auto auto 1em auto;
-    padding-top: 1em
-}
-
-.college_slogan::after {
-    content: "";
-    display: block;
-    width: 2em;
-    height: 3px;
-    background-color: rgb(var(--secondary));
-    margin-top: 3px;
-    margin-left: 2em;
-    border-radius: 2px;
-}
-
-hr.customHR {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0));
-    margin-bottom: 1em;
-}
 
 
 /* Footer credits */
