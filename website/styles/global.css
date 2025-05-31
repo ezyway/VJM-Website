@@ -158,6 +158,9 @@ td a:hover{
 
 
 @media screen and (max-width: 768px) {
+    .container{
+        margin-top: 13em;
+    }
     .wrapper{
         padding: 0em 0.5em 1em 0.5em;
 		font-size: 1em;
