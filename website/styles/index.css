@@ -264,7 +264,6 @@
 }
 
 .pride-section {
-    min-width: 300px;
     padding: 1em;
 }
 
@@ -785,8 +784,16 @@
 
 /* ====================================================
    RESPONSIVE STYLES (MOBILE VIEWS)
-   - Adjust layout and font sizes for screens up to 768px wide.
 ==================================================== */
+@media (max-width: 1300px) {
+    .chairman-section {
+        flex-direction: column;
+    }
+    .chairman-section__profile,
+    .pride-section {
+        margin: 0em auto;
+    }
+}
 @media screen and (max-width: 768px) {
     .video-banner__content {
         padding: 2em;
