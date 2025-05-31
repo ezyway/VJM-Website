@@ -60,6 +60,11 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="trustee-section__controls">
+                    <button id="trustee-prev" class="trustee-nav-button" aria-label="Previous Trustee">&lt;</button>
+                    <button id="trustee-next" class="trustee-nav-button" aria-label="Next Trustee">&gt;</button>
+                </div>
             </div>
 
             <p>Shri V. J. Modha College of Information Technology was established in 2007 by the Shri V. J. Modha Educational & Charitable Trust, Porbandar (Gujarat). Since its inception, the institute has provided every possible opportunity to its students. It offers a global perspective, helping students understand broader social scenarios. The college welcomes students from all backgrounds, without distinction of caste, race, or religion, and fosters a culture of humility and respectful behavior.</p> &nbsp;
