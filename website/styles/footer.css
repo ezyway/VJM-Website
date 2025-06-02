@@ -92,7 +92,7 @@ hr.customHR {
 }
 
 .footer__links {
-    flex: 0 1 25%;
+    flex: 1 1 25%;
 }
 
 .footer__links,
