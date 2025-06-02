@@ -43,6 +43,7 @@
     border-bottom-right-radius: 10px;
     margin: 0em auto 1em auto;
     font-size: 2em;
+    text-align: center;
 }
 
 .component_title::after {
@@ -806,9 +807,13 @@
     }
 
     /* Counter Section: Stack items vertically */
+    .counter-section {
+        padding: 3em 1em;
+    }
     .counter-section__box {
         flex-direction: column;
         align-items: center;
+        padding: 1em 1em;
     }
 
     .counter-section__item {
@@ -1025,4 +1030,21 @@
         right: 1em;
     }
 
+}
+
+@media screen and (max-width: 300px) {
+    .chairman-section__profile,
+    .pride-section {
+        padding: 0.5em;
+    }
+    .pride-section {
+        height: 27em;
+    }
+    .pride-section h3{
+        font-size: 1em;;
+    }
+
+    .news-section__box {
+        padding: 0em 0.5em;
+    }
 }
