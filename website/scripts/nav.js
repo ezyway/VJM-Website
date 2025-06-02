@@ -7,20 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdownItems = document.querySelectorAll(".navbar_nav__item--dropdown");
 
   // Helper to close all dropdowns (unless you pass a reference to skip one)
-  const closeAllMobileDropdowns = (except = null) => {
+  const closeAllDropdowns = (except = null) => {
     dropdownItems.forEach(item => {
       if (item !== except) {
         item.classList.remove("js-dropdown-active");
       }
     });
   };
-
   // Toggle mobile nav & close dropdowns when collapsing
   hamburger.addEventListener("click", () => {
     hamburger.classList.toggle("navbar_hamburger--active");
     navLinks.classList.toggle("navbar_nav--active");
     if (!navLinks.classList.contains("navbar_nav--active")) {
-      closeAllMobileDropdowns();
+      closeAllDropdowns();
     }
   });
 
@@ -43,42 +42,65 @@ document.addEventListener("DOMContentLoaded", () => {
   dropdownItems.forEach(item => {
     const link = item.querySelector(".navbar_nav__link");
     link.addEventListener("click", (e) => {
-      if (window.innerWidth > 1150) return;         // desktop: let CSS hover handle it
+      // if (window.innerWidth > 1150) return; // Removed to allow JS handling on desktop
       if (link.getAttribute("href") === "#") {
         e.preventDefault();
       }
 
       const wasActive = item.classList.contains("js-dropdown-active");
-
       if (wasActive) {
         // If already open, close everything (including this one)
-        closeAllMobileDropdowns();
+        closeAllDropdowns();
       } else {
         // Otherwise, close others and open this one
-        closeAllMobileDropdowns(item);
+        closeAllDropdowns(item);
         item.classList.add("js-dropdown-active");
       }
     });
   });
 
-  // Close any open dropdown if clicking outside (mobile only)
+  // Close any open dropdown if clicking outside
   document.addEventListener("click", (e) => {
-    if (window.innerWidth > 1150) return;                          // desktop: ignore
-    if (!navLinks.classList.contains("navbar_nav--active")) return; // nav closed: nothing to do
-    if (hamburger.contains(e.target)) return;                       // clicking hamburger itself
+    const target = e.target;
 
-    // Check if click is on a dropdown trigger or inside an open dropdown’s content
-    const clickedInsideDropdown = Array.from(dropdownItems).some(item => {
+    const isMobileNavActive = navLinks.classList.contains("navbar_nav--active");
+    // Assuming 1150px is the breakpoint for desktop-like layout where nav items are always visible
+    const isLikelyDesktopLayout = window.innerWidth > 1150;
+
+    // This listener should only proceed if:
+    // 1. We are on a desktop-like layout OR
+    // 2. We are on a mobile-like layout AND the mobile nav is currently open.
+    // Otherwise (e.g., mobile layout with nav closed), clicks outside shouldn't affect hidden dropdowns.
+    if (!isLikelyDesktopLayout && !isMobileNavActive) {
+      return;
+    }
+
+    // 1. Ignore clicks on the hamburger itself (it has its own toggle logic)
+    if (hamburger.contains(target)) {
+      return;
+    }
+
+    // 2. Determine if the click is on any dropdown trigger OR inside the content of an OPEN dropdown.
+    let clickIsInsideInteractiveDropdownArea = false;
+    for (const item of dropdownItems) {
       const trigger = item.querySelector(".navbar_nav__link");
-      const content = item.querySelector(".navbar_dropdown");
-      return (
-        trigger.contains(e.target) ||
-        (item.classList.contains("js-dropdown-active") && content.contains(e.target))
-      );
-    });
+      const content = item.querySelector(".navbar_dropdown"); // Selector for the dropdown content area
 
-    if (!clickedInsideDropdown) {
-      closeAllMobileDropdowns();
+      if (trigger && trigger.contains(target)) {
+        // Click is on a dropdown trigger. Its own event listener will handle opening/closing.
+        clickIsInsideInteractiveDropdownArea = true;
+        break;
+      }
+      if (item.classList.contains("js-dropdown-active") && content && content.contains(target)) {
+        // Click is inside the content of an OPEN dropdown. Allow interaction.
+        clickIsInsideInteractiveDropdownArea = true;
+        break;
+      }
+    }
+
+    // 3. If the click was not on a trigger and not inside open content, then it's an "outside" click.
+    if (!clickIsInsideInteractiveDropdownArea) {
+      closeAllDropdowns();
     }
   });
 });
