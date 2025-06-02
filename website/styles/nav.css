@@ -121,16 +121,10 @@ textarea:focus {
 	background: rgba(var(--secondary-light), 0.8);
 }
 
-/* Show dropdown on hover */
-.navbar_nav__item:hover > .navbar_dropdown,
-.navbar_nav__item--dropdown:hover .navbar_dropdown {
-	display: block;
-	animation: fadeIn 0.3s ease-in-out;
+.navbar_nav__item--dropdown.js-dropdown-active .navbar_dropdown {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
 }
-
-
-
-
 
 
 /* =======================================================
