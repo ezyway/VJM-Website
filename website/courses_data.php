@@ -217,7 +217,7 @@
 		'Medium of Instruction: ',
 		'Course Duration: ',
 		'Subjects Every Semester: ',
-		'Higher Education Options: ',
+		'Post Graduation: ',
 		'Session Timing: ',
 		'Syllabus Link: '
 	];
