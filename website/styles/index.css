@@ -876,6 +876,9 @@
     .pride-section {
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
+    .pride-section {
+        height: 27em;
+    }
 
     /* News Section: Stack news boxes vertically */
     .news-section {
@@ -1032,14 +1035,12 @@
 
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 400px) {
     .chairman-section__profile,
     .pride-section {
         padding: 0.5em;
     }
-    .pride-section {
-        height: 27em;
-    }
+    
     .pride-section h3{
         font-size: 1em;;
     }
