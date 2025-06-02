@@ -44,27 +44,27 @@ Fonts & Stylesheets
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 <!-- Custom Styles -->
-<link href="styles/global.css" rel="stylesheet">
-<link href="styles/nav.css" rel="stylesheet">
-<link href="styles/footer.css" rel="stylesheet">
+<link href="styles/global.css?v=<?= filemtime('styles/global.css') ?>" rel="stylesheet">
+<link href="styles/nav.css?v=<?= filemtime('styles/nav.css') ?>" rel="stylesheet">
+<link href="styles/footer.css?v=<?= filemtime('styles/footer.css') ?>" rel="stylesheet">
 <?php
     $path = "styles/".$currentFileName.".css";
     if(file_exists($path)){
-        echo "<link href='$path' rel='stylesheet'>";
+        echo "<link href='{$path}?v=" . filemtime($path) . "' rel='stylesheet'>";
     }
 ?>
-
 
 <!-- ===================================================
 Scripts
 =================================================== -->
-<script src='scripts/nav.js' defer></script>
+<script src='scripts/nav.js?v=<?= filemtime('scripts/nav.js') ?>' defer></script>
 <?php
     $path = "scripts/".$currentFileName.".js";
     if(file_exists($path)){
-        echo "<script src='$path' defer></script>";
+        echo "<script src='{$path}?v=" . filemtime($path) . "' defer></script>";
     }
 ?>
+
 
 
 <!-- ===================================================
