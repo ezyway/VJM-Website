@@ -37,33 +37,35 @@ if (isset($_GET["course"])) {
 					echo "</div>";
 
 
-					echo "<div class='job-roles-snippet snippet'>";
-						echo "<h3 class='snippet_title'>Job Roles</h3>";
-						echo "<ul>";
-							foreach ($courses[$_GET["course"]]['job_roles'] as $role) {
-								echo "<li>$role</li>";
-							}
-						echo "</ul>";
-					echo "</div>";
-
-
-					echo "<div class='faq-snippet snippet'>";
-						echo "<h3 class='snippet_title'>FAQs</h3>";
-						echo "<ul>";
-							$faq = $courses[$_GET["course"]]['faq'];
-							for($i = 0; $i < count($faq); $i++){
-								if($faq_questions[$i] == "Syllabus Link: "){
-									echo<<<HTML
-										<li>
-											<b>$faq_questions[$i]</b>
-											<a href='{$faq[$i]}' target="_blank"> Link</a>
-										</li>
-									HTML;
-								} else {
-									echo "<li><b>$faq_questions[$i]</b>$faq[$i]</li>";
+					echo "<div class='job-roles-faq-container'>";
+						echo "<div class='job-roles-snippet snippet'>";
+							echo "<h3 class='snippet_title'>Job Roles</h3>";
+							echo "<ul>";
+								foreach ($courses[$_GET["course"]]['job_roles'] as $role) {
+									echo "<li>$role</li>";
 								}
-							}
-						echo "</ul>";
+							echo "</ul>";
+						echo "</div>";
+
+
+						echo "<div class='faq-snippet snippet'>";
+							echo "<h3 class='snippet_title'>FAQs</h3>";
+							echo "<ul>";
+								$faq = $courses[$_GET["course"]]['faq'];
+								for($i = 0; $i < count($faq); $i++){
+									if($faq_questions[$i] == "Syllabus Link: "){
+										echo<<<HTML
+											<li>
+												<b>$faq_questions[$i]</b>
+												<a href='{$faq[$i]}' target="_blank"> Link</a>
+											</li>
+										HTML;
+									} else {
+										echo "<li><b>$faq_questions[$i]</b>$faq[$i]</li>";
+									}
+								}
+							echo "</ul>";
+						echo "</div>";
 					echo "</div>";
 				}
 				?>
