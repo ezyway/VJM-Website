@@ -71,6 +71,9 @@
         <div class="gallery_modal__content" id="modal-content">
             <!-- Slides will be injected here by JavaScript -->
         </div>
+        <div class="gallery_modal__counter" id="modal-counter">
+            <!-- Counter will be updated by JavaScript -->
+        </div>
         <button class="gallery_modal__nav gallery_modal__nav--prev" onclick="prevSlide()">&#10094;</button>
         <button class="gallery_modal__nav gallery_modal__nav--next" onclick="nextSlide()">&#10095;</button>
     </div>
