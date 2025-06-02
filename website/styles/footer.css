@@ -252,3 +252,11 @@ hr.customHR {
         width: 100%;
     }
 }
+
+
+
+@media (max-width: 300px) {
+    .college_slogan {
+        font-size: 0.8em;
+    }
+}
