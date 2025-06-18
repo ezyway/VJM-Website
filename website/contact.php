@@ -28,14 +28,14 @@
 
 				<a href="mailto:shrivjmodha@gmail.com">
 					<img src="assets/icons/footer/email.png" alt="Email icon">
-					<span>shrivjmodha@gmail.com</span>
+					<span>shrivjmodha@</wbr>gmail.com</span>
 				</a>
 
 				<a href="https://maps.app.goo.gl/1KuyRCNiCoc7pfun9">
 					<img src="assets/icons/footer/location.png" alt="Location icon">
 					<span class="contact__address">
-						"Vidhyadham", Chhaya-Birla Road, <br>
-						Nr. Pakshi Abhiyaran, <br>
+						"Vidhyadham",</wbr> Chhaya-Birla Road, </wbr>
+						Nr. Pakshi Abhiyaran, </wbr>
 						Porbandar, Gujarat, 360575
 					</span>
 				</a>
