@@ -21,9 +21,9 @@
 
             <p><b>Disclaimer:</b> The information contained in pages found at www. shrivjmodhacollege.com are publications of Shri V.J.Modha College, for general purposes only and should not be considered as professional advice or opinion on any specific facts or circumstances. If you have specific questions, you are urged to contact us concerning your own situation.</p> &nbsp;
 
-            <p>The website is designed, developed and maintained <a href="https://www.linkedin.com/in/cvbiro" target="_blank">Sreyas Cheeran Velikoth</a> and <a href="https://www.linkedin.com/in/aakash-kava/" target="_blank">Aakash Kava</a>.</p> &nbsp;
+            <p>The website is designed, developed and maintained by <a href="https://www.linkedin.com/in/cvbiro" target="_blank">Sreyas Cheeran Velikoth</a> and <a href="https://www.linkedin.com/in/aakash-kava/" target="_blank">Aakash Kava</a>.</p> &nbsp;
 
-            <p>If you experience any technical difficulty with this website, or have questions, concerns or suggestions regarding this site, please contact us using any mode listed below in the footer.</p> &nbsp;
+            <p>If you experience any technical difficulty with this website, or have questions, concerns or suggestions regarding this site, please contact us using any mode listed below in the footer with relevant information and we shall attend your concerns with utmost importance.</p> &nbsp;
 
             <p>Thank you.</p>
         </div>

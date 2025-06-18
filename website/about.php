@@ -73,7 +73,7 @@
 
             <p>In a rapidly changing modern world, new demands are placed on both students and lecturers. Each lecturer at Shri V. J. Modha College of Information Technology rises to these challenges by staying up-to-date with the latest trends in Information Technology and striving to prepare students for a well-balanced future.</p> &nbsp;
 
-            <p>In this context, pursuing the BCA and PGDCA programs at Shri V. J. Modha College of Information Technology becomes an ideal choice for IT aspirants, as the college is committed to grooming young talent into highly competent professionals.</p> &nbsp;
+            <p>In this context, pursuing the BCA and M.Sc. IT programs at Shri V. J. Modha College of Information Technology becomes an ideal choice for IT aspirants, as the college is committed to grooming young talent into highly competent professionals.</p> &nbsp;
 
             <p>Centrally located on a sprawling campus, the college boasts modern infrastructure such as a Bio-Metric Attendance System, CCTV monitoring, and a Wi-Fi-enabled environment. The college is supported by highly qualified and dedicated staff who impart essential skills and knowledge, preparing cheerful young men and women to pursue their professional careers with confidence and dedication.</p> &nbsp;
 
