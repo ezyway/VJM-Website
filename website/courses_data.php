@@ -205,9 +205,9 @@
 		'bca' => 'Bachelor in Computer Applications',
 		'bsc' => 'Bachelor in Science',
 		'bba' => 'Bachelor in Business Administration',
-		'bcom' => 'Bachelor in Commerse',
+		'bcom' => 'Bachelor in Commerce',
 		'bsw' => 'Bachelor in Social Work',
-		'mcom' => 'Master in Commerse',
+		'mcom' => 'Master in Commerce',
 		'mscit' => 'Master in Information Technology',
 		'mscorgchem' => 'Master in Science (Chemistry)'
 	];
