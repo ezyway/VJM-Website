@@ -545,28 +545,49 @@
         font-size: 0.92rem;
     }
     .labs-section {
-        padding: 2.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 0.5rem 1.5rem 0.5rem;
     }
-    .labs-section__container,
+    .labs-section__container {
+        padding: 1.5rem 0.85rem;
+    }
     .labs-cta__box {
         padding: 2rem 1.25rem;
     }
     .lab-switcher {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.85rem;
-        border-radius: var(--radius-lg);
+        align-items: stretch;
+        gap: 0.75rem;
+        border-radius: var(--radius-md);
+        padding: 1rem 0.85rem;
+    }
+    .lab-switcher__label {
+        padding-left: 0;
+        text-align: center;
     }
     .lab-switcher__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         width: 100%;
-        overflow-x: auto;
-        padding-bottom: 0.25rem;
+        overflow-x: visible;
+        padding-bottom: 0;
+    }
+    .lab-switcher__pill {
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 0.55rem 0.85rem;
+        font-size: 0.82rem;
+        white-space: nowrap;
+    }
+    .lab-detail-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
     .lab-card {
-        padding: 2rem 1.25rem;
+        padding: 1.75rem 1.25rem;
     }
     .lab-carousel__main {
-        height: 260px;
+        height: 250px;
     }
     .lab-specs-grid {
         grid-template-columns: 1fr;
