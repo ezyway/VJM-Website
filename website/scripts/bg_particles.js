@@ -15,18 +15,24 @@
     }
 
     const GLYPHS = [
-        // Sanskrit & Academic Glyphs
-        "॥", "ॐ", "विद्या", "ज्ञानम्", "सत्यम्", "ऋ",
-        // Academic & STEM Icons / Symbols
-        "🎓", "📚", "⚛", "⚗️", "π", "∑", "∞", "💡", "💻", "{ }", "A+", "✨", "✦", "★"
+        // Sanskrit & Gujarati Academic Mottos
+        "॥", "ॐ", "विद्या", "ज्ञानम्", "सत्यम्", "ऋ", "धर्मः", "विनयः", "तપઃ", "શ્રી", "વિદ્યા", "સત્ય", "શ્રદ્ધા", "વિવેક", "પ્રગતિ", "શિક્ષા", "સાધના",
+        // Academic, Degree & Graduation Icons
+        "🎓", "📚", "📖", "📝", "🏆", "🎯", "A+", "📜", "🏛️", "🏅", "🎨", "🌍", "🌱",
+        // Degree Acronyms & Heritage
+        "B.C.A.", "B.Sc.", "B.B.A.", "B.Com.", "M.Sc.", "M.Com.", "VJM", "2007",
+        // Science, Mathematics & Research
+        "⚛", "⚗️", "🔬", "🧪", "🧬", "π", "∑", "∞", "∫", "√", "λ", "Ω", "∆", "📐", "📊", "📈",
+        // Technology, Computing & Innovation
+        "💻", "{ }", "</>", "💡", "⚡", "✨", "✦", "★", "⚖️", "🔍", "🔑", "⚙️"
     ];
 
     const COLORS = [
-        "rgba(21, 92, 79, 0.35)",    // Brand Deep Emerald
-        "rgba(34, 130, 112, 0.3)",    // Brand Light Emerald
-        "rgba(217, 119, 6, 0.32)",    // Brand Warm Gold
-        "rgba(251, 191, 36, 0.35)",   // Brand Bright Amber
-        "rgba(16, 185, 129, 0.25)"    // Mint Accent
+        "rgba(10, 55, 46, 0.75)",    // Deep Forest Emerald
+        "rgba(21, 92, 79, 0.72)",    // Primary Institutional Emerald
+        "rgba(217, 119, 6, 0.75)",   // Rich Warm Amber
+        "rgba(180, 115, 10, 0.72)",  // Polished Heritage Gold
+        "rgba(13, 148, 136, 0.68)"   // Deep Teal Accent
     ];
 
     let canvas, ctx;
@@ -37,7 +43,7 @@
     const mouse = {
         x: -9999,
         y: -9999,
-        radius: 140,
+        radius: 170,
         isActive: false
     };
 
@@ -51,31 +57,32 @@
             this.y = isInitial ? Math.random() * (height || window.innerHeight) : (height || window.innerHeight) + 20;
             
             // Subtle drift velocities
-            this.vx = (Math.random() - 0.5) * 0.45;
-            this.vy = -(Math.random() * 0.35 + 0.15); // Gently floats upwards
+            this.vx = (Math.random() - 0.5) * 0.55;
+            this.vy = -(Math.random() * 0.45 + 0.2); // Gently floats upwards
 
-            this.type = Math.random() < 0.45 ? 'glyph' : 'node';
+            // 72% Glyphs/Icons, 28% Glowing Constellation Orbs
+            this.type = Math.random() < 0.72 ? 'glyph' : 'node';
             
             if (this.type === 'glyph') {
                 this.text = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-                this.fontSize = Math.floor(Math.random() * 8) + 13; // 13px - 20px
-                this.fontFamily = this.text.charCodeAt(0) > 255 ? "'Montserrat', 'Noto Sans Devanagari', serif" : "'Montserrat', sans-serif";
+                this.fontSize = Math.floor(Math.random() * 12) + 16; // 16px - 28px
+                this.fontFamily = this.text.charCodeAt(0) > 255 ? "'Montserrat', 'Noto Sans Devanagari', 'Noto Sans Gujarati', serif" : "'Montserrat', sans-serif";
             } else {
-                this.radius = Math.random() * 2.5 + 1.2;
+                this.radius = Math.random() * 3 + 1.5;
             }
 
             this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-            this.alpha = Math.random() * 0.45 + 0.2; // 0.2 to 0.65 opacity
+            this.alpha = Math.random() * 0.45 + 0.4; // 0.4 to 0.85 high contrast opacity
             this.baseAlpha = this.alpha;
             this.rotation = Math.random() * Math.PI * 2;
-            this.rotSpeed = (Math.random() - 0.5) * 0.008;
+            this.rotSpeed = (Math.random() - 0.5) * 0.01;
             this.waveOffset = Math.random() * Math.PI * 2;
-            this.waveSpeed = Math.random() * 0.02 + 0.01;
+            this.waveSpeed = Math.random() * 0.02 + 0.012;
         }
 
         update(time) {
             // Natural drifting with gentle sinusoidal oscillation
-            this.x += this.vx + Math.sin(time * this.waveSpeed + this.waveOffset) * 0.25;
+            this.x += this.vx + Math.sin(time * this.waveSpeed + this.waveOffset) * 0.3;
             this.y += this.vy;
             this.rotation += this.rotSpeed;
 
@@ -86,11 +93,11 @@
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < mouse.radius && dist > 0) {
-                    const force = (1 - dist / mouse.radius) * 3.5;
+                    const force = (1 - dist / mouse.radius) * 4.2;
                     const angle = Math.atan2(dy, dx);
                     this.x -= Math.cos(angle) * force;
                     this.y -= Math.sin(angle) * force;
-                    this.alpha = Math.min(1, this.baseAlpha + (1 - dist / mouse.radius) * 0.5);
+                    this.alpha = Math.min(1, this.baseAlpha + (1 - dist / mouse.radius) * 0.45);
                 } else {
                     this.alpha += (this.baseAlpha - this.alpha) * 0.05;
                 }
@@ -200,7 +207,7 @@
 
     function createParticles() {
         // Density based on screen area (smooth on mobile, rich on desktop)
-        const count = Math.min(Math.max(Math.floor((window.innerWidth * window.innerHeight) / 28000), 22), 48);
+        const count = Math.min(Math.max(Math.floor((window.innerWidth * window.innerHeight) / 14000), 45), 90);
         particles = [];
         for (let i = 0; i < count; i++) {
             particles.push(new Particle(true));
@@ -208,7 +215,7 @@
     }
 
     function drawConstellationLines() {
-        const maxDist = 95;
+        const maxDist = 110;
         const count = particles.length;
 
         for (let i = 0; i < count; i++) {
@@ -220,13 +227,13 @@
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
                 if (dist < maxDist) {
-                    const lineAlpha = (1 - dist / maxDist) * 0.12 * Math.min(p1.alpha, p2.alpha);
+                    const lineAlpha = (1 - dist / maxDist) * 0.22 * Math.min(p1.alpha, p2.alpha);
                     ctx.save();
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
                     ctx.lineTo(p2.x, p2.y);
                     ctx.strokeStyle = "rgba(21, 92, 79, " + lineAlpha + ")";
-                    ctx.lineWidth = 0.85;
+                    ctx.lineWidth = 1;
                     ctx.stroke();
                     ctx.restore();
                 }
@@ -237,14 +244,14 @@
                 const mdx = p1.x - mouse.x;
                 const mdy = p1.y - mouse.y;
                 const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-                if (mdist < 130) {
-                    const mAlpha = (1 - mdist / 130) * 0.22;
+                if (mdist < 150) {
+                    const mAlpha = (1 - mdist / 150) * 0.38;
                     ctx.save();
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
                     ctx.lineTo(mouse.x, mouse.y);
                     ctx.strokeStyle = "rgba(217, 119, 6, " + mAlpha + ")";
-                    ctx.lineWidth = 1;
+                    ctx.lineWidth = 1.25;
                     ctx.stroke();
                     ctx.restore();
                 }
