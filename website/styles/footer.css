@@ -1,262 +1,334 @@
+/* ====================================================
+   FOOTER - MODERN INSTITUTIONAL FOOTER SYSTEM
+   Shri V.J. Modha College Portal
+   ==================================================== */
+
 .footer {
     width: 100%;
-    background: rgba(var(--primary-dark), 0.8);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
+    background: linear-gradient(180deg, #071D18 0%, #030F0C 100%);
+    color: #E2E8F0;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+/* ====================================================
+   1. TOP MOTTO BANNER
+   ==================================================== */
+
+.footer__motto-bar {
+    background: rgba(10, 42, 36, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+}
+
+.footer__motto-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.footer__motto-text {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #FDE047;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.footer__motto-sub {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #94A3B8;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+
+/* ====================================================
+   2. MAIN 4-COLUMN FOOTER GRID
+   ==================================================== */
+
+.footer__main {
+    padding: 4.5rem 1.5rem 3.5rem 1.5rem;
 }
 
 .footer__container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.1fr 1.1fr;
+    gap: 3rem;
+}
+
+.footer__col {
     display: flex;
-    justify-content: space-around;
-    align-items: start;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
+/* Brand Column */
+.footer__brand-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
 
-/* =====SLOGAN===== */
-.college_slogan {
-    text-align: center;
-    color: white;
+.footer__logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    padding: 2px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.footer__brand-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.footer__brand-sub {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #FDE68A;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.footer__brand-desc {
+    font-size: 0.9rem;
+    color: #94A3B8;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+}
+
+.footer__address-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    color: #CBD5E1;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.footer__address-box svg {
+    color: var(--brand-primary-light);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.footer__address-box address {
+    font-style: normal;
+}
+
+/* Headings */
+.footer__heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.2px;
     position: relative;
-    font-weight: bold;
-    color: #222;
-    font-size: 1em;
-    width: fit-content;
-    margin: auto auto 1em auto;
-    padding-top: 1em
+    padding-bottom: 0.65rem;
 }
 
-.college_slogan::after {
+.footer__heading::after {
     content: "";
-    display: block;
-    width: 2em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 32px;
     height: 3px;
-    background-color: rgb(var(--secondary));
-    margin-top: 3px;
-    margin-left: 2em;
+    background: linear-gradient(90deg, var(--brand-primary-light), var(--brand-primary));
     border-radius: 2px;
 }
 
-hr.customHR {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0));
-}
-
-
-/* Styles for all footer columns */
-.footer__contact,
-.footer__links,
-.footer__map {
-    background-color: white;
-    padding: 1em;
-    border-radius: 10px;
-    margin: 1em 1em;
-}
-
-.footer__links {
-    white-space: nowrap;
-}
-
-.footer__contact h2,
-.footer__links h2,
-.footer__map h2{
-    text-align: left;
-}
-
-.footer__contact span,
-.footer__links span {
-    width: 100%;
-    font-size: 1em;
-    text-align: left;
-}
-
-.footer__contact a,
-.footer__links a {
+/* Link Lists */
+.footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
-    font-size: 1.3em;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer__list a {
+    color: #CBD5E1;
     text-decoration: none;
-    color: black;
-    transition: 0.5s ease;
-    margin-top: 1em;
-}
-
-.footer a:hover {
-    color: rgb(var(--secondary));
-}
-
-.footer__contact,
-.footer__map {
-    flex: 1 1 33%;
-}
-
-.footer__links {
-    flex: 1 1 25%;
-}
-
-.footer__links,
-.footer__map {
-    width: fit-content;
-    text-align: center;
-}
-
-.footer h2 {
-    position: relative;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #222;
-    margin-bottom: 1em;
-    font-size: 1.8em;
-}
-
-.footer h2::after {
-    content: "";
-    display: block;
-    width: 24px;
-    height: 3px;
-    background-color: rgb(var(--secondary));
-    margin-top: 3px;
-    border-radius: 2px;
-}
-
-
-/* Footer column content for all columns */
-.footer__map iframe {
-    border-radius: 10px;
-    text-align: center;
-    border: none;
-}
-
-/* Address styling */
-.footer__contact .footer__address {
-    line-height: normal;
-    margin-top: 1em;
-}
-
-
-/* Footer images */
-.footer img {
-    height: 2em;
-    width: 2em;
-    margin: 0em 1em;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    padding: 10px;
-    transition: transform 0.5s;
-}
-.footer__social-icons img{
-    height: 2.5em;
-    width: 2.5em;
-}
-
-.footer img:hover {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-    transform: scale(1.1);
-}
-
-.footer__social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+    display: inline-flex;
     align-items: center;
-    margin-top: 2em;
+    gap: 0.4rem;
+}
+
+.footer__list a:hover {
+    color: #FDE047;
+    transform: translateX(4px);
+}
+
+/* Contact Helpdesk Links */
+.footer__contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1.75rem;
+}
+
+.footer__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    color: #E2E8F0;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.footer__contact-item svg {
+    color: var(--brand-primary-light);
+    flex-shrink: 0;
+}
+
+.footer__contact-item:hover {
+    background: rgba(34, 130, 112, 0.2);
+    border-color: rgba(34, 130, 112, 0.4);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+.footer__contact-item--whatsapp svg {
+    color: #25D366;
+}
+
+/* Social Links */
+.footer__social-heading {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #94A3B8;
+    margin-bottom: 0.75rem;
+}
+
+.footer__social-links {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.footer__social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.footer__social-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.footer__social-btn:hover {
+    background: rgba(34, 130, 112, 0.35);
+    border-color: #FDE047;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 
+/* ====================================================
+   3. BOTTOM BAR (COPYRIGHT & CREDITS)
+   ==================================================== */
 
-/* Footer credits */
-.footer__credits {
+.footer__bottom {
+    background: #020A08;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.5rem;
+}
+
+.footer__bottom-container {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5em;
-    border-top: 1px double rgb(255, 255, 255, 0.1);
-    color: #000000;
-    font-size: 0.9rem;
     flex-wrap: wrap;
-    background-color: white;
+    gap: 1rem;
+    font-size: 0.86rem;
+    color: #94A3B8;
 }
 
-.footer__credits .footer__copyright,
-.footer__credits .footer__developed-by {
-    text-align: center;
+.footer__copyright strong {
+    color: #E2E8F0;
 }
 
 .footer__credits a {
-    color: rgb(var(--secondary));
-    font-weight: bold;
+    color: #FDE68A;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+}
+
+.footer__credits a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
 }
 
 
-@media (min-width: 769px) {
-    .footer__credits .footer__copyright {
-        text-align: left;
-    }
-    .footer__credits .footer__developed-by {
-        text-align: right;
+/* ====================================================
+   4. RESPONSIVE BREAKPOINTS
+   ==================================================== */
+
+@media screen and (max-width: 1100px) {
+    .footer__container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
     }
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-    .footer__credits {
-        flex-direction: column;
+@media screen and (max-width: 768px) {
+    .footer__motto-text {
+        font-size: 1.2rem;
+    }
+    .footer__main {
+        padding: 3rem 1.25rem 2rem 1.25rem;
     }
     .footer__container {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+    }
+    .footer__bottom-container {
         flex-direction: column;
-        align-items: center;
-    }
-    .footer h2{
         text-align: center;
-        width: fit-content;
-    }
-    .footer__title{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .footer img {
-        margin: 0em 0.5em 0em 0em;
-    }
-
-    .footer__contact,
-    .footer__links,
-    .footer__map {
-        width: 95%;
-        max-width: 95%;
-        box-sizing: border-box;
-        padding: 2em 0.5em;
-        margin: 1em auto;
-    }
-
-    .footer__links span,
-    .footer__map span {
-        text-align: center;
-    }
-    
-    .footer__contact a,
-    .footer__links a,
-    .footer__map a {
-        justify-content: center;
-        text-align: center;
-    }
-
-    .socialWrapper {
-        margin-right: 0px;
-    }
-
-    .footer__map iframe {
-        width: 100%;
-    }
-}
-
-
-
-@media (max-width: 300px) {
-    .college_slogan {
-        font-size: 0.8em;
+        gap: 0.5rem;
     }
 }
