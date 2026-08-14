@@ -75,6 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
         backdrop.addEventListener("click", () => toggleMobileNav(true));
     }
 
+    const drawerCloseBtn = document.getElementById("drawerCloseBtn");
+    if (drawerCloseBtn) {
+        drawerCloseBtn.addEventListener("click", () => toggleMobileNav(true));
+    }
+
     // Close mobile drawer when clicking regular destination links
     if (navLinks) {
         const directLinks = navLinks.querySelectorAll("a:not([aria-haspopup='true'])");
