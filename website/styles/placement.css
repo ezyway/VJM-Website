@@ -139,7 +139,7 @@
 
 .placement-section {
     padding: 4.5rem 1.5rem 3.5rem 1.5rem;
-    max-width: 1240px;
+    max-width: 1080px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -155,6 +155,7 @@
     display: flex;
     flex-direction: column;
     gap: 4rem;
+    box-sizing: border-box;
 }
 
 .placement-block__title {
@@ -338,7 +339,7 @@
 
 .placement-cta {
     padding: 2.5rem 1.5rem 5rem 1.5rem;
-    max-width: 1240px;
+    max-width: 1080px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -354,6 +355,7 @@
     border: 1px solid rgba(255, 255, 255, 0.15);
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .placement-cta__badge {
@@ -425,22 +427,32 @@
         font-size: 0.92rem;
     }
     .placement-section {
-        padding: 2.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 0.35rem 1.5rem 0.35rem;
     }
-    .placement-section__container,
-    .placement-cta__box {
-        padding: 2rem 1.25rem;
-        gap: 2.5rem;
+    .placement-section__container {
+        padding: 1.5rem 0.65rem;
+        gap: 2rem;
+        border-radius: var(--radius-sm);
+    }
+    .placement-service-card {
+        padding: 1.5rem 1.15rem;
+        border-radius: var(--radius-sm);
     }
     .placement-block__title,
     .placement-cta__title {
-        font-size: 1.65rem;
+        font-size: 1.5rem;
+        line-height: 1.25;
     }
     .placement-platforms-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
     .placement-cta {
-        padding: 1.5rem 1rem 3.5rem 1rem;
+        padding: 1.5rem 0.35rem 3.5rem 0.35rem;
+    }
+    .placement-cta__box {
+        padding: 1.75rem 1rem;
+        border-radius: var(--radius-sm);
     }
     .placement-cta__actions {
         flex-direction: column;

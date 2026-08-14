@@ -139,7 +139,7 @@
 
 .anti-ragging-section {
     padding: 4.5rem 1.5rem 3.5rem 1.5rem;
-    max-width: 1240px;
+    max-width: 1080px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -155,6 +155,7 @@
     display: flex;
     flex-direction: column;
     gap: 3.5rem;
+    box-sizing: border-box;
 }
 
 /* Policy Card */
@@ -369,7 +370,7 @@
 
 .anti-ragging-cta {
     padding: 2.5rem 1.5rem 5rem 1.5rem;
-    max-width: 1240px;
+    max-width: 1080px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -385,6 +386,7 @@
     border: 1px solid rgba(255, 255, 255, 0.15);
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .anti-ragging-cta__badge {
@@ -453,30 +455,37 @@
         font-size: 0.92rem;
     }
     .anti-ragging-section {
-        padding: 2.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 0.35rem 1.5rem 0.35rem;
     }
-    .anti-ragging-section__container,
-    .anti-ragging-cta__box {
-        padding: 2rem 1.25rem;
-        gap: 2.5rem;
+    .anti-ragging-section__container {
+        padding: 1.5rem 0.65rem;
+        gap: 2rem;
+        border-radius: var(--radius-sm);
     }
     .anti-ragging-policy-card {
         flex-direction: column;
-        gap: 1.25rem;
-        padding: 1.75rem 1.25rem;
+        gap: 1rem;
+        padding: 1.5rem 1rem;
+        border-radius: var(--radius-sm);
     }
     .committee-block__title,
     .anti-ragging-cta__title {
-        font-size: 1.65rem;
+        font-size: 1.5rem;
+        line-height: 1.25;
     }
     .helpline-box {
         flex-direction: column;
         text-align: center;
         gap: 1rem;
-        padding: 1.75rem 1.25rem;
+        padding: 1.5rem 1rem;
+        border-radius: var(--radius-sm);
     }
     .anti-ragging-cta {
-        padding: 1.5rem 1rem 3.5rem 1rem;
+        padding: 1.5rem 0.35rem 3.5rem 0.35rem;
+    }
+    .anti-ragging-cta__box {
+        padding: 1.75rem 1rem;
+        border-radius: var(--radius-sm);
     }
     .anti-ragging-cta__actions {
         flex-direction: column;

@@ -139,7 +139,7 @@
 
 .emag-section {
     padding: 4.5rem 1.5rem 3.5rem 1.5rem;
-    max-width: 1240px;
+    max-width: 1080px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -152,6 +152,7 @@
     padding: 3.5rem 2.5rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
+    box-sizing: border-box;
 }
 
 .emag-section__title {
@@ -337,7 +338,7 @@
 
 .emag-cta {
     padding: 2.5rem 1.5rem 5rem 1.5rem;
-    max-width: 1240px;
+    max-width: 1080px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -353,6 +354,7 @@
     border: 1px solid rgba(255, 255, 255, 0.15);
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .emag-cta__badge {
@@ -424,17 +426,18 @@
         font-size: 0.92rem;
     }
     .emag-section {
-        padding: 2.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 0.35rem 1.5rem 0.35rem;
     }
-    .emag-section__container,
-    .emag-cta__box {
-        padding: 2rem 1.25rem;
+    .emag-section__container {
+        padding: 1.5rem 0.65rem;
+        border-radius: var(--radius-sm);
     }
     .emag-card {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 1.75rem 1.25rem;
+        padding: 1.5rem 1.15rem;
+        border-radius: var(--radius-sm);
     }
     .emag-card__tags {
         justify-content: center;
@@ -448,10 +451,15 @@
     }
     .emag-section__title,
     .emag-cta__title {
-        font-size: 1.65rem;
+        font-size: 1.5rem;
+        line-height: 1.25;
     }
     .emag-cta {
-        padding: 1.5rem 1rem 3.5rem 1rem;
+        padding: 1.5rem 0.35rem 3.5rem 0.35rem;
+    }
+    .emag-cta__box {
+        padding: 1.75rem 1rem;
+        border-radius: var(--radius-sm);
     }
     .emag-cta__actions {
         flex-direction: column;
