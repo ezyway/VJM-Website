@@ -86,12 +86,23 @@
     ];
 
     $selectedCourse = isset($_GET["course"]) ? strtolower(trim($_GET["course"])) : null;
-    $isSingleCourse = ($selectedCourse && isset($courses[$selectedCourse]));
+    if ($selectedCourse && !isset($courses[$selectedCourse])) {
+        $selectedCourse = null;
+    }
+    $isSingleCourse = ($selectedCourse !== null);
+
+    // Initial course for rendering detail view template
+    $initialCourseKey = $isSingleCourse ? $selectedCourse : "bca";
+    $initialMeta = $courseMeta[$initialCourseKey];
+    $initialTitle = $fullforms[$initialCourseKey];
+    $initialData = $courses[$initialCourseKey];
+    $initialFaq = $initialData['faq'];
+    $initialRoles = $initialData['job_roles'];
+    $initialQuickInfo = $initialData['quick_info'][0];
 
     // SEO Meta description
     if ($isSingleCourse) {
-        $courseTitle = $fullforms[$selectedCourse] ?? strtoupper($selectedCourse);
-        $meta_description = "Learn more about the {$courseTitle} program at Shri V.J. Modha College, Porbandar. Check eligibility, syllabus, career opportunities, and course structure.";
+        $meta_description = "Learn more about the {$initialTitle} program at Shri V.J. Modha College, Porbandar. Check eligibility, syllabus, career opportunities, and course structure.";
     } else {
         $meta_description = "Explore undergraduate and postgraduate academic programs at Shri V.J. Modha College, Porbandar including BCA, B.Sc, BBA, B.Com, BSW, M.Com, and M.Sc IT.";
     }
@@ -125,84 +136,86 @@
 </head>
 
 <body>
+    <!-- Embed Course Data for 0ms Client-Side Instant Switching -->
+    <script id="coursesPayload" type="application/json">
+        <?= json_encode([
+            'courses' => $courses,
+            'fullforms' => $fullforms,
+            'meta' => $courseMeta,
+            'initialCourse' => $selectedCourse
+        ], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>
+    </script>
+
     <!-- ===================================================
          Navigation Section
          =================================================== -->
     <?php include("nav.html"); ?>
 
 
-    <?php if ($isSingleCourse): 
-        $meta = $courseMeta[$selectedCourse] ?? [
-            "code" => strtoupper($selectedCourse),
-            "level" => "Academic Program",
-            "dept" => "Academics",
-            "duration" => "3-4 Years",
-            "medium" => "English",
-            "color" => "#10B981",
-            "icon" => "book"
-        ];
-        $faqData = $courses[$selectedCourse]['faq'] ?? [];
-        $jobRoles = $courses[$selectedCourse]['job_roles'] ?? [];
-        $quickInfo = $courses[$selectedCourse]['quick_info'][0] ?? '';
-    ?>
-
-        <!-- ===================================================
-             1. Single Course Hero Banner
-             =================================================== -->
+    <!-- ===================================================
+         VIEW 1: SINGLE COURSE DETAIL VIEW
+         =================================================== -->
+    <div id="courseDetailView" class="course-view-wrapper" style="<?= $isSingleCourse ? '' : 'display: none;' ?>">
+        
+        <!-- Hero Header -->
         <header class="course-hero" id="course-hero">
             <div class="course-hero__overlay">
                 <div class="course-hero__content">
                     <nav class="course-hero__breadcrumb" aria-label="Breadcrumb">
                         <a href="index.php">Home</a>
                         <span class="course-hero__breadcrumb-sep">/</span>
-                        <a href="courses.php">Courses</a>
+                        <a href="courses.php" class="breadcrumb-all-courses" data-course="all">Courses</a>
                         <span class="course-hero__breadcrumb-sep">/</span>
-                        <span aria-current="page"><?= htmlspecialchars($meta['code']) ?></span>
+                        <span id="courseHeroBreadcrumb" aria-current="page"><?= htmlspecialchars($initialMeta['code']) ?></span>
                     </nav>
-                    <span class="course-hero__badge"><?= htmlspecialchars($meta['level']) ?> • <?= htmlspecialchars($meta['dept']) ?></span>
-                    <h1 class="course-hero__title"><?= htmlspecialchars($fullforms[$selectedCourse]) ?> (<?= htmlspecialchars($meta['code']) ?>)</h1>
+                    <span id="courseHeroBadge" class="course-hero__badge"><?= htmlspecialchars($initialMeta['level']) ?> • <?= htmlspecialchars($initialMeta['dept']) ?></span>
+                    <h1 id="courseHeroTitle" class="course-hero__title"><?= htmlspecialchars($initialTitle) ?> (<?= htmlspecialchars($initialMeta['code']) ?>)</h1>
                     <p class="course-hero__slogan">॥ विद्यार्थी लभते विद्यां ॥</p>
                     
                     <!-- Quick Pill Specs in Hero -->
                     <div class="course-hero__specs">
                         <div class="course-spec-pill">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span><strong>Duration:</strong> <?= htmlspecialchars($faqData[2] ?? $meta['duration']) ?></span>
+                            <span><strong>Duration:</strong> <span id="courseHeroDuration"><?= htmlspecialchars($initialFaq[2] ?? $initialMeta['duration']) ?></span></span>
                         </div>
                         <div class="course-spec-pill">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                            <span><strong>Medium:</strong> <?= htmlspecialchars(strip_tags($faqData[1] ?? $meta['medium'])) ?></span>
+                            <span><strong>Medium:</strong> <span id="courseHeroMedium"><?= htmlspecialchars(strip_tags($initialFaq[1] ?? $initialMeta['medium'])) ?></span></span>
                         </div>
                         <div class="course-spec-pill">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                            <span><strong>Eligibility:</strong> <?= htmlspecialchars(strip_tags($faqData[0] ?? '12th Pass')) ?></span>
+                            <span><strong>Eligibility:</strong> <span id="courseHeroEligibility"><?= htmlspecialchars(strip_tags($initialFaq[0] ?? '12th Pass')) ?></span></span>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
-
-        <!-- ===================================================
-             2. Course Detail Main Content
-             =================================================== -->
+        <!-- Main Detail Section -->
         <main class="course-detail-section" id="course-main">
             <div class="course-detail__container">
                 
-                <!-- Quick Navigation Bar for Switching Courses -->
+                <!-- Quick Program Switcher Bar -->
                 <div class="course-switcher">
-                    <span class="course-switcher__label">Switch Program:</span>
+                    <div class="course-switcher__header">
+                        <a href="courses.php" class="course-switcher__pill course-switcher__pill--all" data-course="all" title="View all degree programs">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <span>All Programs</span>
+                        </a>
+                        <span class="course-switcher__label">Switch Course:</span>
+                    </div>
+
                     <div class="course-switcher__links">
                         <?php foreach ($courseMeta as $key => $cMeta): ?>
-                            <a href="courses.php?course=<?= urlencode($key) ?>" class="course-switcher__pill <?= $key === $selectedCourse ? 'is-active' : '' ?>">
+                            <a href="courses.php?course=<?= urlencode($key) ?>" class="course-switcher__pill <?= $key === $initialCourseKey ? 'is-active' : '' ?>" data-course="<?= htmlspecialchars($key) ?>">
                                 <?= htmlspecialchars($cMeta['code']) ?>
                             </a>
                         <?php endforeach; ?>
                     </div>
                 </div>
 
-                <!-- Two-Column Grid: Left (Overview & Careers) + Right (Key Specs & FAQs) -->
-                <div class="course-detail__grid">
+                <!-- Two-Column Grid -->
+                <div class="course-detail__grid" id="courseDetailGrid">
                     
                     <!-- Left Column -->
                     <div class="course-detail__left">
@@ -210,8 +223,8 @@
                         <!-- Course Overview Card -->
                         <div class="course-card">
                             <span class="section__eyebrow">Program Overview</span>
-                            <h2 class="course-card__title">About <?= htmlspecialchars($meta['code']) ?></h2>
-                            <p class="course-card__lead"><?= htmlspecialchars($quickInfo) ?></p>
+                            <h2 id="courseAboutTitle" class="course-card__title">About <?= htmlspecialchars($initialMeta['code']) ?></h2>
+                            <p id="courseOverviewText" class="course-card__lead"><?= htmlspecialchars($initialQuickInfo) ?></p>
 
                             <div class="course-highlights-banner">
                                 <div class="course-highlight-item">
@@ -240,10 +253,10 @@
                         <div class="course-card">
                             <span class="section__eyebrow">Future Pathways</span>
                             <h2 class="course-card__title">Career Opportunities &amp; Job Roles</h2>
-                            <p class="course-card__subtitle">Graduates from our <?= htmlspecialchars($meta['code']) ?> program step into thriving roles across multiple sectors:</p>
+                            <p class="course-card__subtitle">Graduates step into thriving roles across multiple sectors:</p>
                             
-                            <div class="job-roles-grid">
-                                <?php foreach ($jobRoles as $role): ?>
+                            <div class="job-roles-grid" id="courseJobRolesGrid">
+                                <?php foreach ($initialRoles as $role): ?>
                                     <div class="job-role-chip">
                                         <div class="job-role-chip__bullet"></div>
                                         <span><?= htmlspecialchars($role) ?></span>
@@ -267,7 +280,7 @@
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path></svg>
                                         <span>Eligibility</span>
                                     </div>
-                                    <div class="course-spec-row__value"><?= $faqData[0] ?? '12th Pass' ?></div>
+                                    <div id="specEligibility" class="course-spec-row__value"><?= $initialFaq[0] ?? '12th Pass' ?></div>
                                 </div>
 
                                 <div class="course-spec-row">
@@ -275,7 +288,7 @@
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                         <span>Course Duration</span>
                                     </div>
-                                    <div class="course-spec-row__value"><?= $faqData[2] ?? $meta['duration'] ?></div>
+                                    <div id="specDuration" class="course-spec-row__value"><?= $initialFaq[2] ?? $initialMeta['duration'] ?></div>
                                 </div>
 
                                 <div class="course-spec-row">
@@ -283,7 +296,7 @@
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                                         <span>Medium</span>
                                     </div>
-                                    <div class="course-spec-row__value"><?= $faqData[1] ?? 'English' ?></div>
+                                    <div id="specMedium" class="course-spec-row__value"><?= $initialFaq[1] ?? 'English' ?></div>
                                 </div>
 
                                 <div class="course-spec-row">
@@ -291,7 +304,7 @@
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                         <span>Subjects / Sem</span>
                                     </div>
-                                    <div class="course-spec-row__value"><?= $faqData[3] ?? '5 to 7' ?> Subjects</div>
+                                    <div id="specSubjects" class="course-spec-row__value"><?= $initialFaq[3] ?? '5 to 7' ?> Subjects</div>
                                 </div>
 
                                 <div class="course-spec-row">
@@ -299,7 +312,7 @@
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                         <span>Higher Studies</span>
                                     </div>
-                                    <div class="course-spec-row__value"><?= $faqData[4] ?? 'Post Graduation' ?></div>
+                                    <div id="specHigherStudies" class="course-spec-row__value"><?= $initialFaq[4] ?? 'Post Graduation' ?></div>
                                 </div>
 
                                 <div class="course-spec-row">
@@ -307,19 +320,17 @@
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                         <span>Session Timing</span>
                                     </div>
-                                    <div class="course-spec-row__value"><?= $faqData[5] ?? 'Morning Session' ?></div>
+                                    <div id="specTiming" class="course-spec-row__value"><?= $initialFaq[5] ?? 'Morning Session' ?></div>
                                 </div>
                             </div>
 
                             <!-- Official Syllabus Link Button -->
-                            <?php if (!empty($faqData[6])): ?>
-                                <div class="course-syllabus-action">
-                                    <a href="<?= htmlspecialchars($faqData[6]) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--syllabus">
-                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                        <span>Download Official Syllabus</span>
-                                    </a>
-                                </div>
-                            <?php endif; ?>
+                            <div class="course-syllabus-action">
+                                <a id="courseSyllabusBtn" href="<?= htmlspecialchars($initialFaq[6] ?? 'https://www.bknmu.edu.in/Academic/page/Syllabus') ?>" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--syllabus">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    <span>Download Official Syllabus</span>
+                                </a>
+                            </div>
 
                         </div>
 
@@ -340,11 +351,14 @@
             </div>
         </main>
 
-    <?php else: ?>
+    </div>
 
-        <!-- ===================================================
-             1. All Courses Directory Hero Banner
-             =================================================== -->
+
+    <!-- ===================================================
+         VIEW 2: ALL COURSES DIRECTORY VIEW
+         =================================================== -->
+    <div id="coursesDirectoryView" class="course-view-wrapper" style="<?= $isSingleCourse ? 'display: none;' : '' ?>">
+
         <header class="courses-hero" id="courses-hero">
             <div class="courses-hero__overlay">
                 <div class="courses-hero__content">
@@ -363,14 +377,9 @@
             </div>
         </header>
 
-
-        <!-- ===================================================
-             2. All Courses Grid Directory with Filter Tabs
-             =================================================== -->
         <main class="courses-directory-section" id="courses-directory">
             <div class="courses-directory__container">
 
-                <!-- Section Header -->
                 <div class="courses-directory__header">
                     <div>
                         <span class="section__eyebrow">Degree Programs</span>
@@ -378,7 +387,6 @@
                         <p class="courses-directory__subtitle">Choose from our diverse undergraduate and postgraduate faculties.</p>
                     </div>
 
-                    <!-- Program Level Filter Buttons -->
                     <div class="courses-filter-tabs" role="tablist">
                         <button class="courses-filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All Programs (<?= count($courseMeta) ?>)</button>
                         <button class="courses-filter-btn" data-filter="ug" role="tab" aria-selected="false">Undergraduate (5)</button>
@@ -386,7 +394,6 @@
                     </div>
                 </div>
 
-                <!-- Courses Cards Grid -->
                 <div class="courses-grid" id="coursesGrid">
                     <?php foreach ($courseMeta as $key => $meta): 
                         $cData = $courses[$key] ?? [];
@@ -412,7 +419,7 @@
                             </div>
 
                             <div class="program-card__footer">
-                                <a href="courses.php?course=<?= urlencode($key) ?>" class="btn btn--primary btn--full">
+                                <a href="courses.php?course=<?= urlencode($key) ?>" class="btn btn--primary btn--full program-card-link" data-course="<?= htmlspecialchars($key) ?>">
                                     <span>View Program Details</span>
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                                 </a>
@@ -424,7 +431,7 @@
             </div>
         </main>
 
-    <?php endif; ?>
+    </div>
 
 
     <!-- ===================================================

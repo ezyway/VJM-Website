@@ -1,6 +1,6 @@
 /**
  * ====================================================
- * COURSES PAGE SCRIPTS
+ * COURSES PAGE SCRIPTS - CLIENT-SIDE INSTANT SWITCHER
  * Shri V.J. Modha College Portal
  * ====================================================
  */
@@ -8,7 +8,229 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ----------------------------------------------------
-    // 1. Directory Filter Tabs (All / UG / PG)
+    // 0. Load Embedded Course Data Payload
+    // ----------------------------------------------------
+    let payload = null;
+    const payloadEl = document.getElementById("coursesPayload");
+    if (payloadEl) {
+        try {
+            payload = JSON.parse(payloadEl.textContent);
+        } catch (e) {
+            console.error("Failed to parse courses payload", e);
+        }
+    }
+
+    if (!payload || !payload.courses) return;
+
+    const { courses, fullforms, meta } = payload;
+
+    // View Containers
+    const detailView = document.getElementById("courseDetailView");
+    const directoryView = document.getElementById("coursesDirectoryView");
+    const detailGrid = document.getElementById("courseDetailGrid");
+
+    // Single Course Detail DOM Elements
+    const heroBreadcrumb = document.getElementById("courseHeroBreadcrumb");
+    const heroBadge = document.getElementById("courseHeroBadge");
+    const heroTitle = document.getElementById("courseHeroTitle");
+    const heroDuration = document.getElementById("courseHeroDuration");
+    const heroMedium = document.getElementById("courseHeroMedium");
+    const heroEligibility = document.getElementById("courseHeroEligibility");
+    
+    const aboutTitle = document.getElementById("courseAboutTitle");
+    const overviewText = document.getElementById("courseOverviewText");
+    const jobRolesGrid = document.getElementById("courseJobRolesGrid");
+
+    const specEligibility = document.getElementById("specEligibility");
+    const specDuration = document.getElementById("specDuration");
+    const specMedium = document.getElementById("specMedium");
+    const specSubjects = document.getElementById("specSubjects");
+    const specHigherStudies = document.getElementById("specHigherStudies");
+    const specTiming = document.getElementById("specTiming");
+    const syllabusBtn = document.getElementById("courseSyllabusBtn");
+
+    const switcherPills = document.querySelectorAll(".course-switcher__pill");
+
+    let currentActiveCourse = payload.initialCourse || null;
+    let isTransitioning = false;
+
+    /**
+     * Strip HTML helper
+     */
+    function stripHtml(html) {
+        if (!html) return "";
+        const tmp = document.createElement("DIV");
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || "";
+    }
+
+    /**
+     * Switch course view dynamically without page reload
+     */
+    function renderCourse(courseKey, updateHistory = true) {
+        if (!courseKey || courseKey === "all") {
+            // Switch to directory view
+            if (directoryView && detailView) {
+                detailView.style.display = "none";
+                directoryView.style.display = "block";
+                directoryView.style.animation = "heroFadeIn 0.35s ease forwards";
+                currentActiveCourse = null;
+                document.title = "Academic Programs - Shri V.J. Modha College";
+
+                if (updateHistory) {
+                    window.history.pushState({ course: "all" }, "", "courses.php");
+                }
+
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+            return;
+        }
+
+        const cData = courses[courseKey];
+        const cMeta = meta[courseKey];
+        const cTitle = fullforms[courseKey] || courseKey.toUpperCase();
+
+        if (!cData || !cMeta) return;
+
+        // Switch to detail view if previously on directory
+        if (directoryView && detailView) {
+            directoryView.style.display = "none";
+            detailView.style.display = "block";
+        }
+
+        // Animate content transition
+        if (detailGrid) {
+            detailGrid.style.opacity = "0.4";
+            detailGrid.style.transform = "translateY(8px) scale(0.995)";
+        }
+
+        setTimeout(() => {
+            // 1. Update Hero
+            if (heroBreadcrumb) heroBreadcrumb.textContent = cMeta.code;
+            if (heroBadge) heroBadge.textContent = `${cMeta.level} • ${cMeta.dept}`;
+            if (heroTitle) heroTitle.textContent = `${cTitle} (${cMeta.code})`;
+
+            const faq = cData.faq || [];
+            if (heroDuration) heroDuration.textContent = faq[2] || cMeta.duration;
+            if (heroMedium) heroMedium.textContent = stripHtml(faq[1] || cMeta.medium);
+            if (heroEligibility) heroEligibility.textContent = stripHtml(faq[0] || "12th Pass");
+
+            // 2. Update Overview
+            if (aboutTitle) aboutTitle.textContent = `About ${cMeta.code}`;
+            if (overviewText) overviewText.textContent = (cData.quick_info && cData.quick_info[0]) || "";
+
+            // 3. Update Job Roles
+            if (jobRolesGrid && cData.job_roles) {
+                jobRolesGrid.innerHTML = "";
+                cData.job_roles.forEach((role, idx) => {
+                    const chip = document.createElement("div");
+                    chip.className = "job-role-chip";
+                    chip.style.animation = `facultyCardPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${Math.min(idx * 30, 200)}ms forwards`;
+                    chip.innerHTML = `
+                        <div class="job-role-chip__bullet"></div>
+                        <span>${role}</span>
+                    `;
+                    jobRolesGrid.appendChild(chip);
+                });
+            }
+
+            // 4. Update Specs Table
+            if (specEligibility) specEligibility.innerHTML = faq[0] || "12th Pass";
+            if (specDuration) specDuration.textContent = faq[2] || cMeta.duration;
+            if (specMedium) specMedium.innerHTML = faq[1] || cMeta.medium;
+            if (specSubjects) specSubjects.textContent = `${faq[3] || '5 to 7'} Subjects`;
+            if (specHigherStudies) specHigherStudies.textContent = faq[4] || "Post Graduation";
+            if (specTiming) specTiming.innerHTML = faq[5] || "Morning Session";
+
+            // 5. Update Syllabus Button
+            if (syllabusBtn) {
+                syllabusBtn.href = faq[6] || "https://www.bknmu.edu.in/Academic/page/Syllabus";
+            }
+
+            // 6. Update Active Switcher Pills
+            switcherPills.forEach(pill => {
+                const pCourse = pill.getAttribute("data-course");
+                const isMatch = pCourse === courseKey;
+                pill.classList.toggle("is-active", isMatch);
+                if (isMatch) {
+                    pill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                }
+            });
+
+            // 7. Update Document Title and History
+            currentActiveCourse = courseKey;
+            document.title = `${cTitle} (${cMeta.code}) - Shri V.J. Modha College`;
+
+            if (updateHistory) {
+                window.history.pushState({ course: courseKey }, "", `courses.php?course=${courseKey}`);
+            }
+
+            // Fade detail grid back in
+            if (detailGrid) {
+                detailGrid.style.opacity = "1";
+                detailGrid.style.transform = "translateY(0) scale(1)";
+            }
+
+            // Scroll up to main container if user is scrolled past hero
+            const detailContainer = document.querySelector(".course-detail__container");
+            if (detailContainer) {
+                const rect = detailContainer.getBoundingClientRect();
+                if (rect.top < 0) {
+                    window.scrollTo({
+                        top: detailContainer.offsetTop - 80,
+                        behavior: "smooth"
+                    });
+                }
+            }
+        }, 120);
+    }
+
+
+    // ----------------------------------------------------
+    // 1. Intercept Course Switcher & Card Links
+    // ----------------------------------------------------
+    document.addEventListener("click", (e) => {
+        const link = e.target.closest("a[data-course], a[href*='courses.php?course=']");
+        if (!link) return;
+
+        const href = link.getAttribute("href") || "";
+        const dataCourse = link.getAttribute("data-course");
+
+        let targetCourse = null;
+        if (dataCourse) {
+            targetCourse = dataCourse;
+        } else if (href.includes("courses.php?course=")) {
+            const match = href.match(/courses\.php\?course=([a-zA-Z0-9]+)/);
+            if (match && match[1]) {
+                targetCourse = match[1].toLowerCase();
+            }
+        } else if (href === "courses.php" || href.endsWith("/courses.php")) {
+            targetCourse = "all";
+        }
+
+        if (targetCourse) {
+            e.preventDefault();
+            renderCourse(targetCourse, true);
+        }
+    });
+
+
+    // ----------------------------------------------------
+    // 2. Handle Browser Back & Forward Navigation (popstate)
+    // ----------------------------------------------------
+    window.addEventListener("popstate", (e) => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseParam = urlParams.get("course");
+        if (courseParam && courses[courseParam]) {
+            renderCourse(courseParam, false);
+        } else {
+            renderCourse("all", false);
+        }
+    });
+
+
+    // ----------------------------------------------------
+    // 3. Directory Filter Tabs (All / UG / PG)
     // ----------------------------------------------------
     const filterButtons = document.querySelectorAll(".courses-filter-btn");
     const programCards = document.querySelectorAll(".program-card");
@@ -56,23 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 2. Auto-scroll active switcher pill into view
-    // ----------------------------------------------------
-    const activeSwitcherPill = document.querySelector(".course-switcher__pill.is-active");
-    if (activeSwitcherPill) {
-        const switcherContainer = document.querySelector(".course-switcher");
-        if (switcherContainer) {
-            const containerLeft = switcherContainer.getBoundingClientRect().left;
-            const pillLeft = activeSwitcherPill.getBoundingClientRect().left;
-            if (pillLeft < containerLeft || pillLeft > containerLeft + switcherContainer.offsetWidth) {
-                activeSwitcherPill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-            }
-        }
-    }
-
-
-    // ----------------------------------------------------
-    // 3. Back To Top Button Handler
+    // 4. Back To Top Button Handler
     // ----------------------------------------------------
     const backToTopBtn = document.getElementById("backToTop");
     const heroSection = document.getElementById("course-hero") || document.getElementById("courses-hero");
