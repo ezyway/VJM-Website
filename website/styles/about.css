@@ -909,12 +909,36 @@
         font-size: 1.65rem;
     }
     .trustee-section {
-        padding: 2rem 1rem;
+        padding: 1.5rem 0.5rem;
+    }
+    .trustee-section__container {
+        padding: 1.75rem 1rem;
     }
     .trustee-section__header {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 0.75rem;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .trustee-section__title {
+        font-size: 1.5rem;
+        line-height: 1.25;
+    }
+    .trustee-section__subtitle {
+        font-size: 0.88rem;
+    }
+    .trustee-section__nav {
+        display: flex;
+        flex-shrink: 0;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+    }
+    .trustee-nav-btn {
+        width: 38px;
+        height: 38px;
     }
     .trustee-section__item {
         flex: 0 0 100%; /* 1 item on mobile */

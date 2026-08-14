@@ -325,10 +325,14 @@ td a:hover{
 
 @media screen and (max-width: 768px) {
     .back-to-top {
-        bottom: 1.25rem;
-        right: 1.25rem;
-        width: 42px;
-        height: 42px;
+        bottom: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+    }
+    .back-to-top svg {
+        width: 18px;
+        height: 18px;
     }
 }
 
