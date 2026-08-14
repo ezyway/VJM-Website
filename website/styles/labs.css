@@ -1,33 +1,584 @@
-.lab-section {
+/* ====================================================
+   LABS PAGE - MODERN DESIGN SYSTEM & STYLESHEET
+   Shri V.J. Modha College Portal
+   ==================================================== */
+
+/* ====================================================
+   1. HERO HEADER BANNER
+   ==================================================== */
+
+.labs-hero {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    padding: 7rem 1.5rem 4rem 1.5rem;
     display: flex;
-    gap: 2rem;
+    align-items: center;
     justify-content: center;
-    margin-top: 2rem;
+    background: radial-gradient(circle at 50% 30%, rgba(34, 130, 112, 0.45) 0%, rgba(7, 29, 24, 0.95) 75%),
+                linear-gradient(135deg, #0A372E 0%, #071D18 100%);
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-.lab-section__image-wrapper {
-    width: 100%;
-    max-width: 1000px;
-    height: 500px;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin: auto;
+.labs-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    opacity: 0.7;
 }
-.carousel-track {
+
+.labs-hero__overlay {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.labs-hero__content {
+    background: rgba(10, 42, 36, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-lg);
+    padding: 3rem 2.5rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    animation: heroFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.labs-hero__breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1.25rem;
+}
+
+.labs-hero__breadcrumb a {
+    color: #FDE68A;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.labs-hero__breadcrumb a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.labs-hero__breadcrumb-sep {
+    opacity: 0.4;
+}
+
+.labs-hero__badge {
+    display: inline-block;
+    padding: 5px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #FDE68A;
+    background: rgba(217, 119, 6, 0.2);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+}
+
+.labs-hero__title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    color: #FFFFFF;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.labs-hero__slogan {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #FDE047;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.labs-hero__subtitle {
+    font-size: 1.05rem;
+    color: #E2E8F0;
+    font-weight: 400;
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+
+/* ====================================================
+   2. MAIN LABS CONTAINER & SWITCHER
+   ==================================================== */
+
+.labs-section {
+    padding: 4.5rem 1.5rem 3.5rem 1.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.labs-section__container {
+    background: var(--surface-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+}
+
+/* Lab Switcher */
+.lab-switcher {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem 1rem;
+    background: #FFFFFF;
+    border: 1px solid rgba(21, 92, 79, 0.12);
+    border-radius: var(--radius-full);
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+}
+
+.lab-switcher__label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--brand-primary);
+    white-space: nowrap;
+    padding-left: 0.5rem;
+}
+
+.lab-switcher__links {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.lab-switcher__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-muted);
+    background: #F8FAFC;
+    border: 1.5px solid rgba(21, 92, 79, 0.12);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.lab-switcher__pill:hover {
+    color: var(--brand-primary);
+    border-color: var(--brand-primary-light);
+    background: rgba(34, 130, 112, 0.06);
+}
+
+.lab-switcher__pill.is-active {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, var(--brand-primary-light), var(--brand-primary));
+    border-color: transparent;
+    box-shadow: 0 3px 10px rgba(21, 92, 79, 0.3);
+}
+
+/* Detail Layout */
+.lab-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 2.5rem;
+    align-items: start;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    will-change: opacity, transform;
+}
+
+/* Media Card & Carousel */
+.lab-media-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(21, 92, 79, 0.12);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.lab-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.lab-carousel__main {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    background: #0A2A24;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lab-carousel__image {
     width: 100%;
     height: 100%;
-    transition: transform 0.5s ease-in-out;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.lab-section__image {
-    min-width: 100%;
+
+.lab-carousel__counter {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 4px 12px;
+    background: rgba(7, 29, 24, 0.8);
+    backdrop-filter: blur(6px);
+    color: #FDE68A;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 5;
+}
+
+.lab-carousel__nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: none;
+    color: var(--brand-primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: all var(--transition-fast);
+    z-index: 6;
+}
+
+.lab-carousel__nav-btn:hover {
+    background: var(--brand-primary);
+    color: #FFFFFF;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.lab-carousel__nav-btn--prev {
+    left: 12px;
+}
+
+.lab-carousel__nav-btn--next {
+    right: 12px;
+}
+
+/* Thumbnails Strip */
+.lab-thumbnails-strip {
+    display: flex;
+    gap: 0.6rem;
+    overflow-x: auto;
+    padding: 0.25rem 0;
+    scrollbar-width: thin;
+}
+
+.lab-thumb-btn {
+    width: 72px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 2px solid transparent;
+    opacity: 0.55;
+    padding: 0;
+    cursor: pointer;
+    background: #000;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+}
+
+.lab-thumb-btn img {
+    width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.lab-section__description {
-    font-size: 1.1rem;
+.lab-thumb-btn:hover {
+    opacity: 0.85;
+}
+
+.lab-thumb-btn.is-active {
+    opacity: 1;
+    border-color: var(--brand-primary);
+    transform: scale(1.05);
+}
+
+/* Right Info Cards */
+.lab-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.lab-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(21, 92, 79, 0.12);
+    padding: 2.25rem 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.lab-card__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 1rem;
+    letter-spacing: -0.3px;
+}
+
+.lab-card__lead {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+}
+
+.lab-card__subtitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.85rem;
+}
+
+/* Features List */
+.lab-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.lab-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 0.85rem;
+    background: #F8FAFC;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.lab-feature-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-full);
+    background: rgba(34, 130, 112, 0.12);
+    color: var(--brand-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Specs Grid */
+.lab-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.lab-spec-box {
+    padding: 1rem;
+    background: #F8FAFC;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.lab-spec-box__label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--brand-primary);
+}
+
+.lab-spec-box__value {
+    font-size: 0.95rem;
+    color: var(--brand-primary-dark);
+    font-weight: 700;
+}
+
+
+/* ====================================================
+   3. REUSABLE CALL TO ACTION
+   ==================================================== */
+
+.labs-cta {
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.labs-cta__box {
+    background: radial-gradient(circle at 70% 30%, rgba(34, 130, 112, 0.6) 0%, rgba(10, 55, 46, 0.95) 100%),
+                linear-gradient(135deg, #0A372E, #071D18);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    color: #FFFFFF;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.labs-cta__badge {
+    display: inline-block;
+    padding: 4px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #FDE68A;
+    background: rgba(217, 119, 6, 0.25);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+}
+
+.labs-cta__title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.3px;
+    color: #FFFFFF;
+}
+
+.labs-cta__subtitle {
+    font-size: 1.05rem;
+    color: #E2E8F0;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
     line-height: 1.6;
+}
+
+.labs-cta__actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+/* ====================================================
+   4. RESPONSIVE BREAKPOINTS
+   ==================================================== */
+
+@media screen and (max-width: 1024px) {
+    .labs-hero__title {
+        font-size: 2.2rem;
+    }
+    .lab-detail-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .lab-carousel__main {
+        height: 360px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .labs-hero {
+        padding: 5.5rem 1rem 3rem 1rem;
+        min-height: 360px;
+    }
+    .labs-hero__content {
+        padding: 2rem 1.25rem;
+    }
+    .labs-hero__title {
+        font-size: 1.75rem;
+    }
+    .labs-hero__slogan {
+        font-size: 1.1rem;
+    }
+    .labs-hero__subtitle {
+        font-size: 0.92rem;
+    }
+    .labs-section {
+        padding: 2.5rem 1rem 1.5rem 1rem;
+    }
+    .labs-section__container,
+    .labs-cta__box {
+        padding: 2rem 1.25rem;
+    }
+    .lab-switcher {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+        border-radius: var(--radius-lg);
+    }
+    .lab-switcher__links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+    }
+    .lab-card {
+        padding: 2rem 1.25rem;
+    }
+    .lab-carousel__main {
+        height: 260px;
+    }
+    .lab-specs-grid {
+        grid-template-columns: 1fr;
+    }
+    .labs-cta {
+        padding: 1.5rem 1rem 3.5rem 1rem;
+    }
+    .labs-cta__actions {
+        flex-direction: column;
+        gap: 0.85rem;
+    }
+    .labs-cta__actions .btn {
+        width: 100%;
+    }
 }

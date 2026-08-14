@@ -1,73 +1,236 @@
 <?php
-if (isset($_GET["lab"])) {
     include("labs_data.php");
-    $lab_type = $_GET["lab"];
-    $lab = $labs[$lab_type];
+
+    // Gather lab images dynamically
+    $labsPayload = [];
+    foreach ($labs as $key => $labData) {
+        $fsDir = __DIR__ . '/assets/photos/labs/' . $key . '/';
+        $webDir = 'assets/photos/labs/' . $key . '/';
+        $images = glob($fsDir . '*.{jpg,jpeg,png,webp}', GLOB_BRACE);
+        $imgUrls = [];
+        if ($images) {
+            sort($images);
+            foreach ($images as $p) {
+                $imgUrls[] = $webDir . basename($p);
+            }
+        }
+        $labsPayload[$key] = array_merge($labData, [
+            "key" => $key,
+            "images" => $imgUrls
+        ]);
+    }
+
+    $selectedLab = isset($_GET["lab"]) ? strtolower(trim($_GET["lab"])) : "computer";
+    if (!isset($labsPayload[$selectedLab])) {
+        $selectedLab = "computer";
+    }
+
+    $currentLab = $labsPayload[$selectedLab];
+    $meta_description = "Explore the cutting-edge {$currentLab['name']} at Shri V.J. Modha College, Porbandar. Review modern infrastructure, equipment specifications, and laboratory amenities.";
 ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <?php include("header.php"); ?>
-    </head>
+<head>
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": "Shri V.J. Modha College - Campus Laboratories",
+            "url": "https://shrivjmodhacollege.com/labs.php",
+            "logo": "https://shrivjmodhacollege.com/assets/logo.ico",
+            "description": "<?= htmlspecialchars($meta_description) ?>",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Vidhyadham, Chhaya-Birla Road, Nr. Pakshi Abhiyaran",
+                "addressLocality": "Porbandar",
+                "addressRegion": "Gujarat",
+                "postalCode": "360575",
+                "addressCountry": "IN"
+            }
+        }
+    </script>
 
-    <body>
+    <?php include("header.php"); ?>
+</head>
 
-        <!-- Navigation -->
-        <?php include("nav.html"); ?>
+<body>
+    <!-- Embed Labs Payload for instant client-side switching -->
+    <script id="labsPayload" type="application/json">
+        <?= json_encode([
+            'labs' => $labsPayload,
+            'initialLab' => $selectedLab
+        ], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>
+    </script>
 
-        <!-- Main Content -->
-        <div class="container">
-            <div class="wrapper">
-                <div class="page_title_wrapper">
-                    <h2 class="page_title"><?php echo $lab["name"]; ?></h2>
+    <!-- ===================================================
+         Navigation Section
+         =================================================== -->
+    <?php include("nav.html"); ?>
+
+
+    <!-- ===================================================
+         1. Hero Header Banner
+         =================================================== -->
+    <header class="labs-hero" id="labs-hero">
+        <div class="labs-hero__overlay">
+            <div class="labs-hero__content">
+                <nav class="labs-hero__breadcrumb" aria-label="Breadcrumb">
+                    <a href="index.php">Home</a>
+                    <span class="labs-hero__breadcrumb-sep">/</span>
+                    <span>Facilities</span>
+                    <span class="labs-hero__breadcrumb-sep">/</span>
+                    <span id="labHeroBreadcrumb" aria-current="page"><?= htmlspecialchars($currentLab['code']) ?></span>
+                </nav>
+                <span id="labHeroBadge" class="labs-hero__badge"><?= htmlspecialchars($currentLab['badge']) ?></span>
+                <h1 id="labHeroTitle" class="labs-hero__title"><?= htmlspecialchars($currentLab['name']) ?></h1>
+                <p class="labs-hero__slogan">॥ क्रियासिद्धिः सत्त्वे भवति महतां नोपकरणे ॥</p>
+                <p id="labHeroSubtitle" class="labs-hero__subtitle">
+                    <?= htmlspecialchars($currentLab['tagline']) ?>
+                </p>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ===================================================
+         2. Main Labs Section with Switcher & Media Showcase
+         =================================================== -->
+    <main class="labs-section" id="labs-main">
+        <div class="labs-section__container">
+
+            <!-- Lab Switcher Bar -->
+            <div class="lab-switcher">
+                <span class="lab-switcher__label">Explore Laboratories:</span>
+                <div class="lab-switcher__links">
+                    <?php foreach ($labsPayload as $key => $lData): ?>
+                        <a href="labs.php?lab=<?= urlencode($key) ?>" class="lab-switcher__pill <?= $key === $selectedLab ? 'is-active' : '' ?>" data-lab="<?= htmlspecialchars($key) ?>">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <?php if ($key === 'computer'): ?>
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>
+                                <?php elseif ($key === 'chemistry'): ?>
+                                    <path d="M10 2v7.31L4.41 18.9A2 2 0 0 0 6 22h12a2 2 0 0 0 1.59-3.1L14 9.31V2z"></path>
+                                <?php else: ?>
+                                    <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                <?php endif; ?>
+                            </svg>
+                            <span><?= htmlspecialchars($lData['code']) ?></span>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Two-Column Lab Detail Layout -->
+            <div class="lab-detail-layout" id="labDetailLayout">
+                
+                <!-- Left: Photo Carousel Showcase -->
+                <div class="lab-media-card">
+                    <div class="lab-carousel" id="labCarousel">
+                        <div class="lab-carousel__main">
+                            <img id="labMainImage" src="<?= htmlspecialchars($currentLab['images'][0] ?? 'assets/background.png') ?>" alt="<?= htmlspecialchars($currentLab['name']) ?>" class="lab-carousel__image" loading="lazy" decoding="async" />
+                            <div class="lab-carousel__counter" id="labCarouselCounter">1 / <?= count($currentLab['images']) ?></div>
+                            
+                            <!-- Carousel Navigation Buttons -->
+                            <button type="button" class="lab-carousel__nav-btn lab-carousel__nav-btn--prev" id="labPrevBtn" aria-label="Previous lab photo">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            </button>
+                            <button type="button" class="lab-carousel__nav-btn lab-carousel__nav-btn--next" id="labNextBtn" aria-label="Next lab photo">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                        </div>
+
+                        <!-- Thumbnail Selectors -->
+                        <div class="lab-thumbnails-strip" id="labThumbnailsStrip">
+                            <?php foreach ($currentLab['images'] as $idx => $imgSrc): ?>
+                                <button type="button" class="lab-thumb-btn <?= $idx === 0 ? 'is-active' : '' ?>" data-index="<?= $idx ?>">
+                                    <img src="<?= htmlspecialchars($imgSrc) ?>" alt="Lab photo thumbnail <?= $idx + 1 ?>" loading="lazy" />
+                                </button>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="lab-section">
-                    <div class="lab-section__image-wrapper">
-                        <div class="carousel-track">
-                            <!-- <?php foreach ($lab["images"] as $image): ?>
-                                <img src="<?php echo $image; ?>" alt="<?php echo $lab["name"]; ?>" class="lab-section__image" />
-                            <?php endforeach; ?> -->
+                <!-- Right: Lab Description & Features & Specs -->
+                <div class="lab-info-col">
+                    
+                    <!-- Overview Card -->
+                    <div class="lab-card">
+                        <span class="section__eyebrow">Facility Overview</span>
+                        <h2 id="labOverviewTitle" class="lab-card__title">About <?= htmlspecialchars($currentLab['name']) ?></h2>
+                        <p id="labDescriptionText" class="lab-card__lead"><?= htmlspecialchars($currentLab['description']) ?></p>
 
-
-                            <?php
-                            $image_dir_fs = __DIR__ . '/assets/photos/labs/'.$lab_type . '/';
-                            $image_dir_web = 'assets/photos/labs/'.$lab_type . '/';
-
-                            $images = glob($image_dir_fs . '*.{jpg,jpeg,png,webp}', GLOB_BRACE);
-
-                            if ($images) {
-                                sort($images);
-                                foreach ($images as $path) {
-                                    $src = $image_dir_web . basename($path);
-                                    echo "<img src='$src' alt='$lab_type' class='lab-section__image' />";
-                                }
-                            } else {
-                                echo "<p class='photo-carousel-section__no-images-message'>No photos available at the moment.</p>";
-                            }
-                            ?>
+                        <!-- Key Highlights List -->
+                        <h4 class="lab-card__subtitle">Key Laboratory Highlights:</h4>
+                        <div class="lab-features-list" id="labFeaturesList">
+                            <?php foreach ($currentLab['features'] as $feat): ?>
+                                <div class="lab-feature-item">
+                                    <div class="lab-feature-icon">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    </div>
+                                    <span><?= htmlspecialchars($feat) ?></span>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
-                    <div class="lab-section__description">
-                        <p><?php echo $lab["description"]; ?></p>
+                    <!-- Infrastructure Specs Card -->
+                    <div class="lab-card lab-card--specs">
+                        <span class="section__eyebrow">Technical Specifications</span>
+                        <h3 class="lab-card__title">Infrastructure &amp; Capacity</h3>
+                        
+                        <div class="lab-specs-grid" id="labSpecsGrid">
+                            <?php foreach ($currentLab['specs'] as $sLabel => $sVal): ?>
+                                <div class="lab-spec-box">
+                                    <span class="lab-spec-box__label"><?= htmlspecialchars($sLabel) ?></span>
+                                    <strong class="lab-spec-box__value"><?= htmlspecialchars($sVal) ?></strong>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+
+    <!-- ===================================================
+         3. Reusable Call to Action
+         =================================================== -->
+    <section class="labs-cta" id="cta">
+        <div class="labs-cta__container">
+            <div class="labs-cta__box">
+                <span class="labs-cta__badge">Hands-On Learning</span>
+                <h2 class="labs-cta__title">Experience Our Modern Infrastructure</h2>
+                <p class="labs-cta__subtitle">
+                    Discover why practical laboratory work at Shri V. J. Modha College builds superior technical competence.
+                </p>
+                <div class="labs-cta__actions">
+                    <a href="courses.php" class="btn btn--primary">Explore Programs</a>
+                    <a href="contact.php" class="btn btn--secondary">Schedule a Campus Visit</a>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Footer -->
-        <?php include("footer.html"); ?>
 
-    </body>
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 4l-8 8h6v8h4v-8h6z"></path>
+        </svg>
+    </button>
 
-    </html>
 
-<?php
-} else {
-    header("Location: index.php");
-    exit();
-}
-?>
+    <!-- ===================================================
+         Footer Section
+         =================================================== -->
+    <?php include("footer.html"); ?>
+
+</body>
+
+</html>

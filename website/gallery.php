@@ -1,9 +1,10 @@
 <?php
     $galleryDir = 'assets/photos/gallery';
-    $albums = array_diff(scandir($galleryDir), ['.', '..']);
-    function getImageURLs($folderPath)
-    {
+    $rawAlbums = array_diff(scandir($galleryDir), ['.', '..']);
+    
+    function getImageURLs($folderPath) {
         $result = [];
+        if (!is_dir($folderPath)) return $result;
         $images = array_diff(scandir($folderPath), ['.', '..']);
         foreach ($images as $file) {
             $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
@@ -13,9 +14,75 @@
         }
         return $result;
     }
-    // AJAX endpoint: Return a JSON list of image URLs for the selected album
+
+    // Album metadata dictionary
+    $albumMeta = [
+        "aavishkar_event" => [
+            "title" => "Aavishkar Tech & Science Fest",
+            "category" => "events",
+            "category_label" => "Tech & Academic",
+            "description" => "Annual technical exhibition and science project competitions showcasing student innovations."
+        ],
+        "campus" => [
+            "title" => "Campus Infrastructure & Grounds",
+            "category" => "campus",
+            "category_label" => "Campus Life",
+            "description" => "Lush green campus environment, seminar halls, sports arena, and modern academic blocks."
+        ],
+        "freshers_party" => [
+            "title" => "Freshers Welcome Celebration",
+            "category" => "events",
+            "category_label" => "Cultural & Social",
+            "description" => "Welcoming the incoming batch of bright minds with music, performances, and student bonding."
+        ],
+        "ganesh_mahotsav" => [
+            "title" => "Ganesh Mahotsav Celebrations",
+            "category" => "cultural",
+            "category_label" => "Tradition & Festivity",
+            "description" => "Traditional cultural celebrations and devotional festivities uniting students and staff."
+        ],
+        "labs" => [
+            "title" => "High-Tech Computer & Science Labs",
+            "category" => "campus",
+            "category_label" => "Facilities",
+            "description" => "State-of-the-art computer labs, chemistry setups, and hands-on scientific research equipment."
+        ],
+        "talent_show" => [
+            "title" => "Annual Talent & Cultural Showcase",
+            "category" => "cultural",
+            "category_label" => "Arts & Performances",
+            "description" => "Celebrating extraordinary artistic talents in dance, drama, music, and public speaking."
+        ]
+    ];
+
+    // Build complete albums payload for 0ms client-side modal
+    $albumsPayload = [];
+    foreach ($rawAlbums as $albumKey) {
+        $folder = "$galleryDir/$albumKey";
+        if (is_dir($folder)) {
+            $imgs = getImageURLs($folder);
+            $meta = $albumMeta[$albumKey] ?? [
+                "title" => ucwords(str_replace('_', ' ', $albumKey)),
+                "category" => "events",
+                "category_label" => "Events",
+                "description" => "Memorable moments and student activities at Shri V.J. Modha College."
+            ];
+            $albumsPayload[$albumKey] = [
+                "key" => $albumKey,
+                "title" => $meta['title'],
+                "category" => $meta['category'],
+                "category_label" => $meta['category_label'],
+                "description" => $meta['description'],
+                "images" => $imgs,
+                "cover" => $imgs[0] ?? 'assets/background.png',
+                "count" => count($imgs)
+            ];
+        }
+    }
+
+    // AJAX endpoint support
     if (isset($_GET['album']) && isset($_GET['action']) && $_GET['action'] === 'json') {
-        $album = basename($_GET['album']); // security: ignore any path traversal
+        $album = basename($_GET['album']);
         $path = "$galleryDir/$album";
         if (is_dir($path)) {
             $images = getImageURLs($path);
@@ -24,61 +91,199 @@
         }
         exit;
     }
+
+    $meta_description = "Browse the vibrant photo gallery of Shri V.J. Modha College, Porbandar. Explore campus infrastructure, cultural fests, tech exhibitions, and student life.";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": "Shri V.J. Modha College - Photo Gallery",
+            "url": "https://shrivjmodhacollege.com/gallery.php",
+            "logo": "https://shrivjmodhacollege.com/assets/logo.ico",
+            "description": "<?= htmlspecialchars($meta_description) ?>",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Vidhyadham, Chhaya-Birla Road, Nr. Pakshi Abhiyaran",
+                "addressLocality": "Porbandar",
+                "addressRegion": "Gujarat",
+                "postalCode": "360575",
+                "addressCountry": "IN"
+            }
+        }
+    </script>
+
     <?php include("header.php"); ?>
 </head>
 
 <body>
-    <!-- Navigation Section (assuming nav.html exists) -->
-    <?php include("nav.html"); ?>
-    <div class="container">
-        <div class="wrapper">
+    <!-- Embed Gallery Data Payload for instant lightbox -->
+    <script id="galleryPayload" type="application/json">
+        <?= json_encode($albumsPayload, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>
+    </script>
 
-            <div class="page_title_wrapper">
-                <h2 class="page_title">Gallery</h2>
+    <!-- ===================================================
+         Navigation Section
+         =================================================== -->
+    <?php include("nav.html"); ?>
+
+
+    <!-- ===================================================
+         1. Hero Header Banner
+         =================================================== -->
+    <header class="gallery-hero" id="gallery-hero">
+        <div class="gallery-hero__overlay">
+            <div class="gallery-hero__content">
+                <nav class="gallery-hero__breadcrumb" aria-label="Breadcrumb">
+                    <a href="index.php">Home</a>
+                    <span class="gallery-hero__breadcrumb-sep">/</span>
+                    <span>Facilities</span>
+                    <span class="gallery-hero__breadcrumb-sep">/</span>
+                    <span aria-current="page">Photo Gallery</span>
+                </nav>
+                <span class="gallery-hero__badge">Campus Life &amp; Events</span>
+                <h1 class="gallery-hero__title">Our Photo Gallery</h1>
+                <p class="gallery-hero__slogan">॥ स्मरणीयाः सुखदाः क्षणाः ॥</p>
+                <p class="gallery-hero__subtitle">
+                    Immerse yourself in the vibrant student life, state-of-the-art campus amenities, festive celebrations, and academic milestones at Shri V. J. Modha College.
+                </p>
             </div>
-            
-            <div class="gallery_albums" id="album-grid">
-                <?php foreach ($albums as $album): ?>
-                    <?php
-                    // Get the first image to use as a thumbnail
-                    $folderPath = "$galleryDir/$album";
-                    $images = array_diff(scandir($folderPath), ['.', '..']);
-                    $thumb = null;
-                    foreach ($images as $file) {
-                        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                        if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                            $thumb = "$folderPath/$file";
-                            break;
-                        }
-                    }
-                    $thumbStyle = $thumb ? "background-image: url('$thumb');" : "";
-                    ?>
-                    <div class="gallery_album" style="<?php echo $thumbStyle; ?>" onclick="openModal('<?php echo $album; ?>')">
-                        <div class="gallery_album__title"><?php echo ucwords(str_replace('_', ' ', $album)); ?></div>
+        </div>
+    </header>
+
+
+    <!-- ===================================================
+         2. Main Gallery Section with Album Cards & Filter
+         =================================================== -->
+    <main class="gallery-section" id="gallery-main">
+        <div class="gallery-section__container">
+
+            <!-- Section Header & Filter Tabs -->
+            <div class="gallery-section__header">
+                <div>
+                    <span class="section__eyebrow">Visual Memories</span>
+                    <h2 class="gallery-section__title">Explore Photo Albums</h2>
+                    <p class="gallery-section__subtitle">Click on any album card to launch the interactive photo slideshow.</p>
+                </div>
+
+                <div class="gallery-filter-tabs" role="tablist">
+                    <button class="gallery-filter-btn is-active" data-category="all" role="tab" aria-selected="true">All Albums (<?= count($albumsPayload) ?>)</button>
+                    <button class="gallery-filter-btn" data-category="events" role="tab" aria-selected="false">Events</button>
+                    <button class="gallery-filter-btn" data-category="cultural" role="tab" aria-selected="false">Cultural</button>
+                    <button class="gallery-filter-btn" data-category="campus" role="tab" aria-selected="false">Campus &amp; Labs</button>
+                </div>
+            </div>
+
+            <!-- Album Cards Grid -->
+            <div class="gallery-grid" id="albumGrid">
+                <?php foreach ($albumsPayload as $key => $album): ?>
+                    <div class="album-card" data-category="<?= htmlspecialchars($album['category']) ?>" data-album="<?= htmlspecialchars($key) ?>">
+                        <div class="album-card__cover-box">
+                            <img src="<?= htmlspecialchars($album['cover']) ?>" alt="<?= htmlspecialchars($album['title']) ?>" class="album-card__image" loading="lazy" decoding="async" />
+                            <div class="album-card__overlay">
+                                <span class="album-card__view-btn">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <span>View Album</span>
+                                </span>
+                            </div>
+                            <span class="album-card__count-badge">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span><?= $album['count'] ?> Photos</span>
+                            </span>
+                        </div>
+
+                        <div class="album-card__content">
+                            <span class="album-card__badge"><?= htmlspecialchars($album['category_label']) ?></span>
+                            <h3 class="album-card__title"><?= htmlspecialchars($album['title']) ?></h3>
+                            <p class="album-card__desc"><?= htmlspecialchars($album['description']) ?></p>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
+        </div>
+    </main>
+
+
+    <!-- ===================================================
+         3. Interactive Fullscreen Lightbox Modal
+         =================================================== -->
+    <div class="gallery-modal" id="galleryModal" role="dialog" aria-modal="true" aria-label="Photo Lightbox" style="display: none;">
+        <div class="gallery-modal__backdrop" id="modalBackdrop"></div>
+        
+        <div class="gallery-modal__container">
+            
+            <!-- Top Controls -->
+            <div class="gallery-modal__header">
+                <div class="gallery-modal__info">
+                    <h3 id="modalAlbumTitle" class="gallery-modal__title">Album Title</h3>
+                    <span id="modalCounter" class="gallery-modal__counter">1 / 1</span>
+                </div>
+                <button type="button" class="gallery-modal__close-btn" id="modalCloseBtn" aria-label="Close Lightbox">&times;</button>
+            </div>
+
+            <!-- Main Stage -->
+            <div class="gallery-modal__stage">
+                <button type="button" class="gallery-modal__nav-btn gallery-modal__nav-btn--prev" id="modalPrevBtn" aria-label="Previous Photo">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+
+                <div class="gallery-modal__image-wrapper">
+                    <img id="modalMainImage" src="" alt="Album photo" class="gallery-modal__main-image" />
+                    <div id="modalLoadingSpinner" class="gallery-modal__spinner" style="display: none;"></div>
+                </div>
+
+                <button type="button" class="gallery-modal__nav-btn gallery-modal__nav-btn--next" id="modalNextBtn" aria-label="Next Photo">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+
+            <!-- Bottom Thumbnails Strip -->
+            <div class="gallery-modal__thumbnails-strip" id="modalThumbnailsStrip"></div>
+
         </div>
     </div>
-    <!-- Fullscreen Modal for slideshow -->
-    <div class="gallery_modal" id="modal">
-        <button class="gallery_modal__close" onclick="closeModal()">&times;</button>
-        <div class="gallery_modal__content" id="modal-content">
-            <!-- Slides will be injected here by JavaScript -->
+
+
+    <!-- ===================================================
+         4. Reusable Call to Action
+         =================================================== -->
+    <section class="gallery-cta" id="cta">
+        <div class="gallery-cta__container">
+            <div class="gallery-cta__box">
+                <span class="gallery-cta__badge">Experience Campus Life</span>
+                <h2 class="gallery-cta__title">Want to Experience Our Vibrant Campus?</h2>
+                <p class="gallery-cta__subtitle">
+                    Schedule a campus tour or connect with our admissions counselors to learn more about our thriving student community.
+                </p>
+                <div class="gallery-cta__actions">
+                    <a href="contact.php" class="btn btn--primary">Schedule a Campus Visit</a>
+                    <a href="about.php" class="btn btn--secondary">About Our Campus</a>
+                </div>
+            </div>
         </div>
-        <div class="gallery_modal__counter" id="modal-counter">
-            <!-- Counter will be updated by JavaScript -->
-        </div>
-        <button class="gallery_modal__nav gallery_modal__nav--prev" onclick="prevSlide()">&#10094;</button>
-        <button class="gallery_modal__nav gallery_modal__nav--next" onclick="nextSlide()">&#10095;</button>
-    </div>
-    <!-- Footer Section (assuming footer.html exists) -->
+    </section>
+
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 4l-8 8h6v8h4v-8h6z"></path>
+        </svg>
+    </button>
+
+
+    <!-- ===================================================
+         Footer Section
+         =================================================== -->
     <?php include("footer.html"); ?>
+
 </body>
 
 </html>

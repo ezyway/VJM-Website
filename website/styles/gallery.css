@@ -1,143 +1,683 @@
-/* Album Grid & Album Thumbnail Styles */
-.gallery_albums {
+/* ====================================================
+   GALLERY PAGE - MODERN DESIGN SYSTEM & STYLESHEET
+   Shri V.J. Modha College Portal
+   ==================================================== */
+
+/* ====================================================
+   1. HERO HEADER BANNER
+   ==================================================== */
+
+.gallery-hero {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    padding: 7rem 1.5rem 4rem 1.5rem;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 30%, rgba(34, 130, 112, 0.45) 0%, rgba(7, 29, 24, 0.95) 75%),
+                linear-gradient(135deg, #0A372E 0%, #071D18 100%);
+    overflow: hidden;
+    box-sizing: border-box;
 }
-.gallery_album {
-    background: #ddd;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    width: 200px;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+
+.gallery-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.gallery-hero__overlay {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
     text-align: center;
-    transition: transform 0.2s ease;
+}
+
+.gallery-hero__content {
+    background: rgba(10, 42, 36, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-lg);
+    padding: 3rem 2.5rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    animation: heroFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.gallery-hero__breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1.25rem;
+}
+
+.gallery-hero__breadcrumb a {
+    color: #FDE68A;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.gallery-hero__breadcrumb a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.gallery-hero__breadcrumb-sep {
+    opacity: 0.4;
+}
+
+.gallery-hero__badge {
+    display: inline-block;
+    padding: 5px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #FDE68A;
+    background: rgba(217, 119, 6, 0.2);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+}
+
+.gallery-hero__title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    color: #FFFFFF;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-hero__slogan {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #FDE047;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-hero__subtitle {
+    font-size: 1.05rem;
+    color: #E2E8F0;
+    font-weight: 400;
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+
+/* ====================================================
+   2. MAIN GALLERY DIRECTORY & ALBUM CARDS
+   ==================================================== */
+
+.gallery-section {
+    padding: 4.5rem 1.5rem 3.5rem 1.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.gallery-section__container {
+    background: var(--surface-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+}
+
+.gallery-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(21, 92, 79, 0.1);
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.gallery-section__title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    letter-spacing: -0.3px;
+    margin-bottom: 0.35rem;
+}
+
+.gallery-section__subtitle {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+}
+
+/* Category Filter Tabs */
+.gallery-filter-tabs {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.gallery-filter-btn {
+    padding: 0.6rem 1.25rem;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: #FFFFFF;
+    border: 1.5px solid rgba(21, 92, 79, 0.15);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.gallery-filter-btn:hover {
+    color: var(--brand-primary);
+    border-color: var(--brand-primary-light);
+}
+
+.gallery-filter-btn.is-active {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, var(--brand-primary-light), var(--brand-primary));
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(21, 92, 79, 0.35);
+}
+
+/* Album Cards Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    transition: opacity 0.3s ease;
+}
+
+.album-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(21, 92, 79, 0.12);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    transition: all var(--transition-normal);
+}
+
+.album-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(21, 92, 79, 0.3);
+    box-shadow: var(--shadow-lg);
+}
+
+.album-card__cover-box {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    background: #E2E8F0;
     overflow: hidden;
 }
-.gallery_album::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.3);
-}
-.gallery_album:hover {
-    transform: scale(1.03);
-}
-.gallery_album__title {
-    color: #fff;
-    font-weight: bold;
-    padding: 10px;
-    z-index: 1;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    position: relative;
-}
-/* Fullscreen Modal Styles */
-.gallery_modal {
-    position: fixed;
-    top: 0;
-    left: 0;
+
+.album-card__image {
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.95);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    overflow: hidden;
-}
-.gallery_modal--active {
-    display: flex;
-}
-.gallery_modal__content {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-    overflow: hidden;
-}
-/* Slide container */
-.gallery_slide {
-    min-width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 0;
-    top: 0;
+    object-fit: cover;
+    display: block;
     transition: transform 0.5s ease;
 }
-.gallery_slide__image {
+
+.album-card:hover .album-card__image {
+    transform: scale(1.08);
+}
+
+.album-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 29, 24, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.album-card:hover .album-card__overlay {
+    opacity: 1;
+}
+
+.album-card__view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: #FFFFFF;
+    color: var(--brand-primary-dark);
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(8px);
+    transition: transform var(--transition-fast);
+}
+
+.album-card:hover .album-card__view-btn {
+    transform: translateY(0);
+}
+
+.album-card__count-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 4px 10px;
+    background: rgba(7, 29, 24, 0.75);
+    backdrop-filter: blur(6px);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.album-card__content {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.album-card__badge {
+    display: inline-block;
+    width: fit-content;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--brand-primary);
+    background: rgba(34, 130, 112, 0.1);
+    border-radius: var(--radius-full);
+    margin-bottom: 0.65rem;
+}
+
+.album-card__title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.4rem;
+    line-height: 1.35;
+}
+
+.album-card__desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+
+/* ====================================================
+   3. FULLSCREEN LIGHTBOX MODAL
+   ==================================================== */
+
+.gallery-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 20, 16, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: modalBackdropIn 0.3s ease forwards;
+}
+
+@keyframes modalBackdropIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.gallery-modal__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Modal Header */
+.gallery-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.gallery-modal__info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gallery-modal__title {
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.gallery-modal__counter {
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-full);
+    color: #FDE68A;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.gallery-modal__close-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.gallery-modal__close-btn:hover {
+    background: #DC2626;
+    border-color: transparent;
+    transform: scale(1.08);
+}
+
+/* Main Stage */
+.gallery-modal__stage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    position: relative;
+    padding: 1rem 0;
+    overflow: hidden;
+}
+
+.gallery-modal__image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 230px);
+    position: relative;
+}
+
+.gallery-modal__main-image {
     max-width: 90%;
-    max-height: 90%;
-    border-radius: 10px;
+    max-height: 100%;
     object-fit: contain;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
-/* Navigation buttons */
-.gallery_modal__nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 1);
-    color: #000;
-    border: none;
-    padding: 10px 20px;
+
+.gallery-modal__nav-btn {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    font-size: 18px;
-    border-radius: 5px;
-    z-index: 1050;
+    transition: all var(--transition-fast);
+    z-index: 10;
+    flex-shrink: 0;
 }
-.gallery_modal__nav--prev {
-    left: 1em;
+
+.gallery-modal__nav-btn:hover {
+    background: var(--brand-primary);
+    border-color: transparent;
+    transform: scale(1.1);
 }
-.gallery_modal__nav--next {
-    right: 1em;
+
+.gallery-modal__nav-btn--prev {
+    margin-right: 1rem;
 }
-/* Close Button */
-.gallery_modal__close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 30px;
-    color: #fff;
-    background: transparent;
-    border: none;
+
+.gallery-modal__nav-btn--next {
+    margin-left: 1rem;
+}
+
+/* Thumbnails Strip */
+.gallery-modal__thumbnails-strip {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 0.75rem 0;
+    scrollbar-width: none;
+}
+
+.gallery-modal__thumbnails-strip::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-thumb-item {
+    width: 64px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    opacity: 0.5;
+    border: 2px solid transparent;
     cursor: pointer;
-    z-index: 1050;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
 }
-/* Counter */
-.gallery_modal__counter {
-    position: absolute;
-    bottom: 1em;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 1);
-    width: 6em;
-    padding: 1em;
+
+.gallery-thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-thumb-item:hover {
+    opacity: 0.85;
+}
+
+.gallery-thumb-item.is-active {
+    opacity: 1;
+    border-color: #FDE047;
+    transform: scale(1.08);
+}
+
+
+/* ====================================================
+   4. REUSABLE CALL TO ACTION
+   ==================================================== */
+
+.gallery-cta {
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.gallery-cta__box {
+    background: radial-gradient(circle at 70% 30%, rgba(34, 130, 112, 0.6) 0%, rgba(10, 55, 46, 0.95) 100%),
+                linear-gradient(135deg, #0A372E, #071D18);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
     text-align: center;
-    border-radius: 5px;
-    font-size: 1em;
-    font-weight: bold;
-    z-index: 1050;
+    color: #FFFFFF;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
 }
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .gallery_album {
-        width: 150px;
-        height: 100px;
+
+.gallery-cta__badge {
+    display: inline-block;
+    padding: 4px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #FDE68A;
+    background: rgba(217, 119, 6, 0.25);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+}
+
+.gallery-cta__title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.3px;
+    color: #FFFFFF;
+}
+
+.gallery-cta__subtitle {
+    font-size: 1.05rem;
+    color: #E2E8F0;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+}
+
+.gallery-cta__actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+/* ====================================================
+   5. RESPONSIVE BREAKPOINTS
+   ==================================================== */
+
+@media screen and (max-width: 1024px) {
+    .gallery-hero__title {
+        font-size: 2.2rem;
     }
-    .gallery_modal__nav {
-        padding: 1em 1.5em;
-        font-size: 16px;
-        top:80%;
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .gallery-hero {
+        padding: 5.5rem 1rem 3rem 1rem;
+        min-height: 360px;
+    }
+    .gallery-hero__content {
+        padding: 2rem 1.25rem;
+    }
+    .gallery-hero__title {
+        font-size: 1.75rem;
+    }
+    .gallery-hero__slogan {
+        font-size: 1.1rem;
+    }
+    .gallery-hero__subtitle {
+        font-size: 0.92rem;
+    }
+    .gallery-section {
+        padding: 2.5rem 1rem 1.5rem 1rem;
+    }
+    .gallery-section__container,
+    .gallery-cta__box {
+        padding: 2rem 1.25rem;
+    }
+    .gallery-section__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+    .gallery-filter-tabs {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .gallery-modal__container {
+        padding: 1rem 0.75rem;
+    }
+    .gallery-modal__title {
+        font-size: 1rem;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .gallery-modal__nav-btn {
+        width: 42px;
+        height: 42px;
+    }
+    .gallery-modal__image-wrapper {
+        height: calc(100vh - 200px);
+    }
+    .gallery-cta {
+        padding: 1.5rem 1rem 3.5rem 1rem;
+    }
+    .gallery-cta__actions {
+        flex-direction: column;
+        gap: 0.85rem;
+    }
+    .gallery-cta__actions .btn {
+        width: 100%;
     }
 }

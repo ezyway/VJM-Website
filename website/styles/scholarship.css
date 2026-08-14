@@ -1,0 +1,534 @@
+/* ====================================================
+   SCHOLARSHIP PAGE - MODERN DESIGN SYSTEM & STYLESHEET
+   Shri V.J. Modha College Portal
+   ==================================================== */
+
+/* ====================================================
+   1. HERO HEADER BANNER
+   ==================================================== */
+
+.scholarship-hero {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    padding: 7rem 1.5rem 4rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 30%, rgba(34, 130, 112, 0.45) 0%, rgba(7, 29, 24, 0.95) 75%),
+                linear-gradient(135deg, #0A372E 0%, #071D18 100%);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.scholarship-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.scholarship-hero__overlay {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.scholarship-hero__content {
+    background: rgba(10, 42, 36, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-lg);
+    padding: 3rem 2.5rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    animation: heroFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.scholarship-hero__breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1.25rem;
+}
+
+.scholarship-hero__breadcrumb a {
+    color: #FDE68A;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.scholarship-hero__breadcrumb a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.scholarship-hero__breadcrumb-sep {
+    opacity: 0.4;
+}
+
+.scholarship-hero__badge {
+    display: inline-block;
+    padding: 5px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #FDE68A;
+    background: rgba(217, 119, 6, 0.2);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+}
+
+.scholarship-hero__title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    color: #FFFFFF;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.scholarship-hero__slogan {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #FDE047;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.8px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.scholarship-hero__subtitle {
+    font-size: 1.05rem;
+    color: #E2E8F0;
+    font-weight: 400;
+    max-width: 680px;
+    margin: 0 auto 1.5rem auto;
+    line-height: 1.6;
+}
+
+/* Metric Badges in Hero */
+.scholarship-hero__metrics {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.scholarship-metric-pill {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.6rem 1.4rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    color: #FFFFFF;
+}
+
+.scholarship-metric-pill strong {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #FDE68A;
+}
+
+.scholarship-metric-pill span {
+    font-size: 0.75rem;
+    color: #CBD5E1;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+
+/* ====================================================
+   2. MAIN SCHOLARSHIP CONTAINER & BLOCKS
+   ==================================================== */
+
+.scholarship-section {
+    padding: 4.5rem 1.5rem 3.5rem 1.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.scholarship-section__container {
+    background: var(--surface-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.scholarship-block__title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.3px;
+}
+
+.scholarship-block__subtitle {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+    max-width: 680px;
+}
+
+/* Portals Grid */
+.portals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.portal-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(21, 92, 79, 0.14);
+    box-shadow: var(--shadow-sm);
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.portal-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-primary-light), var(--brand-primary));
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.portal-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(21, 92, 79, 0.3);
+    box-shadow: var(--shadow-lg);
+}
+
+.portal-card:hover::before {
+    opacity: 1;
+}
+
+.portal-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.portal-card__icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: rgba(34, 130, 112, 0.1);
+    color: var(--brand-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.portal-card__badge {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--brand-primary);
+    background: rgba(34, 130, 112, 0.1);
+    border-radius: var(--radius-full);
+}
+
+.portal-card__title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+}
+
+.portal-card__provider {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--brand-accent);
+    margin-bottom: 1rem;
+}
+
+.portal-card__desc {
+    font-size: 0.94rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+}
+
+.btn--portal {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.25rem;
+}
+
+
+/* ====================================================
+   3. YEARLY DISBURSEMENT TABLE
+   ==================================================== */
+
+.scholarship-table-wrapper {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(21, 92, 79, 0.12);
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+    margin-top: 2rem;
+}
+
+.scholarship-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.scholarship-table thead th {
+    background: #F8FAFC;
+    color: var(--brand-primary-dark);
+    font-weight: 800;
+    padding: 1.15rem 1.5rem;
+    border-bottom: 2px solid rgba(21, 92, 79, 0.15);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.scholarship-table tbody td {
+    padding: 1.05rem 1.5rem;
+    border-bottom: 1px solid rgba(21, 92, 79, 0.08);
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+.scholarship-table tbody tr {
+    transition: background var(--transition-fast);
+}
+
+.scholarship-table tbody tr:hover {
+    background: rgba(34, 130, 112, 0.04);
+}
+
+.table-year-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    color: var(--brand-primary-dark);
+}
+
+.table-year-cell svg {
+    color: var(--brand-primary);
+}
+
+.table-amount-cell {
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    font-family: inherit;
+}
+
+.table-status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    background: #F1F5F9;
+    color: var(--text-muted);
+}
+
+.table-status-pill.status--latest {
+    background: rgba(16, 185, 129, 0.15);
+    color: #047857;
+}
+
+.table-status-pill.status--peak {
+    background: rgba(217, 119, 6, 0.15);
+    color: #B45309;
+}
+
+.table-status-pill.status--total {
+    background: var(--brand-primary);
+    color: #FFFFFF;
+}
+
+.table-total-row td {
+    background: #F8FAFC;
+    padding: 1.25rem 1.5rem;
+    border-top: 2px solid rgba(21, 92, 79, 0.15);
+    color: var(--brand-primary-dark);
+    font-size: 1.05rem;
+}
+
+
+/* ====================================================
+   4. REUSABLE CALL TO ACTION
+   ==================================================== */
+
+.scholarship-cta {
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.scholarship-cta__box {
+    background: radial-gradient(circle at 70% 30%, rgba(34, 130, 112, 0.6) 0%, rgba(10, 55, 46, 0.95) 100%),
+                linear-gradient(135deg, #0A372E, #071D18);
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    text-align: center;
+    color: #FFFFFF;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.scholarship-cta__badge {
+    display: inline-block;
+    padding: 4px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #FDE68A;
+    background: rgba(217, 119, 6, 0.25);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+}
+
+.scholarship-cta__title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.3px;
+    color: #FFFFFF;
+}
+
+.scholarship-cta__subtitle {
+    font-size: 1.05rem;
+    color: #E2E8F0;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+}
+
+.scholarship-cta__actions {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+/* ====================================================
+   5. RESPONSIVE BREAKPOINTS
+   ==================================================== */
+
+@media screen and (max-width: 1024px) {
+    .scholarship-hero__title {
+        font-size: 2.2rem;
+    }
+    .portals-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .scholarship-hero {
+        padding: 5.5rem 1rem 3rem 1rem;
+        min-height: 360px;
+    }
+    .scholarship-hero__content {
+        padding: 2rem 1.25rem;
+    }
+    .scholarship-hero__title {
+        font-size: 1.75rem;
+    }
+    .scholarship-hero__slogan {
+        font-size: 1.1rem;
+    }
+    .scholarship-hero__subtitle {
+        font-size: 0.92rem;
+    }
+    .scholarship-hero__metrics {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+    .scholarship-section {
+        padding: 2.5rem 1rem 1.5rem 1rem;
+    }
+    .scholarship-section__container,
+    .scholarship-cta__box {
+        padding: 2rem 1.25rem;
+        gap: 2.5rem;
+    }
+    .scholarship-block__title,
+    .scholarship-cta__title {
+        font-size: 1.65rem;
+    }
+    .scholarship-table thead th,
+    .scholarship-table tbody td {
+        padding: 0.85rem 1rem;
+    }
+    .scholarship-cta {
+        padding: 1.5rem 1rem 3.5rem 1rem;
+    }
+    .scholarship-cta__actions {
+        flex-direction: column;
+        gap: 0.85rem;
+    }
+    .scholarship-cta__actions .btn {
+        width: 100%;
+    }
+}
