@@ -835,34 +835,79 @@
 
 .table-container {
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 520px;
     border-radius: var(--radius-md);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(21, 92, 79, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(21, 92, 79, 0.15);
+    position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 .achievements-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     text-align: center;
     background: #FFFFFF;
 }
 
-.achievements-table th {
-    background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-dark));
+/* Sticky Top Header Row */
+.achievements-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #0A372E;
     color: #FFFFFF;
     padding: 1rem 0.85rem;
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.5px;
-    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
     white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Sticky Left Year Column */
+.achievements-table th:first-child,
+.achievements-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    background: #FFFFFF;
+    text-align: left;
+    padding-left: 1.15rem;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.08);
+}
+
+.achievements-table tbody tr:nth-child(even) td:first-child {
+    background: #F9FAFB;
+}
+
+.achievements-table tbody tr:hover td:first-child {
+    background: #EEF5F3;
+}
+
+.achievements-table .tr-latest td:first-child {
+    background: #FEF9EE;
+}
+
+/* Intersection: Frozen Top-Left Header Cell */
+.achievements-table thead th:first-child {
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 25;
+    background: #071D18;
+    box-shadow: 3px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .achievements-table td {
-    padding: 0.9rem 0.85rem;
+    padding: 0.85rem 0.85rem;
     font-size: 0.92rem;
     color: var(--text-main);
     border-bottom: 1px solid #E5E7EB;
+    border-right: 1px solid #F1F5F9;
     transition: background var(--transition-fast);
     white-space: nowrap;
 }
@@ -1224,13 +1269,29 @@
     .chairman-section__profile,
     .pride-section,
     .news-section__box,
-    .table-section__container,
     .testimonials-section__wrapper,
     .photo-carousel-section__wrapper {
         padding: 1.5rem;
     }
+    .table-section {
+        padding: 1.25rem 0.35rem 2.5rem 0.35rem;
+    }
+    .table-section__container {
+        padding: 1.5rem 0.35rem;
+        border-radius: var(--radius-sm);
+    }
     .table-scroll-hint {
         display: flex;
+    }
+    .achievements-table th,
+    .achievements-table td {
+        padding: 0.75rem 0.55rem;
+        font-size: 0.84rem;
+    }
+    .achievements-table th:first-child,
+    .achievements-table td:first-child {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
     }
     .back-to-top {
         bottom: 1.25rem;

@@ -318,39 +318,81 @@
 .scholarship-table-wrapper {
     background: #FFFFFF;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(21, 92, 79, 0.12);
-    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(21, 92, 79, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 520px;
     margin-top: 2rem;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 .scholarship-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     text-align: left;
     font-size: 0.95rem;
 }
 
 .scholarship-table thead th {
-    background: #F8FAFC;
-    color: var(--brand-primary-dark);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #0A372E;
+    color: #FFFFFF;
     font-weight: 800;
-    padding: 1.15rem 1.5rem;
-    border-bottom: 2px solid rgba(21, 92, 79, 0.15);
-    font-size: 0.9rem;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.88rem;
     text-transform: uppercase;
     letter-spacing: 0.6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Sticky Left Year Column */
+.scholarship-table th:first-child,
+.scholarship-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    background: #FFFFFF;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.08);
+}
+
+.scholarship-table tbody tr:hover td:first-child {
+    background: #EEF5F3;
+}
+
+.scholarship-table tbody tr:nth-child(even) td:first-child {
+    background: #F9FAFB;
+}
+
+/* Intersection: Frozen Top-Left Header Cell */
+.scholarship-table thead th:first-child {
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 25;
+    background: #071D18;
+    box-shadow: 3px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .scholarship-table tbody td {
-    padding: 1.05rem 1.5rem;
+    padding: 0.95rem 1.25rem;
     border-bottom: 1px solid rgba(21, 92, 79, 0.08);
     color: var(--text-main);
     vertical-align: middle;
+    white-space: nowrap;
 }
 
 .scholarship-table tbody tr {
     transition: background var(--transition-fast);
+}
+
+.scholarship-table tbody tr:nth-child(even) {
+    background: #F9FAFB;
 }
 
 .scholarship-table tbody tr:hover {
@@ -506,9 +548,16 @@
         gap: 0.6rem;
     }
     .scholarship-section {
-        padding: 2.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 0.35rem 1.5rem 0.35rem;
     }
-    .scholarship-section__container,
+    .scholarship-section__container {
+        padding: 1.5rem 0.35rem;
+        gap: 2.5rem;
+        border-radius: var(--radius-sm);
+    }
+    .scholarship-table-wrapper {
+        border-radius: var(--radius-sm);
+    }
     .scholarship-cta__box {
         padding: 2rem 1.25rem;
         gap: 2.5rem;
@@ -519,7 +568,8 @@
     }
     .scholarship-table thead th,
     .scholarship-table tbody td {
-        padding: 0.85rem 1rem;
+        padding: 0.75rem 0.65rem;
+        font-size: 0.84rem;
     }
     .scholarship-cta {
         padding: 1.5rem 1rem 3.5rem 1rem;
