@@ -1,88 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --------------------------
-    // Video Overlay Toggle
-    // --------------------------
-    const video = document.querySelector(".video-banner__background");
+    // ----------------------------------------------------
+    // 1. Hero Video Banner Setup & Scroll Down
+    // ----------------------------------------------------
     const overlay = document.querySelector(".video-banner__overlay");
+    const scrollDownBtn = document.querySelector('.scroll-down');
 
-    if (video && overlay) {
-        const hideOverlay = () => {
-            overlay.classList.add("hidden");
-        };
-
-        const showOverlay = () => {
-            overlay.classList.remove("hidden");
-        };
-
-        // Hide overlay when video starts playing
-        video.addEventListener("playing", hideOverlay);
-
-        // (Optional) Show overlay again if video is paused
-        video.addEventListener("pause", showOverlay);
-
-        // Check the initial state of the video.
-        // If `autoplay` has already started the video, the `playing` event might have been missed.
-        if (!video.paused) {
-            hideOverlay(); // Video is already playing, so hide the overlay.
-        } else {
-            showOverlay(); // Video is not playing yet, ensure overlay is visible.
-        }
+    // Ensure overlay is smoothly visible once DOM is ready
+    if (overlay) {
+        overlay.classList.add("is-visible");
     }
 
-    // --------------------------
-    // Click for Scroll Down Icon
-    // --------------------------
+    if (scrollDownBtn) {
+        scrollDownBtn.addEventListener('click', () => {
+            const counterSection = document.getElementById('counter-section');
+            if (counterSection) {
+                counterSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
 
-    document.querySelector('.scroll-down').addEventListener('click', function () {
-        document.getElementById('counter-section').scrollIntoView({ behavior: 'smooth' });
-    });
 
-
-    // --------------------------
-    // Animate Counters
-    // --------------------------
+    // ----------------------------------------------------
+    // 2. Animated Stats Counters (IntersectionObserver)
+    // ----------------------------------------------------
     const counters = document.querySelectorAll('[data-target]');
 
-    function animateCount(element, duration) {
-        const targetString = element.getAttribute('data-target');
+    function animateCount(element, duration = 2000) {
+        const targetString = element.getAttribute('data-target') || '0';
         const isFloat = targetString.includes('.');
-        // Check if the element's class indicates it needs a '+' suffix
         const percentSuffix = element.classList.contains('counter-section__pass-percentage');
         const plusSuffix = element.classList.contains('counter-section__enrolled') ||
-            element.classList.contains('counter-section__passouts');
+                           element.classList.contains('counter-section__passouts');
 
         const target = isFloat ? parseFloat(targetString) : parseInt(targetString, 10);
+        const decimalPlaces = isFloat ? (targetString.split('.')[1] || '').length : 0;
         let startTime = null;
+
+        function easeOutQuad(t) {
+            return t * (2 - t);
+        }
 
         function updateCount(timestamp) {
             if (!startTime) startTime = timestamp;
-            const progress = timestamp - startTime;
-            let displayValue;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeOutQuad(progress);
 
-            if (progress < duration) {
-                if (isFloat) {
-                    const currentValue = (progress / duration) * target;
-                    // Determine decimal places from the target string, e.g., "97.63" has 2
-                    const decimalPlaces = (targetString.split('.')[1] || '').length;
-                    displayValue = Math.min(currentValue, target).toFixed(decimalPlaces);
-                } else {
-                    const currentValue = Math.floor((progress / duration) * target);
-                    displayValue = Math.min(currentValue, target);
-                }
-                element.textContent = displayValue;
+            if (progress < 1) {
+                const current = easedProgress * target;
+                element.textContent = isFloat ? current.toFixed(decimalPlaces) : Math.floor(current).toLocaleString();
                 requestAnimationFrame(updateCount);
             } else {
-                // Animation finished, set the final target value
-                if (isFloat) {
-                    const decimalPlaces = (targetString.split('.')[1] || '').length;
-                    displayValue = target.toFixed(decimalPlaces);
-                } else {
-                    displayValue = target;
-                }
-                element.textContent = displayValue;
-
-                // Add '+ and %' suffix if needed
+                element.textContent = isFloat ? target.toFixed(decimalPlaces) : target.toLocaleString();
                 if (plusSuffix) {
                     element.textContent += '+';
                 }
@@ -91,183 +61,214 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
+
         requestAnimationFrame(updateCount);
     }
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCount(entry.target, 2000); // 2000 ms duration for the animation
-                observer.unobserve(entry.target);
+    if (counters.length > 0) {
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCount(entry.target, 2000);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+    }
+
+
+    // ----------------------------------------------------
+    // 3. Pride of College Slider (Fixed Auto & Manual Slide)
+    // ----------------------------------------------------
+    const prideSliderWrapper = document.querySelector(".pride-section__slider-wrapper");
+    const prideSlides = document.querySelectorAll(".pride-section__item");
+    const pridePrevBtn = document.querySelector(".pride-section__nav-prev");
+    const prideNextBtn = document.querySelector(".pride-section__nav-next");
+    const prideSection = document.querySelector(".pride-section");
+
+    if (prideSliderWrapper && prideSlides.length > 0) {
+        let prideCurrentIndex = 0;
+        let prideInterval = null;
+        const totalSlides = prideSlides.length;
+
+        function updatePrideSlider() {
+            // Wrapper width is 100% of container width (1 slide).
+            // Translating by - (prideCurrentIndex * 100)% translates exactly 1 full slide.
+            const offset = -prideCurrentIndex * 100;
+            prideSliderWrapper.style.transform = `translateX(${offset}%)`;
+        }
+
+        function showNextPrideSlide() {
+            prideCurrentIndex = (prideCurrentIndex + 1) % totalSlides;
+            updatePrideSlider();
+        }
+
+        function showPrevPrideSlide() {
+            prideCurrentIndex = (prideCurrentIndex - 1 + totalSlides) % totalSlides;
+            updatePrideSlider();
+        }
+
+        function resetPrideTimer() {
+            if (prideInterval) {
+                clearInterval(prideInterval);
             }
-        });
-    }, { threshold: 0.5 });
+            prideInterval = setInterval(showNextPrideSlide, 4500);
+        }
 
-    counters.forEach(counter => {
-        observer.observe(counter);
-    });
+        if (prideNextBtn) {
+            prideNextBtn.addEventListener("click", () => {
+                showNextPrideSlide();
+                resetPrideTimer();
+            });
+        }
 
-    // --------------------------
-    // Testimonials Slider Script
-    // --------------------------
+        if (pridePrevBtn) {
+            pridePrevBtn.addEventListener("click", () => {
+                showPrevPrideSlide();
+                resetPrideTimer();
+            });
+        }
+
+        function startPrideAutoSlide() {
+            if (!prideInterval) {
+                prideInterval = setInterval(showNextPrideSlide, 4500);
+            }
+        }
+
+        function stopPrideAutoSlide() {
+            if (prideInterval) {
+                clearInterval(prideInterval);
+                prideInterval = null;
+            }
+        }
+
+        startPrideAutoSlide();
+        updatePrideSlider();
+
+        if (prideSection) {
+            prideSection.addEventListener("mouseenter", stopPrideAutoSlide);
+            prideSection.addEventListener("mouseleave", startPrideAutoSlide);
+            prideSection.addEventListener("touchstart", stopPrideAutoSlide, { passive: true });
+            prideSection.addEventListener("touchend", startPrideAutoSlide, { passive: true });
+        }
+    }
+
+
+    // ----------------------------------------------------
+    // 4. Testimonials Horizontal Slider
+    // ----------------------------------------------------
     const testimonialsSlider = document.querySelector('.testimonials-section__slider');
     const testimonialBtnLeft = document.querySelector('.testimonials-section__nav-left');
     const testimonialBtnRight = document.querySelector('.testimonials-section__nav-right');
 
     if (testimonialsSlider && testimonialBtnLeft && testimonialBtnRight) {
-        // Calculate scroll amount dynamically
-        function getScrollAmount() {
-            return Math.min(testimonialsSlider.clientWidth * 0.75, 300); // 75% of container width or max 300px
-        }
-
-        // Center the active slide if one exists
-        function centerActiveSlide() {
-            const activeItem = testimonialsSlider.querySelector('.testimonials-section__item.active');
-            if (activeItem) {
-                const offsetLeft = activeItem.offsetLeft;
-                const itemWidth = activeItem.offsetWidth;
-                const centerPosition = offsetLeft - (testimonialsSlider.clientWidth / 2) + (itemWidth / 2);
-                testimonialsSlider.scrollTo({
-                    left: centerPosition,
-                    behavior: 'smooth'
-                });
-            }
+        function getScrollStep() {
+            const item = testimonialsSlider.querySelector('.testimonials-section__item');
+            return item ? item.offsetWidth + 24 : 340;
         }
 
         testimonialBtnLeft.addEventListener('click', () => {
             testimonialsSlider.scrollBy({
-                left: -getScrollAmount(),
+                left: -getScrollStep(),
                 behavior: 'smooth'
             });
-            setTimeout(centerActiveSlide, 300);
-            updateTestimonialNavButtons();
+            updateNavState();
         });
 
         testimonialBtnRight.addEventListener('click', () => {
             testimonialsSlider.scrollBy({
-                left: getScrollAmount(),
+                left: getScrollStep(),
                 behavior: 'smooth'
             });
-            setTimeout(centerActiveSlide, 300);
-            updateTestimonialNavButtons();
+            updateNavState();
         });
 
-        function updateTestimonialNavButtons() {
+        function updateNavState() {
             setTimeout(() => {
-                testimonialBtnLeft.disabled = testimonialsSlider.scrollLeft <= 0;
-                testimonialBtnRight.disabled = testimonialsSlider.scrollLeft + testimonialsSlider.clientWidth >= testimonialsSlider.scrollWidth;
-            }, 300);
+                const maxScroll = testimonialsSlider.scrollWidth - testimonialsSlider.clientWidth;
+                testimonialBtnLeft.disabled = testimonialsSlider.scrollLeft <= 4;
+                testimonialBtnRight.disabled = testimonialsSlider.scrollLeft >= maxScroll - 4;
+            }, 250);
         }
 
-        updateTestimonialNavButtons();
-        testimonialsSlider.addEventListener('scroll', updateTestimonialNavButtons);
-        window.addEventListener('resize', updateTestimonialNavButtons);
+        testimonialsSlider.addEventListener('scroll', updateNavState, { passive: true });
+        window.addEventListener('resize', updateNavState);
+        updateNavState();
     }
 
-    // --------------------------
-    // Carousel Button Controls
-    // --------------------------
+
+    // ----------------------------------------------------
+    // 5. Campus Life Photo Carousel
+    // ----------------------------------------------------
     const carousel = document.getElementById('carousel');
     const carouselBtnLeft = document.querySelector('.photo-carousel-section__nav-left');
     const carouselBtnRight = document.querySelector('.photo-carousel-section__nav-right');
 
-    const carouselItems = carousel.querySelectorAll('.photo-carousel-section__item');
-    let itemWidth = carouselItems[0]?.offsetWidth || 300;
+    if (carousel && carouselBtnLeft && carouselBtnRight) {
+        function getPhotoStep() {
+            const item = carousel.querySelector('.photo-carousel-section__item');
+            return item ? item.offsetWidth + 20 : 320;
+        }
 
-    window.addEventListener('resize', () => {
-        itemWidth = carouselItems[0]?.offsetWidth || 300;
-    });
-
-    carouselBtnLeft.addEventListener('click', () => {
-        carousel.scrollBy({
-            left: -itemWidth,
-            behavior: 'smooth'
+        carouselBtnLeft.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: -getPhotoStep(),
+                behavior: 'smooth'
+            });
+            updateCarouselNavState();
         });
-        updateCarouselNavButtons();
-    });
 
-    carouselBtnRight.addEventListener('click', () => {
-        carousel.scrollBy({
-            left: itemWidth,
-            behavior: 'smooth'
+        carouselBtnRight.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: getPhotoStep(),
+                behavior: 'smooth'
+            });
+            updateCarouselNavState();
         });
-        updateCarouselNavButtons();
-    });
 
-    function updateCarouselNavButtons() {
-        setTimeout(() => {
-            carouselBtnLeft.disabled = carousel.scrollLeft <= 0;
-            carouselBtnRight.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
-        }, 200);
+        function updateCarouselNavState() {
+            setTimeout(() => {
+                const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+                carouselBtnLeft.disabled = carousel.scrollLeft <= 4;
+                carouselBtnRight.disabled = carousel.scrollLeft >= maxScroll - 4;
+            }, 200);
+        }
+
+        carousel.addEventListener('scroll', updateCarouselNavState, { passive: true });
+        window.addEventListener('resize', updateCarouselNavState);
+        updateCarouselNavState();
     }
 
-    updateCarouselNavButtons();
-    carousel.addEventListener('scroll', updateCarouselNavButtons);
-    window.addEventListener('resize', updateCarouselNavButtons);
 
-    // --------------------------
-    // Pride Slider Script
-    // --------------------------
-    const prideSection = document.querySelector(".pride-section");
-    const prideSliderWrapper = document.querySelector(".pride-section__slider-wrapper");
-    const prideSlides = document.querySelectorAll(".pride-section__item");
-    const pridePrevBtn = document.querySelector(".pride-section__nav-prev");
-    const prideNextBtn = document.querySelector(".pride-section__nav-next");
-
-    let prideCurrentIndex = 0;
-
-    function showNextPrideSlide() {
-        prideCurrentIndex = (prideCurrentIndex + 1) % prideSlides.length;
-        updatePrideSlider();
-    }
-
-    function showPrevPrideSlide() {
-        prideCurrentIndex = (prideCurrentIndex - 1 + prideSlides.length) % prideSlides.length;
-        updatePrideSlider();
-    }
-
-    function updatePrideSlider() {
-        const offset = -prideCurrentIndex * 100;
-        prideSliderWrapper.style.transform = `translateX(${offset}%)`;
-    }
-
-    prideNextBtn.addEventListener("click", showNextPrideSlide);
-    pridePrevBtn.addEventListener("click", showPrevPrideSlide);
-
-    // Auto slide every 5 seconds
-    let prideInterval = setInterval(showNextPrideSlide, 5000);
-
-    prideSection.addEventListener("mouseenter", () => clearInterval(prideInterval));
-    prideSection.addEventListener("mouseleave", () => {
-        prideInterval = setInterval(showNextPrideSlide, 5000);
-    });
-
-
-    // --------------------------
-    // Back to top button
-    // --------------------------
+    // ----------------------------------------------------
+    // 6. Back To Top Button
+    // ----------------------------------------------------
     const backToTopButton = document.getElementById("backToTop");
-    const section1 = document.getElementById("video-banner");
+    const heroBanner = document.getElementById("video-banner");
 
-    // Function to check if section1 is out of view
     function toggleBackToTop() {
-        const rect = section1.getBoundingClientRect();
-        // Check if the bottom of section1 is above the viewport
-        if (rect.bottom <= 0) {
-            backToTopButton.style.display = "block";
+        if (!backToTopButton) return;
+        const triggerPoint = heroBanner ? heroBanner.offsetHeight * 0.7 : 400;
+
+        if (window.scrollY > triggerPoint) {
+            backToTopButton.classList.add("is-visible");
         } else {
-            backToTopButton.style.display = "none";
+            backToTopButton.classList.remove("is-visible");
         }
     }
 
-    // Listen for scroll events
-    window.addEventListener("scroll", toggleBackToTop);
+    window.addEventListener("scroll", toggleBackToTop, { passive: true });
+    toggleBackToTop();
 
-    // Smooth scroll to top when button is clicked
-    backToTopButton.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
+    if (backToTopButton) {
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         });
-    });
+    }
+
 });

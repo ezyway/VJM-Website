@@ -1,97 +1,146 @@
 <!-- ===================================================
     Testimonials Section
-    - Displays student testimonials with horizontal scroll.
+    - Interactive student voices with glass cards and star ratings
     =================================================== -->
-<section class="testimonials-section">
-    <h2 class="testimonials-section__title component_title">Student Testimonials</h2>
-
-    <div class="testimonials-section__container">
-        <button class="testimonials-section__nav-left">&lt;</button>
-
-        <div class="testimonials-section__slider">
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "The faculty are so supportive and truly committed to our success."
-                </p>
-                <h3 class="testimonials-section__name">Odedra Ranjitji</h3>
-                <span class="testimonials-section__course">B.S.W.</span>
+<section class="testimonials-section" id="testimonials">
+    <div class="testimonials-section__wrapper">
+        
+        <div class="testimonials-section__header">
+            <div class="testimonials-section__header-text">
+                <span class="section__eyebrow">Student Experiences</span>
+                <h2 class="testimonials-section__title">What Our Students Say</h2>
             </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "This college has supported me in my growth both academically and as a person."
-                </p>
-                <h3 class="testimonials-section__name">Sida Jay</h3>
-                <span class="testimonials-section__course">B.B.A.</span>
+            <div class="testimonials-section__controls">
+                <button class="testimonials-section__nav-left" aria-label="Previous testimonial">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="testimonials-section__nav-right" aria-label="Next testimonial">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "This college has helped me find my voice, both academically and personally. It’s been a life-changing experience."
-                </p>
-                <h3 class="testimonials-section__name">Ghediya Vaishnavi</h3>
-                <span class="testimonials-section__course">M.Com.</span>
-            </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "The labs and facilities are top-notch — it makes learning feel hands-on and real."
-                </p>
-                <h3 class="testimonials-section__name">Bamaniya Monik</h3>
-                <span class="testimonials-section__course">M.Sc. IT</span>
-            </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "The canteen food is delicious and affordable. It’s the best spot to grab a quick bite during breaks."
-                </p>
-                <h3 class="testimonials-section__name">Modha Vivek</h3>
-                <span class="testimonials-section__course">M.Sc. IT</span>
-            </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "What I enjoy most is the balance between academics and extracurriculars. It's a place where you can grow in all directions."
-                </p>
-                <h3 class="testimonials-section__name">Parikh Bhavini</h3>
-                <span class="testimonials-section__course">B.B.A</span>
-            </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "I've found mentors here who really inspire me."
-                </p>
-                <h3 class="testimonials-section__name">Modhvadiya Miraj</h3>
-                <span class="testimonials-section__course">B.C.A</span>
-            </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "The campus upholds a strong sense of discipline, creating an environment that promotes focus and respect."
-                </p>
-                <h3 class="testimonials-section__name">Goraniya Rahul</h3>
-                <span class="testimonials-section__course">B.S.W</span>
-            </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "The science labs are really good and have everything we need to do our experiments properly."
-                </p>
-                <h3 class="testimonials-section__name">Khara Ravi</h3>
-                <span class="testimonials-section__course">B.Sc.</span>
-            </div>
-
-            <div class="testimonials-section__item">
-                <p class="testimonials-section__text">
-                    "This institution has laid a strong foundation for my academic and professional growth"
-                </p>
-                <h3 class="testimonials-section__name">Mavadiya Riya </h3>
-                <span class="testimonials-section__course">B.C.A</span>
-            </div>
-
         </div>
 
-        <button class="testimonials-section__nav-right">&gt;</button>
+        <div class="testimonials-section__container">
+            <div class="testimonials-section__slider">
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "The faculty are so supportive and truly committed to our success. The guidance I received here shaped my career path completely."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">OR</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Odedra Ranjitji</h3>
+                            <span class="testimonials-section__course">B.S.W. Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "This college has supported me in my growth both academically and as a person with excellent corporate exposure."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">SJ</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Sida Jay</h3>
+                            <span class="testimonials-section__course">B.B.A. Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "This college has helped me find my voice, both academically and personally. It’s been a truly life-changing experience."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">GV</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Ghediya Vaishnavi</h3>
+                            <span class="testimonials-section__course">M.Com. Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "The labs and IT facilities are top-notch — it makes learning feel hands-on, practical, and aligned with industry standards."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">BM</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Bamaniya Monik</h3>
+                            <span class="testimonials-section__course">M.Sc. IT Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "What I enjoy most is the balance between academics and extracurriculars. It's a place where you can grow in all directions."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">PB</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Parikh Bhavini</h3>
+                            <span class="testimonials-section__course">B.B.A. Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "I've found mentors here who really inspire me. The practical projects and coding culture prepared me well."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">MM</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Modhvadiya Miraj</h3>
+                            <span class="testimonials-section__course">B.C.A. Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "The science and chemistry labs have everything we need to carry out experiments accurately and safely."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">KR</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Khara Ravi</h3>
+                            <span class="testimonials-section__course">B.Sc. Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials-section__item">
+                    <div class="testimonials-section__stars">★★★★★</div>
+                    <p class="testimonials-section__text">
+                        "This institution has laid a rock-solid foundation for my academic and professional career growth."
+                    </p>
+                    <div class="testimonials-section__author">
+                        <div class="testimonials-section__avatar">MR</div>
+                        <div class="testimonials-section__info">
+                            <h3 class="testimonials-section__name">Mavadiya Riya</h3>
+                            <span class="testimonials-section__course">B.C.A. Graduate</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </section>

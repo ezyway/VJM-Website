@@ -1,6 +1,6 @@
 <?php
-    // Use this to add meta descriptions individually in each page
-    $meta_description = "Scholarships available for merit and need-based students."; 
+    // Meta description for SEO
+    $meta_description = "Shri V.J. Modha College, Porbandar — Empowering students through quality education, modern facilities, experienced faculty, and industry-oriented programs."; 
 ?>
 
 <!DOCTYPE html>
@@ -33,14 +33,12 @@
 <body>
     <!-- ===================================================
          Navigation Section
-         - Included via PHP to allow reusability across pages.
          =================================================== -->
     <?php include("nav.html"); ?>
 
 
     <!-- ===================================================
-         Banner Video Section
-         - Fullscreen video banner with an overlay message.
+         Hero Video Banner Section
          =================================================== -->
     <section class="video-banner" id="video-banner">
         <video autoplay muted loop playsinline class="video-banner__background" preload="metadata">
@@ -50,15 +48,23 @@
 
         <div class="video-banner__overlay">
             <div class="video-banner__content">
-                <h1>Shri V.J. Modha College</h1>
-                <p>॥ विद्यार्थी लभते विद्यां ॥</p>
+                <span class="video-banner__badge">Welcome to Excellence</span>
+                <h1 class="video-banner__title">Shri V.J. Modha College</h1>
+                <p class="video-banner__slogan">॥ विद्यार्थी लभते विद्यां ॥</p>
+                <p class="video-banner__subtitle">Empowering Minds • Inspiring Futures • Leading Education in Porbandar</p>
+                
+                <div class="video-banner__actions">
+                    <a href="courses.php" class="btn btn--primary">Explore Programs</a>
+                    <a href="contact.php" class="btn btn--secondary">Get in Touch</a>
+                </div>
             </div>
         </div>
 
-        <div class="scroll-down">
+        <button class="scroll-down" aria-label="Scroll to content">
+            <span class="scroll-down__text">Explore</span>
             <span class="arrow"></span>
             <span class="arrow"></span>
-        </div>
+        </button>
     </section>
 
 
@@ -75,17 +81,15 @@
     <?php include("components/photos.php"); ?>
 
 
-    <!-- Back to Top Button with a modern arrow icon -->
-    <button id="backToTop" aria-label="Back to top">
-        <!-- Inline SVG arrow icon -->
-        <svg viewBox="0 0 24 24">
+    <!-- Back to Top Button with smooth floating icon -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
             <path d="M12 4l-8 8h6v8h4v-8h6z"></path>
         </svg>
     </button>
 
     <!-- ===================================================
          Footer Section
-         - Included via PHP for consistency across pages.
          =================================================== -->
     <?php include("footer.html"); ?>
 
