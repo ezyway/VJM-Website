@@ -1,0 +1,26 @@
+# ====================================================
+# Apache Server Configuration
+# Shri V.J. Modha College Portal
+# ====================================================
+
+# Enable proper MIME types for video, audio, and modern image formats
+<IfModule mod_mime.c>
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
+    AddType video/ogg .ogv
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+    AddType application/font-woff2 .woff2
+    AddType application/font-woff .woff
+</IfModule>
+
+# Enable Range Requests for smooth MP4 video playback
+<IfModule mod_headers.c>
+    Header set Accept-Ranges bytes
+</IfModule>
+
+# Protect sensitive environment and dotfiles
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

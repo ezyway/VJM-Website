@@ -5,10 +5,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------
     const overlay = document.querySelector(".video-banner__overlay");
     const scrollDownBtn = document.querySelector('.scroll-down');
+    const bannerVideo = document.querySelector('.video-banner__background');
 
     // Ensure overlay is smoothly visible once DOM is ready
     if (overlay) {
         overlay.classList.add("is-visible");
+    }
+
+    // Explicit video playback trigger (handles mobile & strict browser policies)
+    if (bannerVideo) {
+        bannerVideo.muted = true;
+        bannerVideo.playsInline = true;
+        const playPromise = bannerVideo.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // Autoplay blocked by browser power saving / policy, trigger on first touch/click
+                const resumePlay = () => {
+                    bannerVideo.play();
+                    document.removeEventListener('touchstart', resumePlay);
+                    document.removeEventListener('click', resumePlay);
+                };
+                document.addEventListener('touchstart', resumePlay, { passive: true });
+                document.addEventListener('click', resumePlay, { passive: true });
+            });
+        }
     }
 
     if (scrollDownBtn) {
