@@ -502,15 +502,18 @@
 @media screen and (max-width: 1120px) {
     .navbar_container {
         pointer-events: auto;
-        background: rgba(7, 29, 24, 0.96) !important;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        background: #071D18 !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
         height: 64px;
         padding: 0;
         display: flex;
         align-items: center;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        transform: none !important;
+        filter: none !important;
+        perspective: none !important;
     }
 
     .navbar_container__inner {
@@ -521,6 +524,8 @@
         align-items: center;
         justify-content: space-between;
         box-sizing: border-box;
+        position: static !important;
+        transform: none !important;
     }
 
     .navbar_logo_wrapper {
@@ -542,10 +547,14 @@
     }
 
     .navbar_island {
-        background: transparent;
-        border: none;
-        box-shadow: none;
-        padding: 0;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        position: static !important;
+        transform: none !important;
     }
 
     .navbar_hamburger {
@@ -585,8 +594,11 @@
         top: 10px;
         left: 10px;
         right: 10px;
-        width: auto;
+        margin: 0 auto;
+        width: calc(100% - 20px);
+        max-width: 480px;
         max-height: calc(100dvh - 20px);
+        background: #07261F;
         background: linear-gradient(180deg, #0A372E 0%, #061F19 100%);
         border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: var(--radius-lg);
