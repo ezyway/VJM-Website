@@ -1,5 +1,5 @@
 /* ====================================================
-   ONLINE COURSES PAGE - MODERN DESIGN SYSTEM & STYLESHEET
+   ANTI-RAGGING PAGE - MODERN DESIGN SYSTEM & STYLESHEET
    Shri V.J. Modha College Portal
    ==================================================== */
 
@@ -7,7 +7,7 @@
    1. HERO HEADER BANNER
    ==================================================== */
 
-.online-hero {
+.anti-ragging-hero {
     position: relative;
     width: 100%;
     min-height: 420px;
@@ -21,7 +21,7 @@
     box-sizing: border-box;
 }
 
-.online-hero::before {
+.anti-ragging-hero::before {
     content: "";
     position: absolute;
     top: 0;
@@ -34,7 +34,7 @@
     opacity: 0.7;
 }
 
-.online-hero__overlay {
+.anti-ragging-hero__overlay {
     position: relative;
     z-index: 2;
     max-width: 960px;
@@ -43,7 +43,7 @@
     text-align: center;
 }
 
-.online-hero__content {
+.anti-ragging-hero__content {
     background: rgba(10, 42, 36, 0.65);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -65,7 +65,7 @@
     }
 }
 
-.online-hero__breadcrumb {
+.anti-ragging-hero__breadcrumb {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -75,22 +75,22 @@
     margin-bottom: 1.25rem;
 }
 
-.online-hero__breadcrumb a {
+.anti-ragging-hero__breadcrumb a {
     color: #FDE68A;
     text-decoration: none;
     transition: color var(--transition-fast);
 }
 
-.online-hero__breadcrumb a:hover {
+.anti-ragging-hero__breadcrumb a:hover {
     color: #FFFFFF;
     text-decoration: underline;
 }
 
-.online-hero__breadcrumb-sep {
+.anti-ragging-hero__breadcrumb-sep {
     opacity: 0.4;
 }
 
-.online-hero__badge {
+.anti-ragging-hero__badge {
     display: inline-block;
     padding: 5px 16px;
     font-size: 0.8rem;
@@ -104,7 +104,7 @@
     margin-bottom: 1rem;
 }
 
-.online-hero__title {
+.anti-ragging-hero__title {
     font-size: 2.65rem;
     font-weight: 800;
     letter-spacing: -0.5px;
@@ -114,7 +114,7 @@
     text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.online-hero__slogan {
+.anti-ragging-hero__slogan {
     font-size: 1.45rem;
     font-weight: 700;
     color: #FDE047;
@@ -123,7 +123,7 @@
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
-.online-hero__subtitle {
+.anti-ragging-hero__subtitle {
     font-size: 1.05rem;
     color: #E2E8F0;
     font-weight: 400;
@@ -134,17 +134,17 @@
 
 
 /* ====================================================
-   2. MAIN ONLINE COURSES SECTION
+   2. MAIN ANTI-RAGGING CONTENT
    ==================================================== */
 
-.online-section {
+.anti-ragging-section {
     padding: 4.5rem 1.5rem 3.5rem 1.5rem;
     max-width: 1240px;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-.online-section__container {
+.anti-ragging-section__container {
     background: var(--surface-card);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -152,130 +152,214 @@
     padding: 3.5rem 2.5rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
 }
 
-.online-section__title {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--brand-primary-dark);
-    letter-spacing: -0.3px;
-    margin-bottom: 0.35rem;
-}
-
-.online-section__subtitle {
-    font-size: 0.98rem;
-    color: var(--text-muted);
-}
-
-/* Grid & Platform Cards */
-.online-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-top: 2.5rem;
-}
-
-.online-card {
+/* Policy Card */
+.anti-ragging-policy-card {
     background: #FFFFFF;
     border-radius: var(--radius-lg);
     border: 1px solid rgba(21, 92, 79, 0.14);
     box-shadow: var(--shadow-sm);
-    padding: 2.25rem 2rem;
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.policy-card__icon-box {
+    width: 68px;
+    height: 68px;
+    border-radius: var(--radius-md);
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--brand-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.policy-card__content h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.3px;
+}
+
+.policy-card__content p {
+    font-size: 0.98rem;
+    color: var(--text-main);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+}
+
+.policy-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.policy-badge {
+    padding: 6px 14px;
+    background: #F8FAFC;
+    border: 1.5px solid rgba(21, 92, 79, 0.12);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand-primary-dark);
+}
+
+/* Committee Members Grid */
+.committee-block__title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.3px;
+}
+
+.committee-block__subtitle {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+}
+
+.committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.committee-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(21, 92, 79, 0.12);
+    box-shadow: var(--shadow-sm);
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
+    align-items: center;
+    text-align: center;
     transition: all var(--transition-normal);
 }
 
-.online-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--brand-primary-light), var(--brand-primary));
-    opacity: 0;
-    transition: opacity var(--transition-fast);
-}
-
-.online-card:hover {
+.committee-card:hover {
     transform: translateY(-6px);
     border-color: rgba(21, 92, 79, 0.3);
     box-shadow: var(--shadow-lg);
 }
 
-.online-card:hover::before {
-    opacity: 1;
-}
-
-.online-card__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.online-card__logo-box {
-    width: 90px;
-    height: 54px;
-    padding: 4px;
-    background: #F8FAFC;
-    border: 1px solid rgba(21, 92, 79, 0.1);
+.committee-card__image-box {
+    position: relative;
+    width: 148px;
+    height: 184px;
     border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 8px 18px rgba(21, 92, 79, 0.12);
+    background: #F1F5F9;
 }
 
-.online-card__logo {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.committee-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
 }
 
-.online-card__badge {
-    padding: 4px 12px;
-    font-size: 0.72rem;
-    font-weight: 700;
+.committee-card__role-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 8px;
+    font-size: 0.68rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.6px;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, var(--brand-primary-light), var(--brand-primary));
+    border-radius: var(--radius-sm);
+}
+
+.committee-card__info {
+    width: 100%;
+}
+
+.committee-card__name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.35rem;
+}
+
+.committee-card__designation {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-bottom: 0.6rem;
+}
+
+.committee-card__contact-tag {
+    display: inline-block;
+    padding: 3px 12px;
+    font-size: 0.74rem;
+    font-weight: 700;
     color: var(--brand-primary);
     background: rgba(34, 130, 112, 0.1);
     border-radius: var(--radius-full);
 }
 
-.online-card__title {
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--brand-primary-dark);
-    margin-bottom: 0.3rem;
-    line-height: 1.35;
+/* Helpline Block */
+.helpline-box {
+    background: linear-gradient(135deg, rgba(21, 92, 79, 0.08), rgba(34, 130, 112, 0.14));
+    border: 1.5px solid rgba(21, 92, 79, 0.22);
+    border-radius: var(--radius-lg);
+    padding: 2.25rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
 }
 
-.online-card__provider {
-    font-size: 0.84rem;
-    font-weight: 600;
-    color: var(--brand-accent);
-    margin-bottom: 1rem;
-}
-
-.online-card__desc {
-    font-size: 0.92rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 1.75rem;
-}
-
-.btn--online {
-    width: 100%;
-    display: inline-flex;
+.helpline-box__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-full);
+    background: var(--brand-primary);
+    color: #FFFFFF;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 0.85rem 1.25rem;
+    flex-shrink: 0;
+}
+
+.helpline-box__details h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.35rem;
+}
+
+.helpline-number {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #DC2626;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.35rem;
+}
+
+.helpline-email {
+    font-size: 0.92rem;
+    color: var(--text-main);
+}
+
+.helpline-email a {
+    color: var(--brand-primary);
+    font-weight: 700;
+    text-decoration: underline;
 }
 
 
@@ -283,14 +367,14 @@
    3. REUSABLE CALL TO ACTION
    ==================================================== */
 
-.online-cta {
+.anti-ragging-cta {
     padding: 2.5rem 1.5rem 5rem 1.5rem;
     max-width: 1240px;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-.online-cta__box {
+.anti-ragging-cta__box {
     background: radial-gradient(circle at 70% 30%, rgba(34, 130, 112, 0.6) 0%, rgba(10, 55, 46, 0.95) 100%),
                 linear-gradient(135deg, #0A372E, #071D18);
     border-radius: var(--radius-lg);
@@ -303,7 +387,7 @@
     overflow: hidden;
 }
 
-.online-cta__badge {
+.anti-ragging-cta__badge {
     display: inline-block;
     padding: 4px 16px;
     font-size: 0.78rem;
@@ -317,7 +401,7 @@
     margin-bottom: 1rem;
 }
 
-.online-cta__title {
+.anti-ragging-cta__title {
     font-size: 2.25rem;
     font-weight: 800;
     margin-bottom: 0.75rem;
@@ -325,7 +409,7 @@
     color: #FFFFFF;
 }
 
-.online-cta__subtitle {
+.anti-ragging-cta__subtitle {
     font-size: 1.05rem;
     color: #E2E8F0;
     max-width: 600px;
@@ -333,7 +417,7 @@
     line-height: 1.6;
 }
 
-.online-cta__actions {
+.anti-ragging-cta__actions {
     display: flex;
     gap: 1.25rem;
     justify-content: center;
@@ -346,53 +430,59 @@
    ==================================================== */
 
 @media screen and (max-width: 1024px) {
-    .online-hero__title {
+    .anti-ragging-hero__title {
         font-size: 2.2rem;
-    }
-    .online-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
 }
 
 @media screen and (max-width: 768px) {
-    .online-hero {
+    .anti-ragging-hero {
         padding: 5.5rem 1rem 3rem 1rem;
         min-height: 360px;
     }
-    .online-hero__content {
+    .anti-ragging-hero__content {
         padding: 2rem 1.25rem;
     }
-    .online-hero__title {
+    .anti-ragging-hero__title {
         font-size: 1.75rem;
     }
-    .online-hero__slogan {
+    .anti-ragging-hero__slogan {
         font-size: 1.1rem;
     }
-    .online-hero__subtitle {
+    .anti-ragging-hero__subtitle {
         font-size: 0.92rem;
     }
-    .online-section {
+    .anti-ragging-section {
         padding: 2.5rem 1rem 1.5rem 1rem;
     }
-    .online-section__container,
-    .online-cta__box {
+    .anti-ragging-section__container,
+    .anti-ragging-cta__box {
         padding: 2rem 1.25rem;
+        gap: 2.5rem;
     }
-    .online-section__title,
-    .online-cta__title {
+    .anti-ragging-policy-card {
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: 1.75rem 1.25rem;
+    }
+    .committee-block__title,
+    .anti-ragging-cta__title {
         font-size: 1.65rem;
     }
-    .online-grid {
-        grid-template-columns: 1fr;
+    .helpline-box {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.75rem 1.25rem;
     }
-    .online-cta {
+    .anti-ragging-cta {
         padding: 1.5rem 1rem 3.5rem 1rem;
     }
-    .online-cta__actions {
+    .anti-ragging-cta__actions {
         flex-direction: column;
         gap: 0.85rem;
     }
-    .online-cta__actions .btn {
+    .anti-ragging-cta__actions .btn {
         width: 100%;
     }
 }

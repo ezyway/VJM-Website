@@ -1,5 +1,5 @@
 /* ====================================================
-   ONLINE COURSES PAGE - MODERN DESIGN SYSTEM & STYLESHEET
+   E-MAGAZINE PAGE - MODERN DESIGN SYSTEM & STYLESHEET
    Shri V.J. Modha College Portal
    ==================================================== */
 
@@ -7,7 +7,7 @@
    1. HERO HEADER BANNER
    ==================================================== */
 
-.online-hero {
+.emag-hero {
     position: relative;
     width: 100%;
     min-height: 420px;
@@ -21,7 +21,7 @@
     box-sizing: border-box;
 }
 
-.online-hero::before {
+.emag-hero::before {
     content: "";
     position: absolute;
     top: 0;
@@ -34,7 +34,7 @@
     opacity: 0.7;
 }
 
-.online-hero__overlay {
+.emag-hero__overlay {
     position: relative;
     z-index: 2;
     max-width: 960px;
@@ -43,7 +43,7 @@
     text-align: center;
 }
 
-.online-hero__content {
+.emag-hero__content {
     background: rgba(10, 42, 36, 0.65);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -65,7 +65,7 @@
     }
 }
 
-.online-hero__breadcrumb {
+.emag-hero__breadcrumb {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -75,22 +75,22 @@
     margin-bottom: 1.25rem;
 }
 
-.online-hero__breadcrumb a {
+.emag-hero__breadcrumb a {
     color: #FDE68A;
     text-decoration: none;
     transition: color var(--transition-fast);
 }
 
-.online-hero__breadcrumb a:hover {
+.emag-hero__breadcrumb a:hover {
     color: #FFFFFF;
     text-decoration: underline;
 }
 
-.online-hero__breadcrumb-sep {
+.emag-hero__breadcrumb-sep {
     opacity: 0.4;
 }
 
-.online-hero__badge {
+.emag-hero__badge {
     display: inline-block;
     padding: 5px 16px;
     font-size: 0.8rem;
@@ -104,7 +104,7 @@
     margin-bottom: 1rem;
 }
 
-.online-hero__title {
+.emag-hero__title {
     font-size: 2.65rem;
     font-weight: 800;
     letter-spacing: -0.5px;
@@ -114,7 +114,7 @@
     text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.online-hero__slogan {
+.emag-hero__slogan {
     font-size: 1.45rem;
     font-weight: 700;
     color: #FDE047;
@@ -123,7 +123,7 @@
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
-.online-hero__subtitle {
+.emag-hero__subtitle {
     font-size: 1.05rem;
     color: #E2E8F0;
     font-weight: 400;
@@ -134,17 +134,17 @@
 
 
 /* ====================================================
-   2. MAIN ONLINE COURSES SECTION
+   2. MAIN E-MAGAZINES SECTION
    ==================================================== */
 
-.online-section {
+.emag-section {
     padding: 4.5rem 1.5rem 3.5rem 1.5rem;
     max-width: 1240px;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-.online-section__container {
+.emag-section__container {
     background: var(--surface-card);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -154,7 +154,7 @@
     border: 1px solid var(--border-light);
 }
 
-.online-section__title {
+.emag-section__title {
     font-size: 2rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
@@ -162,34 +162,34 @@
     margin-bottom: 0.35rem;
 }
 
-.online-section__subtitle {
+.emag-section__subtitle {
     font-size: 0.98rem;
     color: var(--text-muted);
 }
 
-/* Grid & Platform Cards */
-.online-grid {
+/* Grid */
+.emag-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 2.5rem;
     margin-top: 2.5rem;
 }
 
-.online-card {
+.emag-card {
     background: #FFFFFF;
     border-radius: var(--radius-lg);
     border: 1px solid rgba(21, 92, 79, 0.14);
     box-shadow: var(--shadow-sm);
     padding: 2.25rem 2rem;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    gap: 1.75rem;
+    align-items: center;
     position: relative;
     overflow: hidden;
     transition: all var(--transition-normal);
 }
 
-.online-card::before {
+.emag-card::before {
     content: "";
     position: absolute;
     top: 0;
@@ -201,81 +201,133 @@
     transition: opacity var(--transition-fast);
 }
 
-.online-card:hover {
+.emag-card:hover {
     transform: translateY(-6px);
     border-color: rgba(21, 92, 79, 0.3);
     box-shadow: var(--shadow-lg);
 }
 
-.online-card:hover::before {
+.emag-card:hover::before {
     opacity: 1;
 }
 
-.online-card__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.online-card__logo-box {
-    width: 90px;
-    height: 54px;
-    padding: 4px;
-    background: #F8FAFC;
-    border: 1px solid rgba(21, 92, 79, 0.1);
-    border-radius: var(--radius-md);
+/* Book Cover Mockup */
+.emag-card__book-cover {
+    width: 130px;
+    height: 180px;
+    background: linear-gradient(135deg, #0A372E, #071D18);
+    border-radius: 4px 10px 10px 4px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), inset 4px 0 8px rgba(0, 0, 0, 0.4);
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.online-card__logo {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+.emag-card__spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.online-card__badge {
-    padding: 4px 12px;
-    font-size: 0.72rem;
+.emag-card__cover-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.emag-card__year {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #FDE68A;
+    margin-bottom: 0.5rem;
+}
+
+.emag-card__icon-box {
+    color: var(--brand-primary-light);
+    margin-bottom: 0.5rem;
+}
+
+.emag-card__cover-text {
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    color: var(--brand-primary);
-    background: rgba(34, 130, 112, 0.1);
+    opacity: 0.8;
+}
+
+/* Card Body */
+.emag-card__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.emag-card__tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.85rem;
+}
+
+.emag-tag {
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
     border-radius: var(--radius-full);
 }
 
-.online-card__title {
-    font-size: 1.3rem;
+.emag-tag--badge {
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+}
+
+.emag-tag--format {
+    background: #F1F5F9;
+    color: var(--text-muted);
+}
+
+.emag-card__title {
+    font-size: 1.2rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
     line-height: 1.35;
 }
 
-.online-card__provider {
-    font-size: 0.84rem;
-    font-weight: 600;
-    color: var(--brand-accent);
-    margin-bottom: 1rem;
-}
-
-.online-card__desc {
-    font-size: 0.92rem;
+.emag-card__theme {
+    font-size: 0.88rem;
     color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 1.75rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
 }
 
-.btn--online {
-    width: 100%;
+.emag-card__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn--emag {
+    flex: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 0.85rem 1.25rem;
+    gap: 0.4rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
 }
 
 
@@ -283,14 +335,14 @@
    3. REUSABLE CALL TO ACTION
    ==================================================== */
 
-.online-cta {
+.emag-cta {
     padding: 2.5rem 1.5rem 5rem 1.5rem;
     max-width: 1240px;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-.online-cta__box {
+.emag-cta__box {
     background: radial-gradient(circle at 70% 30%, rgba(34, 130, 112, 0.6) 0%, rgba(10, 55, 46, 0.95) 100%),
                 linear-gradient(135deg, #0A372E, #071D18);
     border-radius: var(--radius-lg);
@@ -303,7 +355,7 @@
     overflow: hidden;
 }
 
-.online-cta__badge {
+.emag-cta__badge {
     display: inline-block;
     padding: 4px 16px;
     font-size: 0.78rem;
@@ -317,7 +369,7 @@
     margin-bottom: 1rem;
 }
 
-.online-cta__title {
+.emag-cta__title {
     font-size: 2.25rem;
     font-weight: 800;
     margin-bottom: 0.75rem;
@@ -325,7 +377,7 @@
     color: #FFFFFF;
 }
 
-.online-cta__subtitle {
+.emag-cta__subtitle {
     font-size: 1.05rem;
     color: #E2E8F0;
     max-width: 600px;
@@ -333,7 +385,7 @@
     line-height: 1.6;
 }
 
-.online-cta__actions {
+.emag-cta__actions {
     display: flex;
     gap: 1.25rem;
     justify-content: center;
@@ -346,53 +398,66 @@
    ==================================================== */
 
 @media screen and (max-width: 1024px) {
-    .online-hero__title {
+    .emag-hero__title {
         font-size: 2.2rem;
     }
-    .online-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    .emag-grid {
+        grid-template-columns: 1fr;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .online-hero {
+    .emag-hero {
         padding: 5.5rem 1rem 3rem 1rem;
         min-height: 360px;
     }
-    .online-hero__content {
+    .emag-hero__content {
         padding: 2rem 1.25rem;
     }
-    .online-hero__title {
+    .emag-hero__title {
         font-size: 1.75rem;
     }
-    .online-hero__slogan {
+    .emag-hero__slogan {
         font-size: 1.1rem;
     }
-    .online-hero__subtitle {
+    .emag-hero__subtitle {
         font-size: 0.92rem;
     }
-    .online-section {
+    .emag-section {
         padding: 2.5rem 1rem 1.5rem 1rem;
     }
-    .online-section__container,
-    .online-cta__box {
+    .emag-section__container,
+    .emag-cta__box {
         padding: 2rem 1.25rem;
     }
-    .online-section__title,
-    .online-cta__title {
+    .emag-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.75rem 1.25rem;
+    }
+    .emag-card__tags {
+        justify-content: center;
+    }
+    .emag-card__actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .btn--emag {
+        width: 100%;
+    }
+    .emag-section__title,
+    .emag-cta__title {
         font-size: 1.65rem;
     }
-    .online-grid {
-        grid-template-columns: 1fr;
-    }
-    .online-cta {
+    .emag-cta {
         padding: 1.5rem 1rem 3.5rem 1rem;
     }
-    .online-cta__actions {
+    .emag-cta__actions {
         flex-direction: column;
         gap: 0.85rem;
     }
-    .online-cta__actions .btn {
+    .emag-cta__actions .btn {
         width: 100%;
     }
 }
