@@ -551,28 +551,82 @@
         padding: 1.5rem 0.35rem 1.5rem 0.35rem;
     }
     .scholarship-section__container {
-        padding: 1.5rem 0.35rem;
+        padding: 1.5rem 0.45rem;
         gap: 2.5rem;
         border-radius: var(--radius-sm);
+    }
+    .scholarship-history-block {
+        padding-top: 0.5rem;
+    }
+    .scholarship-block__title {
+        font-size: 1.45rem;
+        line-height: 1.25;
+        margin-top: 0.25rem;
+    }
+    .scholarship-block__subtitle {
+        font-size: 0.88rem;
     }
     .scholarship-table-wrapper {
         border-radius: var(--radius-sm);
+        margin-top: 1.25rem;
+        overflow-x: auto;
     }
-    .scholarship-cta__box {
-        padding: 2rem 1.25rem;
-        gap: 2.5rem;
-    }
-    .scholarship-block__title,
-    .scholarship-cta__title {
-        font-size: 1.65rem;
-    }
-    .scholarship-table thead th,
-    .scholarship-table tbody td {
-        padding: 0.75rem 0.65rem;
+    .scholarship-table {
+        width: 100%;
+        border-collapse: collapse;
         font-size: 0.84rem;
     }
+    .scholarship-table thead th {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.78rem;
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #0A372E;
+    }
+    .scholarship-table th:first-child,
+    .scholarship-table td:first-child {
+        position: static;
+        box-shadow: none;
+        padding-left: 0.65rem;
+    }
+    .scholarship-table thead th:first-child {
+        position: sticky;
+        top: 0;
+        left: auto;
+        box-shadow: none;
+    }
+    .scholarship-table tbody td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.84rem;
+        white-space: nowrap;
+    }
+    .table-year-cell {
+        gap: 0.35rem;
+    }
+    .table-year-cell svg {
+        width: 13px;
+        height: 13px;
+    }
+    .table-amount-cell {
+        font-size: 0.84rem;
+    }
+    .table-status-pill {
+        font-size: 0.72rem;
+        padding: 2px 7px;
+    }
+    .scholarship-cta__box {
+        padding: 1.75rem 1rem;
+        gap: 1.5rem;
+        border-radius: var(--radius-sm);
+    }
+    .scholarship-cta__title {
+        font-size: 1.5rem;
+        line-height: 1.25;
+    }
     .scholarship-cta {
-        padding: 1.5rem 1rem 3.5rem 1rem;
+        padding: 1.5rem 0.35rem 3.5rem 0.35rem;
     }
     .scholarship-cta__actions {
         flex-direction: column;
