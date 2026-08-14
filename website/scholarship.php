@@ -196,7 +196,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="table-total-row">
-                                <td><strong>Grand Total (2012 – 2025)</strong></td>
+                                <td><strong>Grand Total</strong> <small>(2012–2025)</small></td>
                                 <td><strong>₹ <?= number_format($totalDisbursed) ?></strong></td>
                                 <td><span class="table-status-pill status--total">Disbursed</span></td>
                             </tr>
