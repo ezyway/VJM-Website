@@ -623,30 +623,52 @@
         font-size: 0.92rem;
     }
     .faculties-section {
-        padding: 2.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 0.35rem 1.5rem 0.35rem;
     }
-    .faculties-section__container,
-    .faculties-cta__box {
-        padding: 2rem 1.25rem;
+    .faculties-section__container {
+        padding: 1.5rem 0.65rem;
+        border-radius: var(--radius-sm);
     }
     .faculties-section__header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 1.25rem;
     }
     .faculty-search-wrapper {
+        min-width: 100%;
         max-width: 100%;
+        box-sizing: border-box;
     }
     .faculties-section__title,
     .faculties-cta__title {
-        font-size: 1.65rem;
+        font-size: 1.5rem;
+        line-height: 1.25;
+    }
+    .faculty-tabs-container {
+        gap: 0.5rem;
+        padding-bottom: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+    .faculty-tab-btn {
+        padding: 0.55rem 0.95rem;
+        font-size: 0.82rem;
     }
     .faculty-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 1.25rem;
     }
+    .faculty-card {
+        padding: 1.5rem 1rem;
+        border-radius: var(--radius-sm);
+        max-width: 100%;
+        box-sizing: border-box;
+    }
     .faculties-cta {
-        padding: 1.5rem 1rem 3.5rem 1rem;
+        padding: 1.5rem 0.35rem 3.5rem 0.35rem;
+    }
+    .faculties-cta__box {
+        padding: 1.75rem 1rem;
+        border-radius: var(--radius-sm);
     }
     .faculties-cta__actions {
         flex-direction: column;
