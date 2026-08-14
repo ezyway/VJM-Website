@@ -1,84 +1,122 @@
 <!-- ============================================
-     Navigation Bar Section
+     Modern Navigation Bar Section
+     Shri V.J. Modha College Portal
      ============================================ -->
-<nav class="navbar_container">
+<nav class="navbar_container" id="siteNavbar">
     <div class="navbar_container__inner">
-        <!-- Logo Section (Visible in Desktop View) -->
-        <div class="navbar_logo">
-            <!-- <img src="assets/logoHD.png" alt="Shri V.J. Modha Logo"> -->
-            <img src="assets/nav_logo.png" alt="College Logo" class="navbar_logo__image" id="logoTrigger" fetchpriority="high">
-        </div>
-        <!-- Navigation Links and Dropdowns -->
-        <ul class="navbar_nav">
-            <!-- Mobile Logo (Visible in Mobile View) -->
-            <div class="navbar_logo--mobile">
-                <img src="assets/nav_logo.png" alt="Shri V.J. Modha Logo">
+        <!-- Logo & College Brand (Desktop & Mobile) -->
+        <a href="index.php" class="navbar_logo" id="logoTrigger" aria-label="Shri V.J. Modha College Home">
+            <img src="assets/nav_logo.png" alt="Shri V.J. Modha College Logo" class="navbar_logo__image" fetchpriority="high">
+            <div class="navbar_logo__text">
+                <span class="navbar_logo__title">Shri V. J. Modha</span>
+                <span class="navbar_logo__subtitle">College • Porbandar</span>
             </div>
+        </a>
+
+        <!-- Navigation Links and Dropdowns -->
+        <ul class="navbar_nav" id="navbarLinks" role="menubar">
+            <!-- Mobile Drawer Header -->
+            <li class="navbar_logo--mobile">
+                <img src="assets/nav_logo.png" alt="Shri V.J. Modha College Logo" loading="lazy">
+                <div class="navbar_logo--mobile__text">
+                    <strong>Shri V. J. Modha College</strong>
+                    <span>Empowering Futures Since 2007</span>
+                </div>
+            </li>
+
             <!-- Main Navigation Links -->
-            <li class="navbar_nav__item"><a href="index.php" class="navbar_nav__link">Home</a></li>
-            <li class="navbar_nav__item"><a href="about.php" class="navbar_nav__link">About Us</a></li>
-            <li class="navbar_nav__item"><a href="faculties.php" class="navbar_nav__link">Faculties</a></li>
+            <li class="navbar_nav__item" role="none">
+                <a href="index.php" class="navbar_nav__link" role="menuitem">Home</a>
+            </li>
+            <li class="navbar_nav__item" role="none">
+                <a href="about.php" class="navbar_nav__link" role="menuitem">About Us</a>
+            </li>
+            <li class="navbar_nav__item" role="none">
+                <a href="faculties.php" class="navbar_nav__link" role="menuitem">Faculties</a>
+            </li>
+
             <!-- Dropdown Menu for Courses -->
-            <li class="navbar_nav__item navbar_nav__item--dropdown">
-                <a href="#" class="navbar_nav__link">Courses <span class="navbar_nav__arrow">&#9662;</span></a>
-                <ul class="navbar_dropdown">
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=bca" class="navbar_dropdown__link">BCA</a></li>
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=bsc" class="navbar_dropdown__link">B.Sc.</a></li>
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=bba" class="navbar_dropdown__link">BBA</a></li>
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=bcom" class="navbar_dropdown__link">B.Com</a></li>
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=bsw" class="navbar_dropdown__link">BSW</a></li>
-                    <!-- <li class="navbar_dropdown__item"><a class="navbar_dropdown__link"></a></li> -->
-                    <!-- <li><a href="#">PGDCA</a></li> -->
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=mcom" class="navbar_dropdown__link">M.Com</a></li>
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=mscit" class="navbar_dropdown__link">M.Sc IT & CA</a></li>
-                    <li class="navbar_dropdown__item"><a href="courses.php?course=mscorgchem" class="navbar_dropdown__link">M.Sc (Chem)</a></li>
+            <li class="navbar_nav__item navbar_nav__item--dropdown" role="none">
+                <a href="courses.php" class="navbar_nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    <span>Courses</span>
+                    <svg class="navbar_nav__arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </a>
+                <ul class="navbar_dropdown" role="menu" aria-label="Courses submenu">
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bca" class="navbar_dropdown__link" role="menuitem">B.C.A. (Computer Applications)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bsc" class="navbar_dropdown__link" role="menuitem">B.Sc. (Science)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bba" class="navbar_dropdown__link" role="menuitem">B.B.A. (Business Admin)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bcom" class="navbar_dropdown__link" role="menuitem">B.Com. (Commerce)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bsw" class="navbar_dropdown__link" role="menuitem">B.S.W. (Social Work)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mcom" class="navbar_dropdown__link" role="menuitem">M.Com. (Commerce)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mscit" class="navbar_dropdown__link" role="menuitem">M.Sc. (IT &amp; CA)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mscorgchem" class="navbar_dropdown__link" role="menuitem">M.Sc. (Organic Chemistry)</a></li>
                 </ul>
             </li>
+
             <!-- Dropdown Menu for Facilities -->
-            <li class="navbar_nav__item navbar_nav__item--dropdown">
-                <a href="#" class="navbar_nav__link">Facilities <span class="navbar_nav__arrow">&#9662;</span></a>
-                <ul class="navbar_dropdown">
-                    <li class="navbar_dropdown__item"><a href="scholarship.php" class="navbar_dropdown__link">Scholarships</a></li>
-                    <li class="navbar_dropdown__item"><a href="gallery.php" class="navbar_dropdown__link">Photo Gallery</a></li>
-                    <!-- <li class="navbar_dropdown__item"><a href="#" class="navbar_dropdown__link"></a></li> -->
-                    <li class="navbar_dropdown__item"><a href="labs.php?lab=computer" class="navbar_dropdown__link">Computer Lab</a></li>
-                    <li class="navbar_dropdown__item"><a href="labs.php?lab=chemistry" class="navbar_dropdown__link">Chemistry Lab</a></li>
-                    <li class="navbar_dropdown__item"><a href="labs.php?lab=physics" class="navbar_dropdown__link">Physics Lab</a></li>
+            <li class="navbar_nav__item navbar_nav__item--dropdown" role="none">
+                <a href="#" class="navbar_nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    <span>Facilities</span>
+                    <svg class="navbar_nav__arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </a>
+                <ul class="navbar_dropdown" role="menu" aria-label="Facilities submenu">
+                    <li class="navbar_dropdown__item" role="none"><a href="scholarship.php" class="navbar_dropdown__link" role="menuitem">Scholarships &amp; Aid</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="gallery.php" class="navbar_dropdown__link" role="menuitem">Photo Gallery</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=computer" class="navbar_dropdown__link" role="menuitem">Computer &amp; IT Lab</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=chemistry" class="navbar_dropdown__link" role="menuitem">Chemistry Lab</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=physics" class="navbar_dropdown__link" role="menuitem">Physics Lab</a></li>
                 </ul>
             </li>
-            <!-- Dropdown Menu for Miscellaneous -->
-            <li class="navbar_nav__item navbar_nav__item--dropdown">
-                <a href="#" class="navbar_nav__link">More <span class="navbar_nav__arrow">&#9662;</span></a>
-                <ul class="navbar_dropdown">
-                    <li class="navbar_dropdown__item"><a href="placement.php" class="navbar_dropdown__link">Placement</a></li>
-                    <li class="navbar_dropdown__item"><a href="anti_ragging.php" class="navbar_dropdown__link">Anti-Ragging</a></li>
-                    <li class="navbar_dropdown__item"><a href="online_courses.php" class="navbar_dropdown__link">Online Courses</a></li>
-                    <li class="navbar_dropdown__item"><a href="e_mag.php" class="navbar_dropdown__link">E-Magazine</a></li>
-                    <li class="navbar_dropdown__item"><a href="https://forms.gle/onWVowyburaXaAbC7" target="_blank" class="navbar_dropdown__link">Careers</a></li>
-                    <li class="navbar_dropdown__item"><a href="disclaimer.php" class="navbar_dropdown__link">Disclaimer</a></li>
+
+            <!-- Dropdown Menu for More -->
+            <li class="navbar_nav__item navbar_nav__item--dropdown" role="none">
+                <a href="#" class="navbar_nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                    <span>More</span>
+                    <svg class="navbar_nav__arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </a>
+                <ul class="navbar_dropdown" role="menu" aria-label="More resources submenu">
+                    <li class="navbar_dropdown__item" role="none"><a href="placement.php" class="navbar_dropdown__link" role="menuitem">Placement Cell</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="anti_ragging.php" class="navbar_dropdown__link" role="menuitem">Anti-Ragging Cell</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="online_courses.php" class="navbar_dropdown__link" role="menuitem">Online MOOCs</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="e_mag.php" class="navbar_dropdown__link" role="menuitem">E-Magazines</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="https://forms.gle/onWVowyburaXaAbC7" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem">Careers (Apply)</a></li>
+                    <li class="navbar_dropdown__item" role="none"><a href="disclaimer.php" class="navbar_dropdown__link" role="menuitem">Disclaimer &amp; Legal</a></li>
                 </ul>
             </li>
-            <!-- Contact Us Link -->
-            <li class="navbar_nav__item"><a href="contact.php" class="navbar_nav__link">Contact Us</a></li>
+
+            <!-- Contact Us Nav Action Link -->
+            <li class="navbar_nav__item navbar_nav__item--cta" role="none">
+                <a href="contact.php" class="navbar_nav__link navbar_nav__link--cta" role="menuitem">Contact Us</a>
+            </li>
         </ul>
+
+        <!-- Mobile Menu Backdrop Overlay -->
+        <div class="navbar_backdrop" id="navbarBackdrop"></div>
+
         <!-- Hamburger Menu (Visible in Mobile View) -->
-        <div class="navbar_hamburger">
-            <!-- Three bars for hamburger icon -->
-            <div class="navbar_hamburger__bar"></div>
-            <div class="navbar_hamburger__bar"></div>
-            <div class="navbar_hamburger__bar"></div>
-        </div>
+        <button class="navbar_hamburger" id="navbarHamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="navbar_hamburger__bar"></span>
+            <span class="navbar_hamburger__bar"></span>
+            <span class="navbar_hamburger__bar"></span>
+        </button>
     </div>
 </nav>
-<!-- Glassmorphic Popup Modal -->
-<div class="navbar_modal" id="modalOverlay">
+
+<!-- Glassmorphic Info Popup Modal -->
+<div class="navbar_modal" id="modalOverlay" role="dialog" aria-modal="true" aria-label="College Overview">
     <div class="navbar_modal__content">
-        <button class="navbar_modal__close" id="closeBtn">&times;</button>
+        <button class="navbar_modal__close" id="closeBtn" aria-label="Close modal">&times;</button>
         <img src="assets/nav_logo.png" alt="College Logo" class="navbar_modal__image" loading="lazy">
-        <h2 class="navbar_modal__title">Shri V.J. Modha College</h2>
-        <p class="navbar_modal__text">Empowering bright futures since 2007 in Porbandar,
-            Our campus blends rich tradition with cutting-edge innovation.
-            Passionate faculty and dynamic programs ignite creativity and growth,
-            Join Shri V J Modha College—where your dreams take flight!</p>
+        <h2 class="navbar_modal__title">Shri V. J. Modha College</h2>
+        <span class="navbar_modal__subtitle">Porbandar, Gujarat</span>
+        <p class="navbar_modal__text">
+            Empowering bright futures since 2007 in Porbandar.<br/>
+            Our campus blends rich cultural tradition with cutting-edge academic innovation.<br/>
+            Dedicated faculty, modern laboratories, and vibrant student life ignite creativity and lifelong excellence.
+        </p>
+        <div class="navbar_modal__actions">
+            <a href="about.php" class="btn btn--primary btn--sm">About Institution</a>
+            <a href="contact.php" class="btn btn--outline btn--sm">Contact Campus</a>
+        </div>
     </div>
 </div>
