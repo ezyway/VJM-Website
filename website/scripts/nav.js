@@ -75,6 +75,18 @@ document.addEventListener("DOMContentLoaded", () => {
         backdrop.addEventListener("click", () => toggleMobileNav(true));
     }
 
+    // Close mobile drawer when clicking regular destination links
+    if (navLinks) {
+        const directLinks = navLinks.querySelectorAll("a:not([aria-haspopup='true'])");
+        directLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                if (window.innerWidth <= 1120) {
+                    toggleMobileNav(true);
+                }
+            });
+        });
+    }
+
 
     // ----------------------------------------------------
     // 3. Dropdowns Navigation (Desktop & Mobile Accordion)
