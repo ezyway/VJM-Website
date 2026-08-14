@@ -84,10 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!link) return;
 
         link.addEventListener("click", (e) => {
-            const href = link.getAttribute("href");
-            if (href === "#" || href === "" || href.startsWith("javascript")) {
-                e.preventDefault();
-            }
+            e.preventDefault();
+            e.stopPropagation();
 
             const wasActive = item.classList.contains("js-dropdown-active");
             if (wasActive) {

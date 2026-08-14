@@ -195,11 +195,13 @@
 
 .navbar_dropdown {
     position: absolute;
-    top: calc(100% + 12px);
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(8px);
+    transform: translateX(-50%) translateY(10px);
     min-width: 260px;
-    background: rgba(7, 29, 24, 0.97);
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+    background: rgba(7, 29, 24, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.16);
@@ -215,22 +217,8 @@
     z-index: 1010;
 }
 
-/* Dropdown Arrow Tip */
-.navbar_dropdown::before {
-    content: "";
-    position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 12px;
-    height: 12px;
-    background: rgba(7, 29, 24, 0.97);
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
-    border-left: 1px solid rgba(255, 255, 255, 0.16);
-}
-
 .navbar_dropdown--mega {
-    min-width: 290px;
+    min-width: 310px;
 }
 
 .navbar_dropdown__header {
@@ -250,10 +238,33 @@
     padding-top: 0.25rem;
 }
 
+/* Desktop Hover & Focus State */
+@media (min-width: 1121px) {
+    .navbar_nav__item--dropdown:hover .navbar_dropdown,
+    .navbar_nav__item--dropdown:focus-within .navbar_dropdown,
+    .navbar_nav__item--dropdown.js-dropdown-active .navbar_dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(4px);
+        pointer-events: auto;
+    }
+
+    .navbar_nav__item--dropdown:hover .navbar_nav__arrow,
+    .navbar_nav__item--dropdown.js-dropdown-active .navbar_nav__arrow {
+        transform: rotate(180deg);
+    }
+
+    .navbar_nav__item--dropdown:hover > .navbar_nav__link {
+        color: #FFFFFF;
+        background: rgba(255, 255, 255, 0.12);
+    }
+}
+
+/* Fallback JS active class for touch / click */
 .navbar_nav__item--dropdown.js-dropdown-active .navbar_dropdown {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(4px);
     pointer-events: auto;
 }
 
