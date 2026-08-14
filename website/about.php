@@ -71,20 +71,24 @@
         <div class="about-story__container">
             
             <div class="about-story__content">
-                <span class="section__eyebrow">Our Heritage &amp; Journey</span>
-                <h2 class="about-story__title">Nurturing Talent, Inspiring Excellence Since 2007</h2>
+                <div class="about-story__header-box">
+                    <span class="section__eyebrow">Our Heritage &amp; Journey</span>
+                    <h2 class="about-story__title">Nurturing Talent, Inspiring Excellence Since 2007</h2>
+                </div>
                 
-                <p class="about-story__lead">
-                    <strong>Shri V. J. Modha College of Information Technology</strong> was established in 2007 by the <em>Shri V. J. Modha Educational &amp; Charitable Trust</em>, Porbandar (Gujarat). Since its inception, the institute has provided every possible opportunity to its students, cultivating a global perspective and deep social consciousness.
-                </p>
-                
-                <p class="about-story__text">
-                    The college proudly welcomes students from all backgrounds, without distinction of caste, race, or religion, and fosters a culture of humility, mutual respect, and academic rigour. Starting with a modest student strength of just 100 learners, the institute has grown exponentially into a vibrant educational hub accommodating over <strong>1,500+ active scholars</strong> today.
-                </p>
+                <div class="about-story__text-box">
+                    <p class="about-story__lead">
+                        <strong>Shri V. J. Modha College of Information Technology</strong> was established in 2007 by the <em>Shri V. J. Modha Educational &amp; Charitable Trust</em>, Porbandar (Gujarat). Since its inception, the institute has provided every possible opportunity to its students, cultivating a global perspective and deep social consciousness.
+                    </p>
+                    
+                    <p class="about-story__text">
+                        The college proudly welcomes students from all backgrounds, without distinction of caste, race, or religion, and fosters a culture of humility, mutual respect, and academic rigour. Starting with a modest student strength of just 100 learners, the institute has grown exponentially into a vibrant educational hub accommodating over <strong>1,500+ active scholars</strong> today.
+                    </p>
 
-                <p class="about-story__text">
-                    In a rapidly evolving digital era, modern demands require proactive minds. Our dedicated faculty members continuously embrace cutting-edge trends in Information Technology and Commerce to prepare students for a balanced, prosperous future.
-                </p>
+                    <p class="about-story__text">
+                        In a rapidly evolving digital era, modern demands require proactive minds. Our dedicated faculty members continuously embrace cutting-edge trends in Information Technology and Commerce to prepare students for a balanced, prosperous future.
+                    </p>
+                </div>
 
                 <div class="about-story__highlights">
                     <div class="about-story__highlight-item">

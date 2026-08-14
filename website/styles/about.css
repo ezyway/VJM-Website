@@ -3,6 +3,32 @@
    Shri V.J. Modha College Portal
    ==================================================== */
 
+:root {
+    --brand-primary: #155C4F;
+    --brand-primary-dark: #0A372E;
+    --brand-primary-light: #228270;
+    --brand-accent: #D97706;
+    --brand-accent-light: #FBBF24;
+    --brand-gold: #D4AF37;
+    --brand-emerald: #10B981;
+    --surface-card: rgba(255, 255, 255, 0.45);
+    --surface-glass: rgba(255, 255, 255, 0.55);
+    --surface-glass-dark: rgba(10, 55, 46, 0.65);
+    --border-light: rgba(255, 255, 255, 0.65);
+    --text-main: #1F2937;
+    --text-muted: #4B5563;
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 18px 45px rgba(0, 0, 0, 0.08);
+    --shadow-glow: 0 0 25px rgba(21, 92, 79, 0.2);
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* ====================================================
    1. HERO HEADER BANNER
    ==================================================== */
@@ -45,9 +71,9 @@
 
 .about-hero__content {
     background: rgba(10, 42, 36, 0.65);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: var(--radius-lg);
     padding: 3rem 2.5rem;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
@@ -153,10 +179,10 @@
 
 .about-story__content {
     background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border-radius: var(--radius-lg);
-    padding: 3rem 2.5rem;
+    padding: 2.5rem 2rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
     display: flex;
@@ -164,42 +190,66 @@
     justify-content: center;
 }
 
+.about-story__header-box {
+    background: #FFFFFF;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    margin-bottom: 1.25rem;
+}
+
 .about-story__title {
-    font-size: 1.85rem;
+    font-size: 1.65rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
-    line-height: 1.25;
-    margin-bottom: 1.5rem;
+    line-height: 1.3;
+    margin-top: 0.25rem;
     letter-spacing: -0.3px;
 }
 
-.about-story__lead {
-    font-size: 1.08rem;
-    line-height: 1.75;
-    color: var(--text-main);
+.about-story__text-box {
+    background: #FFFFFF;
+    padding: 1.5rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     margin-bottom: 1.25rem;
 }
 
+.about-story__lead {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
 .about-story__text {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     line-height: 1.75;
     color: var(--text-muted);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.about-story__text:last-child {
+    margin-bottom: 0;
 }
 
 .about-story__highlights {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
-    margin-top: 1rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(21, 92, 79, 0.1);
 }
 
 .about-story__highlight-item {
     display: flex;
     align-items: flex-start;
     gap: 0.85rem;
+    background: #FFFFFF;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .about-story__highlight-icon {
@@ -230,10 +280,10 @@
 /* Timeline & Milestones Card */
 .about-story__card {
     background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border-radius: var(--radius-lg);
-    padding: 2.75rem 2.25rem;
+    padding: 2.25rem 2rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
     display: flex;
@@ -242,9 +292,12 @@
 }
 
 .about-milestones__header {
-    margin-bottom: 1.75rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(21, 92, 79, 0.1);
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1.25rem;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .about-milestones__tag {
@@ -257,11 +310,11 @@
     color: var(--brand-accent);
     background: rgba(217, 119, 6, 0.1);
     border-radius: var(--radius-full);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
 }
 
 .about-milestones__title {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
 }
@@ -269,26 +322,19 @@
 .about-milestones__list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.15rem;
     position: relative;
-}
-
-.about-milestones__list::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    bottom: 10px;
-    left: 45px;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--brand-primary), rgba(34, 130, 112, 0.2));
 }
 
 .about-milestones__item {
     display: flex;
     align-items: flex-start;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 1;
+    gap: 1.25rem;
+    background: #FFFFFF;
+    padding: 0.85rem 1.15rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .about-milestones__year {
@@ -305,16 +351,16 @@
 }
 
 .about-milestones__desc h4 {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--brand-primary-dark);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .about-milestones__desc p {
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     color: var(--text-muted);
-    line-height: 1.5;
+    line-height: 1.45;
 }
 
 
@@ -331,10 +377,10 @@
 
 .about-pillars__container {
     background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border-radius: var(--radius-lg);
-    padding: 3rem 2.5rem;
+    padding: 2.75rem 2.25rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
 }
@@ -342,21 +388,24 @@
 .about-pillars__header {
     text-align: center;
     max-width: 720px;
-    margin: 0 auto 2.5rem auto;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(21, 92, 79, 0.1);
+    margin: 0 auto 2rem auto;
+    padding: 1.25rem 1.75rem;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .about-pillars__title {
-    font-size: 2.15rem;
+    font-size: 1.95rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
     letter-spacing: -0.3px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 .about-pillars__subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
     line-height: 1.5;
 }
@@ -364,14 +413,14 @@
 .about-pillars__grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2rem;
+    gap: 1.75rem;
 }
 
 .about-pillar-card {
     background: #FFFFFF;
     border-radius: var(--radius-lg);
-    padding: 2.5rem 2rem;
-    box-shadow: var(--shadow-sm);
+    padding: 2.25rem 1.75rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(21, 92, 79, 0.1);
     position: relative;
     overflow: hidden;
@@ -403,19 +452,19 @@
 }
 
 .about-pillar-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
     border-color: rgba(21, 92, 79, 0.25);
 }
 
 .about-pillar-card__icon-wrap {
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     box-shadow: var(--shadow-sm);
 }
 
@@ -440,7 +489,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
 }
 
 .about-pillar-card--vision .about-pillar-card__badge { color: #059669; }
@@ -448,15 +497,15 @@
 .about-pillar-card--values .about-pillar-card__badge { color: #2563EB; }
 
 .about-pillar-card__title {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
 }
 
 .about-pillar-card__text {
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: 0.92rem;
+    line-height: 1.65;
     color: var(--text-muted);
 }
 
@@ -474,10 +523,10 @@
 
 .trustee-section__container {
     background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border-radius: var(--radius-lg);
-    padding: 3rem 2.5rem;
+    padding: 2.75rem 2.25rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
     overflow: hidden;
@@ -486,22 +535,25 @@
 .trustee-section__header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 2rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(21, 92, 79, 0.1);
+    align-items: center;
+    margin-bottom: 1.75rem;
+    padding: 0.85rem 1.25rem;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .trustee-section__title {
-    font-size: 1.85rem;
+    font-size: 1.75rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
     letter-spacing: -0.3px;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .trustee-section__subtitle {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--text-muted);
 }
 
@@ -511,8 +563,8 @@
 }
 
 .trustee-nav-btn {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: var(--radius-full);
     background: #FFFFFF;
     border: 1.5px solid rgba(21, 92, 79, 0.2);
@@ -555,7 +607,7 @@
 }
 
 .trustee-section__item {
-    flex: 0 0 calc((100% - 3rem) / 3); /* Default: 3 items per view */
+    flex: 0 0 calc((100% - 3rem) / 3); /* 3 items per view */
     min-width: 0;
     box-sizing: border-box;
 }
@@ -564,7 +616,7 @@
     background: #FFFFFF;
     border-radius: var(--radius-lg);
     border: 1px solid rgba(21, 92, 79, 0.12);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     transition: all var(--transition-normal);
     height: 100%;
@@ -572,7 +624,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 1.75rem 1.25rem 1.75rem 1.25rem;
+    padding: 1.75rem 1.25rem;
 }
 
 .trustee-card:hover {
@@ -697,10 +749,10 @@
 
 .about-facilities__container {
     background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border-radius: var(--radius-lg);
-    padding: 3rem 2.5rem;
+    padding: 2.75rem 2.25rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
 }
@@ -708,21 +760,24 @@
 .about-facilities__header {
     text-align: center;
     max-width: 720px;
-    margin: 0 auto 2.5rem auto;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(21, 92, 79, 0.1);
+    margin: 0 auto 2rem auto;
+    padding: 1.25rem 1.75rem;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .about-facilities__title {
-    font-size: 2.15rem;
+    font-size: 1.95rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
     letter-spacing: -0.3px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 .about-facilities__subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
 }
 
@@ -736,7 +791,7 @@
     background: #FFFFFF;
     border-radius: var(--radius-lg);
     padding: 2.25rem 1.75rem;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(21, 92, 79, 0.1);
     transition: all var(--transition-normal);
     display: flex;
@@ -883,7 +938,7 @@
         font-size: 0.92rem;
     }
     .about-story {
-        padding: 2.5rem 1rem 1.5rem 1rem;
+        padding: 1.5rem 0.35rem 1rem 0.35rem;
     }
     .about-story__content,
     .about-story__card,
@@ -891,50 +946,47 @@
     .trustee-section__container,
     .about-facilities__container,
     .about-cta__box {
-        padding: 2rem 1.25rem;
+        padding: 1.5rem 0.65rem;
+        border-radius: var(--radius-sm);
     }
     .about-story__title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
     .about-story__highlights {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.85rem;
     }
     .about-pillars {
-        padding: 2rem 1rem;
+        padding: 1rem 0.35rem;
     }
     .about-pillars__title,
     .about-facilities__title,
     .about-cta__title {
-        font-size: 1.65rem;
+        font-size: 1.5rem;
     }
     .trustee-section {
-        padding: 1.5rem 0.5rem;
-    }
-    .trustee-section__container {
-        padding: 1.75rem 1rem;
+        padding: 1rem 0.35rem;
     }
     .trustee-section__header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
         gap: 0.75rem;
-        padding-bottom: 1rem;
-        margin-bottom: 1.5rem;
+        padding: 0.85rem 1rem;
+        margin-bottom: 1.25rem;
     }
     .trustee-section__title {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
         line-height: 1.25;
     }
     .trustee-section__subtitle {
-        font-size: 0.88rem;
+        font-size: 0.85rem;
     }
     .trustee-section__nav {
         display: flex;
         flex-shrink: 0;
         gap: 0.5rem;
-        margin-top: 0.25rem;
     }
     .trustee-nav-btn {
         width: 38px;
@@ -947,14 +999,14 @@
         display: flex;
     }
     .about-facilities {
-        padding: 2rem 1rem;
+        padding: 1rem 0.35rem;
     }
     .about-facilities__grid {
         grid-template-columns: 1fr;
-        gap: 1.25rem;
+        gap: 1rem;
     }
     .about-cta {
-        padding: 1.5rem 1rem 3.5rem 1rem;
+        padding: 1rem 0.35rem 3.5rem 0.35rem;
     }
     .about-cta__actions {
         flex-direction: column;
