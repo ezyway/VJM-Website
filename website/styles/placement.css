@@ -45,9 +45,9 @@
 
 .placement-hero__content {
     background: rgba(10, 42, 36, 0.65);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: var(--radius-lg);
     padding: 3rem 2.5rem;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
@@ -146,16 +146,48 @@
 
 .placement-section__container {
     background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border-radius: var(--radius-lg);
-    padding: 3.5rem 2.5rem;
+    padding: 2.75rem 2.25rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 3.5rem;
     box-sizing: border-box;
+}
+
+.placement-block__title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-top: 0.25rem;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.3px;
+}
+
+.placement-block__subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 680px;
+}
+
+/* Services Grid */
+.placement-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.75rem;
+    margin-top: 2rem;
+}
+
+.placement-service-card {
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(21, 92, 79, 0.12);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    padding: 2.25rem 1.75rem;
+    transition: all var(--transition-normal);
 }
 
 .placement-block__title {

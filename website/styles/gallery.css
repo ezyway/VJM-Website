@@ -45,9 +45,9 @@
 
 .gallery-hero__content {
     background: rgba(10, 42, 36, 0.65);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: var(--radius-lg);
     padding: 3rem 2.5rem;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
@@ -146,10 +146,10 @@
 
 .gallery-section__container {
     background: var(--surface-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     border-radius: var(--radius-lg);
-    padding: 3.5rem 2.5rem;
+    padding: 2.75rem 2.25rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-light);
 }
@@ -157,24 +157,27 @@
 .gallery-section__header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(21, 92, 79, 0.1);
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.25rem 1.75rem;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 92, 79, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     flex-wrap: wrap;
     gap: 1.5rem;
 }
 
 .gallery-section__title {
-    font-size: 2rem;
+    font-size: 1.85rem;
     font-weight: 800;
     color: var(--brand-primary-dark);
     letter-spacing: -0.3px;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
 }
 
 .gallery-section__subtitle {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
 }
 
