@@ -1274,7 +1274,7 @@
     .news-section__box,
     .testimonials-section__wrapper,
     .photo-carousel-section__wrapper {
-        padding: 1.5rem 0.75rem;
+        padding: 1.5rem 0.85rem;
     }
     .news-section {
         padding: 1rem 0.35rem 2rem 0.35rem;
@@ -1288,6 +1288,34 @@
     }
     .testimonials-section {
         padding: 1rem 0.35rem 2rem 0.35rem;
+    }
+    .testimonials-section__header,
+    .photo-carousel-section__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+    .testimonials-section__title,
+    .photo-carousel-section__title {
+        font-size: 1.5rem;
+        line-height: 1.25;
+    }
+    .photo-carousel-section__controls {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .photo-carousel-section__view-all {
+        font-size: 0.82rem;
+        padding: 5px 12px;
+        white-space: nowrap;
+    }
+    .photo-carousel-section__item {
+        min-width: 80vw;
+        max-width: 82vw;
+        flex: 0 0 80vw;
     }
     .photo-carousel-section {
         padding: 1rem 0.35rem 3.5rem 0.35rem;
