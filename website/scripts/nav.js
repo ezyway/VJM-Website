@@ -1,6 +1,6 @@
 /**
  * =======================================================
- * NAVBAR - INTERACTIVE NAVIGATION SYSTEM & MOBILE DRAWER
+ * NAVBAR - INTERACTIVE NAVIGATION SYSTEM & LOGO SHRINK
  * Shri V.J. Modha College Portal
  * =======================================================
  */
@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropdownItems = document.querySelectorAll(".navbar_nav__item--dropdown");
 
     // ----------------------------------------------------
-    // 1. Scroll State (Glass Opacity Increase)
+    // 1. Scroll State (Triggers Logo Shrink & Navbar Glass)
     // ----------------------------------------------------
     function handleScroll() {
         if (!navbar) return;
-        if (window.scrollY > 20) {
+        if (window.scrollY > 25) {
             navbar.classList.add("navbar_container--scrolled");
         } else {
             navbar.classList.remove("navbar_container--scrolled");
@@ -65,7 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (hamburger) {
-        hamburger.addEventListener("click", () => toggleMobileNav());
+        hamburger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            toggleMobileNav();
+        });
     }
 
     if (backdrop) {
@@ -82,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         link.addEventListener("click", (e) => {
             const href = link.getAttribute("href");
-            if (href === "#" || href === "") {
+            if (href === "#" || href === "" || href.startsWith("javascript")) {
                 e.preventDefault();
             }
 
@@ -168,6 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // General page match without query
         else if (!linkSearch && currentPath === linkPath) {
             link.classList.add("is-active-page");
+            const parentDropdown = link.closest(".navbar_nav__item--dropdown");
+            if (parentDropdown) {
+                const parentLink = parentDropdown.querySelector(".navbar_nav__link");
+                if (parentLink) parentLink.classList.add("is-active-page");
+            }
         }
     });
 
