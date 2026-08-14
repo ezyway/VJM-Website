@@ -51,6 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
         hamburger.classList.toggle("navbar_hamburger--active", isOpen);
         hamburger.setAttribute("aria-expanded", isOpen ? "true" : "false");
         navLinks.classList.toggle("navbar_nav--active", isOpen);
+        if (navbar) {
+            navbar.classList.toggle("navbar_container--mobile-open", isOpen);
+        }
 
         if (backdrop) {
             backdrop.classList.toggle("is-active", isOpen);
