@@ -339,7 +339,7 @@
                             <h3>Interested in Enrolling?</h3>
                             <p>Get in touch with our admissions office for counseling, application assistance, and scholarship details.</p>
                             <div class="course-card-cta-btns">
-                                <a href="contact.php" class="btn btn--secondary">Contact Admissions</a>
+                                <a href="contact.php" class="btn btn--primary">Contact Admissions</a>
                                 <a href="faculties.php" class="btn btn--outline">Meet Department Faculty</a>
                             </div>
                         </div>

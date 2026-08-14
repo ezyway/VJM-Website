@@ -459,8 +459,9 @@
 
 /* Admissions Card in Right Column */
 .course-card--cta {
-    background: linear-gradient(135deg, rgba(21, 92, 79, 0.06), rgba(34, 130, 112, 0.12));
-    border-color: rgba(21, 92, 79, 0.2);
+    background: linear-gradient(135deg, rgba(21, 92, 79, 0.05), rgba(34, 130, 112, 0.1));
+    border: 1.5px solid rgba(21, 92, 79, 0.18);
+    box-shadow: var(--shadow-sm);
 }
 
 .course-card--cta h3 {
@@ -472,19 +473,36 @@
 
 .course-card--cta p {
     font-size: 0.92rem;
-    color: var(--text-muted);
+    color: #334155;
     line-height: 1.6;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
 .course-card-cta-btns {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
 }
 
 .course-card-cta-btns .btn {
     width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.25rem;
+    font-weight: 700;
+    box-sizing: border-box;
+}
+
+.course-card-cta-btns .btn--outline {
+    background: #FFFFFF;
+    color: var(--brand-primary-dark) !important;
+    border: 1.5px solid var(--brand-primary);
+}
+
+.course-card-cta-btns .btn--outline:hover {
+    background: var(--brand-primary);
+    color: #FFFFFF !important;
 }
 
 
