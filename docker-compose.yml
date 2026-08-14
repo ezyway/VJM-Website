@@ -1,0 +1,11 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vjm_website
+    ports:
+      - "8080:80"
+    volumes:
+      - ./website:/var/www/html
+    restart: unless-stopped
