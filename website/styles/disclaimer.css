@@ -15,23 +15,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at 50% 30%, rgba(34, 130, 112, 0.45) 0%, rgba(7, 29, 24, 0.95) 75%),
-                linear-gradient(135deg, #0A372E 0%, #071D18 100%);
+    background: linear-gradient(135deg, rgba(10, 55, 46, 0.88) 0%, rgba(7, 29, 24, 0.92) 100%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     overflow: hidden;
     box-sizing: border-box;
-}
-
-.disclaimer-hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-    opacity: 0.7;
 }
 
 .disclaimer-hero__overlay {

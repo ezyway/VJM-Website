@@ -19,11 +19,11 @@
 }
 
 .navbar_container--scrolled {
-    background: rgba(5, 22, 18, 0.94);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(34, 130, 112, 0.3);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    background: rgba(10, 42, 36, 0.88);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(34, 130, 112, 0.35);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
     pointer-events: auto;
 }
 
@@ -99,13 +99,13 @@
 
 .navbar_island {
     pointer-events: auto;
-    background: rgba(7, 29, 24, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(10, 42, 36, 0.85);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: var(--radius-full);
     padding: 0.4rem 0.6rem 0.4rem 1rem;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
     display: flex;
     align-items: center;
     transition: all 0.3s ease;
@@ -201,12 +201,12 @@
     min-width: 260px;
     max-height: calc(100vh - 90px);
     overflow-y: auto;
-    background: rgba(7, 29, 24, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(10, 42, 36, 0.92);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: var(--radius-md);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
     list-style: none;
     margin: 0;
     padding: 0.6rem 0.5rem;
