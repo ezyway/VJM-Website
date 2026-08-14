@@ -1233,8 +1233,11 @@
 }
 
 @media screen and (max-width: 768px) {
+    .video-banner__overlay {
+        padding: 7rem 0.5rem 2.5rem 0.5rem;
+    }
     .video-banner__content {
-        padding: 2rem 1.5rem;
+        padding: 2rem 1rem;
     }
     .video-banner__title {
         font-size: 1.85rem;
@@ -1253,14 +1256,14 @@
         width: 100%;
     }
     .counter-section {
-        padding: 2rem 1rem;
+        padding: 1.5rem 0.35rem;
     }
     .counter-section__box {
         grid-template-columns: 1fr;
-        padding: 1.5rem 1rem;
+        padding: 1.25rem 0.5rem;
     }
     .chairman-pride-section {
-        padding: 1rem 1rem 2.5rem 1rem;
+        padding: 1rem 0.35rem 2rem 0.35rem;
     }
     .chairman-section__header {
         flex-direction: column;
@@ -1271,14 +1274,23 @@
     .news-section__box,
     .testimonials-section__wrapper,
     .photo-carousel-section__wrapper {
-        padding: 1.5rem;
+        padding: 1.5rem 0.75rem;
+    }
+    .news-section {
+        padding: 1rem 0.35rem 2rem 0.35rem;
     }
     .table-section {
-        padding: 1.25rem 0.35rem 2.5rem 0.35rem;
+        padding: 1rem 0.35rem 2rem 0.35rem;
     }
     .table-section__container {
         padding: 1.5rem 0.35rem;
         border-radius: var(--radius-sm);
+    }
+    .testimonials-section {
+        padding: 1rem 0.35rem 2rem 0.35rem;
+    }
+    .photo-carousel-section {
+        padding: 1rem 0.35rem 3.5rem 0.35rem;
     }
     .table-scroll-hint {
         display: flex;
