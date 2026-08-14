@@ -1,5 +1,5 @@
 <?php
-    $meta_description = "Get in touch with Shri V.J. Modha College, Porbandar. Find our campus address, phone numbers, WhatsApp helpline, email, interactive map, and admissions inquiry desk.";
+    $meta_description = "Get in touch with Shri V.J. Modha College, Porbandar. Find our campus address, phone numbers, WhatsApp helpline, email, interactive map, and office timings.";
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +53,7 @@
                 <h1 class="contact-hero__title">Get in Touch with Us</h1>
                 <p class="contact-hero__slogan">॥ सर्वस्य लोचनं शास्त्रम् ॥</p>
                 <p class="contact-hero__subtitle">
-                    Have questions regarding admissions, degree programs, fee structures, or campus visits? Our counselors and administrative staff are here to assist you.
+                    Have questions regarding admissions, degree programs, fee structures, or campus visits? Reach out to our team or drop by our campus in Porbandar.
                 </p>
             </div>
         </div>
@@ -68,12 +68,13 @@
 
             <div class="contact-grid">
                 
-                <!-- Left Column: Information Cards & Social Hub -->
+                <!-- Left Column: Communication Channels & Office Hours -->
                 <div class="contact-info-col">
                     
                     <div class="contact-card">
                         <span class="section__eyebrow">Direct Channels</span>
-                        <h2 class="contact-card__title">Campus Communication</h2>
+                        <h2 class="contact-card__title">Reach Our Campus</h2>
+                        <p class="contact-card__desc">Connect with our administrative office directly via phone, WhatsApp, or email.</p>
                         
                         <div class="contact-channels-list">
                             
@@ -124,6 +125,51 @@
                         </div>
                     </div>
 
+                    <!-- Office Timings Card -->
+                    <div class="contact-card">
+                        <span class="section__eyebrow">Working Hours</span>
+                        <h3 class="contact-card__title">Administrative Desk Timings</h3>
+                        
+                        <div class="timings-grid">
+                            <div class="timing-item">
+                                <span class="timing-day">Monday &ndash; Saturday</span>
+                                <strong class="timing-hours">08:00 AM &ndash; 04:00 PM</strong>
+                            </div>
+                            <div class="timing-item timing-item--closed">
+                                <span class="timing-day">Sunday &amp; Public Holidays</span>
+                                <strong class="timing-hours">Closed</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Right Column: Interactive Google Map & Social Community Hub -->
+                <div class="contact-map-col">
+                    
+                    <!-- Interactive Google Map Card -->
+                    <div class="contact-card contact-card--map">
+                        <div class="map-card__header">
+                            <div>
+                                <span class="section__eyebrow">Location &amp; Directions</span>
+                                <h2 class="contact-card__title" style="margin-bottom: 0.2rem;">Find Us on Google Maps</h2>
+                                <p class="contact-card__desc" style="margin-bottom: 0;">Located near Pakshi Abhiyaran on Chhaya-Birla Road, Porbandar.</p>
+                            </div>
+                            <a href="https://maps.app.goo.gl/1KuyRCNiCoc7pfun9" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">
+                                <span>Get Directions</span>
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                            </a>
+                        </div>
+
+                        <div class="contact-map-frame">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3530.0519910131816!2d69.6194120749665!3d21.63553296666266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395634f5f4455d49%3A0xdadec407c49c6b5c!2sShri%20V.%20J.%20Modha%20College%20of%20Information%20Technology!5e1!3m2!1sen!2sin!4v1742061188891!5m2!1sen!2sin"
+                                width="100%" height="340" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade" title="College Google Map Location"></iframe>
+                        </div>
+                    </div>
+
                     <!-- Social Media Hub Card -->
                     <div class="contact-card">
                         <span class="section__eyebrow">Connect Online</span>
@@ -143,88 +189,6 @@
                                 <img src="assets/icons/footer/linkedin.png" alt="LinkedIn" width="22" height="22" />
                                 <span>LinkedIn</span>
                             </a>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!-- Right Column: Inquiry Form & Interactive Google Map -->
-                <div class="contact-form-col">
-                    
-                    <!-- Quick Inquiry Form -->
-                    <div class="contact-card contact-card--form">
-                        <span class="section__eyebrow">Online Inquiry Desk</span>
-                        <h2 class="contact-card__title">Send Us a Message</h2>
-                        <p class="contact-card__desc">Fill out the quick form below and our admissions team will respond promptly.</p>
-
-                        <form id="contactForm" class="contact-form" onsubmit="handleContactSubmit(event)">
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <label for="contactName">Full Name *</label>
-                                    <input type="text" id="contactName" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="contactPhone">Phone Number *</label>
-                                    <input type="tel" id="contactPhone" name="phone" class="form-input" placeholder="e.g. +91 98765 43210" required />
-                                </div>
-                            </div>
-
-                            <div class="form-group-row">
-                                <div class="form-group">
-                                    <label for="contactEmail">Email Address *</label>
-                                    <input type="email" id="contactEmail" name="email" class="form-input" placeholder="e.g. rahul@example.com" required />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="contactCourse">Program of Interest</label>
-                                    <select id="contactCourse" name="course" class="form-select">
-                                        <option value="BCA">B.C.A. (Computer Applications)</option>
-                                        <option value="B.Sc.">B.Sc. (Chemistry / Physics / Maths)</option>
-                                        <option value="BBA">B.B.A. (Business Administration)</option>
-                                        <option value="B.Com">B.Com. (Commerce)</option>
-                                        <option value="BSW">B.S.W. (Social Work)</option>
-                                        <option value="M.Sc. IT">M.Sc. (IT &amp; CA)</option>
-                                        <option value="M.Sc. Chem">M.Sc. (Organic Chemistry)</option>
-                                        <option value="M.Com">M.Com. (Commerce)</option>
-                                        <option value="General">General Inquiry / Campus Visit</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contactMessage">Your Message / Query *</label>
-                                <textarea id="contactMessage" name="message" class="form-textarea" rows="4" placeholder="Tell us what you'd like to know..." required></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn--primary btn--submit" id="contactSubmitBtn">
-                                <span>Send Inquiry</span>
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                            </button>
-
-                            <div id="formFeedback" class="form-feedback" style="display: none;"></div>
-                        </form>
-                    </div>
-
-                    <!-- Interactive Google Map Card -->
-                    <div class="contact-card contact-card--map">
-                        <div class="map-card__header">
-                            <div>
-                                <span class="section__eyebrow">Location Guide</span>
-                                <h3 class="contact-card__title" style="margin-bottom: 0;">Find Us on Google Maps</h3>
-                            </div>
-                            <a href="https://maps.app.goo.gl/1KuyRCNiCoc7pfun9" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--sm">
-                                <span>Open in Maps</span>
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                            </a>
-                        </div>
-
-                        <div class="contact-map-frame">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3530.0519910131816!2d69.6194120749665!3d21.63553296666266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395634f5f4455d49%3A0xdadec407c49c6b5c!2sShri%20V.%20J.%20Modha%20College%20of%20Information%20Technology!5e1!3m2!1sen!2sin!4v1742061188891!5m2!1sen!2sin"
-                                width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade" title="College Google Map Location"></iframe>
                         </div>
                     </div>
 
