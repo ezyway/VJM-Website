@@ -33,37 +33,57 @@
                     <a href="index.php" class="navbar_nav__link" role="menuitem">Home</a>
                 </li>
 
-                <!-- 2. About Us -->
-                <li class="navbar_nav__item" role="none">
-                    <a href="about.php" class="navbar_nav__link" role="menuitem">About Us</a>
+                <!-- 2. Institution / About Dropdown -->
+                <li class="navbar_nav__item navbar_nav__item--dropdown" role="none">
+                    <a href="#" class="navbar_nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false">
+                        <span>Institution</span>
+                        <svg class="navbar_nav__arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </a>
+                    <ul class="navbar_dropdown" role="menu" aria-label="Institution submenu">
+                        <li class="navbar_dropdown__header">About Campus</li>
+                        <li class="navbar_dropdown__item" role="none"><a href="about.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>About Institution &amp; Trust</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="faculties.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Faculty Directory (43 Professors)</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="contact.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Contact &amp; Campus Location</a></li>
+
+                        <li class="navbar_dropdown__header">Statutory Disclosures</li>
+                        <li class="navbar_dropdown__item" role="none"><a href="data/IDP_2025.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Institutional Development Plan</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="data/NIRF_2025.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>NIRF 2025 Submission</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="data/NIRF_2026.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>NIRF 2026 Submission</a></li>
+                    </ul>
                 </li>
 
-                <!-- 3. Academics Dropdown Tree (Courses + Faculties + MOOCs) -->
+                <!-- 3. Academics Dropdown Tree (Courses + Inquiry + Resources) -->
                 <li class="navbar_nav__item navbar_nav__item--dropdown" role="none">
                     <a href="#" class="navbar_nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false">
                         <span>Academics</span>
                         <svg class="navbar_nav__arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </a>
                     <ul class="navbar_dropdown navbar_dropdown--mega" role="menu" aria-label="Academics submenu">
-                        <li class="navbar_dropdown__header">Undergraduate Degree</li>
+                        <li class="navbar_dropdown__header">Admissions &amp; Prospectus</li>
+                        <li class="navbar_dropdown__item" role="none">
+                            <a href="#" class="navbar_dropdown__link navbar_dropdown__link--highlight" data-open-inquiry="true" role="menuitem">
+                                <span class="badge-dot badge-dot--gold"></span>
+                                <strong>🎓 Apply / Admission Inquiry</strong>
+                            </a>
+                        </li>
+                        <li class="navbar_dropdown__item" role="none"><a href="courses.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>All Programs &amp; Stream Advisor</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="data/brochure.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Download College Brochure (PDF)</a></li>
+                        
+                        <li class="navbar_dropdown__header">Undergraduate (UG)</li>
                         <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bca" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.C.A. (Computer Applications)</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bsc" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.Sc. (Science)</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bba" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.B.A. (Business Admin)</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bcom" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.Com. (Commerce)</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bsc" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.Sc. (Science &amp; Chemistry)</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bba" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.B.A. (Business Administration)</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bcom" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.Com. (Commerce &amp; Banking)</a></li>
                         <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=bsw" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>B.S.W. (Social Work)</a></li>
                         
-                        <li class="navbar_dropdown__header">Postgraduate Programs</li>
-                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mscit" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>M.Sc. (IT &amp; Computer Applications)</a></li>
+                        <li class="navbar_dropdown__header">Postgraduate (PG)</li>
+                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mscit" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>M.Sc. (IT &amp; Computer Science)</a></li>
                         <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mscorgchem" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>M.Sc. (Organic Chemistry)</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mcom" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>M.Com. (Commerce)</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="courses.php?course=mcom" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>M.Com. (Advanced Commerce)</a></li>
 
-                        <li class="navbar_dropdown__header">Academic Resources</li>
-                        <li class="navbar_dropdown__item" role="none"><a href="faculties.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Faculty Directory (43 Professors)</a></li>
+                        <li class="navbar_dropdown__header">Learning Portals</li>
                         <li class="navbar_dropdown__item" role="none"><a href="online_courses.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Free Online MOOCs &amp; SWAYAM</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="data/brochure.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>College Brochure</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="data/IDP_2025.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Institutional Development Plan</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="data/NIRF_2025.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>NIRF 2025</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="data/NIRF_2026.pdf" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>NIRF 2026</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="https://www.bknmu.edu.in/Academic/page/Syllabus" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>BKNMU University Syllabus</a></li>
                     </ul>
                 </li>
 
@@ -76,17 +96,17 @@
                     <ul class="navbar_dropdown" role="menu" aria-label="Facilities submenu">
                         <li class="navbar_dropdown__header">Campus Infrastructure</li>
                         <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=computer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Computer &amp; IT Lab</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=chemistry" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Chemistry Lab</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=physics" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Physics Lab</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="gallery.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Photo Gallery</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=chemistry" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Chemistry Laboratory</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="labs.php?lab=physics" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Physics Laboratory</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="gallery.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Photo Gallery &amp; Campus Life</a></li>
                         
-                        <li class="navbar_dropdown__header">Student Support</li>
-                        <li class="navbar_dropdown__item" role="none"><a href="scholarship.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Scholarships &amp; Financial Aid</a></li>
+                        <li class="navbar_dropdown__header">Student Welfare</li>
+                        <li class="navbar_dropdown__item" role="none"><a href="scholarship.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Scholarships (MYSY &amp; Digital Gujarat)</a></li>
                         <li class="navbar_dropdown__item" role="none"><a href="e_mag.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>College E-Magazines</a></li>
                     </ul>
                 </li>
 
-                <!-- 5. Student Welfare & Cell Dropdown Tree -->
+                <!-- 5. Student Cell & Contact Dropdown Tree -->
                 <li class="navbar_nav__item navbar_nav__item--dropdown" role="none">
                     <a href="#" class="navbar_nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false">
                         <span>Student Cell</span>
@@ -96,8 +116,12 @@
                         <li class="navbar_dropdown__header">Career &amp; Safety</li>
                         <li class="navbar_dropdown__item" role="none"><a href="placement.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Training &amp; Placement Cell</a></li>
                         <li class="navbar_dropdown__item" role="none"><a href="anti_ragging.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Anti-Ragging Committee</a></li>
-                        <li class="navbar_dropdown__item" role="none"><a href="https://forms.gle/onWVowyburaXaAbC7" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Faculty Careers (Apply)</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="https://forms.gle/onWVowyburaXaAbC7" target="_blank" rel="noopener noreferrer" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Faculty Careers (Apply Online)</a></li>
                         <li class="navbar_dropdown__item" role="none"><a href="disclaimer.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Legal Disclaimer</a></li>
+
+                        <li class="navbar_dropdown__header">Helpdesk &amp; Admissions</li>
+                        <li class="navbar_dropdown__item" role="none"><a href="contact.php" class="navbar_dropdown__link" role="menuitem"><span class="badge-dot"></span>Contact Campus &amp; Helpdesk</a></li>
+                        <li class="navbar_dropdown__item" role="none"><a href="#" class="navbar_dropdown__link" data-open-inquiry="true" role="menuitem"><span class="badge-dot"></span>Online Admission Inquiry</a></li>
                     </ul>
                 </li>
 
@@ -118,18 +142,6 @@
                     </button>
                 </li>
 
-                <!-- 8. Apply / Inquire CTA Button -->
-                <li class="navbar_nav__item navbar_nav__item--apply" role="none">
-                    <button type="button" class="navbar_nav__link navbar_nav__link--inquiry" id="openInquiryBtn" data-open-inquiry="true" aria-label="Open Admissions Inquiry">
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                        <span>Apply / Inquire</span>
-                    </button>
-                </li>
-
-                <!-- 9. Contact Us CTA Button -->
-                <li class="navbar_nav__item navbar_nav__item--cta" role="none">
-                    <a href="contact.php" class="navbar_nav__link navbar_nav__link--cta" role="menuitem">Contact Us</a>
-                </li>
             </ul>
 
             <!-- Hamburger Button for Mobile -->
