@@ -403,3 +403,50 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (DISCLAIMER PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .disclaimer-section__container {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .legal-card {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .legal-card:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .legal-card__content h2,
+[data-theme="dark"] .credit-box__info h3 {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .legal-card__content p,
+[data-theme="dark"] .credit-box__info p {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .legal-card__content code {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34D399 !important;
+    border: 1px solid rgba(52, 211, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .credit-box {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .credit-linkedin-link {
+    color: #38BDF8 !important;
+}

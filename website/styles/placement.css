@@ -496,14 +496,16 @@
 }
 
 [data-theme="dark"] .placement-service-card,
-[data-theme="dark"] .placement-platform-card {
+[data-theme="dark"] .placement-platform-card,
+[data-theme="dark"] .platform-card {
     background: #1E293B !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
 }
 
 [data-theme="dark"] .placement-service-card:hover,
-[data-theme="dark"] .placement-platform-card:hover {
+[data-theme="dark"] .placement-platform-card:hover,
+[data-theme="dark"] .platform-card:hover {
     background: #243248 !important;
     border-color: rgba(52, 211, 153, 0.35) !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
@@ -511,18 +513,26 @@
 
 [data-theme="dark"] .placement-block__title,
 [data-theme="dark"] .placement-service-card__title,
-[data-theme="dark"] .placement-platform-card__title {
+[data-theme="dark"] .placement-platform-card__title,
+[data-theme="dark"] .platform-card__title {
     color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .placement-block__subtitle,
 [data-theme="dark"] .placement-service-card__desc,
-[data-theme="dark"] .placement-platform-card__desc {
+[data-theme="dark"] .placement-platform-card__desc,
+[data-theme="dark"] .platform-card__desc,
+[data-theme="dark"] .platform-card__authority {
     color: #CBD5E1 !important;
 }
 
-[data-theme="dark"] .placement-platform-card__tag {
+[data-theme="dark"] .placement-platform-card__tag,
+[data-theme="dark"] .platform-jurisdiction-badge {
     background: rgba(16, 185, 129, 0.15) !important;
     color: #34D399 !important;
     border: 1px solid rgba(52, 211, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .platform-card__number {
+    color: #94A3B8 !important;
 }
