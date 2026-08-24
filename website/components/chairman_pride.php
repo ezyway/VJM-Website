@@ -7,7 +7,7 @@
         <!-- Chairman Executive Profile Card -->
         <div class="chairman-section__profile">
             <div class="chairman-section__header">
-                <img src="assets/photos/index/chairman.png" alt="Mr. Vallabhbhai Modha" class="chairman-section__image" />
+                <img src="assets/photos/index/chairman.png" alt="Mr. Vallabhbhai Modha" class="chairman-section__image" width="100" height="100" loading="lazy" decoding="async" />
                 <div class="chairman-section__header-info">
                     <span class="chairman-section__badge">Chairman's Desk</span>
                     <h3 class="chairman-section__name">Mr. Vallabhbhai Modha</h3>

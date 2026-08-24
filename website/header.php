@@ -101,6 +101,9 @@
 <link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
 <link rel="apple-touch-icon" href="assets/logo.ico">
 
+<!-- Web App Manifest (PWA) -->
+<link rel="manifest" href="manifest.json">
+
 <!-- ===================================================
      Fonts & Stylesheets
      =================================================== -->
@@ -122,7 +125,7 @@
 ?>
 
 <!-- ===================================================
-     Scripts
+     Scripts & PWA Service Worker Registration
      =================================================== -->
 <script src='scripts/bg_particles.js?v=<?= filemtime('scripts/bg_particles.js') ?>' defer></script>
 <script src='scripts/nav.js?v=<?= filemtime('scripts/nav.js') ?>' defer></script>
@@ -132,6 +135,16 @@
         echo "<script src='{$path}?v=" . filemtime($path) . "' defer></script>";
     }
 ?>
+
+<script>
+    // Register PWA Service Worker for offline performance
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .catch((err) => console.debug('ServiceWorker registration note:', err));
+        });
+    }
+</script>
 
 <!-- ===================================================
      Google Analytics

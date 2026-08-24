@@ -1,0 +1,35 @@
+{
+  "name": "Shri V.J. Modha College",
+  "short_name": "VJM College",
+  "description": "Shri V.J. Modha College Portal — Higher Education, Academic Programs, Laboratories & Admissions in Porbandar, Gujarat",
+  "start_url": "/index.php",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0A372E",
+  "theme_color": "#155C4F",
+  "categories": [
+    "education",
+    "academic",
+    "reference"
+  ],
+  "icons": [
+    {
+      "src": "assets/logo.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "assets/nav_logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/nav_logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
