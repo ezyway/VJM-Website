@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+    <!-- Home Page -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- About Us -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/about.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Academic Courses Directory -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+    </url>
+
+    <!-- Specific Course Pages -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php?course=bca</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php?course=bsc</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php?course=bba</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php?course=bcom</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php?course=bsw</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php?course=mcom</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/courses.php?course=mscit</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- Faculty Directory -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/faculties.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- Laboratories & Facilities -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/labs.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/labs.php?lab=computer</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/labs.php?lab=chemistry</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/labs.php?lab=physics</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Photo Gallery -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/gallery.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Placement & Career Desk -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/placement.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Scholarships -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/scholarship.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.80</priority>
+    </url>
+
+    <!-- Free Online MOOCs & Courses -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/online_courses.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.75</priority>
+    </url>
+
+    <!-- College E-Magazines -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/e_mag.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.75</priority>
+    </url>
+
+    <!-- Contact & Admissions Desk -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/contact.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- Anti-Ragging Committee -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/anti_ragging.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.70</priority>
+    </url>
+
+    <!-- Disclaimer & Policies -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/disclaimer.php</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.50</priority>
+    </url>
+
+    <!-- Downloadable Official PDFs -->
+    <url>
+        <loc>https://shrivjmodhacollege.com/data/brochure.pdf</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.75</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/data/IDP_2025.pdf</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.65</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/data/NIRF_2025.pdf</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.65</priority>
+    </url>
+    <url>
+        <loc>https://shrivjmodhacollege.com/data/NIRF_2026.pdf</loc>
+        <lastmod>2026-08-24</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.70</priority>
+    </url>
+
+</urlset>

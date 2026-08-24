@@ -5,38 +5,105 @@
         "about" => "About Us",
         "anti_ragging" => "Anti-Ragging Committee",
         "contact" => "Contact Us",
-        "courses" => "Courses",
-        "disclaimer" => "Disclaimer",
-        "e_mag" => "E-Magazines",
-        "faculties" => "Faculties",
-        "gallery" => "Gallery",
-        "labs" => isset($lab["name"]) ? $lab["name"] : null." - Facilities",
-        "online_courses" => "Free Online Courses",
-        "placement" => "Placement",
-        "scholarship" => "Scholarships"
+        "courses" => "Academic Courses & Programs",
+        "disclaimer" => "Disclaimer & Policies",
+        "e_mag" => "Annual College E-Magazines",
+        "faculties" => "Faculty Directory",
+        "gallery" => "Photo Gallery & Campus Life",
+        "labs" => isset($lab["name"]) ? $lab["name"] . " - Facilities" : "Laboratories & Facilities",
+        "online_courses" => "Free Online MOOCs & Courses",
+        "placement" => "Placement & Career Desk",
+        "scholarship" => "Scholarships & Government Schemes"
     ];
+
+    // Compute dynamic title
+    $rawTitle = $title_data[$currentFileName] ?? "Shri V.J. Modha College";
+    if ($currentFileName === "index") {
+        $page_full_title = "Shri V.J. Modha College — Empowering Higher Education in Porbandar";
+    } else {
+        $page_full_title = $rawTitle . " | Shri V.J. Modha College, Porbandar";
+    }
+
+    // Default Meta Description
+    $page_description = isset($meta_description) 
+        ? $meta_description 
+        : "Shri V.J. Modha College of Information Technology, Porbandar — Offering BCA, B.Sc, BBA, B.Com, BSW, M.Com, and M.Sc IT with world-class academic infrastructure.";
+
+    // Base URL & Canonical Calculation
+    $site_base = "https://shrivjmodhacollege.com";
+    $script_path = basename($_SERVER['PHP_SELF']);
+    
+    if ($currentFileName === "index") {
+        $canonical_url = $site_base . "/";
+    } else {
+        $queryString = "";
+        if (!empty($_SERVER['QUERY_STRING'])) {
+            $safeQuery = htmlspecialchars($_SERVER['QUERY_STRING']);
+            $queryString = "?" . $safeQuery;
+        }
+        $canonical_url = $site_base . "/" . $script_path . $queryString;
+    }
+
+    $og_image = $site_base . "/assets/background.png";
 ?>
 
 <!-- Document Title -->
-<title> <?= $title_data[$currentFileName]; ?> </title>
+<title><?= htmlspecialchars($page_full_title); ?></title>
 
 <!-- ===================================================
-Metadata & Document Setup
-=================================================== -->
+     Metadata & SEO Setup
+     =================================================== -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="<?= htmlspecialchars($page_description); ?>">
+<meta name="keywords" content="Shri V.J. Modha College, VJM College Porbandar, BCA Porbandar, B.Sc College, BBA, B.Com, BSW, M.Sc IT, Bhakta Kavi Narsinh Mehta University, BKNMU Affiliated College, Higher Education Porbandar">
+<meta name="author" content="Shri V.J. Modha Educational &amp; Charitable Trust">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-<!-- Meta description for SEO -->
-<meta name="description" content="<?= isset($meta_description) ? htmlspecialchars($meta_description) : 'Shri V.J. Modha College - Empowering students for a better future.' ?>">
-
-
-
-<!-- Favicon -->
-<link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
+<!-- Canonical Link -->
+<link rel="canonical" href="<?= htmlspecialchars($canonical_url); ?>">
 
 <!-- ===================================================
-Fonts & Stylesheets
-=================================================== -->
+     Open Graph (Facebook, WhatsApp, LinkedIn)
+     =================================================== -->
+<meta property="og:site_name" content="Shri V.J. Modha College, Porbandar">
+<meta property="og:title" content="<?= htmlspecialchars($page_full_title); ?>">
+<meta property="og:description" content="<?= htmlspecialchars($page_description); ?>">
+<meta property="og:type" content="website">
+<meta property="og:url" content="<?= htmlspecialchars($canonical_url); ?>">
+<meta property="og:image" content="<?= htmlspecialchars($og_image); ?>">
+<meta property="og:image:secure_url" content="<?= htmlspecialchars($og_image); ?>">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shri V.J. Modha College Campus &amp; Infrastructure">
+<meta property="og:locale" content="en_IN">
+
+<!-- ===================================================
+     Twitter Cards
+     =================================================== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?= htmlspecialchars($page_full_title); ?>">
+<meta name="twitter:description" content="<?= htmlspecialchars($page_description); ?>">
+<meta name="twitter:image" content="<?= htmlspecialchars($og_image); ?>">
+<meta name="twitter:image:alt" content="Shri V.J. Modha College Campus &amp; Infrastructure">
+
+<!-- ===================================================
+     Mobile & App Shell Metadata
+     =================================================== -->
+<meta name="theme-color" content="#155C4F">
+<meta name="msapplication-TileColor" content="#155C4F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VJM College">
+
+<!-- Favicon & Touch Icons -->
+<link rel="shortcut icon" type="image/x-icon" href="assets/logo.ico">
+<link rel="apple-touch-icon" href="assets/logo.ico">
+
+<!-- ===================================================
+     Fonts & Stylesheets
+     =================================================== -->
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,8 +122,8 @@ Fonts & Stylesheets
 ?>
 
 <!-- ===================================================
-Scripts
-=================================================== -->
+     Scripts
+     =================================================== -->
 <script src='scripts/bg_particles.js?v=<?= filemtime('scripts/bg_particles.js') ?>' defer></script>
 <script src='scripts/nav.js?v=<?= filemtime('scripts/nav.js') ?>' defer></script>
 <?php
@@ -66,13 +133,11 @@ Scripts
     }
 ?>
 
-
-
 <!-- ===================================================
-Google Analytics
-=================================================== -->
+     Google Analytics
+     =================================================== -->
 <?php
-    $host = $_SERVER['HTTP_HOST'];
+    $host = $_SERVER['HTTP_HOST'] ?? '';
     if ($host !== 'localhost' && !preg_match('/^192\.168\./', $host)) {
         // Production only: output GA script
         ?>

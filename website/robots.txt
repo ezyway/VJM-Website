@@ -1,0 +1,17 @@
+# ====================================================
+# Robots.txt for Shri V.J. Modha College Portal
+# https://shrivjmodhacollege.com/
+# ====================================================
+
+User-agent: *
+Allow: /
+
+# Disallow private server assets/logs if any
+Disallow: /tmp/
+Disallow: /scripts/
+
+# Crawl Delay
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://shrivjmodhacollege.com/sitemap.xml
