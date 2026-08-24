@@ -1,6 +1,6 @@
 /**
  * ====================================================
- * GALLERY PAGE SCRIPTS - INTERACTIVE LIGHTBOX & ALBUM FILTER
+ * GALLERY PAGE SCRIPTS - INTERACTIVE LIGHTBOX & SLIDESHOW
  * Shri V.J. Modha College Portal
  * ====================================================
  */
@@ -27,24 +27,71 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalAlbumTitle = document.getElementById("modalAlbumTitle");
     const modalCounter = document.getElementById("modalCounter");
     const modalMainImage = document.getElementById("modalMainImage");
+    const modalLoadingSpinner = document.getElementById("modalLoadingSpinner");
     const modalPrevBtn = document.getElementById("modalPrevBtn");
     const modalNextBtn = document.getElementById("modalNextBtn");
     const thumbnailsStrip = document.getElementById("modalThumbnailsStrip");
+    const modalProgressBar = document.getElementById("modalProgressBar");
+    const modalPlayBtn = document.getElementById("modalPlayBtn");
+    const modalPlayBtnLabel = document.getElementById("modalPlayBtnLabel");
+    const modalPlayStateBadge = document.getElementById("modalPlayStateBadge");
+    const playIcon = document.getElementById("playIcon");
+    const pauseIcon = document.getElementById("pauseIcon");
+    const modalFullscreenBtn = document.getElementById("modalFullscreenBtn");
+    const fullscreenExpandIcon = document.getElementById("fullscreenExpandIcon");
+    const fullscreenCompressIcon = document.getElementById("fullscreenCompressIcon");
 
     let currentAlbumKey = null;
     let currentPhotos = [];
     let currentIndex = 0;
 
+    // Slideshow state
+    let isPlaying = false;
+    let slideshowTimer = null;
+    const SLIDE_DURATION = 3800; // 3.8 seconds per slide
+
+    /**
+     * Preload adjacent images in background for instant responsiveness
+     */
+    function preloadAdjacentImages() {
+        if (!currentPhotos.length) return;
+        const nextIdx = (currentIndex + 1) % currentPhotos.length;
+        const prevIdx = (currentIndex - 1 + currentPhotos.length) % currentPhotos.length;
+
+        const imgNext = new Image();
+        imgNext.src = currentPhotos[nextIdx];
+
+        const imgPrev = new Image();
+        imgPrev.src = currentPhotos[prevIdx];
+    }
+
+    /**
+     * Reset and start the progress bar animation
+     */
+    function triggerProgressBar() {
+        if (!modalProgressBar) return;
+        modalProgressBar.style.transition = "none";
+        modalProgressBar.style.width = "0%";
+
+        if (isPlaying) {
+            // Trigger reflow
+            void modalProgressBar.offsetWidth;
+            modalProgressBar.style.transition = `width ${SLIDE_DURATION}ms linear`;
+            modalProgressBar.style.width = "100%";
+        }
+    }
+
     /**
      * Update Lightbox Image and Thumbnails
      */
-    function updateLightbox(index) {
+    function updateLightbox(index, isAutoSlide = false) {
         if (!currentPhotos.length) return;
         currentIndex = (index + currentPhotos.length) % currentPhotos.length;
 
         if (modalMainImage) {
-            modalMainImage.style.opacity = "0.4";
-            modalMainImage.style.transform = "scale(0.97)";
+            if (modalLoadingSpinner) modalLoadingSpinner.style.display = "block";
+            modalMainImage.style.opacity = "0.35";
+            modalMainImage.style.transform = "scale(0.98)";
 
             const nextSrc = currentPhotos[currentIndex];
             const tempImg = new Image();
@@ -53,11 +100,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 modalMainImage.src = nextSrc;
                 modalMainImage.style.opacity = "1";
                 modalMainImage.style.transform = "scale(1)";
+                if (modalLoadingSpinner) modalLoadingSpinner.style.display = "none";
+                preloadAdjacentImages();
+            };
+            tempImg.onerror = () => {
+                if (modalLoadingSpinner) modalLoadingSpinner.style.display = "none";
+                modalMainImage.style.opacity = "1";
             };
         }
 
         if (modalCounter) {
-            modalCounter.textContent = `${currentIndex + 1} / ${currentPhotos.length}`;
+            modalCounter.textContent = `Slide ${currentIndex + 1} / ${currentPhotos.length}`;
         }
 
         // Update active thumbnail
@@ -71,12 +124,97 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
+
+        // Sync slideshow progress if running
+        if (isPlaying) {
+            triggerProgressBar();
+        }
     }
+
+    /**
+     * Slideshow Playback Controls
+     */
+    function startSlideshow() {
+        if (isPlaying || currentPhotos.length <= 1) return;
+        isPlaying = true;
+
+        if (playIcon) playIcon.style.display = "none";
+        if (pauseIcon) pauseIcon.style.display = "block";
+        if (modalPlayBtnLabel) modalPlayBtnLabel.textContent = "Pause";
+        if (modalPlayStateBadge) modalPlayStateBadge.style.display = "inline-flex";
+        if (modalPlayBtn) {
+            modalPlayBtn.classList.add("is-active");
+            modalPlayBtn.setAttribute("title", "Pause Slideshow (Space)");
+        }
+
+        triggerProgressBar();
+
+        slideshowTimer = setInterval(() => {
+            updateLightbox(currentIndex + 1, true);
+        }, SLIDE_DURATION);
+    }
+
+    function pauseSlideshow() {
+        if (!isPlaying) return;
+        isPlaying = false;
+        clearInterval(slideshowTimer);
+        slideshowTimer = null;
+
+        if (playIcon) playIcon.style.display = "block";
+        if (pauseIcon) pauseIcon.style.display = "none";
+        if (modalPlayBtnLabel) modalPlayBtnLabel.textContent = "Slideshow";
+        if (modalPlayStateBadge) modalPlayStateBadge.style.display = "none";
+        if (modalPlayBtn) {
+            modalPlayBtn.classList.remove("is-active");
+            modalPlayBtn.setAttribute("title", "Play Slideshow (Space)");
+        }
+
+        if (modalProgressBar) {
+            modalProgressBar.style.transition = "none";
+            modalProgressBar.style.width = "0%";
+        }
+    }
+
+    function toggleSlideshow() {
+        if (isPlaying) {
+            pauseSlideshow();
+        } else {
+            startSlideshow();
+        }
+    }
+
+    /**
+     * Fullscreen Toggle
+     */
+    function toggleFullscreen() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+            if (modal.requestFullscreen) {
+                modal.requestFullscreen();
+            } else if (modal.webkitRequestFullscreen) {
+                modal.webkitRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        }
+    }
+
+    function updateFullscreenIcons() {
+        const isFull = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        if (fullscreenExpandIcon) fullscreenExpandIcon.style.display = isFull ? "none" : "block";
+        if (fullscreenCompressIcon) fullscreenCompressIcon.style.display = isFull ? "block" : "none";
+    }
+
+    document.addEventListener("fullscreenchange", updateFullscreenIcons);
+    document.addEventListener("webkitfullscreenchange", updateFullscreenIcons);
 
     /**
      * Open Lightbox Modal for a selected album
      */
-    function openAlbum(albumKey) {
+    function openAlbum(albumKey, autoStartSlideshow = true) {
         const album = albumsData[albumKey];
         if (!album || !album.images || !album.images.length) return;
 
@@ -94,8 +232,12 @@ document.addEventListener("DOMContentLoaded", () => {
             currentPhotos.forEach((src, idx) => {
                 const thumb = document.createElement("div");
                 thumb.className = `gallery-thumb-item ${idx === 0 ? 'is-active' : ''}`;
+                thumb.setAttribute("title", `Slide ${idx + 1}`);
                 thumb.innerHTML = `<img src="${src}" alt="Thumbnail ${idx + 1}" loading="lazy" />`;
-                thumb.addEventListener("click", () => updateLightbox(idx));
+                thumb.addEventListener("click", () => {
+                    pauseSlideshow();
+                    updateLightbox(idx);
+                });
                 thumbnailsStrip.appendChild(thumb);
             });
         }
@@ -106,12 +248,24 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.style.display = "flex";
             document.body.style.overflow = "hidden";
         }
+
+        // Auto start slideshow on launch if more than 1 image
+        if (autoStartSlideshow && currentPhotos.length > 1) {
+            startSlideshow();
+        } else {
+            pauseSlideshow();
+        }
     }
 
     /**
      * Close Lightbox Modal
      */
     function closeModal() {
+        pauseSlideshow();
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        }
         if (modal) {
             modal.style.display = "none";
             document.body.style.overflow = "";
@@ -121,10 +275,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Modal Event Listeners
     if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeModal);
     if (modalBackdrop) modalBackdrop.addEventListener("click", closeModal);
+    if (modalPlayBtn) modalPlayBtn.addEventListener("click", toggleSlideshow);
+    if (modalFullscreenBtn) modalFullscreenBtn.addEventListener("click", toggleFullscreen);
 
     if (modalPrevBtn) {
         modalPrevBtn.addEventListener("click", (e) => {
             e.stopPropagation();
+            pauseSlideshow();
             updateLightbox(currentIndex - 1);
         });
     }
@@ -132,6 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalNextBtn) {
         modalNextBtn.addEventListener("click", (e) => {
             e.stopPropagation();
+            pauseSlideshow();
             updateLightbox(currentIndex + 1);
         });
     }
@@ -139,9 +297,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Keyboard Navigation
     document.addEventListener("keydown", (e) => {
         if (!modal || modal.style.display === "none") return;
-        if (e.key === "Escape") closeModal();
-        if (e.key === "ArrowLeft") updateLightbox(currentIndex - 1);
-        if (e.key === "ArrowRight") updateLightbox(currentIndex + 1);
+        
+        if (e.key === "Escape") {
+            closeModal();
+        } else if (e.key === "ArrowLeft") {
+            pauseSlideshow();
+            updateLightbox(currentIndex - 1);
+        } else if (e.key === "ArrowRight") {
+            pauseSlideshow();
+            updateLightbox(currentIndex + 1);
+        } else if (e.key === " " || e.code === "Space") {
+            e.preventDefault();
+            toggleSlideshow();
+        } else if (e.key === "f" || e.key === "F") {
+            toggleFullscreen();
+        }
     });
 
     // Touch Swipe Support
@@ -157,6 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
             touchEndX = e.changedTouches[0].screenX;
             const diff = touchEndX - touchStartX;
             if (Math.abs(diff) > 45) {
+                pauseSlideshow();
                 if (diff > 0) {
                     updateLightbox(currentIndex - 1); // Swipe right -> Prev
                 } else {
@@ -171,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     albumCards.forEach(card => {
         card.addEventListener("click", () => {
             const albumKey = card.getAttribute("data-album");
-            if (albumKey) openAlbum(albumKey);
+            if (albumKey) openAlbum(albumKey, true);
         });
     });
 

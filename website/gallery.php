@@ -188,20 +188,32 @@
                             <img src="<?= htmlspecialchars($album['cover']) ?>" alt="<?= htmlspecialchars($album['title']) ?>" class="album-card__image" loading="lazy" decoding="async" />
                             <div class="album-card__overlay">
                                 <span class="album-card__view-btn">
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                    <span>View Album</span>
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                    <span>Play Slideshow</span>
                                 </span>
                             </div>
-                            <span class="album-card__count-badge">
+                            <span class="album-card__count-badge" title="<?= $album['count'] ?> photos in this album">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                <span><?= $album['count'] ?> Photos</span>
+                                <span><?= $album['count'] ?> <?= $album['count'] === 1 ? 'Slide' : 'Slides' ?></span>
                             </span>
                         </div>
 
                         <div class="album-card__content">
-                            <span class="album-card__badge"><?= htmlspecialchars($album['category_label']) ?></span>
+                            <div class="album-card__header">
+                                <span class="album-card__badge"><?= htmlspecialchars($album['category_label']) ?></span>
+                                <span class="album-card__slide-indicator">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line></svg>
+                                    <?= $album['count'] ?> Photos
+                                </span>
+                            </div>
                             <h3 class="album-card__title"><?= htmlspecialchars($album['title']) ?></h3>
                             <p class="album-card__desc"><?= htmlspecialchars($album['description']) ?></p>
+                            
+                            <div class="album-card__footer">
+                                <span class="album-card__cta-text">
+                                    View Album &amp; Slideshow &rarr;
+                                </span>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -212,25 +224,50 @@
 
 
     <!-- ===================================================
-         3. Interactive Fullscreen Lightbox Modal
+         3. Interactive Fullscreen Lightbox & Slideshow Modal
          =================================================== -->
-    <div class="gallery-modal" id="galleryModal" role="dialog" aria-modal="true" aria-label="Photo Lightbox" style="display: none;">
+    <div class="gallery-modal" id="galleryModal" role="dialog" aria-modal="true" aria-label="Photo Lightbox & Slideshow" style="display: none;">
         <div class="gallery-modal__backdrop" id="modalBackdrop"></div>
         
+        <!-- Slideshow Top Progress Bar -->
+        <div class="gallery-modal__progress-track">
+            <div class="gallery-modal__progress-bar" id="modalProgressBar"></div>
+        </div>
+
         <div class="gallery-modal__container">
             
             <!-- Top Controls -->
             <div class="gallery-modal__header">
                 <div class="gallery-modal__info">
                     <h3 id="modalAlbumTitle" class="gallery-modal__title">Album Title</h3>
-                    <span id="modalCounter" class="gallery-modal__counter">1 / 1</span>
+                    <span id="modalCounter" class="gallery-modal__counter">Slide 1 / 1</span>
+                    <span id="modalPlayStateBadge" class="gallery-modal__play-badge" style="display: none;">
+                        <span class="gallery-modal__pulse-dot"></span> Slideshow Active
+                    </span>
                 </div>
-                <button type="button" class="gallery-modal__close-btn" id="modalCloseBtn" aria-label="Close Lightbox">&times;</button>
+
+                <div class="gallery-modal__actions">
+                    <!-- Slideshow Play/Pause Button -->
+                    <button type="button" class="gallery-modal__action-btn" id="modalPlayBtn" title="Play Slideshow (Space)" aria-label="Play Slideshow">
+                        <svg id="playIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <svg id="pauseIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                        <span id="modalPlayBtnLabel" class="gallery-modal__btn-text">Slideshow</span>
+                    </button>
+
+                    <!-- Fullscreen Toggle Button -->
+                    <button type="button" class="gallery-modal__action-btn" id="modalFullscreenBtn" title="Toggle Fullscreen (F)" aria-label="Toggle Fullscreen">
+                        <svg id="fullscreenExpandIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        <svg id="fullscreenCompressIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="display: none;"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                    </button>
+
+                    <!-- Close Button -->
+                    <button type="button" class="gallery-modal__close-btn" id="modalCloseBtn" title="Close Lightbox (Esc)" aria-label="Close Lightbox">&times;</button>
+                </div>
             </div>
 
             <!-- Main Stage -->
             <div class="gallery-modal__stage">
-                <button type="button" class="gallery-modal__nav-btn gallery-modal__nav-btn--prev" id="modalPrevBtn" aria-label="Previous Photo">
+                <button type="button" class="gallery-modal__nav-btn gallery-modal__nav-btn--prev" id="modalPrevBtn" title="Previous Slide (Left Arrow)" aria-label="Previous Photo">
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
 
@@ -239,13 +276,21 @@
                     <div id="modalLoadingSpinner" class="gallery-modal__spinner" style="display: none;"></div>
                 </div>
 
-                <button type="button" class="gallery-modal__nav-btn gallery-modal__nav-btn--next" id="modalNextBtn" aria-label="Next Photo">
+                <button type="button" class="gallery-modal__nav-btn gallery-modal__nav-btn--next" id="modalNextBtn" title="Next Slide (Right Arrow)" aria-label="Next Photo">
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
             </div>
 
-            <!-- Bottom Thumbnails Strip -->
-            <div class="gallery-modal__thumbnails-strip" id="modalThumbnailsStrip"></div>
+            <!-- Bottom Controls & Thumbnails Strip -->
+            <div class="gallery-modal__footer">
+                <div class="gallery-modal__thumbnails-strip" id="modalThumbnailsStrip"></div>
+                <div class="gallery-modal__hints">
+                    <span><kbd>Space</kbd> Play / Pause</span>
+                    <span><kbd>&larr;</kbd> <kbd>&rarr;</kbd> Navigate</span>
+                    <span><kbd>F</kbd> Fullscreen</span>
+                    <span><kbd>Esc</kbd> Close</span>
+                </div>
+            </div>
 
         </div>
     </div>
