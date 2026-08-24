@@ -44,12 +44,12 @@
 	--brand-primary-light: #34D399;
 	--brand-accent: #F59E0B;
 	--brand-accent-light: #FCD34D;
-	--surface-card: rgba(30, 41, 59, 0.75);
-	--surface-glass: rgba(30, 41, 59, 0.85);
-	--surface-glass-dark: rgba(15, 23, 42, 0.95);
+	--surface-card: rgba(30, 41, 59, 0.78);
+	--surface-glass: rgba(30, 41, 59, 0.88);
+	--surface-glass-dark: rgba(15, 23, 42, 0.96);
 	--border-light: rgba(255, 255, 255, 0.1);
 	--text-main: #F1F5F9;
-	--text-muted: #94A3B8;
+	--text-muted: #CBD5E1;
 	--card-bg: #1E293B;
 	--card-border: rgba(255, 255, 255, 0.08);
 	--input-bg: #0F172A;
@@ -60,7 +60,7 @@
 }
 
 [data-theme="dark"] body {
-	color: var(--text-main);
+	color: #F1F5F9;
 	background-color: #0B0F17;
 	background-image:
 		radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
@@ -69,77 +69,177 @@
 		linear-gradient(180deg, #0F172A 0%, #080D1A 100%);
 }
 
+/* ====================================================
+   DARK MODE COMPONENT & CARD ELEVATION
+   ==================================================== */
+
 [data-theme="dark"] .section-header-glass,
+[data-theme="dark"] .counter-section__box,
+[data-theme="dark"] .counter-section__item,
+[data-theme="dark"] .chairman-section__profile,
+[data-theme="dark"] .chairman-section__header,
+[data-theme="dark"] .chairman-section__body,
+[data-theme="dark"] .pride-section,
+[data-theme="dark"] .pride-section__item,
+[data-theme="dark"] .passrate-card,
+[data-theme="dark"] .news-card,
+[data-theme="dark"] .testimonial-card,
 [data-theme="dark"] .program-card,
 [data-theme="dark"] .faculty-card,
+[data-theme="dark"] .trustee-card,
 [data-theme="dark"] .album-card,
 [data-theme="dark"] .committee-card,
 [data-theme="dark"] .scholarship-card,
 [data-theme="dark"] .placement-card,
 [data-theme="dark"] .contact-card,
+[data-theme="dark"] .online-card,
+[data-theme="dark"] .emag-card,
+[data-theme="dark"] .course-card,
+[data-theme="dark"] .stream-advisor,
+[data-theme="dark"] .stream-chip,
 [data-theme="dark"] .inquiry_modal__dialog,
 [data-theme="dark"] .spotlight_modal__dialog,
-[data-theme="dark"] .stream-chip,
-[data-theme="dark"] .course-card {
-	background: var(--card-bg) !important;
-	border-color: var(--card-border) !important;
-	color: var(--text-main) !important;
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+[data-theme="dark"] .navbar_modal__content {
+	background: #1E293B !important;
+	border-color: rgba(255, 255, 255, 0.08) !important;
+	color: #F1F5F9 !important;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
 }
 
+/* Nested Sub-Cards, Stats & Inner Boxes */
+[data-theme="dark"] .passrate-card__stat-item,
+[data-theme="dark"] .program-card__specs-row,
+[data-theme="dark"] .stream-advisor__status,
+[data-theme="dark"] .courses-directory__header,
+[data-theme="dark"] .course-card__info-row,
+[data-theme="dark"] .course-faq__item,
+[data-theme="dark"] .faculties-directory__header,
+[data-theme="dark"] .gallery-controls {
+	background: #0F172A !important;
+	border-color: rgba(255, 255, 255, 0.06) !important;
+	color: #F1F5F9 !important;
+}
+
+/* Headings, Stream Codes, Names & Counters */
 [data-theme="dark"] h1,
 [data-theme="dark"] h2,
 [data-theme="dark"] h3,
 [data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] .counter-section__number,
+[data-theme="dark"] .chairman-section__name,
+[data-theme="dark"] .pride-section__name,
+[data-theme="dark"] .passrate-card__stream,
+[data-theme="dark"] .passrate-card__stat-value,
+[data-theme="dark"] .news-card__title,
+[data-theme="dark"] .testimonial-card__name,
 [data-theme="dark"] .program-card__title,
+[data-theme="dark"] .faculty-card__name,
+[data-theme="dark"] .trustee-card__name,
+[data-theme="dark"] .album-card__title,
+[data-theme="dark"] .committee-card__name,
+[data-theme="dark"] .scholarship-card__title,
 [data-theme="dark"] .stream-advisor__title,
+[data-theme="dark"] .courses-directory__title,
 [data-theme="dark"] .inquiry_modal__title,
 [data-theme="dark"] .inquiry_modal__success-title {
 	color: #FFFFFF !important;
 }
 
+/* Body Copy, Paragraphs, Quotes & Descriptions */
 [data-theme="dark"] p,
+[data-theme="dark"] .chairman-section__message,
+[data-theme="dark"] .pride-section__quote,
+[data-theme="dark"] .testimonial-card__quote,
 [data-theme="dark"] .program-card__desc,
 [data-theme="dark"] .program-card__dept,
+[data-theme="dark"] .faculty-card__dept,
+[data-theme="dark"] .faculty-card__qualification,
+[data-theme="dark"] .news-card__desc,
+[data-theme="dark"] .scholarship-card__desc,
+[data-theme="dark"] .courses-directory__subtitle,
+[data-theme="dark"] .stream-advisor__desc,
 [data-theme="dark"] .inquiry_modal__subtitle,
 [data-theme="dark"] .inquiry_form__footer-note {
-	color: var(--text-muted) !important;
+	color: #CBD5E1 !important;
 }
 
+/* Secondary Meta, Labels & Subtitles */
+[data-theme="dark"] .counter-section__label,
+[data-theme="dark"] .chairman-section__designation,
+[data-theme="dark"] .pride-section__designation,
+[data-theme="dark"] .testimonial-card__program,
+[data-theme="dark"] .passrate-card__stat-label,
+[data-theme="dark"] .passrate-card__summary,
+[data-theme="dark"] .news-card__date,
+[data-theme="dark"] .program-card__specs-row span,
+[data-theme="dark"] .course-card p {
+	color: #94A3B8 !important;
+}
+
+/* Form Controls & Inputs */
 [data-theme="dark"] .inquiry_form__input,
 [data-theme="dark"] .inquiry_form__select,
 [data-theme="dark"] .inquiry_form__textarea,
 [data-theme="dark"] .contact-form__input,
-[data-theme="dark"] .contact-form__textarea {
-	background: var(--input-bg) !important;
-	color: #F8FAFC !important;
-	border-color: var(--input-border) !important;
-}
-
-[data-theme="dark"] .inquiry_form__label {
-	color: #E2E8F0 !important;
-}
-
-[data-theme="dark"] .program-card__specs-row {
+[data-theme="dark"] .contact-form__textarea,
+[data-theme="dark"] .faculties-search__input {
 	background: #0F172A !important;
-	border-color: rgba(255, 255, 255, 0.06) !important;
-}
-
-[data-theme="dark"] .courses-directory__header {
-	background: #1E293B !important;
-	border-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-[data-theme="dark"] .courses-filter-btn {
-	background: #0F172A !important;
-	color: #94A3B8 !important;
+	color: #FFFFFF !important;
 	border-color: #334155 !important;
 }
 
-[data-theme="dark"] .courses-filter-btn.is-active {
+[data-theme="dark"] .inquiry_form__input::placeholder,
+[data-theme="dark"] .inquiry_form__textarea::placeholder,
+[data-theme="dark"] .contact-form__input::placeholder,
+[data-theme="dark"] .contact-form__textarea::placeholder,
+[data-theme="dark"] .faculties-search__input::placeholder {
+	color: #64748B !important;
+}
+
+[data-theme="dark"] .inquiry_form__label,
+[data-theme="dark"] .contact-form__label {
+	color: #F1F5F9 !important;
+}
+
+/* Filter Tabs & Buttons */
+[data-theme="dark"] .courses-filter-btn,
+[data-theme="dark"] .faculties-filter-btn {
+	background: #0F172A !important;
+	color: #CBD5E1 !important;
+	border-color: #334155 !important;
+}
+
+[data-theme="dark"] .courses-filter-btn.is-active,
+[data-theme="dark"] .faculties-filter-btn.is-active {
 	background: linear-gradient(135deg, #10B981, #059669) !important;
 	color: #FFFFFF !important;
 	border-color: transparent !important;
+}
+
+[data-theme="dark"] .stream-chip {
+	color: #F1F5F9 !important;
+	border-color: #334155 !important;
+}
+
+[data-theme="dark"] .stream-chip.is-active {
+	background: linear-gradient(135deg, #10B981, #059669) !important;
+	color: #FFFFFF !important;
+	border-color: transparent !important;
+}
+
+[data-theme="dark"] .btn--outline,
+[data-theme="dark"] .btn--quick-inquire {
+	background: #0F172A !important;
+	color: #34D399 !important;
+	border-color: rgba(52, 211, 153, 0.4) !important;
+}
+
+[data-theme="dark"] .btn--outline:hover,
+[data-theme="dark"] .btn--quick-inquire:hover {
+	background: #10B981 !important;
+	color: #FFFFFF !important;
 }
 
 /* ====================================================
