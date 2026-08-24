@@ -360,6 +360,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------
     // 5. Dropdowns Navigation (Desktop Hover Grace + Mobile Accordion)
     // ----------------------------------------------------
+    const allNavItems = document.querySelectorAll(".navbar_nav__item");
+
+    // Close any stuck dropdowns when hovering over ANY nav link
+    allNavItems.forEach(navItem => {
+        navItem.addEventListener("mouseenter", () => {
+            if (window.innerWidth > 1120) {
+                dropdownItems.forEach(d => {
+                    if (d !== navItem) {
+                        d.classList.remove("js-dropdown-active");
+                        const l = d.querySelector(".navbar_nav__link");
+                        if (l) l.setAttribute("aria-expanded", "false");
+                    }
+                });
+            }
+        });
+    });
+
     dropdownItems.forEach(item => {
         const link = item.querySelector(".navbar_nav__link");
         if (!link) return;
@@ -401,9 +418,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Close dropdowns when clicking outside or when mouse leaves the navbar on desktop
+    if (navbar) {
+        navbar.addEventListener("mouseleave", () => {
+            if (window.innerWidth > 1120) {
+                closeAllDropdowns();
+            }
+        });
+    }
+
     document.addEventListener("click", (e) => {
         const isClickInside = Array.from(dropdownItems).some(item => item.contains(e.target));
         if (!isClickInside) {
+            closeAllDropdowns();
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
             closeAllDropdowns();
         }
     });

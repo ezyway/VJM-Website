@@ -272,6 +272,23 @@
         background: rgba(255, 255, 255, 0.12);
     }
 
+    /* Mutual Exclusion: Never allow a non-hovered dropdown to remain visible over/under a hovered one */
+    .navbar_nav:hover .navbar_nav__item--dropdown:not(:hover) .navbar_dropdown {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translateX(-50%) translateY(10px) !important;
+    }
+
+    .navbar_nav:hover .navbar_nav__item--dropdown:not(:hover) .navbar_nav__arrow {
+        transform: rotate(0deg) !important;
+    }
+
+    .navbar_nav:hover .navbar_nav__item--dropdown:not(:hover) > .navbar_nav__link {
+        background: transparent !important;
+        color: #E2E8F0 !important;
+    }
+
     /* Dark Mode Overrides for Desktop Floating Island & Dropdowns */
     [data-theme="dark"] .navbar_island {
         background: rgba(15, 23, 42, 0.88);
