@@ -70,7 +70,7 @@
 }
 
 /* ====================================================
-   DARK MODE COMPONENT & CARD ELEVATION
+   DARK MODE COMPONENT & CARD ELEVATION (UNIVERSAL)
    ==================================================== */
 
 [data-theme="dark"] .section-header-glass,
@@ -81,9 +81,20 @@
 [data-theme="dark"] .chairman-section__body,
 [data-theme="dark"] .pride-section,
 [data-theme="dark"] .pride-section__item,
+[data-theme="dark"] .pride-section__card,
 [data-theme="dark"] .passrate-card,
 [data-theme="dark"] .news-card,
-[data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .news-section__box,
+[data-theme="dark"] .news-section__item,
+[data-theme="dark"] .table-section__container,
+[data-theme="dark"] .table-container,
+[data-theme="dark"] .testimonials-section__wrapper,
+[data-theme="dark"] .testimonials-section__item,
+[data-theme="dark"] .photo-carousel-section__wrapper,
+[data-theme="dark"] .about-story__card,
+[data-theme="dark"] .about-story__header-box,
+[data-theme="dark"] .about-story__text-box,
+[data-theme="dark"] .about-story__highlight-item,
 [data-theme="dark"] .program-card,
 [data-theme="dark"] .faculty-card,
 [data-theme="dark"] .trustee-card,
@@ -106,7 +117,12 @@
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
 }
 
-/* Nested Sub-Cards, Stats & Inner Boxes */
+/* Inner Headers, Banners & Group Blocks */
+[data-theme="dark"] .news-section__header,
+[data-theme="dark"] .table-section__header,
+[data-theme="dark"] .testimonials-section__header,
+[data-theme="dark"] .photo-carousel-section__header,
+[data-theme="dark"] .pride-section__header,
 [data-theme="dark"] .passrate-card__stat-item,
 [data-theme="dark"] .program-card__specs-row,
 [data-theme="dark"] .stream-advisor__status,
@@ -116,7 +132,7 @@
 [data-theme="dark"] .faculties-directory__header,
 [data-theme="dark"] .gallery-controls {
 	background: #0F172A !important;
-	border-color: rgba(255, 255, 255, 0.06) !important;
+	border: 1px solid rgba(255, 255, 255, 0.08) !important;
 	color: #F1F5F9 !important;
 }
 
@@ -132,8 +148,12 @@
 [data-theme="dark"] .pride-section__name,
 [data-theme="dark"] .passrate-card__stream,
 [data-theme="dark"] .passrate-card__stat-value,
-[data-theme="dark"] .news-card__title,
-[data-theme="dark"] .testimonial-card__name,
+[data-theme="dark"] .news-section__title,
+[data-theme="dark"] .news-section__item-title,
+[data-theme="dark"] .table-section__title,
+[data-theme="dark"] .testimonials-section__title,
+[data-theme="dark"] .testimonials-section__name,
+[data-theme="dark"] .photo-carousel-section__title,
 [data-theme="dark"] .program-card__title,
 [data-theme="dark"] .faculty-card__name,
 [data-theme="dark"] .trustee-card__name,
@@ -151,17 +171,20 @@
 [data-theme="dark"] p,
 [data-theme="dark"] .chairman-section__message,
 [data-theme="dark"] .pride-section__quote,
-[data-theme="dark"] .testimonial-card__quote,
+[data-theme="dark"] .news-section__item-desc,
+[data-theme="dark"] .table-section__subtitle,
+[data-theme="dark"] .testimonials-section__text,
 [data-theme="dark"] .program-card__desc,
 [data-theme="dark"] .program-card__dept,
 [data-theme="dark"] .faculty-card__dept,
 [data-theme="dark"] .faculty-card__qualification,
-[data-theme="dark"] .news-card__desc,
 [data-theme="dark"] .scholarship-card__desc,
 [data-theme="dark"] .courses-directory__subtitle,
 [data-theme="dark"] .stream-advisor__desc,
 [data-theme="dark"] .inquiry_modal__subtitle,
-[data-theme="dark"] .inquiry_form__footer-note {
+[data-theme="dark"] .inquiry_form__footer-note,
+[data-theme="dark"] .about-story__lead,
+[data-theme="dark"] .about-story__text {
 	color: #CBD5E1 !important;
 }
 
@@ -170,9 +193,11 @@
 [data-theme="dark"] .chairman-section__designation,
 [data-theme="dark"] .pride-section__designation,
 [data-theme="dark"] .testimonial-card__program,
+[data-theme="dark"] .testimonials-section__course,
 [data-theme="dark"] .passrate-card__stat-label,
 [data-theme="dark"] .passrate-card__summary,
-[data-theme="dark"] .news-card__date,
+[data-theme="dark"] .news-section__date,
+[data-theme="dark"] .news-section__university,
 [data-theme="dark"] .program-card__specs-row span,
 [data-theme="dark"] .course-card p {
 	color: #94A3B8 !important;

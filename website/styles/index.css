@@ -1382,3 +1382,164 @@
         height: 42px;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (INDEX PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .counter-section__box,
+[data-theme="dark"] .chairman-section__profile,
+[data-theme="dark"] .pride-section,
+[data-theme="dark"] .news-section__box,
+[data-theme="dark"] .table-section__container,
+[data-theme="dark"] .testimonials-section__wrapper,
+[data-theme="dark"] .photo-carousel-section__wrapper {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Inner Headers and Group Banners */
+[data-theme="dark"] .chairman-section__header,
+[data-theme="dark"] .chairman-section__body,
+[data-theme="dark"] .pride-section__header,
+[data-theme="dark"] .pride-section__card,
+[data-theme="dark"] .news-section__header,
+[data-theme="dark"] .table-section__header,
+[data-theme="dark"] .table-container,
+[data-theme="dark"] .testimonials-section__header,
+[data-theme="dark"] .photo-carousel-section__header {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Inner Floating Items & Cards */
+[data-theme="dark"] .counter-section__item,
+[data-theme="dark"] .news-section__item,
+[data-theme="dark"] .testimonials-section__item {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .counter-section__item:hover,
+[data-theme="dark"] .news-section__item:hover,
+[data-theme="dark"] .testimonials-section__item:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Headings & High Contrast Text */
+[data-theme="dark"] .chairman-section__name,
+[data-theme="dark"] .pride-section__title,
+[data-theme="dark"] .pride-section__name,
+[data-theme="dark"] .news-section__title,
+[data-theme="dark"] .news-section__item-title,
+[data-theme="dark"] .table-section__title,
+[data-theme="dark"] .testimonials-section__title,
+[data-theme="dark"] .testimonials-section__name,
+[data-theme="dark"] .photo-carousel-section__title,
+[data-theme="dark"] .counter-section__number {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .chairman-section__message,
+[data-theme="dark"] .pride-section__quote,
+[data-theme="dark"] .news-section__item-desc,
+[data-theme="dark"] .table-section__subtitle,
+[data-theme="dark"] .testimonials-section__text {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .chairman-section__designation,
+[data-theme="dark"] .counter-section__label,
+[data-theme="dark"] .news-section__university,
+[data-theme="dark"] .testimonials-section__course {
+    color: #94A3B8 !important;
+}
+
+/* Navigation Round Buttons */
+[data-theme="dark"] .pride-section__nav-prev,
+[data-theme="dark"] .pride-section__nav-next,
+[data-theme="dark"] .testimonials-section__nav-left,
+[data-theme="dark"] .testimonials-section__nav-right,
+[data-theme="dark"] .photo-carousel-section__nav-left,
+[data-theme="dark"] .photo-carousel-section__nav-right {
+    background: #0F172A !important;
+    border: 1.5px solid #334155 !important;
+    color: #F8FAFC !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .pride-section__nav-prev:hover,
+[data-theme="dark"] .pride-section__nav-next:hover,
+[data-theme="dark"] .testimonials-section__nav-left:hover,
+[data-theme="dark"] .testimonials-section__nav-right:hover,
+[data-theme="dark"] .photo-carousel-section__nav-left:hover,
+[data-theme="dark"] .photo-carousel-section__nav-right:hover {
+    background: #10B981 !important;
+    border-color: #10B981 !important;
+    color: #FFFFFF !important;
+}
+
+/* Section Action Links */
+[data-theme="dark"] .photo-carousel-section__view-all,
+[data-theme="dark"] .photo-carousel-section__header a {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34D399 !important;
+    border: 1px solid rgba(52, 211, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .photo-carousel-section__view-all:hover,
+[data-theme="dark"] .photo-carousel-section__header a:hover {
+    background: #10B981 !important;
+    color: #FFFFFF !important;
+}
+
+/* Table Dark Overrides */
+[data-theme="dark"] .achievements-table {
+    background: #0F172A !important;
+}
+
+[data-theme="dark"] .achievements-table thead th {
+    background: #0B1322 !important;
+    color: #F8FAFC !important;
+    border-bottom: 2px solid #334155 !important;
+}
+
+[data-theme="dark"] .achievements-table thead th:first-child {
+    background: #080E1A !important;
+}
+
+[data-theme="dark"] .achievements-table th:first-child,
+[data-theme="dark"] .achievements-table td:first-child {
+    background: #0F172A !important;
+    color: #F8FAFC !important;
+    border-right: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .achievements-table td {
+    color: #CBD5E1 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+[data-theme="dark"] .achievements-table tbody tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+[data-theme="dark"] .achievements-table tbody tr:hover td {
+    background: rgba(16, 185, 129, 0.12) !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .achievements-table .tr-latest td {
+    background: rgba(245, 158, 11, 0.08) !important;
+}
+
+[data-theme="dark"] .rate-perfect {
+    color: #34D399 !important;
+    background: rgba(16, 185, 129, 0.18) !important;
+}
