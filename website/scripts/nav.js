@@ -358,12 +358,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 5. Dropdowns Navigation (Desktop & Mobile Accordion)
+    // 5. Dropdowns Navigation (Desktop Hover Grace + Mobile Accordion)
     // ----------------------------------------------------
     dropdownItems.forEach(item => {
         const link = item.querySelector(".navbar_nav__link");
         if (!link) return;
 
+        let leaveTimer = null;
+
+        // Desktop Smooth Hover Intent with grace buffer
+        item.addEventListener("mouseenter", () => {
+            if (window.innerWidth > 1120) {
+                clearTimeout(leaveTimer);
+                closeAllDropdowns(item);
+                item.classList.add("js-dropdown-active");
+                link.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        item.addEventListener("mouseleave", () => {
+            if (window.innerWidth > 1120) {
+                leaveTimer = setTimeout(() => {
+                    item.classList.remove("js-dropdown-active");
+                    link.setAttribute("aria-expanded", "false");
+                }, 180);
+            }
+        });
+
+        // Click handler for mobile accordion / touch / keyboard access
         link.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
