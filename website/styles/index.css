@@ -1505,41 +1505,68 @@
 
 [data-theme="dark"] .achievements-table thead th {
     background: #0B1322 !important;
-    color: #F8FAFC !important;
+    color: #FFFFFF !important;
     border-bottom: 2px solid #334155 !important;
 }
 
 [data-theme="dark"] .achievements-table thead th:first-child {
     background: #080E1A !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .achievements-table tbody tr {
+    background: #0F172A !important;
+}
+
+[data-theme="dark"] .achievements-table tbody tr:nth-child(even) {
+    background: #162032 !important;
+}
+
+[data-theme="dark"] .achievements-table tbody tr:hover {
+    background: #1E2D44 !important;
 }
 
 [data-theme="dark"] .achievements-table th:first-child,
 [data-theme="dark"] .achievements-table td:first-child {
     background: #0F172A !important;
-    color: #F8FAFC !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
     border-right: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .achievements-table tbody tr:nth-child(even) td:first-child {
+    background: #162032 !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .achievements-table tbody tr:hover td:first-child {
+    background: #1E2D44 !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .achievements-table td {
     color: #CBD5E1 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 [data-theme="dark"] .achievements-table tbody tr:nth-child(even) td {
-    background: rgba(255, 255, 255, 0.02) !important;
+    background: transparent !important;
 }
 
 [data-theme="dark"] .achievements-table tbody tr:hover td {
-    background: rgba(16, 185, 129, 0.12) !important;
-    color: #FFFFFF !important;
+    background: transparent !important;
 }
 
-[data-theme="dark"] .achievements-table .tr-latest td {
-    background: rgba(245, 158, 11, 0.08) !important;
+[data-theme="dark"] .achievements-table .tr-latest,
+[data-theme="dark"] .achievements-table .tr-latest td,
+[data-theme="dark"] .achievements-table .tr-latest td:first-child {
+    background: rgba(245, 158, 11, 0.12) !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="dark"] .rate-perfect {
     color: #34D399 !important;
-    background: rgba(16, 185, 129, 0.18) !important;
+    background: rgba(16, 185, 129, 0.22) !important;
+    font-weight: 800 !important;
 }
