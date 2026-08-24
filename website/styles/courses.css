@@ -979,3 +979,95 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (COURSES PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .course-detail__container,
+[data-theme="dark"] .courses-directory__container,
+[data-theme="dark"] .stream-advisor {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .courses-directory__header,
+[data-theme="dark"] .course-card__info-row,
+[data-theme="dark"] .course-specs-table,
+[data-theme="dark"] .course-faq__item,
+[data-theme="dark"] .stream-advisor__status {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .course-card,
+[data-theme="dark"] .program-card,
+[data-theme="dark"] .course-overview-card,
+[data-theme="dark"] .course-highlight-item {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .course-card:hover,
+[data-theme="dark"] .program-card:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .program-card__title,
+[data-theme="dark"] .course-card__title,
+[data-theme="dark"] .course-spec-row__label,
+[data-theme="dark"] .course-faq__question,
+[data-theme="dark"] .stream-advisor__title,
+[data-theme="dark"] .courses-directory__title {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .program-card__desc,
+[data-theme="dark"] .course-card p,
+[data-theme="dark"] .course-faq__answer,
+[data-theme="dark"] .course-spec-row__value,
+[data-theme="dark"] .stream-advisor__desc,
+[data-theme="dark"] .courses-directory__subtitle {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .program-card__dept,
+[data-theme="dark"] .course-card__meta-item {
+    color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .program-card__specs-row {
+    background: #0F172A !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="dark"] .program-card__specs-row span {
+    color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .courses-filter-btn {
+    background: #0F172A !important;
+    color: #CBD5E1 !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .courses-filter-btn.is-active {
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+}
+
+[data-theme="dark"] .btn--quick-inquire {
+    background: #0F172A !important;
+    color: #34D399 !important;
+    border-color: rgba(52, 211, 153, 0.4) !important;
+}
+
+[data-theme="dark"] .btn--quick-inquire:hover {
+    background: #10B981 !important;
+    color: #FFFFFF !important;
+}

@@ -980,3 +980,86 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (ABOUT PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .about-story__card,
+[data-theme="dark"] .trustee-section__container,
+[data-theme="dark"] .about-facilities__container {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Inner Headers & Highlight Boxes */
+[data-theme="dark"] .about-story__header-box,
+[data-theme="dark"] .about-story__text-box,
+[data-theme="dark"] .about-story__highlight-item,
+[data-theme="dark"] .about-pillars__header,
+[data-theme="dark"] .trustee-section__header,
+[data-theme="dark"] .about-facilities__header {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Floating Cards (Pillars, Trustees, Facilities) */
+[data-theme="dark"] .about-pillar-card,
+[data-theme="dark"] .trustee-card,
+[data-theme="dark"] .facility-card {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .about-pillar-card:hover,
+[data-theme="dark"] .trustee-card:hover,
+[data-theme="dark"] .facility-card:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Typography & Contrast */
+[data-theme="dark"] .about-story__title,
+[data-theme="dark"] .about-story__highlight-item h4,
+[data-theme="dark"] .about-pillars__title,
+[data-theme="dark"] .about-pillar-card__title,
+[data-theme="dark"] .trustee-section__title,
+[data-theme="dark"] .trustee-card__name,
+[data-theme="dark"] .about-facilities__title,
+[data-theme="dark"] .facility-card__title {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .about-story__lead,
+[data-theme="dark"] .about-story__text,
+[data-theme="dark"] .about-story__highlight-item p,
+[data-theme="dark"] .about-pillars__subtitle,
+[data-theme="dark"] .about-pillar-card__desc,
+[data-theme="dark"] .trustee-card__desc,
+[data-theme="dark"] .about-facilities__subtitle,
+[data-theme="dark"] .facility-card__desc {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .trustee-section__subtitle,
+[data-theme="dark"] .trustee-card__designation {
+    color: #94A3B8 !important;
+}
+
+/* Trustee Slider Buttons */
+[data-theme="dark"] .trustee-nav-btn {
+    background: #0F172A !important;
+    border: 1.5px solid #334155 !important;
+    color: #F8FAFC !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .trustee-nav-btn:hover:not(:disabled) {
+    background: #10B981 !important;
+    border-color: #10B981 !important;
+    color: #FFFFFF !important;
+}

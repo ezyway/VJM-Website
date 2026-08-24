@@ -1162,3 +1162,61 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (FACULTIES PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .faculties-section__container {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .faculties-section__header,
+[data-theme="dark"] .faculty-search-wrapper,
+[data-theme="dark"] .faculty-search__input {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .faculty-card {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .faculty-card:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .faculty-card__name,
+[data-theme="dark"] .faculties-section__title {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .faculty-card__dept,
+[data-theme="dark"] .faculty-card__qualification {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .faculty-card__designation,
+[data-theme="dark"] .faculty-card__experience,
+[data-theme="dark"] .faculties-section__subtitle {
+    color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .faculty-tab-btn {
+    background: #0F172A !important;
+    color: #CBD5E1 !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .faculty-tab-btn.is-active {
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+}
