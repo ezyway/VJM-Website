@@ -260,6 +260,28 @@
     }
 }
 
+/* Dark Mode Overrides for Navbar & Dropdowns */
+[data-theme="dark"] .navbar_island {
+    background: rgba(15, 23, 42, 0.88) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .navbar_dropdown {
+    background: rgba(15, 23, 42, 0.96) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .navbar_container--scrolled {
+    background: rgba(11, 15, 23, 0.95) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .navbar_nav {
+    background: rgba(15, 23, 42, 0.98);
+}
+
 /* Fallback JS active class for touch / click */
 .navbar_nav__item--dropdown.js-dropdown-active .navbar_dropdown {
     opacity: 1;
@@ -491,65 +513,38 @@
 
 
 /* =======================================================
-   5. SEARCH BUTTON & THEME TOGGLE (NAVBAR)
+   5. COMPACT ICON BUTTONS: SEARCH & THEME TOGGLE (NAVBAR)
    ========================================================== */
 
-/* Quick Search Button */
-.navbar_search-btn {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: var(--radius-full);
-    color: #E2E8F0;
-    padding: 0.45rem 0.85rem;
-    font-family: inherit;
-    font-size: 0.84rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.navbar_search-btn:hover {
-    background: rgba(255, 255, 255, 0.22);
-    border-color: #FDE68A;
-    color: #FFFFFF;
-    transform: translateY(-1px);
-}
-
-.navbar_search-kbd {
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    font-size: 0.68rem;
-    padding: 1px 5px;
-    color: #FDE68A;
-    font-family: inherit;
-    font-weight: 700;
-}
-
-/* Theme Toggle Button */
-.theme-toggle-btn {
+/* Universal Compact Icon Button (Search & Theme) */
+.navbar_icon-btn {
     width: 36px;
     height: 36px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     color: #FDE68A;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-family: inherit;
     transition: all var(--transition-fast);
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar_icon-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #FDE68A;
+    color: #FFFFFF;
+    transform: translateY(-1px) scale(1.06);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .theme-toggle-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.08) rotate(15deg);
-    border-color: #FDE68A;
+    transform: translateY(-1px) scale(1.06) rotate(15deg);
 }
-
 
 /* =======================================================
    6. SPOTLIGHT QUICK SEARCH MODAL (Ctrl + K)
@@ -685,8 +680,8 @@
 
 [data-theme="dark"] .spotlight-item:hover,
 [data-theme="dark"] .spotlight-item.is-selected {
-    background: rgba(43, 176, 151, 0.15) !important;
-    border-color: rgba(43, 176, 151, 0.35) !important;
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
 }
 
 .spotlight-item__icon {
@@ -712,7 +707,7 @@
 }
 
 [data-theme="dark"] .spotlight-item__title {
-    color: #F1F5F9 !important;
+    color: #F8FAFC !important;
 }
 
 .spotlight-item__desc {
@@ -721,6 +716,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+[data-theme="dark"] .spotlight-item__desc {
+    color: #94A3B8 !important;
 }
 
 .spotlight-item__badge {
@@ -734,6 +733,12 @@
     color: #D97706;
     border: 1px solid rgba(217, 119, 6, 0.25);
     flex-shrink: 0;
+}
+
+[data-theme="dark"] .spotlight-item__badge {
+    background: rgba(245, 158, 11, 0.18) !important;
+    color: #FCD34D !important;
+    border-color: rgba(245, 158, 11, 0.35) !important;
 }
 
 .spotlight-empty {
@@ -764,8 +769,22 @@
 
 [data-theme="dark"] .spotlight_modal__search-box,
 [data-theme="dark"] .spotlight_modal__footer {
-    background: #071A16 !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: #0F172A !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .spotlight_modal__input {
+    color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .spotlight_modal__close-btn {
+    background: #334155 !important;
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .spotlight_modal__close-btn:hover {
+    background: #EF4444 !important;
+    color: #FFFFFF !important;
 }
 
 .spotlight_modal__footer kbd {
@@ -776,7 +795,7 @@
 }
 
 [data-theme="dark"] .spotlight_modal__footer kbd {
-    background: rgba(255, 255, 255, 0.15) !important;
+    background: #334155 !important;
     color: #F8FAFC !important;
 }
 
