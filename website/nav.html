@@ -101,7 +101,15 @@
                     </ul>
                 </li>
 
-                <!-- 6. Contact Us CTA Button -->
+                <!-- 6. Apply / Inquire CTA Button -->
+                <li class="navbar_nav__item navbar_nav__item--apply" role="none">
+                    <button type="button" class="navbar_nav__link navbar_nav__link--inquiry" id="openInquiryBtn" data-open-inquiry="true" aria-label="Open Admissions Inquiry">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                        <span>Apply / Inquire</span>
+                    </button>
+                </li>
+
+                <!-- 7. Contact Us CTA Button -->
                 <li class="navbar_nav__item navbar_nav__item--cta" role="none">
                     <a href="contact.php" class="navbar_nav__link navbar_nav__link--cta" role="menuitem">Contact Us</a>
                 </li>
@@ -139,3 +147,116 @@
         </div>
     </div>
 </div>
+
+<!-- ============================================
+     Interactive Quick Admission & Course Inquiry Modal
+     ============================================ -->
+<div class="inquiry_modal" id="inquiryModal" role="dialog" aria-modal="true" aria-label="Admission &amp; Course Inquiry Desk" style="display: none;">
+    <div class="inquiry_modal__backdrop" id="inquiryBackdrop"></div>
+    
+    <div class="inquiry_modal__dialog">
+        <button type="button" class="inquiry_modal__close" id="inquiryCloseBtn" aria-label="Close Inquiry Dialog">&times;</button>
+        
+        <div class="inquiry_modal__header">
+            <div class="inquiry_modal__icon-badge">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div>
+                <span class="inquiry_modal__eyebrow">Academic Year 2026–27</span>
+                <h2 class="inquiry_modal__title">Admission &amp; Course Inquiry</h2>
+                <p class="inquiry_modal__subtitle">Get instant guidance regarding eligibility, fee structure, scholarships, and campus visits.</p>
+            </div>
+        </div>
+
+        <form id="admissionInquiryForm" class="inquiry_form" novalidate>
+            <div class="inquiry_form__grid">
+                
+                <!-- Full Name -->
+                <div class="inquiry_form__group">
+                    <label for="inquiryName" class="inquiry_form__label">Student / Parent Name <span class="req">*</span></label>
+                    <input type="text" id="inquiryName" name="name" class="inquiry_form__input" placeholder="e.g. Rahul Sharma" required />
+                    <span class="inquiry_form__error" id="inquiryNameError">Please enter your name</span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="inquiry_form__group">
+                    <label for="inquiryPhone" class="inquiry_form__label">Mobile / WhatsApp Number <span class="req">*</span></label>
+                    <input type="tel" id="inquiryPhone" name="phone" class="inquiry_form__input" placeholder="e.g. 9876543210" maxlength="10" required />
+                    <span class="inquiry_form__error" id="inquiryPhoneError">Enter a valid 10-digit mobile number</span>
+                </div>
+
+                <!-- Program of Interest -->
+                <div class="inquiry_form__group">
+                    <label for="inquiryProgram" class="inquiry_form__label">Select Program <span class="req">*</span></label>
+                    <select id="inquiryProgram" name="program" class="inquiry_form__select" required>
+                        <option value="">-- Choose Degree Program --</option>
+                        <optgroup label="Undergraduate (UG)">
+                            <option value="BCA">B.C.A. (Computer Applications)</option>
+                            <option value="B.Sc.">B.Sc. (Science &amp; Chemistry)</option>
+                            <option value="BBA">B.B.A. (Business Administration)</option>
+                            <option value="B.Com.">B.Com. (Commerce &amp; Banking)</option>
+                            <option value="BSW">B.S.W. (Social Work)</option>
+                        </optgroup>
+                        <optgroup label="Postgraduate (PG)">
+                            <option value="M.Sc. IT">M.Sc. (IT &amp; Computer Science)</option>
+                            <option value="M.Sc. Chem">M.Sc. (Organic Chemistry)</option>
+                            <option value="M.Com.">M.Com. (Advanced Commerce)</option>
+                        </optgroup>
+                    </select>
+                    <span class="inquiry_form__error" id="inquiryProgramError">Please select a program</span>
+                </div>
+
+                <!-- Current Qualification / Stream -->
+                <div class="inquiry_form__group">
+                    <label for="inquiryStream" class="inquiry_form__label">Current Qualification</label>
+                    <select id="inquiryStream" name="stream" class="inquiry_form__select">
+                        <option value="12th Science">12th Science (A / B / AB Group)</option>
+                        <option value="12th Commerce">12th Commerce</option>
+                        <option value="12th Arts">12th Arts / Humanities</option>
+                        <option value="Graduate">Undergraduate Degree (B.Sc / B.Com / BCA / Other)</option>
+                        <option value="Other">Other / Diploma</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- Optional Questions -->
+            <div class="inquiry_form__group inquiry_form__group--full">
+                <label for="inquiryMessage" class="inquiry_form__label">Questions or Message (Optional)</label>
+                <textarea id="inquiryMessage" name="message" class="inquiry_form__textarea" rows="2" placeholder="Ask about fees, hostel, bus facility, scholarship eligibility, etc."></textarea>
+            </div>
+
+            <!-- Dual Action Buttons -->
+            <div class="inquiry_form__actions">
+                <button type="submit" class="btn btn--primary inquiry_form__submit-btn" id="inquirySubmitBtn">
+                    <span id="inquirySubmitText">Submit Inquiry Online</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+
+                <button type="button" class="btn btn--whatsapp inquiry_form__whatsapp-btn" id="inquiryWhatsAppBtn">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <span>Send via WhatsApp</span>
+                </button>
+            </div>
+
+            <div class="inquiry_form__footer-note">
+                <span>🔒 Your information is secure and directly sent to our college admissions desk. Helpline: <strong>+91 99788 18009</strong></span>
+            </div>
+        </form>
+
+        <!-- Success Confirmation View -->
+        <div class="inquiry_modal__success" id="inquirySuccessBox" style="display: none;">
+            <div class="inquiry_modal__success-icon">✓</div>
+            <h3 class="inquiry_modal__success-title">Inquiry Received Successfully!</h3>
+            <p class="inquiry_modal__success-text">Thank you for your interest in Shri V.J. Modha College. Our admissions counselor will contact you shortly via phone/WhatsApp with complete program details and fee information.</p>
+            <div class="inquiry_modal__success-actions">
+                <button type="button" class="btn btn--primary btn--sm" id="inquirySuccessCloseBtn">Done &amp; Close</button>
+                <a href="https://wa.me/919978818009" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--sm">Chat on WhatsApp Now</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Global Toast Notification Container -->
+<div id="siteToast" class="site-toast" role="alert" aria-live="assertive" style="display: none;"></div>

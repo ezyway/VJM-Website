@@ -339,7 +339,10 @@
                             <h3>Interested in Enrolling?</h3>
                             <p>Get in touch with our admissions office for counseling, application assistance, and scholarship details.</p>
                             <div class="course-card-cta-btns">
-                                <a href="contact.php" class="btn btn--primary">Contact Admissions</a>
+                                <button type="button" class="btn btn--primary" id="detailInquireBtn" data-open-inquiry="true" data-course-inquiry="<?= htmlspecialchars($initialCourseKey) ?>">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                                    <span>Apply / Inquire for <?= htmlspecialchars($initialMeta['code']) ?></span>
+                                </button>
                                 <a href="faculties.php" class="btn btn--outline">Meet Department Faculty</a>
                             </div>
                         </div>
@@ -355,7 +358,7 @@
 
 
     <!-- ===================================================
-         VIEW 2: ALL COURSES DIRECTORY VIEW
+         VIEW 2: ALL COURSES DIRECTORY VIEW & STREAM ADVISOR
          =================================================== -->
     <div id="coursesDirectoryView" class="course-view-wrapper" style="<?= $isSingleCourse ? 'display: none;' : '' ?>">
 
@@ -380,10 +383,56 @@
         <main class="courses-directory-section" id="courses-directory">
             <div class="courses-directory__container">
 
+                <!-- ============================================
+                     Interactive Stream & Eligibility Advisor
+                     ============================================ -->
+                <div class="stream-advisor">
+                    <div class="stream-advisor__header">
+                        <div class="stream-advisor__badge">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>Interactive Stream Advisor</span>
+                        </div>
+                        <h2 class="stream-advisor__title">Find Your Best-Fit Degree Program</h2>
+                        <p class="stream-advisor__desc">Select your current 12th stream or academic qualification to instantly filter eligible degree pathways:</p>
+                    </div>
+
+                    <div class="stream-advisor__chips" role="tablist" aria-label="Stream filters">
+                        <button type="button" class="stream-chip is-active" data-stream="all" role="tab" aria-selected="true">
+                            <span class="stream-chip__icon">🎓</span>
+                            <span class="stream-chip__text">All Programs (8)</span>
+                        </button>
+                        <button type="button" class="stream-chip" data-stream="science" role="tab" aria-selected="false">
+                            <span class="stream-chip__icon">🧪</span>
+                            <span class="stream-chip__text">12th Science</span>
+                        </button>
+                        <button type="button" class="stream-chip" data-stream="commerce" role="tab" aria-selected="false">
+                            <span class="stream-chip__icon">📊</span>
+                            <span class="stream-chip__text">12th Commerce</span>
+                        </button>
+                        <button type="button" class="stream-chip" data-stream="arts" role="tab" aria-selected="false">
+                            <span class="stream-chip__icon">🎨</span>
+                            <span class="stream-chip__text">12th Arts / Humanities</span>
+                        </button>
+                        <button type="button" class="stream-chip" data-stream="any12" role="tab" aria-selected="false">
+                            <span class="stream-chip__icon">✨</span>
+                            <span class="stream-chip__text">Any 12th Pass</span>
+                        </button>
+                        <button type="button" class="stream-chip" data-stream="graduate" role="tab" aria-selected="false">
+                            <span class="stream-chip__icon">📜</span>
+                            <span class="stream-chip__text">Graduate / PG</span>
+                        </button>
+                    </div>
+
+                    <div class="stream-advisor__status" id="streamAdvisorStatus">
+                        <span>Showing <strong>8 Degree Programs</strong> open for admissions.</span>
+                    </div>
+                </div>
+
+                <!-- Section Header & Filter Tabs -->
                 <div class="courses-directory__header">
                     <div>
-                        <span class="section__eyebrow">Degree Programs</span>
-                        <h2 class="courses-directory__title">Explore All Programs</h2>
+                        <span class="section__eyebrow">Degree Directory</span>
+                        <h3 class="courses-directory__title">Explore All Programs</h3>
                         <p class="courses-directory__subtitle">Choose from our diverse undergraduate and postgraduate faculties.</p>
                     </div>
 
@@ -394,21 +443,35 @@
                     </div>
                 </div>
 
+                <!-- Course Cards Grid -->
                 <div class="courses-grid" id="coursesGrid">
-                    <?php foreach ($courseMeta as $key => $meta): 
+                    <?php 
+                    $streamMap = [
+                        "bca" => "science commerce arts any12 ug",
+                        "bsc" => "science ug",
+                        "bba" => "science commerce arts any12 ug",
+                        "bcom" => "commerce science arts any12 ug",
+                        "bsw" => "science commerce arts any12 ug",
+                        "mcom" => "graduate pg",
+                        "mscit" => "graduate pg",
+                        "mscorgchem" => "graduate pg"
+                    ];
+                    
+                    foreach ($courseMeta as $key => $meta): 
                         $cData = $courses[$key] ?? [];
                         $faq = $cData['faq'] ?? [];
                         $snippet = $cData['quick_info'][0] ?? '';
                         $shortDesc = strlen($snippet) > 180 ? substr($snippet, 0, 180) . '...' : $snippet;
+                        $streams = $streamMap[$key] ?? 'all';
                     ?>
-                        <div class="program-card" data-category="<?= htmlspecialchars($meta['category']) ?>">
+                        <div class="program-card" data-category="<?= htmlspecialchars($meta['category']) ?>" data-streams="<?= htmlspecialchars($streams) ?>" data-course-key="<?= htmlspecialchars($key) ?>">
                             <div class="program-card__header">
                                 <span class="program-card__badge"><?= htmlspecialchars($meta['level']) ?></span>
                                 <span class="program-card__duration"><?= htmlspecialchars($meta['duration']) ?></span>
                             </div>
 
                             <div class="program-card__body">
-                                <h3 class="program-card__title"><?= htmlspecialchars($fullforms[$key] ?? $meta['code']) ?></h3>
+                                <h3 class="program-card__title"><?= htmlspecialchars($fullforms[$key] ?? $meta['code']) ?> (<?= htmlspecialchars($meta['code']) ?>)</h3>
                                 <p class="program-card__dept"><?= htmlspecialchars($meta['dept']) ?></p>
                                 <p class="program-card__desc"><?= htmlspecialchars($shortDesc) ?></p>
 
@@ -423,6 +486,10 @@
                                     <span>View Program Details</span>
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                                 </a>
+                                <button type="button" class="btn btn--outline btn--full btn--quick-inquire" data-open-inquiry="true" data-course-inquiry="<?= htmlspecialchars($key) ?>" title="Quick inquiry for <?= htmlspecialchars($meta['code']) ?>">
+                                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path></svg>
+                                    <span>Quick Inquire</span>
+                                </button>
                             </div>
                         </div>
                     <?php endforeach; ?>

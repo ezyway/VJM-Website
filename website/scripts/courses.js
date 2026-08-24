@@ -142,9 +142,16 @@ document.addEventListener("DOMContentLoaded", () => {
             if (specHigherStudies) specHigherStudies.textContent = faq[4] || "Post Graduation";
             if (specTiming) specTiming.innerHTML = faq[5] || "Morning Session";
 
-            // 5. Update Syllabus Button
+            // 5. Update Syllabus Button & Detail Inquiry Button
             if (syllabusBtn) {
                 syllabusBtn.href = faq[6] || "https://www.bknmu.edu.in/Academic/page/Syllabus";
+            }
+
+            const detailInquireBtn = document.getElementById("detailInquireBtn");
+            if (detailInquireBtn) {
+                detailInquireBtn.setAttribute("data-course-inquiry", courseKey);
+                const btnSpan = detailInquireBtn.querySelector("span");
+                if (btnSpan) btnSpan.textContent = `Apply / Inquire for ${cMeta.code}`;
             }
 
             // 6. Update Active Switcher Pills
@@ -230,12 +237,82 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 3. Directory Filter Tabs (All / UG / PG)
+    // 3. Interactive Stream Advisor Filtering
     // ----------------------------------------------------
-    const filterButtons = document.querySelectorAll(".courses-filter-btn");
+    const streamChips = document.querySelectorAll(".stream-chip");
     const programCards = document.querySelectorAll(".program-card");
     const coursesGrid = document.getElementById("coursesGrid");
+    const streamAdvisorStatus = document.getElementById("streamAdvisorStatus");
+    const filterButtons = document.querySelectorAll(".courses-filter-btn");
 
+    function applyStreamFilter(stream) {
+        let matchCount = 0;
+
+        if (coursesGrid) {
+            coursesGrid.style.opacity = "0.5";
+            coursesGrid.style.transform = "scale(0.99)";
+        }
+
+        setTimeout(() => {
+            programCards.forEach((card, idx) => {
+                const streams = (card.getAttribute("data-streams") || "").split(" ");
+                const shouldShow = (stream === "all" || streams.includes(stream));
+
+                if (shouldShow) {
+                    card.style.display = "flex";
+                    card.style.animation = `facultyCardPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${Math.min(matchCount * 40, 250)}ms forwards`;
+                    matchCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            if (coursesGrid) {
+                coursesGrid.style.opacity = "1";
+                coursesGrid.style.transform = "scale(1)";
+            }
+
+            if (streamAdvisorStatus) {
+                const streamLabels = {
+                    "all": "All Programs",
+                    "science": "12th Science Stream",
+                    "commerce": "12th Commerce Stream",
+                    "arts": "12th Arts / Humanities",
+                    "any12": "Any 12th Pass",
+                    "graduate": "Graduate / PG Degree"
+                };
+                const label = streamLabels[stream] || "Selected Stream";
+                streamAdvisorStatus.innerHTML = `<span>Showing <strong>${matchCount} Eligible Programs</strong> for <em>${label}</em>.</span>`;
+            }
+        }, 120);
+    }
+
+    if (streamChips.length > 0) {
+        streamChips.forEach(chip => {
+            chip.addEventListener("click", () => {
+                const stream = chip.getAttribute("data-stream") || "all";
+
+                streamChips.forEach(c => {
+                    const isMatch = c === chip;
+                    c.classList.toggle("is-active", isMatch);
+                    c.setAttribute("aria-selected", isMatch ? "true" : "false");
+                });
+
+                // Reset general UG/PG filter buttons to "All"
+                filterButtons.forEach((b, idx) => {
+                    b.classList.toggle("is-active", idx === 0);
+                    b.setAttribute("aria-selected", idx === 0 ? "true" : "false");
+                });
+
+                applyStreamFilter(stream);
+            });
+        });
+    }
+
+
+    // ----------------------------------------------------
+    // 4. Directory Filter Tabs (All / UG / PG)
+    // ----------------------------------------------------
     if (filterButtons.length > 0 && programCards.length > 0) {
         filterButtons.forEach(btn => {
             btn.addEventListener("click", () => {
@@ -245,6 +322,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     const isMatch = b === btn;
                     b.classList.toggle("is-active", isMatch);
                     b.setAttribute("aria-selected", isMatch ? "true" : "false");
+                });
+
+                // Reset stream chips to "All"
+                streamChips.forEach((c, idx) => {
+                    c.classList.toggle("is-active", idx === 0);
+                    c.setAttribute("aria-selected", idx === 0 ? "true" : "false");
                 });
 
                 if (coursesGrid) {
@@ -270,6 +353,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (coursesGrid) {
                         coursesGrid.style.opacity = "1";
                         coursesGrid.style.transform = "scale(1)";
+                    }
+
+                    if (streamAdvisorStatus) {
+                        const catLabels = { "all": "All Programs", "ug": "Undergraduate", "pg": "Postgraduate" };
+                        streamAdvisorStatus.innerHTML = `<span>Showing <strong>${visibleIndex} Programs</strong> in <em>${catLabels[category] || category}</em>.</span>`;
                     }
                 }, 120);
             });

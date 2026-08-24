@@ -491,6 +491,349 @@
 
 
 /* =======================================================
+   6. QUICK ADMISSION & COURSE INQUIRY MODAL
+   ========================================================== */
+
+/* Navbar Apply/Inquire Button */
+.navbar_nav__link--inquiry {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(217, 119, 6, 0.95));
+    color: #FFFFFF !important;
+    font-weight: 700;
+    padding: 0.55rem 1.15rem;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(251, 191, 36, 0.5);
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.25s ease;
+}
+
+.navbar_nav__link--inquiry:hover {
+    background: linear-gradient(135deg, #FBBF24, #D97706);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(217, 119, 6, 0.55);
+}
+
+.inquiry_modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.inquiry_modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 20, 16, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: modalBackdropIn 0.25s ease forwards;
+}
+
+.inquiry_modal__dialog {
+    position: relative;
+    z-index: 2;
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(21, 92, 79, 0.15);
+    max-width: 580px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2.25rem 2rem;
+    box-sizing: border-box;
+    animation: heroFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.inquiry_modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.inquiry_modal__close:hover {
+    background: #DC2626;
+    color: #FFFFFF;
+    border-color: transparent;
+}
+
+.inquiry_modal__header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.inquiry_modal__icon-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--brand-primary-light), var(--brand-primary));
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(21, 92, 79, 0.25);
+}
+
+.inquiry_modal__eyebrow {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #D97706;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.inquiry_modal__title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.25rem;
+    line-height: 1.25;
+}
+
+.inquiry_modal__subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+/* Form Controls */
+.inquiry_form__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.inquiry_form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.inquiry_form__group--full {
+    margin-bottom: 1.25rem;
+}
+
+.inquiry_form__label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.35rem;
+}
+
+.inquiry_form__label .req {
+    color: #DC2626;
+}
+
+.inquiry_form__input,
+.inquiry_form__select,
+.inquiry_form__textarea {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.88rem;
+    color: var(--text-main);
+    background: #F8FAFC;
+    border: 1.5px solid #CBD5E1;
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+    transition: all var(--transition-fast);
+}
+
+.inquiry_form__input:focus,
+.inquiry_form__select:focus,
+.inquiry_form__textarea:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(21, 92, 79, 0.12);
+}
+
+.inquiry_form__input.has-error,
+.inquiry_form__select.has-error {
+    border-color: #DC2626;
+    background: #FEF2F2;
+}
+
+.inquiry_form__error {
+    display: none;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #DC2626;
+    margin-top: 0.25rem;
+}
+
+.inquiry_form__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.inquiry_form__submit-btn {
+    flex: 1.2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.92rem;
+}
+
+.inquiry_form__whatsapp-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #16A34A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--radius-full);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35);
+    transition: all var(--transition-fast);
+}
+
+.inquiry_form__whatsapp-btn:hover {
+    background: #15803D;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(22, 163, 74, 0.5);
+}
+
+.inquiry_form__footer-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.45;
+}
+
+/* Success Card */
+.inquiry_modal__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+}
+
+.inquiry_modal__success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #22C55E;
+    color: #FFFFFF;
+    font-size: 2rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+}
+
+.inquiry_modal__success-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--brand-primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+.inquiry_modal__success-text {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 420px;
+    margin-bottom: 1.75rem;
+}
+
+.inquiry_modal__success-actions {
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Site Toast Notification */
+.site-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 11000;
+    background: #0A372E;
+    color: #FFFFFF;
+    padding: 0.85rem 1.35rem;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.site-toast--success {
+    border-left: 4px solid #22C55E;
+}
+
+.site-toast--info {
+    border-left: 4px solid #38BDF8;
+}
+
+@media screen and (max-width: 600px) {
+    .inquiry_form__grid {
+        grid-template-columns: 1fr;
+    }
+    .inquiry_form__actions {
+        flex-direction: column;
+    }
+    .inquiry_modal__dialog {
+        padding: 1.75rem 1.25rem;
+    }
+}
+
+
+/* =======================================================
    7. RESPONSIVE BREAKPOINTS (MOBILE & TABLET DRAWER)
    ========================================================== */
 
