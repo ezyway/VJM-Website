@@ -101,7 +101,26 @@
                     </ul>
                 </li>
 
-                <!-- 6. Apply / Inquire CTA Button -->
+                <!-- 6. Quick Search Trigger Button -->
+                <li class="navbar_nav__item" role="none">
+                    <button type="button" class="navbar_search-btn" id="openSearchBtn" aria-label="Search Portal (Ctrl + K)" title="Search Portal (Ctrl + K)">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <span class="navbar_search-text">Search...</span>
+                        <kbd class="navbar_search-kbd">Ctrl K</kbd>
+                    </button>
+                </li>
+
+                <!-- 7. Dark/Light Mode Theme Toggle -->
+                <li class="navbar_nav__item" role="none">
+                    <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark and light theme" title="Toggle theme (Light / Dark)">
+                        <!-- Sun Icon (for Dark Mode state) -->
+                        <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <!-- Moon Icon (for Light Mode state) -->
+                        <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                </li>
+
+                <!-- 8. Apply / Inquire CTA Button -->
                 <li class="navbar_nav__item navbar_nav__item--apply" role="none">
                     <button type="button" class="navbar_nav__link navbar_nav__link--inquiry" id="openInquiryBtn" data-open-inquiry="true" aria-label="Open Admissions Inquiry">
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
@@ -109,7 +128,7 @@
                     </button>
                 </li>
 
-                <!-- 7. Contact Us CTA Button -->
+                <!-- 9. Contact Us CTA Button -->
                 <li class="navbar_nav__item navbar_nav__item--cta" role="none">
                     <a href="contact.php" class="navbar_nav__link navbar_nav__link--cta" role="menuitem">Contact Us</a>
                 </li>
@@ -128,6 +147,28 @@
 
     </div>
 </nav>
+
+<!-- ============================================
+     Spotlight Quick Search Modal (Ctrl + K)
+     ============================================ -->
+<div class="spotlight_modal" id="spotlightModal" role="dialog" aria-modal="true" aria-label="Quick Search" style="display: none;">
+    <div class="spotlight_modal__backdrop" id="spotlightBackdrop"></div>
+    <div class="spotlight_modal__dialog">
+        <div class="spotlight_modal__search-box">
+            <svg class="spotlight_modal__search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="spotlight_modal__input" id="spotlightInput" placeholder="Type to search courses, faculty, labs, syllabus, PDFs..." autocomplete="off" />
+            <button type="button" class="spotlight_modal__close-btn" id="spotlightCloseBtn" aria-label="Close search dialog">&times;</button>
+        </div>
+        
+        <div class="spotlight_modal__body" id="spotlightResults"></div>
+
+        <div class="spotlight_modal__footer">
+            <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> Navigate</span>
+            <span><kbd>&crarr;</kbd> Select</span>
+            <span><kbd>Esc</kbd> Close</span>
+        </div>
+    </div>
+</div>
 
 <!-- Glassmorphic Overview Popup Modal -->
 <div class="navbar_modal" id="modalOverlay" role="dialog" aria-modal="true" aria-label="College Overview">

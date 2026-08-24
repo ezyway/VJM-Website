@@ -491,7 +491,298 @@
 
 
 /* =======================================================
-   6. QUICK ADMISSION & COURSE INQUIRY MODAL
+   5. SEARCH BUTTON & THEME TOGGLE (NAVBAR)
+   ========================================================== */
+
+/* Quick Search Button */
+.navbar_search-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-full);
+    color: #E2E8F0;
+    padding: 0.45rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.navbar_search-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: #FDE68A;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+.navbar_search-kbd {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font-size: 0.68rem;
+    padding: 1px 5px;
+    color: #FDE68A;
+    font-family: inherit;
+    font-weight: 700;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #FDE68A;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.08) rotate(15deg);
+    border-color: #FDE68A;
+}
+
+
+/* =======================================================
+   6. SPOTLIGHT QUICK SEARCH MODAL (Ctrl + K)
+   ========================================================== */
+
+.spotlight_modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10100;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 5rem 1.5rem 1.5rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.spotlight_modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 20, 16, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: modalBackdropIn 0.2s ease forwards;
+}
+
+.spotlight_modal__dialog {
+    position: relative;
+    z-index: 2;
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(21, 92, 79, 0.2);
+    max-width: 640px;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: heroFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.spotlight_modal__search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1.15rem 1.35rem;
+    border-bottom: 1px solid #E2E8F0;
+    background: #FAFAFA;
+}
+
+.spotlight_modal__search-icon {
+    color: var(--brand-primary);
+    flex-shrink: 0;
+}
+
+.spotlight_modal__input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1.05rem;
+    color: var(--text-main);
+    outline: none;
+}
+
+.spotlight_modal__input::placeholder {
+    color: #94A3B8;
+    font-size: 0.95rem;
+}
+
+.spotlight_modal__close-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #E2E8F0;
+    border: none;
+    color: #64748B;
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.spotlight_modal__close-btn:hover {
+    background: #DC2626;
+    color: #FFFFFF;
+}
+
+.spotlight_modal__body {
+    padding: 1rem 1.25rem;
+    overflow-y: auto;
+    max-height: 52vh;
+}
+
+.spotlight-section-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+    padding-left: 0.35rem;
+}
+
+.spotlight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.spotlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 0.95rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-main);
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.spotlight-item:hover,
+.spotlight-item.is-selected {
+    background: rgba(21, 92, 79, 0.08);
+    border-color: rgba(21, 92, 79, 0.2);
+    transform: translateX(4px);
+}
+
+[data-theme="dark"] .spotlight-item:hover,
+[data-theme="dark"] .spotlight-item.is-selected {
+    background: rgba(43, 176, 151, 0.15) !important;
+    border-color: rgba(43, 176, 151, 0.35) !important;
+}
+
+.spotlight-item__icon {
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+.spotlight-item__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.spotlight-item__title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--brand-primary-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+[data-theme="dark"] .spotlight-item__title {
+    color: #F1F5F9 !important;
+}
+
+.spotlight-item__desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spotlight-item__badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(217, 119, 6, 0.12);
+    color: #D97706;
+    border: 1px solid rgba(217, 119, 6, 0.25);
+    flex-shrink: 0;
+}
+
+.spotlight-empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--text-muted);
+}
+
+.spotlight-empty p {
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+}
+
+.spotlight-empty span {
+    font-size: 0.82rem;
+    color: #94A3B8;
+}
+
+.spotlight_modal__footer {
+    display: flex;
+    gap: 1.25rem;
+    padding: 0.75rem 1.35rem;
+    background: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .spotlight_modal__search-box,
+[data-theme="dark"] .spotlight_modal__footer {
+    background: #071A16 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.spotlight_modal__footer kbd {
+    background: #E2E8F0;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .spotlight_modal__footer kbd {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #F8FAFC !important;
+}
+
+
+/* =======================================================
+   7. QUICK ADMISSION & COURSE INQUIRY MODAL
    ========================================================== */
 
 /* Navbar Apply/Inquire Button */

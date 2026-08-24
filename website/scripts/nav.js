@@ -1,6 +1,6 @@
 /**
  * =======================================================
- * NAVBAR & ADMISSIONS INQUIRY - INTERACTIVE SYSTEM
+ * NAVBAR, SEARCH, THEME & INQUIRY - INTERACTIVE SYSTEM
  * Shri V.J. Modha College Portal
  * =======================================================
  */
@@ -13,6 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalOverlay = document.getElementById("modalOverlay");
     const closeBtn = document.getElementById("closeBtn");
     const dropdownItems = document.querySelectorAll(".navbar_nav__item--dropdown");
+
+    // Theme Toggle Elements
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const sunIcon = document.querySelector(".theme-icon--sun");
+    const moonIcon = document.querySelector(".theme-icon--moon");
+
+    // Spotlight Search Elements
+    const openSearchBtn = document.getElementById("openSearchBtn");
+    const spotlightModal = document.getElementById("spotlightModal");
+    const spotlightBackdrop = document.getElementById("spotlightBackdrop");
+    const spotlightCloseBtn = document.getElementById("spotlightCloseBtn");
+    const spotlightInput = document.getElementById("spotlightInput");
+    const spotlightResults = document.getElementById("spotlightResults");
 
     // Inquiry Modal Elements
     const inquiryModal = document.getElementById("inquiryModal");
@@ -51,8 +64,221 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 4000);
     }
 
+
     // ----------------------------------------------------
-    // 1. Scroll State (Triggers Logo Shrink & Navbar Glass)
+    // 1. Dark Mode / Theme Toggle Engine
+    // ----------------------------------------------------
+    function getPreferredTheme() {
+        const saved = localStorage.getItem("vjm_theme");
+        if (saved) return saved;
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("vjm_theme", theme);
+
+        if (theme === "dark") {
+            if (sunIcon) sunIcon.style.display = "block";
+            if (moonIcon) moonIcon.style.display = "none";
+        } else {
+            if (sunIcon) sunIcon.style.display = "none";
+            if (moonIcon) moonIcon.style.display = "block";
+        }
+    }
+
+    // Initialize Theme
+    applyTheme(getPreferredTheme());
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", () => {
+            const current = document.documentElement.getAttribute("data-theme") || "light";
+            const next = current === "dark" ? "light" : "dark";
+            applyTheme(next);
+            showToast(`Switched to ${next === "dark" ? "Dark" : "Light"} Mode`, "info");
+        });
+    }
+
+
+    // ----------------------------------------------------
+    // 2. Spotlight Quick Search Engine (Ctrl + K)
+    // ----------------------------------------------------
+    const SEARCH_INDEX = [
+        // Programs
+        { title: "B.C.A. (Computer Applications)", category: "Academic Programs", url: "courses.php?course=bca", desc: "4-Year degree in programming, web development, data structures & databases.", icon: "💻" },
+        { title: "B.Sc. (Science & Chemistry)", category: "Academic Programs", url: "courses.php?course=bsc", desc: "4-Year degree covering physics, organic chemistry & experimental labs.", icon: "🧪" },
+        { title: "B.B.A. (Business Administration)", category: "Academic Programs", url: "courses.php?course=bba", desc: "4-Year management program in marketing, finance, and leadership.", icon: "📈" },
+        { title: "B.Com. (Commerce & Banking)", category: "Academic Programs", url: "courses.php?course=bcom", desc: "4-Year accounting, auditing, banking, and business economics program.", icon: "📊" },
+        { title: "B.S.W. (Social Work)", category: "Academic Programs", url: "courses.php?course=bsw", desc: "4-Year community service, welfare, and social outreach curriculum.", icon: "🤝" },
+        { title: "M.Sc. IT (Computer Science)", category: "Postgraduate", url: "courses.php?course=mscit", desc: "2-Year postgraduate program in full-stack, enterprise computing & cloud.", icon: "🖥️" },
+        { title: "M.Sc. Chem (Organic Chemistry)", category: "Postgraduate", url: "courses.php?course=mscorgchem", desc: "2-Year research and industrial chemistry postgraduate degree.", icon: "🔬" },
+        { title: "M.Com. (Advanced Commerce)", category: "Postgraduate", url: "courses.php?course=mcom", desc: "2-Year master's program in advanced financial management & trade.", icon: "🎓" },
+
+        // Facilities & Labs
+        { title: "Computer & IT Lab", category: "Campus Infrastructure", url: "labs.php?lab=computer", desc: "High-speed workstations, Gigabit LAN, IDEs, and full UPS backup.", icon: "⚡" },
+        { title: "Chemistry Laboratory", category: "Campus Infrastructure", url: "labs.php?lab=chemistry", desc: "Equipped for organic synthesis, digital analytical balances & titrations.", icon: "⚗️" },
+        { title: "Physics Laboratory", category: "Campus Infrastructure", url: "labs.php?lab=physics", desc: "Spectrometers, laser optics, CRO oscilloscopes & mechanics kits.", icon: "🧲" },
+        { title: "Photo Gallery & Events", category: "Campus Life", url: "gallery.php", desc: "Visual memories, cultural celebrations, fests, and student activities.", icon: "📸" },
+
+        // Faculty & Admissions
+        { title: "Faculty Directory (43 Professors)", category: "Academics", url: "faculties.php", desc: "Meet experienced professors across IT, Chemistry, Commerce & Management.", icon: "👨‍🏫" },
+        { title: "Admission & Course Inquiry", category: "Admissions", url: "#", inquiry: true, desc: "Submit quick inquiry for admissions, eligibility criteria & fee structures.", icon: "📝" },
+        { title: "Scholarships & Digital Gujarat Aid", category: "Student Welfare", url: "scholarship.php", desc: "Information on MYSY, government grants, and financial assistance.", icon: "💰" },
+        { title: "Training & Placement Cell", category: "Career", url: "placement.php", desc: "Campus recruitment, MNC placement drives, and career guidance desk.", icon: "💼" },
+        { title: "Free Online Courses & MOOCs", category: "Learning", url: "online_courses.php", desc: "SWAYAM, AICTE, and NPTEL portal links for free certifications.", icon: "🌐" },
+        { title: "College E-Magazines", category: "Publications", url: "e_mag.php", desc: "Annual publications featuring student poems, articles, and art.", icon: "📖" },
+        { title: "Anti-Ragging Committee", category: "Safety", url: "anti_ragging.php", desc: "Zero tolerance campus policy, safety committee, and helpline numbers.", icon: "🛡️" },
+        { title: "Contact & Campus Location", category: "Contact", url: "contact.php", desc: "Address, official email, telephone, WhatsApp helpline, and timings.", icon: "📍" },
+
+        // Downloadable PDFs
+        { title: "College Brochure (PDF)", category: "Downloads", url: "data/brochure.pdf", desc: "Complete official institutional prospectus and admission guide.", icon: "📄" },
+        { title: "Institutional Development Plan 2025 (PDF)", category: "Downloads", url: "data/IDP_2025.pdf", desc: "Strategic development roadmap and accreditation documentation.", icon: "📑" },
+        { title: "NIRF 2025 Report (PDF)", category: "Downloads", url: "data/NIRF_2025.pdf", desc: "National Institutional Ranking Framework official data submission.", icon: "📊" },
+        { title: "NIRF 2026 Report (PDF)", category: "Downloads", url: "data/NIRF_2026.pdf", desc: "Current NIRF 2026 data submission report.", icon: "📊" },
+        { title: "Official BKNMU Syllabus", category: "Academics", url: "https://www.bknmu.edu.in/Academic/page/Syllabus", desc: "University approved course curriculum and semester breakdown.", icon: "📚" }
+    ];
+
+    let selectedResultIndex = 0;
+    let currentResultsList = [];
+
+    function renderSearchResults(query = "") {
+        if (!spotlightResults) return;
+        const q = query.toLowerCase().trim();
+
+        if (!q) {
+            // Show recommended quick shortcuts
+            const popular = SEARCH_INDEX.slice(0, 6);
+            currentResultsList = popular;
+            selectedResultIndex = 0;
+
+            spotlightResults.innerHTML = `
+                <div class="spotlight-section-label">Suggested &amp; Popular</div>
+                <div class="spotlight-list">
+                    ${popular.map((item, idx) => `
+                        <a href="${item.url}" class="spotlight-item ${idx === 0 ? 'is-selected' : ''}" data-idx="${idx}" ${item.inquiry ? 'data-open-inquiry="true"' : ''} ${item.url.endsWith('.pdf') ? 'target="_blank" rel="noopener noreferrer"' : ''}>
+                            <span class="spotlight-item__icon">${item.icon}</span>
+                            <div class="spotlight-item__text">
+                                <strong class="spotlight-item__title">${item.title}</strong>
+                                <span class="spotlight-item__desc">${item.desc}</span>
+                            </div>
+                            <span class="spotlight-item__badge">${item.category}</span>
+                        </a>
+                    `).join("")}
+                </div>
+            `;
+            return;
+        }
+
+        // Fuzzy match query
+        const filtered = SEARCH_INDEX.filter(item => {
+            return item.title.toLowerCase().includes(q) ||
+                   item.category.toLowerCase().includes(q) ||
+                   item.desc.toLowerCase().includes(q);
+        });
+
+        currentResultsList = filtered;
+        selectedResultIndex = 0;
+
+        if (filtered.length === 0) {
+            spotlightResults.innerHTML = `
+                <div class="spotlight-empty">
+                    <p>No matching results found for "<strong>${q}</strong>".</p>
+                    <span>Try searching for <em>BCA</em>, <em>Chemistry</em>, <em>Brochure</em>, or <em>Professors</em>.</span>
+                </div>
+            `;
+            return;
+        }
+
+        spotlightResults.innerHTML = `
+            <div class="spotlight-section-label">${filtered.length} Result${filtered.length === 1 ? '' : 's'} Found</div>
+            <div class="spotlight-list">
+                ${filtered.map((item, idx) => `
+                    <a href="${item.url}" class="spotlight-item ${idx === 0 ? 'is-selected' : ''}" data-idx="${idx}" ${item.inquiry ? 'data-open-inquiry="true"' : ''} ${item.url.endsWith('.pdf') ? 'target="_blank" rel="noopener noreferrer"' : ''}>
+                        <span class="spotlight-item__icon">${item.icon}</span>
+                        <div class="spotlight-item__text">
+                            <strong class="spotlight-item__title">${item.title}</strong>
+                            <span class="spotlight-item__desc">${item.desc}</span>
+                        </div>
+                        <span class="spotlight-item__badge">${item.category}</span>
+                    </a>
+                `).join("")}
+            </div>
+        `;
+    }
+
+    function updateSelectedResult(newIdx) {
+        if (!currentResultsList.length) return;
+        selectedResultIndex = (newIdx + currentResultsList.length) % currentResultsList.length;
+
+        const items = spotlightResults.querySelectorAll(".spotlight-item");
+        items.forEach((item, idx) => {
+            const isMatch = idx === selectedResultIndex;
+            item.classList.toggle("is-selected", isMatch);
+            if (isMatch) {
+                item.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        });
+    }
+
+    function openSearchModal() {
+        if (!spotlightModal) return;
+        spotlightModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        if (spotlightInput) {
+            spotlightInput.value = "";
+            renderSearchResults("");
+            setTimeout(() => spotlightInput.focus(), 80);
+        }
+    }
+
+    function closeSearchModal() {
+        if (!spotlightModal) return;
+        spotlightModal.style.display = "none";
+        document.body.style.overflow = "";
+    }
+
+    if (openSearchBtn) openSearchBtn.addEventListener("click", openSearchModal);
+    if (spotlightCloseBtn) spotlightCloseBtn.addEventListener("click", closeSearchModal);
+    if (spotlightBackdrop) spotlightBackdrop.addEventListener("click", closeSearchModal);
+
+    if (spotlightInput) {
+        spotlightInput.addEventListener("input", (e) => {
+            renderSearchResults(e.target.value);
+        });
+
+        spotlightInput.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                updateSelectedResult(selectedResultIndex + 1);
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                updateSelectedResult(selectedResultIndex - 1);
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+                const selectedEl = spotlightResults.querySelector(".spotlight-item.is-selected");
+                if (selectedEl) {
+                    selectedEl.click();
+                    closeSearchModal();
+                }
+            }
+        });
+    }
+
+    // Global Shortcut: Ctrl+K / Cmd+K
+    document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {
+            e.preventDefault();
+            if (spotlightModal && spotlightModal.style.display === "flex") {
+                closeSearchModal();
+            } else {
+                openSearchModal();
+            }
+        }
+    });
+
+
+    // ----------------------------------------------------
+    // 3. Scroll State (Triggers Logo Shrink & Navbar Glass)
     // ----------------------------------------------------
     function handleScroll() {
         if (!navbar) return;
@@ -67,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 2. Mobile Drawer Controls
+    // 4. Mobile Drawer Controls
     // ----------------------------------------------------
     const closeAllDropdowns = (except = null) => {
         dropdownItems.forEach(item => {
@@ -119,7 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
         drawerCloseBtn.addEventListener("click", () => toggleMobileNav(true));
     }
 
-    // Close mobile drawer when clicking regular destination links
     if (navLinks) {
         const directLinks = navLinks.querySelectorAll("a:not([aria-haspopup='true'])");
         directLinks.forEach(link => {
@@ -133,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 3. Dropdowns Navigation (Desktop & Mobile Accordion)
+    // 5. Dropdowns Navigation (Desktop & Mobile Accordion)
     // ----------------------------------------------------
     dropdownItems.forEach(item => {
         const link = item.querySelector(".navbar_nav__link");
@@ -154,7 +379,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Close dropdowns on outside click
     document.addEventListener("click", (e) => {
         const isClickInside = Array.from(dropdownItems).some(item => item.contains(e.target));
         if (!isClickInside) {
@@ -164,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 4. College Overview Modal Controls
+    // 6. College Overview Modal Controls
     // ----------------------------------------------------
     function openOverviewModal() {
         if (modalOverlay) {
@@ -180,10 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if (closeBtn) {
-        closeBtn.addEventListener("click", closeOverviewModal);
-    }
-
+    if (closeBtn) closeBtn.addEventListener("click", closeOverviewModal);
     if (modalOverlay) {
         modalOverlay.addEventListener("click", (e) => {
             if (e.target === modalOverlay) closeOverviewModal();
@@ -192,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 5. Quick Admissions & Course Inquiry Modal
+    // 7. Quick Admissions & Course Inquiry Modal
     // ----------------------------------------------------
     const courseCodeMap = {
         "bca": "BCA",
@@ -208,13 +429,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function openInquiryModal(preselectedCourseKey = null) {
         if (!inquiryModal) return;
 
-        // Reset state
         if (inquirySuccessBox) inquirySuccessBox.style.display = "none";
-        if (inquiryForm) {
-            inquiryForm.style.display = "block";
-        }
+        if (inquiryForm) inquiryForm.style.display = "block";
 
-        // Prefill program if specified
         if (preselectedCourseKey && inquiryProgramSelect) {
             const mappedVal = courseCodeMap[preselectedCourseKey.toLowerCase()] || preselectedCourseKey;
             for (let option of inquiryProgramSelect.options) {
@@ -228,7 +445,6 @@ document.addEventListener("DOMContentLoaded", () => {
         inquiryModal.style.display = "flex";
         document.body.style.overflow = "hidden";
 
-        // Focus first input
         setTimeout(() => {
             if (inquiryNameInput) inquiryNameInput.focus();
         }, 100);
@@ -240,7 +456,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.style.overflow = "";
     }
 
-    // Global click listener for any element with data-open-inquiry="true"
     document.addEventListener("click", (e) => {
         const trigger = e.target.closest("[data-open-inquiry='true'], #openInquiryBtn");
         if (trigger) {
@@ -254,14 +469,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inquiryBackdrop) inquiryBackdrop.addEventListener("click", closeInquiryModal);
     if (inquirySuccessCloseBtn) inquirySuccessCloseBtn.addEventListener("click", closeInquiryModal);
 
-    // Form Validation Helper
     function validateInquiryForm() {
         let isValid = true;
         const nameVal = inquiryNameInput ? inquiryNameInput.value.trim() : "";
         const phoneVal = inquiryPhoneInput ? inquiryPhoneInput.value.trim() : "";
         const progVal = inquiryProgramSelect ? inquiryProgramSelect.value : "";
 
-        // Name
         const nameErr = document.getElementById("inquiryNameError");
         if (!nameVal || nameVal.length < 2) {
             if (nameErr) nameErr.style.display = "block";
@@ -272,7 +485,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (inquiryNameInput) inquiryNameInput.classList.remove("has-error");
         }
 
-        // Phone (10 digit regex)
         const phoneErr = document.getElementById("inquiryPhoneError");
         const phoneRegex = /^[6-9]\d{9}$/;
         if (!phoneRegex.test(phoneVal.replace(/\D/g, ""))) {
@@ -284,7 +496,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (inquiryPhoneInput) inquiryPhoneInput.classList.remove("has-error");
         }
 
-        // Program
         const progErr = document.getElementById("inquiryProgramError");
         if (!progVal) {
             if (progErr) progErr.style.display = "block";
@@ -298,7 +509,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return isValid;
     }
 
-    // Direct WhatsApp Button Generator
     if (inquiryWhatsAppBtn) {
         inquiryWhatsAppBtn.addEventListener("click", () => {
             const nameVal = inquiryNameInput ? inquiryNameInput.value.trim() : "Prospective Student";
@@ -317,13 +527,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Online Form Submit Handler
     if (inquiryForm) {
         inquiryForm.addEventListener("submit", (e) => {
             e.preventDefault();
             if (!validateInquiryForm()) return;
 
-            // Simulate immediate network submission
             if (inquirySubmitBtn) inquirySubmitBtn.disabled = true;
             if (inquirySubmitText) inquirySubmitText.textContent = "Submitting Inquiry...";
 
@@ -341,10 +549,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 6. Keyboard Shortcuts (Escape Key Handler)
+    // 8. Global Keyboard Shortcuts (Escape Key Handler)
     // ----------------------------------------------------
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
+            closeSearchModal();
             closeInquiryModal();
             closeOverviewModal();
             closeAllDropdowns();
@@ -354,7 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 7. Automatic Active Navigation Link Highlighter
+    // 9. Automatic Active Navigation Link Highlighter
     // ----------------------------------------------------
     const currentPath = window.location.pathname.split("/").pop() || "index.php";
     const currentSearch = window.location.search;
@@ -366,7 +575,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const [linkPath, linkSearch] = href.split("?");
 
-        // Exact match with query param
         if (linkSearch && currentPath === linkPath && currentSearch.includes(linkSearch)) {
             link.classList.add("is-active-page");
             const parentDropdown = link.closest(".navbar_nav__item--dropdown");
@@ -374,9 +582,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const parentLink = parentDropdown.querySelector(".navbar_nav__link");
                 if (parentLink) parentLink.classList.add("is-active-page");
             }
-        }
-        // General page match without query
-        else if (!linkSearch && currentPath === linkPath) {
+        } else if (!linkSearch && currentPath === linkPath) {
             link.classList.add("is-active-page");
             const parentDropdown = link.closest(".navbar_nav__item--dropdown");
             if (parentDropdown) {
