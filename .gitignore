@@ -1,4 +1,5 @@
 website/test.php
 .vscode/sftp.json
 .env
-
+tmp/
+test_nvapi.py

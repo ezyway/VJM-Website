@@ -108,6 +108,15 @@
             "image" => "assets/photos/faculties/Nirali_Dasani.jpeg",
             "featured" => false
         ],
+        [
+            "name" => "Prof. Dhruv Monani",
+            "designation" => "Assistant Professor",
+            "depts" => ["bca"],
+            "badge" => "IT & Computer Science",
+            "dept_label" => "B.C.A. / M.Sc.(IT)",
+            "image" => "assets/photos/faculties/Dhruv_Monani.jpg",
+            "featured" => false
+        ],
         // B.Sc. / M.Sc. Chem
         [
             "name" => "Prof. Manan Purohit",
