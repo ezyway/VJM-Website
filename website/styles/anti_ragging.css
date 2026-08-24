@@ -485,3 +485,45 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (ANTI-RAGGING PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .anti-ragging-section__container {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .anti-ragging-policy-card,
+[data-theme="dark"] .committee-card,
+[data-theme="dark"] .helpline-box {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .committee-card:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .committee-block__title,
+[data-theme="dark"] .committee-card__name,
+[data-theme="dark"] .anti-ragging-policy-card h3,
+[data-theme="dark"] .helpline-box__title {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .committee-block__subtitle,
+[data-theme="dark"] .committee-card__dept,
+[data-theme="dark"] .anti-ragging-policy-card p,
+[data-theme="dark"] .helpline-box__desc {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .committee-card__designation {
+    color: #94A3B8 !important;
+}

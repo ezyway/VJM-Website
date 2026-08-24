@@ -656,3 +656,67 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (LABS PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .labs-section__container {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .lab-switcher,
+[data-theme="dark"] .lab-feature-item,
+[data-theme="dark"] .lab-spec-box {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .lab-card,
+[data-theme="dark"] .lab-media-card {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .lab-card__title,
+[data-theme="dark"] .lab-card__subtitle,
+[data-theme="dark"] .lab-spec-box__value,
+[data-theme="dark"] .lab-switcher__label {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .lab-card__lead,
+[data-theme="dark"] .lab-feature-item span {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .lab-spec-box__label {
+    color: #34D399 !important;
+}
+
+[data-theme="dark"] .lab-switcher__pill {
+    background: #0F172A !important;
+    color: #CBD5E1 !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .lab-switcher__pill.is-active {
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+}
+
+[data-theme="dark"] .lab-carousel__nav-btn {
+    background: #0F172A !important;
+    border: 1.5px solid #334155 !important;
+    color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .lab-carousel__nav-btn:hover {
+    background: #10B981 !important;
+    border-color: #10B981 !important;
+    color: #FFFFFF !important;
+}

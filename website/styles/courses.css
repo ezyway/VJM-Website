@@ -992,9 +992,13 @@
     box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
 }
 
+[data-theme="dark"] .course-switcher,
 [data-theme="dark"] .courses-directory__header,
 [data-theme="dark"] .course-card__info-row,
 [data-theme="dark"] .course-specs-table,
+[data-theme="dark"] .course-spec-row,
+[data-theme="dark"] .job-role-chip,
+[data-theme="dark"] .course-highlight-item,
 [data-theme="dark"] .course-faq__item,
 [data-theme="dark"] .stream-advisor__status {
     background: #0F172A !important;
@@ -1003,8 +1007,7 @@
 
 [data-theme="dark"] .course-card,
 [data-theme="dark"] .program-card,
-[data-theme="dark"] .course-overview-card,
-[data-theme="dark"] .course-highlight-item {
+[data-theme="dark"] .course-overview-card {
     background: #1E293B !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
@@ -1020,14 +1023,25 @@
 [data-theme="dark"] .program-card__title,
 [data-theme="dark"] .course-card__title,
 [data-theme="dark"] .course-spec-row__label,
+[data-theme="dark"] .course-highlight-item h4,
+[data-theme="dark"] .job-role-chip span,
 [data-theme="dark"] .course-faq__question,
 [data-theme="dark"] .stream-advisor__title,
-[data-theme="dark"] .courses-directory__title {
+[data-theme="dark"] .courses-directory__title,
+[data-theme="dark"] .course-switcher__label {
     color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .job-role-chip__bullet {
+    background: #10B981 !important;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.5) !important;
 }
 
 [data-theme="dark"] .program-card__desc,
 [data-theme="dark"] .course-card p,
+[data-theme="dark"] .course-card__lead,
+[data-theme="dark"] .course-card__subtitle,
+[data-theme="dark"] .course-highlight-item p,
 [data-theme="dark"] .course-faq__answer,
 [data-theme="dark"] .course-spec-row__value,
 [data-theme="dark"] .stream-advisor__desc,
@@ -1049,25 +1063,29 @@
     color: #94A3B8 !important;
 }
 
+[data-theme="dark"] .course-switcher__pill,
 [data-theme="dark"] .courses-filter-btn {
     background: #0F172A !important;
     color: #CBD5E1 !important;
     border: 1px solid #334155 !important;
 }
 
+[data-theme="dark"] .course-switcher__pill.is-active,
 [data-theme="dark"] .courses-filter-btn.is-active {
     background: linear-gradient(135deg, #10B981, #059669) !important;
     color: #FFFFFF !important;
     border-color: transparent !important;
 }
 
-[data-theme="dark"] .btn--quick-inquire {
+[data-theme="dark"] .btn--quick-inquire,
+[data-theme="dark"] .btn--faculty {
     background: #0F172A !important;
     color: #34D399 !important;
-    border-color: rgba(52, 211, 153, 0.4) !important;
+    border: 1.5px solid rgba(52, 211, 153, 0.4) !important;
 }
 
-[data-theme="dark"] .btn--quick-inquire:hover {
+[data-theme="dark"] .btn--quick-inquire:hover,
+[data-theme="dark"] .btn--faculty:hover {
     background: #10B981 !important;
     color: #FFFFFF !important;
 }

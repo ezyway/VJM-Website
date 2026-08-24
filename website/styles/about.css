@@ -997,6 +997,11 @@
 [data-theme="dark"] .about-story__header-box,
 [data-theme="dark"] .about-story__text-box,
 [data-theme="dark"] .about-story__highlight-item,
+[data-theme="dark"] .about-story__header-box,
+[data-theme="dark"] .about-story__text-box,
+[data-theme="dark"] .about-story__highlight-item,
+[data-theme="dark"] .about-milestones__header,
+[data-theme="dark"] .about-milestones__item,
 [data-theme="dark"] .about-pillars__header,
 [data-theme="dark"] .trustee-section__header,
 [data-theme="dark"] .about-facilities__header {
@@ -1016,7 +1021,8 @@
 
 [data-theme="dark"] .about-pillar-card:hover,
 [data-theme="dark"] .trustee-card:hover,
-[data-theme="dark"] .facility-card:hover {
+[data-theme="dark"] .facility-card:hover,
+[data-theme="dark"] .about-milestones__item:hover {
     background: #243248 !important;
     border-color: rgba(52, 211, 153, 0.35) !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
@@ -1025,6 +1031,8 @@
 /* Typography & Contrast */
 [data-theme="dark"] .about-story__title,
 [data-theme="dark"] .about-story__highlight-item h4,
+[data-theme="dark"] .about-milestones__title,
+[data-theme="dark"] .about-milestones__desc h4,
 [data-theme="dark"] .about-pillars__title,
 [data-theme="dark"] .about-pillar-card__title,
 [data-theme="dark"] .trustee-section__title,
@@ -1037,6 +1045,7 @@
 [data-theme="dark"] .about-story__lead,
 [data-theme="dark"] .about-story__text,
 [data-theme="dark"] .about-story__highlight-item p,
+[data-theme="dark"] .about-milestones__desc p,
 [data-theme="dark"] .about-pillars__subtitle,
 [data-theme="dark"] .about-pillar-card__desc,
 [data-theme="dark"] .trustee-card__desc,

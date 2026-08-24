@@ -680,3 +680,111 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (SCHOLARSHIP PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .scholarship-section__container {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .portal-card,
+[data-theme="dark"] .scholarship-card {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .portal-card:hover,
+[data-theme="dark"] .scholarship-card:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .scholarship-block__title,
+[data-theme="dark"] .portal-card__title,
+[data-theme="dark"] .scholarship-card__title,
+[data-theme="dark"] .portal-card__authority {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .scholarship-block__subtitle,
+[data-theme="dark"] .portal-card__desc,
+[data-theme="dark"] .scholarship-card__desc {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .portal-card__tag {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34D399 !important;
+    border: 1px solid rgba(52, 211, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .portal-card__icon-box {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34D399 !important;
+}
+
+/* Scholarship Table Dark Overrides */
+[data-theme="dark"] .scholarship-table-wrapper {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .scholarship-table {
+    background: #0F172A !important;
+}
+
+[data-theme="dark"] .scholarship-table thead th {
+    background: #0B1322 !important;
+    color: #FFFFFF !important;
+    border-bottom: 2px solid #334155 !important;
+}
+
+[data-theme="dark"] .scholarship-table tbody tr {
+    background: #0F172A !important;
+}
+
+[data-theme="dark"] .scholarship-table tbody tr:nth-child(even) {
+    background: #162032 !important;
+}
+
+[data-theme="dark"] .scholarship-table tbody tr:hover {
+    background: #1E2D44 !important;
+}
+
+[data-theme="dark"] .scholarship-table th:first-child,
+[data-theme="dark"] .scholarship-table td:first-child {
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-right: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .scholarship-table tbody tr:nth-child(even) td:first-child {
+    background: #162032 !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .scholarship-table tbody tr:hover td:first-child {
+    background: #1E2D44 !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .scholarship-table td {
+    color: #CBD5E1 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme="dark"] .scholarship-table tbody tr:nth-child(even) td {
+    background: transparent !important;
+}
+
+[data-theme="dark"] .table-total-row {
+    background: rgba(245, 158, 11, 0.12) !important;
+    color: #FFFFFF !important;
+}

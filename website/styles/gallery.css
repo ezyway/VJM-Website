@@ -833,3 +833,52 @@
         width: 100%;
     }
 }
+
+/* ====================================================
+   DARK MODE OVERRIDES (GALLERY PAGE)
+   ==================================================== */
+
+[data-theme="dark"] .gallery-section__container {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .gallery-controls {
+    background: #0F172A !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .album-card {
+    background: #1E293B !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .album-card:hover {
+    background: #243248 !important;
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .gallery-section__title,
+[data-theme="dark"] .album-card__title {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .gallery-section__subtitle,
+[data-theme="dark"] .album-card__count {
+    color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .gallery-filter-btn {
+    background: #0F172A !important;
+    color: #CBD5E1 !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .gallery-filter-btn.is-active {
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+}
