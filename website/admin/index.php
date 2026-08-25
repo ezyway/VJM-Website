@@ -59,33 +59,42 @@ $recentEvents = $db->query('SELECT * FROM events ORDER BY sort_order ASC, id DES
 $latestMag = $db->query('SELECT * FROM magazines ORDER BY sort_order ASC, year DESC LIMIT 1')->fetch();
 
 // 7. Storage & Asset Metrics
-$uploadBase = dirname(__DIR__) . '/assets/uploads';
+$siteRoot = dirname(__DIR__);
 
-function getDirInfo(string $dir): array {
-    if (!is_dir($dir)) return ['count' => 0, 'size' => '0 KB'];
-    $files = array_diff(scandir($dir), ['.', '..']);
-    $totalSize = 0;
+function getStorageStats(array $dirs): array {
     $count = 0;
-    foreach ($files as $f) {
-        $path = $dir . '/' . $f;
-        if (is_file($path)) {
-            $totalSize += filesize($path);
-            $count++;
-        } elseif (is_dir($path)) {
-            $sub = getDirInfo($path);
-            $count += $sub['count'];
-        }
+    $bytes = 0;
+    foreach ($dirs as $d) {
+        if (!is_dir($d)) continue;
+        try {
+            $it = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($d, FilesystemIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+            foreach ($it as $item) {
+                if ($item->isFile()) {
+                    $count++;
+                    $bytes += $item->getSize();
+                }
+            }
+        } catch (Exception $e) {}
     }
-    $formattedSize = ($totalSize > 1048576) 
-        ? round($totalSize / 1048576, 1) . ' MB' 
-        : round($totalSize / 1024, 1) . ' KB';
-    return ['count' => $count, 'size' => $formattedSize];
+    $sizeStr = ($bytes > 1048576) 
+        ? round($bytes / 1048576, 1) . ' MB' 
+        : round($bytes / 1024, 1) . ' KB';
+    return ['count' => $count, 'bytes' => $bytes, 'size' => $sizeStr];
 }
 
-$storageFaculty = getDirInfo($uploadBase . '/faculties');
-$storageGallery = getDirInfo($uploadBase . '/gallery');
-$storageEmag    = getDirInfo($uploadBase . '/emag');
-$storageRankers = getDirInfo($uploadBase . '/rankers');
+$storageFaculty = getStorageStats([$siteRoot . '/assets/photos/faculties', $siteRoot . '/assets/uploads/faculties']);
+$storageGallery = getStorageStats([$siteRoot . '/assets/photos/gallery', $siteRoot . '/assets/uploads/gallery']);
+$storageEmag    = getStorageStats([$siteRoot . '/assets/e_mags', $siteRoot . '/assets/uploads/emag']);
+$storageRankers = getStorageStats([$siteRoot . '/assets/photos/index/pride_of_college', $siteRoot . '/assets/uploads/rankers']);
+
+$totalMediaBytes = $storageFaculty['bytes'] + $storageGallery['bytes'] + $storageEmag['bytes'] + $storageRankers['bytes'];
+$totalMediaFiles = $storageFaculty['count'] + $storageGallery['count'] + $storageEmag['count'] + $storageRankers['count'];
+$totalMediaSizeStr = ($totalMediaBytes > 1048576) 
+    ? round($totalMediaBytes / 1048576, 1) . ' MB' 
+    : round($totalMediaBytes / 1024, 1) . ' KB';
 
 $dbFileSize = file_exists(DB_FILE_PATH) ? round(filesize(DB_FILE_PATH) / 1024, 1) . ' KB' : '0 KB';
 $activeTicker = getSetting('announcement_banner', 'Admissions Open for Academic Year 2025-26');
@@ -341,7 +350,7 @@ $counterPassRate = getSetting('counter_pass_rate', '97.6');
     <div class="panel">
         <div class="panel-header">
             <div class="panel-title">Media Storage &amp; Asset Footprint</div>
-            <span class="badge badge-primary">Disk Utilization</span>
+            <span class="badge badge-primary"><?= $totalMediaFiles ?> Files &bull; <?= $totalMediaSizeStr ?></span>
         </div>
         <div class="panel-body">
             <div class="storage-bar-group">
