@@ -1,28 +1,53 @@
 <?php
+    require_once __DIR__ . '/admin/includes/db.php';
     $meta_description = "Read and download annual college e-magazines, student creative writing, poems, and artistic publications from Shri V.J. Modha College, Porbandar.";
 
-    $magazines = [
-        [
-            "year" => "2021",
-            "title" => "Shri V.J. Modha College Annual E-Magazine 2021",
-            "edition" => "Edition 2021",
-            "theme" => "Resilience, Innovation & Digital Transformation",
-            "file" => "assets/e_mags/mag_2021.pdf",
-            "size" => "~31.6 MB",
-            "pages" => "Full Edition",
-            "badge" => "Latest Edition"
-        ],
-        [
-            "year" => "2020",
-            "title" => "Shri V.J. Modha College Annual E-Magazine 2020",
-            "edition" => "Edition 2020",
-            "theme" => "Academic Excellence, Creativity & Cultural Heritage",
-            "file" => "assets/e_mags/mag_2020.pdf",
-            "size" => "~21.6 MB",
-            "pages" => "Full Edition",
-            "badge" => "Archive"
-        ]
-    ];
+    $magazines = [];
+    try {
+        $db = getDB();
+        $dbMags = $db->query('SELECT * FROM magazines ORDER BY sort_order ASC, year DESC')->fetchAll();
+        if (!empty($dbMags)) {
+            foreach ($dbMags as $m) {
+                $magazines[] = [
+                    "year"    => $m['year'],
+                    "title"   => $m['title'],
+                    "edition" => $m['edition'],
+                    "theme"   => $m['theme'],
+                    "file"    => $m['file_path'],
+                    "size"    => $m['file_size'],
+                    "pages"   => $m['pages'],
+                    "badge"   => $m['badge']
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        $magazines = [];
+    }
+
+    if (empty($magazines)) {
+        $magazines = [
+            [
+                "year" => "2021",
+                "title" => "Shri V.J. Modha College Annual E-Magazine 2021",
+                "edition" => "Edition 2021",
+                "theme" => "Resilience, Innovation & Digital Transformation",
+                "file" => "assets/e_mags/mag_2021.pdf",
+                "size" => "~31.6 MB",
+                "pages" => "Full Edition",
+                "badge" => "Latest Edition"
+            ],
+            [
+                "year" => "2020",
+                "title" => "Shri V.J. Modha College Annual E-Magazine 2020",
+                "edition" => "Edition 2020",
+                "theme" => "Academic Excellence, Creativity & Cultural Heritage",
+                "file" => "assets/e_mags/mag_2020.pdf",
+                "size" => "~21.6 MB",
+                "pages" => "Full Edition",
+                "badge" => "Archive"
+            ]
+        ];
+    }
 ?>
 
 <!DOCTYPE html>

@@ -3,3 +3,7 @@ website/test.php
 .env
 tmp/
 test_nvapi.py
+*.sqlite-shm
+*.sqlite-wal
+website/upload.zip
+

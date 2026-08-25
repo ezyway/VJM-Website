@@ -51,75 +51,113 @@
             <div class="pride-section__slider" id="prideSlider">
                 <div class="pride-section__slider-wrapper">
                     <?php
-                    $image_dir_fs = dirname(__DIR__) . '/assets/photos/index/pride_of_college/';
-                    $image_dir_web = 'assets/photos/index/pride_of_college/';
-                    $images = glob($image_dir_fs . '*.{jpg,jpeg,png,webp}', GLOB_BRACE);
+                    require_once dirname(__DIR__) . '/admin/includes/db.php';
+                    $rankerItems = [];
 
-                    if ($images) {
-                        sort($images);
-                        foreach ($images as $path) {
-                            $filename = basename($path);
-                            $filenameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
+                    try {
+                        $db = getDB();
+                        $dbRankers = $db->query('SELECT * FROM rankers ORDER BY sort_order ASC, id ASC')->fetchAll();
+                        if (!empty($dbRankers)) {
+                            foreach ($dbRankers as $rk) {
+                                $courseLabel = trim(
+                                    $rk['course'] .
+                                    ($rk['language'] ? ' ' . $rk['language'] : '') .
+                                    ($rk['semester'] ? " (Sem {$rk['semester']})" : '')
+                                );
+                                $rankDisplay = preg_replace('/\^([a-zA-Z0-9]+)/', '<sup>$1</sup>', $rk['rank_text']);
+                                $src = $rk['image'];
 
-                            // Split into Course__Name__Rank
-                            $parts = explode('__', $filenameWithoutExt);
-                            $courseRaw = $parts[0] ?? '';
-                            $nameRaw   = $parts[1] ?? '';
-                            $rankRaw   = $parts[2] ?? '';
+                                $rankerItems[] = [
+                                    'name' => $rk['name'],
+                                    'courseLabel' => $courseLabel,
+                                    'rankDisplay' => $rankDisplay,
+                                    'src' => $src
+                                ];
+                            }
+                        }
+                    } catch (Exception $e) {
+                        $rankerItems = [];
+                    }
 
-                            // === Course Parsing ===
-                            $courseRaw = str_replace('_', ' ', $courseRaw);
-                            $courseSegments = explode('-', $courseRaw);
+                    // Fallback to disk scan if DB is empty
+                    if (empty($rankerItems)) {
+                        $image_dir_fs = dirname(__DIR__) . '/assets/photos/index/pride_of_college/';
+                        $image_dir_web = 'assets/photos/index/pride_of_college/';
+                        $images = glob($image_dir_fs . '*.{jpg,jpeg,png,webp}', GLOB_BRACE);
 
-                            $courseName = trim($courseSegments[0] ?? '');
-                            $semester   = '';
-                            $language   = '';
+                        if ($images) {
+                            sort($images);
+                            foreach ($images as $path) {
+                                $filename = basename($path);
+                                $filenameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
+                                $parts = explode('__', $filenameWithoutExt);
+                                $courseRaw = $parts[0] ?? '';
+                                $nameRaw   = $parts[1] ?? '';
+                                $rankRaw   = $parts[2] ?? '';
 
-                            if (isset($courseSegments[1])) {
-                                if (is_numeric($courseSegments[1])) {
-                                    $semester = $courseSegments[1];
-                                    $language = $courseSegments[2] ?? '';
-                                } else {
-                                    $courseName .= ' ' . $courseSegments[1];
-                                    if (isset($courseSegments[2]) && is_numeric($courseSegments[2])) {
-                                        $semester = $courseSegments[2];
-                                        $language = $courseSegments[3] ?? '';
+                                $courseRaw = str_replace('_', ' ', $courseRaw);
+                                $courseSegments = explode('-', $courseRaw);
+                                $courseName = trim($courseSegments[0] ?? '');
+                                $semester   = '';
+                                $language   = '';
+
+                                if (isset($courseSegments[1])) {
+                                    if (is_numeric($courseSegments[1])) {
+                                        $semester = $courseSegments[1];
+                                        $language = $courseSegments[2] ?? '';
+                                    } else {
+                                        $courseName .= ' ' . $courseSegments[1];
+                                        if (isset($courseSegments[2]) && is_numeric($courseSegments[2])) {
+                                            $semester = $courseSegments[2];
+                                            $language = $courseSegments[3] ?? '';
+                                        }
                                     }
                                 }
+
+                                $courseLabel = trim(
+                                    $courseName .
+                                        ($language ? ' ' . $language : '') .
+                                        ($semester ? " (Sem $semester)" : '')
+                                );
+
+                                $fullName = str_replace('_', ' ', $nameRaw);
+                                $rankDisplay = '';
+                                if (preg_match('/(.*?)-(\d+)(?:_(\w+))?$/', $rankRaw, $matches)) {
+                                    $scope = $matches[1] ?? '';
+                                    $number = $matches[2] ?? '';
+                                    $suffix = isset($matches[3]) ? "<sup>{$matches[3]}</sup>" : '';
+                                    $rankDisplay = "{$scope} Rank {$number}{$suffix}";
+                                } else {
+                                    $rankDisplay = str_replace('_', ' ', $rankRaw);
+                                }
+
+                                $rankerItems[] = [
+                                    'name' => $fullName,
+                                    'courseLabel' => $courseLabel,
+                                    'rankDisplay' => $rankDisplay,
+                                    'src' => $image_dir_web . $filename
+                                ];
                             }
+                        }
+                    }
 
-                            $courseLabel = trim(
-                                $courseName .
-                                    ($language ? ' ' . $language : '') .
-                                    ($semester ? " (Sem $semester)" : '')
-                            );
-
-                            // === Name Parsing ===
-                            $fullName = str_replace('_', ' ', $nameRaw);
-
-                            // === Rank Parsing ===
-                            $rankDisplay = '';
-                            if (preg_match('/(.*?)-(\d+)(?:_(\w+))?$/', $rankRaw, $matches)) {
-                                $scope = $matches[1] ?? '';
-                                $number = $matches[2] ?? '';
-                                $suffix = isset($matches[3]) ? "<sup>{$matches[3]}</sup>" : '';
-                                $rankDisplay = "{$scope} Rank {$number}{$suffix}";
-                            } else {
-                                $rankDisplay = str_replace('_', ' ', $rankRaw);
-                            }
-
-                            $src = $image_dir_web . $filename;
+                    if (!empty($rankerItems)) {
+                        foreach ($rankerItems as $item) {
+                            $safeName = htmlspecialchars($item['name']);
+                            $safeCourse = htmlspecialchars($item['courseLabel']);
+                            $safeRank = $item['rankDisplay']; // contains <sup>
+                            $safeSrc = htmlspecialchars($item['src']);
 
                             echo <<<HTML
                                 <div class="pride-section__item">
                                     <div class="pride-section__card">
                                         <div class="pride-section__image-box">
-                                            <img src="{$src}" alt="{$fullName}" class="pride-section__image" loading="lazy" />
-                                            <span class="pride-section__award">{$rankDisplay}</span>
+                                            <img src="{$safeSrc}" alt="{$safeName}" class="pride-section__image" loading="lazy" />
+                                            <span class="pride-section__award">{$safeRank}</span>
                                         </div>
                                         <div class="pride-section__details">
-                                            <h3 class="pride-section__name">{$fullName}</h3>
-                                            <p class="pride-section__course">{$courseLabel}</p>
+                                            <h3 class="pride-section__name">{$safeName}</h3>
+                                            <p class="pride-section__course">{$safeCourse}</p>
                                         </div>
                                     </div>
                                 </div>

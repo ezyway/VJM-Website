@@ -13,8 +13,32 @@
         "bsw" => ["name" => "B.S.W.", "badge" => "Social Work"]
     ];
 
-    // Unique faculty list (Zero duplicates across all departments view)
-    $facultyList = [
+    require_once __DIR__ . '/admin/includes/db.php';
+    $facultyList = [];
+    try {
+        $db = getDB();
+        $dbFaculties = $db->query('SELECT * FROM faculties ORDER BY sort_order ASC, id ASC')->fetchAll();
+        if (!empty($dbFaculties)) {
+            foreach ($dbFaculties as $f) {
+                $depts = array_values(array_filter(array_map('trim', explode(',', $f['depts']))));
+                $facultyList[] = [
+                    "name" => $f['name'],
+                    "designation" => $f['designation'],
+                    "depts" => $depts,
+                    "badge" => $f['badge'],
+                    "dept_label" => $f['dept_label'],
+                    "image" => $f['image'],
+                    "featured" => (bool)$f['featured']
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        $facultyList = [];
+    }
+
+    // Fallback if database is empty
+    if (empty($facultyList)) {
+        $facultyList = [
         // Administrators & BCA
         [
             "name" => "Prof. Paresh Savjani",
@@ -419,6 +443,7 @@
             "featured" => false
         ]
     ];
+    }
 
     // Accurate count computation
     $deptCounts = [

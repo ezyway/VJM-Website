@@ -68,15 +68,15 @@
     </section>
 
 
-    <?php include("components/counter.html"); ?>
+    <?php include("components/counter.php"); ?>
 
     <?php include("components/chairman_pride.php"); ?>
 
-    <?php include("components/events_news.html"); ?>
+    <?php include("components/events_news.php"); ?>
 
-    <?php include("components/academic_pass_rates.html"); ?>
+    <?php include("components/academic_pass_rates.php"); ?>
 
-    <?php include("components/testimonials.html"); ?>
+    <?php include("components/testimonials.php"); ?>
 
     <?php include("components/photos.php"); ?>
 

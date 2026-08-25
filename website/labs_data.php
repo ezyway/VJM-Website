@@ -1,5 +1,28 @@
 <?php
-    $labs = [
+    require_once __DIR__ . '/admin/includes/db.php';
+    $labs = [];
+    try {
+        $db = getDB();
+        $dbLabs = $db->query('SELECT * FROM labs ORDER BY sort_order ASC, id ASC')->fetchAll();
+        if (!empty($dbLabs)) {
+            foreach ($dbLabs as $l) {
+                $labs[$l['slug']] = [
+                    "name"        => $l['name'],
+                    "code"        => $l['code'],
+                    "tagline"     => $l['tagline'],
+                    "badge"       => $l['badge'],
+                    "description" => $l['description'],
+                    "features"    => json_decode($l['features'] ?? '[]', true) ?: [],
+                    "specs"       => json_decode($l['specs'] ?? '{}', true) ?: []
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        $labs = [];
+    }
+
+    if (empty($labs)) {
+        $labs = [
         "computer" => [
             "name" => "Computer & Advanced IT Lab",
             "code" => "Computer Lab",
@@ -58,4 +81,5 @@
             ]
         ]
     ];
+    }
 ?>

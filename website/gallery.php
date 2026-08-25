@@ -1,6 +1,6 @@
 <?php
+    require_once __DIR__ . '/admin/includes/db.php';
     $galleryDir = 'assets/photos/gallery';
-    $rawAlbums = array_diff(scandir($galleryDir), ['.', '..']);
     
     function getImageURLs($folderPath) {
         $result = [];
@@ -15,68 +15,107 @@
         return $result;
     }
 
-    // Album metadata dictionary
-    $albumMeta = [
-        "aavishkar_event" => [
-            "title" => "Aavishkar Tech & Science Fest",
-            "category" => "events",
-            "category_label" => "Tech & Academic",
-            "description" => "Annual technical exhibition and science project competitions showcasing student innovations."
-        ],
-        "campus" => [
-            "title" => "Campus Infrastructure & Grounds",
-            "category" => "campus",
-            "category_label" => "Campus Life",
-            "description" => "Lush green campus environment, seminar halls, sports arena, and modern academic blocks."
-        ],
-        "freshers_party" => [
-            "title" => "Freshers Welcome Celebration",
-            "category" => "events",
-            "category_label" => "Cultural & Social",
-            "description" => "Welcoming the incoming batch of bright minds with music, performances, and student bonding."
-        ],
-        "ganesh_mahotsav" => [
-            "title" => "Ganesh Mahotsav Celebrations",
-            "category" => "cultural",
-            "category_label" => "Tradition & Festivity",
-            "description" => "Traditional cultural celebrations and devotional festivities uniting students and staff."
-        ],
-        "labs" => [
-            "title" => "High-Tech Computer & Science Labs",
-            "category" => "campus",
-            "category_label" => "Facilities",
-            "description" => "State-of-the-art computer labs, chemistry setups, and hands-on scientific research equipment."
-        ],
-        "talent_show" => [
-            "title" => "Annual Talent & Cultural Showcase",
-            "category" => "cultural",
-            "category_label" => "Arts & Performances",
-            "description" => "Celebrating extraordinary artistic talents in dance, drama, music, and public speaking."
-        ]
-    ];
-
-    // Build complete albums payload for 0ms client-side modal
     $albumsPayload = [];
-    foreach ($rawAlbums as $albumKey) {
-        $folder = "$galleryDir/$albumKey";
-        if (is_dir($folder)) {
-            $imgs = getImageURLs($folder);
-            $meta = $albumMeta[$albumKey] ?? [
-                "title" => ucwords(str_replace('_', ' ', $albumKey)),
+
+    // Try loading from Database
+    try {
+        $db = getDB();
+        $dbAlbums = $db->query('SELECT * FROM gallery_albums ORDER BY sort_order ASC, id ASC')->fetchAll();
+        if (!empty($dbAlbums)) {
+            $stmtPhotos = $db->prepare('SELECT image_path FROM gallery_photos WHERE album_id = :aid ORDER BY sort_order ASC, id ASC');
+            foreach ($dbAlbums as $alb) {
+                $stmtPhotos->execute([':aid' => $alb['id']]);
+                $photos = $stmtPhotos->fetchAll(PDO::FETCH_COLUMN);
+
+                // Fallback to disk scan if no photos in DB yet
+                if (empty($photos)) {
+                    $folder = "$galleryDir/{$alb['slug']}";
+                    if (is_dir($folder)) {
+                        $photos = getImageURLs($folder);
+                    }
+                }
+
+                $cover = !empty($alb['cover_image']) ? $alb['cover_image'] : ($photos[0] ?? 'assets/background.png');
+
+                $albumsPayload[$alb['slug']] = [
+                    "key" => $alb['slug'],
+                    "title" => $alb['title'],
+                    "category" => $alb['category'],
+                    "category_label" => $alb['category_label'] ?: $alb['category'],
+                    "description" => $alb['description'],
+                    "images" => $photos,
+                    "cover" => $cover,
+                    "count" => count($photos)
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        $albumsPayload = [];
+    }
+
+    // Fallback if DB empty or error
+    if (empty($albumsPayload)) {
+        $rawAlbums = is_dir($galleryDir) ? array_diff(scandir($galleryDir), ['.', '..']) : [];
+        $albumMeta = [
+            "aavishkar_event" => [
+                "title" => "Aavishkar Tech & Science Fest",
                 "category" => "events",
-                "category_label" => "Events",
-                "description" => "Memorable moments and student activities at Shri V.J. Modha College."
-            ];
-            $albumsPayload[$albumKey] = [
-                "key" => $albumKey,
-                "title" => $meta['title'],
-                "category" => $meta['category'],
-                "category_label" => $meta['category_label'],
-                "description" => $meta['description'],
-                "images" => $imgs,
-                "cover" => $imgs[0] ?? 'assets/background.png',
-                "count" => count($imgs)
-            ];
+                "category_label" => "Tech & Academic",
+                "description" => "Annual technical exhibition and science project competitions showcasing student innovations."
+            ],
+            "campus" => [
+                "title" => "Campus Infrastructure & Grounds",
+                "category" => "campus",
+                "category_label" => "Campus Life",
+                "description" => "Lush green campus environment, seminar halls, sports arena, and modern academic blocks."
+            ],
+            "freshers_party" => [
+                "title" => "Freshers Welcome Celebration",
+                "category" => "events",
+                "category_label" => "Cultural & Social",
+                "description" => "Welcoming the incoming batch of bright minds with music, performances, and student bonding."
+            ],
+            "ganesh_mahotsav" => [
+                "title" => "Ganesh Mahotsav Celebrations",
+                "category" => "cultural",
+                "category_label" => "Tradition & Festivity",
+                "description" => "Traditional cultural celebrations and devotional festivities uniting students and staff."
+            ],
+            "labs" => [
+                "title" => "High-Tech Computer & Science Labs",
+                "category" => "campus",
+                "category_label" => "Facilities",
+                "description" => "State-of-the-art computer labs, chemistry setups, and hands-on scientific research equipment."
+            ],
+            "talent_show" => [
+                "title" => "Annual Talent & Cultural Showcase",
+                "category" => "cultural",
+                "category_label" => "Arts & Performances",
+                "description" => "Celebrating extraordinary artistic talents in dance, drama, music, and public speaking."
+            ]
+        ];
+
+        foreach ($rawAlbums as $albumKey) {
+            $folder = "$galleryDir/$albumKey";
+            if (is_dir($folder)) {
+                $imgs = getImageURLs($folder);
+                $meta = $albumMeta[$albumKey] ?? [
+                    "title" => ucwords(str_replace('_', ' ', $albumKey)),
+                    "category" => "events",
+                    "category_label" => "Events",
+                    "description" => "Memorable moments and student activities at Shri V.J. Modha College."
+                ];
+                $albumsPayload[$albumKey] = [
+                    "key" => $albumKey,
+                    "title" => $meta['title'],
+                    "category" => $meta['category'],
+                    "category_label" => $meta['category_label'],
+                    "description" => $meta['description'],
+                    "images" => $imgs,
+                    "cover" => $imgs[0] ?? 'assets/background.png',
+                    "count" => count($imgs)
+                ];
+            }
         }
     }
 

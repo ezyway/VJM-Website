@@ -1,5 +1,38 @@
 <?php
-    $courses = [
+    require_once __DIR__ . '/admin/includes/db.php';
+    $courses = [];
+    try {
+        $db = getDB();
+        $dbCourses = $db->query('SELECT * FROM courses ORDER BY sort_order ASC, id ASC')->fetchAll();
+        if (!empty($dbCourses)) {
+            foreach ($dbCourses as $c) {
+                $quickInfo = array_values(array_filter(array_map('trim', explode("\n\n", $c['quick_info']))));
+                if (empty($quickInfo) && !empty($c['quick_info'])) {
+                    $quickInfo = [$c['quick_info']];
+                }
+                $jobRoles = json_decode($c['job_roles'] ?? '[]', true) ?: [];
+                $faq = [
+                    $c['eligibility'] ?? '',
+                    $c['medium'] ?? '',
+                    $c['duration'] ?? '',
+                    $c['seats_or_intake'] ?? '',
+                    $c['next_step'] ?? '',
+                    $c['timings'] ?? '',
+                    $c['syllabus_url'] ?? ''
+                ];
+                $courses[$c['slug']] = [
+                    "quick_info" => $quickInfo,
+                    "job_roles"  => $jobRoles,
+                    "faq"        => $faq
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        $courses = [];
+    }
+
+    if (empty($courses)) {
+        $courses = [
 		"bca" => [
 			"quick_info" => [
 				"The Bachelor in Computer Applications (BCA) immerses you in the fundamentals of programming, database systems, and web technologies over three years. You’ll build real‑world projects that sharpen your problem‑solving and algorithmic thinking, preparing you for roles in software houses and startups alike. As digital transformation accelerates across industries, BCA graduates are instrumental in designing and maintaining the applications that power businesses, healthcare, and education. Beyond technical skills, the program fosters teamwork and ethical coding practices, ensuring you contribute responsibly to society’s technological backbone."
@@ -200,6 +233,7 @@
 			]
 		]
 	];
+    }
 
 	$fullforms = [
 		'bca' => 'Bachelor in Computer Applications',

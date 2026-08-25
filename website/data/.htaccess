@@ -1,0 +1,4 @@
+# Deny direct access to all files in this directory (databases, internal files)
+<FilesMatch "\.(sqlite|sqlite3|db|sql|json|lock)$">
+    Require all denied
+</FilesMatch>

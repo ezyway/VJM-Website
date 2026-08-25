@@ -1,40 +1,80 @@
 <?php
+    require_once __DIR__ . '/admin/includes/db.php';
     $meta_description = "Explore government and institutional scholarship programs at Shri V.J. Modha College, Porbandar. Review Digital Gujarat, MYSY portals, and yearly disbursement records.";
 
-    $scholarshipRecords = [
-        ["year" => "2024 - 2025", "amount" => "₹ 21,22,000", "numeric" => 2122000, "status" => "Latest"],
-        ["year" => "2023 - 2024", "amount" => "₹ 19,38,000", "numeric" => 1938000, "status" => "Completed"],
-        ["year" => "2022 - 2023", "amount" => "₹ 17,20,000", "numeric" => 1720000, "status" => "Completed"],
-        ["year" => "2021 - 2022", "amount" => "₹ 16,50,000", "numeric" => 1650000, "status" => "Completed"],
-        ["year" => "2020 - 2021", "amount" => "₹ 14,82,000", "numeric" => 1482000, "status" => "Completed"],
-        ["year" => "2019 - 2020", "amount" => "₹ 16,98,500", "numeric" => 1698500, "status" => "Completed"],
-        ["year" => "2018 - 2019", "amount" => "₹ 17,35,800", "numeric" => 1735800, "status" => "Completed"],
-        ["year" => "2017 - 2018", "amount" => "₹ 22,13,100", "numeric" => 2213100, "status" => "Peak"],
-        ["year" => "2016 - 2017", "amount" => "₹ 20,38,090", "numeric" => 2038090, "status" => "Completed"],
-        ["year" => "2015 - 2016", "amount" => "₹ 15,53,850", "numeric" => 1553850, "status" => "Completed"],
-        ["year" => "2014 - 2015", "amount" => "₹ 11,13,140", "numeric" => 1113140, "status" => "Completed"],
-        ["year" => "2013 - 2014", "amount" => "₹ 7,00,774", "numeric" => 700774, "status" => "Completed"],
-        ["year" => "2012 - 2013", "amount" => "₹ 5,42,500", "numeric" => 542500, "status" => "Completed"]
-    ];
+    $scholarshipRecords = [];
+    $portals = [];
 
-    $portals = [
-        [
-            "name" => "Digital Gujarat Portal",
-            "provider" => "Government of Gujarat",
-            "badge" => "State Government",
-            "desc" => "Post-matric and merit scholarships for SC, ST, SEBC, and EWS students pursuing higher education.",
-            "link" => "https://www.digitalgujarat.gov.in/",
-            "icon" => "shield"
-        ],
-        [
-            "name" => "MYSY (Mukhyamantri Yuva Swavalamban Yojana)",
-            "provider" => "Education Department, Gujarat",
-            "badge" => "Merit & Financial Aid",
-            "desc" => "Fee waiver and financial assistance for bright and needy students across degree programs.",
-            "link" => "https://mysy.guj.nic.in/",
-            "icon" => "award"
-        ]
-    ];
+    try {
+        $db = getDB();
+        $dbRecords = $db->query('SELECT * FROM scholarships ORDER BY sort_order ASC, id ASC')->fetchAll();
+        if (!empty($dbRecords)) {
+            foreach ($dbRecords as $r) {
+                $scholarshipRecords[] = [
+                    "year"    => $r['year'],
+                    "amount"  => $r['amount_str'],
+                    "numeric" => (int)$r['amount_numeric'],
+                    "status"  => $r['status']
+                ];
+            }
+        }
+
+        $dbPortals = $db->query('SELECT * FROM scholarship_portals ORDER BY sort_order ASC, id ASC')->fetchAll();
+        if (!empty($dbPortals)) {
+            foreach ($dbPortals as $p) {
+                $portals[] = [
+                    "name"     => $p['name'],
+                    "provider" => $p['provider'],
+                    "badge"    => $p['badge'],
+                    "desc"     => $p['description'],
+                    "link"     => $p['link'],
+                    "icon"     => $p['icon']
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        $scholarshipRecords = [];
+        $portals = [];
+    }
+
+    if (empty($scholarshipRecords)) {
+        $scholarshipRecords = [
+            ["year" => "2024 - 2025", "amount" => "₹ 21,22,000", "numeric" => 2122000, "status" => "Latest"],
+            ["year" => "2023 - 2024", "amount" => "₹ 19,38,000", "numeric" => 1938000, "status" => "Completed"],
+            ["year" => "2022 - 2023", "amount" => "₹ 17,20,000", "numeric" => 1720000, "status" => "Completed"],
+            ["year" => "2021 - 2022", "amount" => "₹ 16,50,000", "numeric" => 1650000, "status" => "Completed"],
+            ["year" => "2020 - 2021", "amount" => "₹ 14,82,000", "numeric" => 1482000, "status" => "Completed"],
+            ["year" => "2019 - 2020", "amount" => "₹ 16,98,500", "numeric" => 1698500, "status" => "Completed"],
+            ["year" => "2018 - 2019", "amount" => "₹ 17,35,800", "numeric" => 1735800, "status" => "Completed"],
+            ["year" => "2017 - 2018", "amount" => "₹ 22,13,100", "numeric" => 2213100, "status" => "Peak"],
+            ["year" => "2016 - 2017", "amount" => "₹ 20,38,090", "numeric" => 2038090, "status" => "Completed"],
+            ["year" => "2015 - 2016", "amount" => "₹ 15,53,850", "numeric" => 1553850, "status" => "Completed"],
+            ["year" => "2014 - 2015", "amount" => "₹ 11,13,140", "numeric" => 1113140, "status" => "Completed"],
+            ["year" => "2013 - 2014", "amount" => "₹ 7,00,774", "numeric" => 700774, "status" => "Completed"],
+            ["year" => "2012 - 2013", "amount" => "₹ 5,42,500", "numeric" => 542500, "status" => "Completed"]
+        ];
+    }
+
+    if (empty($portals)) {
+        $portals = [
+            [
+                "name" => "Digital Gujarat Portal",
+                "provider" => "Government of Gujarat",
+                "badge" => "State Government",
+                "desc" => "Post-matric and merit scholarships for SC, ST, SEBC, and EWS students pursuing higher education.",
+                "link" => "https://www.digitalgujarat.gov.in/",
+                "icon" => "shield"
+            ],
+            [
+                "name" => "MYSY (Mukhyamantri Yuva Swavalamban Yojana)",
+                "provider" => "Education Department, Gujarat",
+                "badge" => "Merit & Financial Aid",
+                "desc" => "Fee waiver and financial assistance for bright and needy students across degree programs.",
+                "link" => "https://mysy.guj.nic.in/",
+                "icon" => "award"
+            ]
+        ];
+    }
 
     $totalDisbursed = 0;
     foreach ($scholarshipRecords as $r) {
