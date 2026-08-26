@@ -351,7 +351,10 @@ $albums = $db->query('
             <div class="panel-title">Gallery Albums (<?= count($albums) ?>)</div>
             <input type="text" class="form-control" data-table-search="albumsTable" placeholder="Search albums..." style="max-width: 320px; font-size: 13px;">
         </div>
-        <a href="gallery.php?action=create_album" class="btn btn-primary btn-sm">
+        <a href="gallery.php?action=create_album" 
+           data-drawer-url="gallery.php?action=create_album" 
+           data-drawer-title="Create New Album" 
+           class="btn btn-primary btn-sm">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Create New Album
         </a>
@@ -359,9 +362,10 @@ $albums = $db->query('
 
     <div class="panel-body" style="padding: 0;">
         <div class="table-responsive">
-            <table class="admin-table" id="albumsTable">
+            <table class="admin-table" id="albumsTable" data-reorder="gallery_albums">
                 <thead>
                     <tr>
+                        <th class="reorder-col" style="width: 48px;"></th>
                         <th style="width: 50px;">Order</th>
                         <th>Cover</th>
                         <th>Album Title</th>
@@ -372,10 +376,15 @@ $albums = $db->query('
                 </thead>
                 <tbody>
                     <?php if (empty($albums)): ?>
-                        <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No albums found.</td></tr>
+                        <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 32px;">No albums found.</td></tr>
                     <?php else: ?>
                         <?php foreach ($albums as $a): ?>
-                        <tr>
+                        <tr data-reorder-id="<?= (int)$a['id'] ?>">
+                            <td class="reorder-col">
+                                <button type="button" class="sortable-handle" aria-label="Drag to reorder" title="Drag to reorder">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
+                                </button>
+                            </td>
                             <td><span class="badge badge-secondary">#<?= (int)$a['sort_order'] ?></span></td>
                             <td>
                                 <img src="../<?= htmlspecialchars($a['cover_image'] ?: 'assets/logo.ico') ?>" alt="" class="preview-thumbnail" onerror="this.src='../assets/logo.ico'">
@@ -396,12 +405,19 @@ $albums = $db->query('
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                         Photos
                                     </a>
-                                    <a href="gallery.php?edit_album=<?= (int)$a['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="gallery.php" style="display: inline;" onsubmit="return confirm('Delete this entire album and its photos?');">
+                                    <a href="gallery.php?edit_album=<?= (int)$a['id'] ?>" 
+                                       data-drawer-url="gallery.php?edit_album=<?= (int)$a['id'] ?>" 
+                                       data-drawer-title="Edit Album Details" 
+                                       class="btn btn-secondary btn-sm">Edit</a>
+                                    <form method="POST" action="gallery.php" style="display: inline;" id="delete-album-<?= (int)$a['id'] ?>">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="action" value="delete_album">
                                         <input type="hidden" name="id" value="<?= (int)$a['id'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-sm" 
+                                                data-confirm="Delete this entire album and its photos?" 
+                                                data-confirm-form="#delete-album-<?= (int)$a['id'] ?>">
+                                            Delete
+                                        </button>
                                     </form>
                                 </div>
                             </td>

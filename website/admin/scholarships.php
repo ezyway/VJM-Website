@@ -299,7 +299,10 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title">Yearly Disbursement Records (<?= count($records) ?> years)</div>
-        <a href="scholarships.php?tab=records&action=create_record" class="btn btn-primary btn-sm">
+        <a href="scholarships.php?tab=records&action=create_record" 
+           data-drawer-url="scholarships.php?tab=records&action=create_record" 
+           data-drawer-title="Add Academic Year" 
+           class="btn btn-primary btn-sm">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Add Academic Year
         </a>
@@ -307,9 +310,10 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 
     <div class="panel-body" style="padding: 0;">
         <div class="table-responsive">
-            <table class="admin-table">
+            <table class="admin-table" data-reorder="scholarships">
                 <thead>
                     <tr>
+                        <th class="reorder-col" style="width: 48px;"></th>
                         <th style="width: 60px;">Order</th>
                         <th>Academic Year</th>
                         <th>Amount Disbursed</th>
@@ -319,10 +323,15 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                 </thead>
                 <tbody>
                     <?php if (empty($records)): ?>
-                        <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 32px;">No scholarship records found.</td></tr>
+                        <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No scholarship records found.</td></tr>
                     <?php else: ?>
                         <?php foreach ($records as $r): ?>
-                        <tr>
+                        <tr data-reorder-id="<?= (int)$r['id'] ?>">
+                            <td class="reorder-col">
+                                <button type="button" class="sortable-handle" aria-label="Drag to reorder" title="Drag to reorder">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
+                                </button>
+                            </td>
                             <td><span class="badge badge-secondary">#<?= (int)$r['sort_order'] ?></span></td>
                             <td><strong style="color: var(--text-main);"><?= htmlspecialchars($r['year']) ?></strong></td>
                             <td style="color: var(--success); font-weight: 600; font-size: 14px;"><?= htmlspecialchars($r['amount_str']) ?></td>
@@ -333,12 +342,19 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                             </td>
                             <td style="text-align: right;">
                                 <div style="display: inline-flex; gap: 6px;">
-                                    <a href="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="scholarships.php" style="display: inline;" onsubmit="return confirm('Delete this record?');">
+                                    <a href="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?>" 
+                                       data-drawer-url="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?>" 
+                                       data-drawer-title="Edit Scholarship Year" 
+                                       class="btn btn-secondary btn-sm">Edit</a>
+                                    <form method="POST" action="scholarships.php" style="display: inline;" id="delete-record-<?= (int)$r['id'] ?>">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="action" value="delete_record">
                                         <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-sm" 
+                                                data-confirm="Delete this scholarship record?" 
+                                                data-confirm-form="#delete-record-<?= (int)$r['id'] ?>">
+                                            Delete
+                                        </button>
                                     </form>
                                 </div>
                             </td>
@@ -357,7 +373,10 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title">Government Scholarship Portals (<?= count($portals) ?>)</div>
-        <a href="scholarships.php?tab=portals&action=create_portal" class="btn btn-primary btn-sm">
+        <a href="scholarships.php?tab=portals&action=create_portal" 
+           data-drawer-url="scholarships.php?tab=portals&action=create_portal" 
+           data-drawer-title="Add Portal" 
+           class="btn btn-primary btn-sm">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Add Portal
         </a>
@@ -365,9 +384,10 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 
     <div class="panel-body" style="padding: 0;">
         <div class="table-responsive">
-            <table class="admin-table">
+            <table class="admin-table" data-reorder="scholarship_portals">
                 <thead>
                     <tr>
+                        <th class="reorder-col" style="width: 48px;"></th>
                         <th style="width: 60px;">Order</th>
                         <th>Portal Name</th>
                         <th>Provider</th>
@@ -378,10 +398,15 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                 </thead>
                 <tbody>
                     <?php if (empty($portals)): ?>
-                        <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No portals configured.</td></tr>
+                        <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 32px;">No portals configured.</td></tr>
                     <?php else: ?>
                         <?php foreach ($portals as $p): ?>
-                        <tr>
+                        <tr data-reorder-id="<?= (int)$p['id'] ?>">
+                            <td class="reorder-col">
+                                <button type="button" class="sortable-handle" aria-label="Drag to reorder" title="Drag to reorder">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
+                                </button>
+                            </td>
                             <td><span class="badge badge-secondary">#<?= (int)$p['sort_order'] ?></span></td>
                             <td><strong style="color: var(--text-main);"><?= htmlspecialchars($p['name']) ?></strong></td>
                             <td><?= htmlspecialchars($p['provider'] ?: '—') ?></td>
@@ -397,12 +422,19 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                             </td>
                             <td style="text-align: right;">
                                 <div style="display: inline-flex; gap: 6px;">
-                                    <a href="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="scholarships.php" style="display: inline;" onsubmit="return confirm('Delete this portal?');">
+                                    <a href="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?>" 
+                                       data-drawer-url="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?>" 
+                                       data-drawer-title="Edit Portal" 
+                                       class="btn btn-secondary btn-sm">Edit</a>
+                                    <form method="POST" action="scholarships.php" style="display: inline;" id="delete-portal-<?= (int)$p['id'] ?>">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="action" value="delete_portal">
                                         <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="button" class="btn btn-danger btn-sm" 
+                                                data-confirm="Delete this portal?" 
+                                                data-confirm-form="#delete-portal-<?= (int)$p['id'] ?>">
+                                            Delete
+                                        </button>
                                     </form>
                                 </div>
                             </td>
