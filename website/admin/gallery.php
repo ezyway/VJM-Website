@@ -49,6 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    if ($action === 'update_photo') {
+        $photoId = (int)($_POST['photo_id'] ?? 0);
+        $albumId = (int)($_POST['album_id'] ?? 0);
+        $caption = trim($_POST['caption'] ?? '');
+        if ($photoId > 0) {
+            $stmt = $db->prepare('UPDATE gallery_photos SET caption = :cap WHERE id = :id');
+            $stmt->execute([':cap' => $caption, ':id' => $photoId]);
+            setFlash('success', 'Caption updated.');
+        }
+        header("Location: gallery.php?manage_photos={$albumId}");
+        exit;
+    }
+
     if ($action === 'upload_photos') {
         $albumId = (int)($_POST['album_id'] ?? 0);
         $stmtA = $db->prepare('SELECT slug FROM gallery_albums WHERE id = :id LIMIT 1');
@@ -221,6 +234,7 @@ $albums = $db->query('
             <div class="gallery-admin-grid">
                 <?php foreach ($albumPhotos as $ph): 
                     $isCover = ($ph['image_path'] === $manageAlbum['cover_image']);
+                    $caption = htmlspecialchars($ph['caption'] ?? '');
                 ?>
                 <div class="gallery-admin-item" style="<?= $isCover ? 'border: 2px solid #3b82f6;' : '' ?>">
                     <img src="../<?= htmlspecialchars($ph['image_path']) ?>" alt="Photo" loading="lazy">
@@ -228,6 +242,12 @@ $albums = $db->query('
                     <?php if ($isCover): ?>
                         <div style="position: absolute; top: 6px; left: 6px; background: #3b82f6; color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">
                             COVER
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($caption): ?>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 8px; background: linear-gradient(transparent, rgba(0,0,0,0.85)); font-size: 11.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <?= $caption ?>
                         </div>
                     <?php endif; ?>
 
@@ -241,6 +261,15 @@ $albums = $db->query('
                             <button type="submit" class="btn btn-secondary btn-sm" title="Set as Album Cover">Cover</button>
                         </form>
                         <?php endif; ?>
+
+                        <form method="POST" action="gallery.php" style="display: inline-flex; align-items: center; gap: 6px;">
+                            <?= csrfField() ?>
+                            <input type="hidden" name="action" value="update_photo">
+                            <input type="hidden" name="photo_id" value="<?= (int)$ph['id'] ?>">
+                            <input type="hidden" name="album_id" value="<?= (int)$manageAlbum['id'] ?>">
+                            <input type="text" name="caption" class="form-control" style="width: 180px; font-size: 12px; padding: 4px 8px;" value="<?= $caption ?>" placeholder="Add caption..." title="Caption">
+                            <button type="submit" class="btn btn-secondary btn-sm" title="Save Caption">✎</button>
+                        </form>
 
                         <form method="POST" action="gallery.php" style="display: inline;" onsubmit="return confirm('Remove this photo?');">
                             <?= csrfField() ?>

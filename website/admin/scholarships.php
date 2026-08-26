@@ -67,12 +67,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: scholarships.php');
         exit;
     }
+
+    // Portals CRUD
+    if ($action === 'delete_portal') {
+        $id = (int)($_POST['id'] ?? 0);
+        $stmt = $db->prepare('DELETE FROM scholarship_portals WHERE id = :id');
+        $stmt->execute([':id' => $id]);
+        setFlash('success', 'Portal removed.');
+        header('Location: scholarships.php?tab=portals');
+        exit;
+    }
+
+    if ($action === 'save_portal') {
+        $id          = (int)($_POST['id'] ?? 0);
+        $name        = trim($_POST['name'] ?? '');
+        $provider    = trim($_POST['provider'] ?? '');
+        $badge       = trim($_POST['badge'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $link        = trim($_POST['link'] ?? '');
+        $icon        = trim($_POST['icon'] ?? 'shield');
+        $sort_order  = (int)($_POST['sort_order'] ?? 0);
+
+        if (empty($name) || empty($link)) {
+            setFlash('danger', 'Portal name and link are required.');
+            header('Location: scholarships.php?tab=portals');
+            exit;
+        }
+
+        if ($id > 0) {
+            $stmt = $db->prepare('UPDATE scholarship_portals SET name = :n, provider = :p, badge = :b, description = :d, link = :l, icon = :i, sort_order = :so WHERE id = :id');
+            $stmt->execute([
+                ':n'  => $name,
+                ':p'  => $provider,
+                ':b'  => $badge,
+                ':d'  => $description,
+                ':l'  => $link,
+                ':i'  => $icon,
+                ':so' => $sort_order,
+                ':id' => $id
+            ]);
+            setFlash('success', 'Portal updated.');
+        } else {
+            $stmt = $db->prepare('INSERT INTO scholarship_portals (name, provider, badge, description, link, icon, sort_order) VALUES (:n, :p, :b, :d, :l, :i, :so)');
+            $stmt->execute([
+                ':n'  => $name,
+                ':p'  => $provider,
+                ':b'  => $badge,
+                ':d'  => $description,
+                ':l'  => $link,
+                ':i'  => $icon,
+                ':so' => $sort_order
+            ]);
+            setFlash('success', 'New portal added.');
+        }
+
+        header('Location: scholarships.php?tab=portals');
+        exit;
+    }
 }
 
 $pageTitle = 'Scholarships & Aid';
 require_once __DIR__ . '/includes/header.php';
 
-// Fetch edit target
+$tab = $_GET['tab'] ?? 'records';
+
+// Fetch edit targets
 $editRecord = null;
 if (isset($_GET['edit_record'])) {
     $rId = (int)$_GET['edit_record'];
@@ -81,8 +140,19 @@ if (isset($_GET['edit_record'])) {
     $editRecord = $stmt->fetch();
 }
 
+$editPortal = null;
+if (isset($_GET['edit_portal'])) {
+    $pId = (int)$_GET['edit_portal'];
+    $stmt = $db->prepare('SELECT * FROM scholarship_portals WHERE id = :id LIMIT 1');
+    $stmt->execute([':id' => $pId]);
+    $editPortal = $stmt->fetch();
+}
+
 $isCreateRecord = isset($_GET['action']) && $_GET['action'] === 'create_record';
+$isCreatePortal = isset($_GET['action']) && $_GET['action'] === 'create_portal';
+
 $records = $db->query('SELECT * FROM scholarships ORDER BY sort_order ASC, id ASC')->fetchAll();
+$portals = $db->query('SELECT * FROM scholarship_portals ORDER BY sort_order ASC, id ASC')->fetchAll();
 $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fetchColumn() ?: 0;
 ?>
 
@@ -99,11 +169,29 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
     </div>
 </div>
 
-<?php if ($editRecord || $isCreateRecord): ?>
+<!-- Tab Navigation -->
+<div class="panel" style="margin-bottom: 24px; padding: 0; background: var(--bg-panel); border-radius: var(--radius-lg); overflow: hidden;">
+    <div class="panel-header" style="padding: 0; border: 0; background: var(--bg-input);">
+        <nav style="display: flex; gap: 0;">
+            <a href="scholarships.php?tab=records" class="nav-link <?= $tab === 'records' ? 'active' : '' ?>" style="padding: 14px 24px; border-radius: 0; border-bottom: 3px solid <?= $tab === 'records' ? 'var(--primary)' : 'transparent' ?>;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <span>Yearly Records</span>
+                <span class="badge badge-primary" style="margin-left: 8px;"><?= count($records) ?></span>
+            </a>
+            <a href="scholarships.php?tab=portals" class="nav-link <?= $tab === 'portals' ? 'active' : '' ?>" style="padding: 14px 24px; border-radius: 0; border-bottom: 3px solid <?= $tab === 'portals' ? 'var(--primary)' : 'transparent' ?>;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <span>Portals & Schemes</span>
+                <span class="badge badge-info" style="margin-left: 8px;"><?= count($portals) ?></span>
+            </a>
+        </nav>
+    </div>
+</div>
+
+<?php if (($editRecord || $isCreateRecord) && $tab === 'records'): ?>
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title"><?= $editRecord ? 'Edit Scholarship Year' : 'Add Scholarship Year Record' ?></div>
-        <a href="scholarships.php" class="btn btn-secondary btn-sm">← Back to List</a>
+        <a href="scholarships.php?tab=records" class="btn btn-secondary btn-sm">← Back to List</a>
     </div>
     <div class="panel-body">
         <form method="POST" action="scholarships.php">
@@ -135,18 +223,83 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 
             <div style="margin-top: 20px; display: flex; gap: 12px;">
                 <button type="submit" class="btn btn-primary">Save Record</button>
-                <a href="scholarships.php" class="btn btn-secondary">Cancel</a>
+                <a href="scholarships.php?tab=records" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 <?php endif; ?>
 
+<?php if (($editPortal || $isCreatePortal) && $tab === 'portals'): ?>
+<div class="panel">
+    <div class="panel-header">
+        <div class="panel-title"><?= $editPortal ? 'Edit Portal' : 'Add Scholarship Portal' ?></div>
+        <a href="scholarships.php?tab=portals" class="btn btn-secondary btn-sm">← Back to List</a>
+    </div>
+    <div class="panel-body">
+        <form method="POST" action="scholarships.php">
+            <?= csrfField() ?>
+            <input type="hidden" name="action" value="save_portal">
+            <input type="hidden" name="id" value="<?= $editPortal ? (int)$editPortal['id'] : 0 ?>">
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label" for="name">Portal Name *</label>
+                    <input type="text" id="name" name="name" class="form-control" required value="<?= htmlspecialchars($editPortal['name'] ?? '') ?>" placeholder="e.g. Digital Gujarat Scholarship Portal">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="provider">Provider Authority</label>
+                    <input type="text" id="provider" name="provider" class="form-control" value="<?= htmlspecialchars($editPortal['provider'] ?? '') ?>" placeholder="e.g. Government of Gujarat">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="badge">Badge Label</label>
+                    <input type="text" id="badge" name="badge" class="form-control" value="<?= htmlspecialchars($editPortal['badge'] ?? '') ?>" placeholder="e.g. State Government">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="icon">Icon</label>
+                    <select id="icon" name="icon" class="form-control">
+                        <option value="shield" <?= ($editPortal['icon'] ?? 'shield') === 'shield' ? 'selected' : '' ?>>Shield (Shield)</option>
+                        <option value="award" <?= ($editPortal['icon'] ?? '') === 'award' ? 'selected' : '' ?>>Award (Award)</option>
+                        <option value="cap" <?= ($editPortal['icon'] ?? '') === 'cap' ? 'selected' : '' ?>>Cap (Graduation)</option>
+                        <option value="briefcase" <?= ($editPortal['icon'] ?? '') === 'briefcase' ? 'selected' : '' ?>>Briefcase (Career)</option>
+                        <option value="globe" <?= ($editPortal['icon'] ?? '') === 'globe' ? 'selected' : '' ?>>Globe (National)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="sort_order">Display Priority</label>
+                    <input type="number" id="sort_order" name="sort_order" class="form-control" value="<?= htmlspecialchars($editPortal['sort_order'] ?? '1') ?>">
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Brief description of the portal and eligibility..."><?= htmlspecialchars($editPortal['description'] ?? '') ?></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="link">Portal URL *</label>
+                    <input type="url" id="link" name="link" class="form-control" required value="<?= htmlspecialchars($editPortal['link'] ?? '') ?>" placeholder="https://...">
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <button type="submit" class="btn btn-primary">Save Portal</button>
+                <a href="scholarships.php?tab=portals" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php if ($tab === 'records'): ?>
 <!-- Records Table -->
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title">Yearly Disbursement Records (<?= count($records) ?> years)</div>
-        <a href="scholarships.php?action=create_record" class="btn btn-primary btn-sm">
+        <a href="scholarships.php?tab=records&action=create_record" class="btn btn-primary btn-sm">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Add Academic Year
         </a>
@@ -180,7 +333,7 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                             </td>
                             <td style="text-align: right;">
                                 <div style="display: inline-flex; gap: 6px;">
-                                    <a href="scholarships.php?edit_record=<?= (int)$r['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
+                                    <a href="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
                                     <form method="POST" action="scholarships.php" style="display: inline;" onsubmit="return confirm('Delete this record?');">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="action" value="delete_record">
@@ -197,5 +350,70 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
         </div>
     </div>
 </div>
+<?php endif; ?>
+
+<?php if ($tab === 'portals'): ?>
+<!-- Portals Table -->
+<div class="panel">
+    <div class="panel-header">
+        <div class="panel-title">Government Scholarship Portals (<?= count($portals) ?>)</div>
+        <a href="scholarships.php?tab=portals&action=create_portal" class="btn btn-primary btn-sm">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add Portal
+        </a>
+    </div>
+
+    <div class="panel-body" style="padding: 0;">
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">Order</th>
+                        <th>Portal Name</th>
+                        <th>Provider</th>
+                        <th>Badge</th>
+                        <th>Link</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($portals)): ?>
+                        <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No portals configured.</td></tr>
+                    <?php else: ?>
+                        <?php foreach ($portals as $p): ?>
+                        <tr>
+                            <td><span class="badge badge-secondary">#<?= (int)$p['sort_order'] ?></span></td>
+                            <td><strong style="color: var(--text-main);"><?= htmlspecialchars($p['name']) ?></strong></td>
+                            <td><?= htmlspecialchars($p['provider'] ?: '—') ?></td>
+                            <td>
+                                <?php if (!empty($p['badge'])): ?>
+                                    <span class="badge badge-info"><?= htmlspecialchars($p['badge']) ?></span>
+                                <?php else: ?>
+                                    <span style="color: var(--text-muted); font-size: 12px;">—</span>
+                                <?php endif; ?>
+                            </td>
+                            <td style="max-width: 250px; font-size: 12.5px; color: var(--text-muted);">
+                                <a href="<?= htmlspecialchars($p['link']) ?>" target="_blank" rel="noopener noreferrer"><?= htmlspecialchars($p['link']) ?></a>
+                            </td>
+                            <td style="text-align: right;">
+                                <div style="display: inline-flex; gap: 6px;">
+                                    <a href="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
+                                    <form method="POST" action="scholarships.php" style="display: inline;" onsubmit="return confirm('Delete this portal?');">
+                                        <?= csrfField() ?>
+                                        <input type="hidden" name="action" value="delete_portal">
+                                        <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

@@ -92,13 +92,28 @@ $storageRankers = getStorageStats([$siteRoot . '/assets/photos/index/pride_of_co
 
 $totalMediaBytes = $storageFaculty['bytes'] + $storageGallery['bytes'] + $storageEmag['bytes'] + $storageRankers['bytes'];
 $totalMediaFiles = $storageFaculty['count'] + $storageGallery['count'] + $storageEmag['count'] + $storageRankers['count'];
-$totalMediaSizeStr = ($totalMediaBytes > 1048576) 
-    ? round($totalMediaBytes / 1048576, 1) . ' MB' 
+$totalMediaSizeStr = ($totalMediaBytes > 1048576)
+    ? round($totalMediaBytes / 1048576, 1) . ' MB'
     : round($totalMediaBytes / 1024, 1) . ' KB';
 
 $dbFileSize = file_exists(DB_FILE_PATH) ? round(filesize(DB_FILE_PATH) / 1024, 1) . ' KB' : '0 KB';
 $activeTicker = getSetting('announcement_banner', 'Admissions Open for Academic Year 2025-26');
 $counterPassRate = getSetting('counter_pass_rate', '97.6');
+
+// Compute benchmark pass rate from latest pass_rates record (average of numeric values)
+$benchmarkPassRate = $counterPassRate; // fallback
+if ($latestPassRates) {
+    $streams = ['bca','bsc','bba','bcom','bsw','pgdca','msc_it','mcom','msc_chem'];
+    $vals = [];
+    foreach ($streams as $s) {
+        $v = $latestPassRates[$s] ?? '—';
+        $num = (float)preg_replace('/[^0-9.]/', '', $v);
+        if ($num > 0) $vals[] = $num;
+    }
+    if (!empty($vals)) {
+        $benchmarkPassRate = number_format(array_sum($vals) / count($vals), 2);
+    }
+}
 ?>
 
 <!-- Executive Banner -->
@@ -151,7 +166,8 @@ $counterPassRate = getSetting('counter_pass_rate', '97.6');
     <div class="stat-card">
         <div class="stat-info">
             <div class="stat-label">Benchmark Pass Rate</div>
-            <div class="stat-value"><?= htmlspecialchars($counterPassRate) ?>%</div>
+            <div class="stat-value"><?= htmlspecialchars($benchmarkPassRate) ?>%</div>
+            <span class="form-hint">Avg. of latest record (<?= htmlspecialchars($latestPassRates['year'] ?? 'N/A') ?>); <a href="settings.php" style="color:var(--primary)">manual override</a></span>
         </div>
         <div class="stat-icon warning">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>

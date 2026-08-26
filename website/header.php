@@ -165,3 +165,49 @@
         <?php
     }
 ?>
+
+<!-- ===================================================
+     Announcement Ticker (managed in Admin CMS)
+     =================================================== -->
+<?php
+    $vjmTicker = '';
+    try {
+        require_once __DIR__ . '/admin/includes/db.php';
+        $vjmTicker = trim(getSetting('announcement_banner', ''));
+    } catch (Exception $e) { $vjmTicker = ''; }
+
+    if ($vjmTicker !== '') { ?>
+    <style>
+        .vjm-ticker{position:sticky;top:0;z-index:10000;display:flex;align-items:center;justify-content:center;gap:12px;
+            padding:9px 44px 9px 16px;background:linear-gradient(90deg,#155C4F,#0f4a3e);color:#fff;font-family:'Montserrat',sans-serif;
+            font-size:13.5px;font-weight:600;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+        .vjm-ticker__dot{width:8px;height:8px;border-radius:50%;background:#4ade80;flex:0 0 auto;animation:vjmTickerPulse 1.6s infinite}
+        @keyframes vjmTickerPulse{0%,100%{opacity:1}50%{opacity:.35}}
+        .vjm-ticker__close{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:#ffffffb0;
+            font-size:17px;line-height:1;cursor:pointer;padding:4px}
+        .vjm-ticker__close:hover{color:#fff}
+    </style>
+    <script>
+    (function () {
+        var text = <?= json_encode($vjmTicker) ?>;
+        var key = 'vjm_ticker_dismissed';
+        try {
+            var seen = sessionStorage.getItem(key);
+            if (seen === text) return; // re-shows when the announcement text changes
+        } catch (e) {}
+        function mount() {
+            var bar = document.createElement('div');
+            bar.className = 'vjm-ticker';
+            bar.innerHTML = '<span class="vjm-ticker__dot"></span><span></span>' +
+                '<button class="vjm-ticker__close" aria-label="Dismiss announcement">&times;</button>';
+            bar.children[1].textContent = text;
+            bar.querySelector('.vjm-ticker__close').addEventListener('click', function () {
+                bar.remove();
+                try { sessionStorage.setItem(key, text); } catch (e) {}
+            });
+            document.body.prepend(bar);
+        }
+        if (document.body) { mount(); } else { document.addEventListener('DOMContentLoaded', mount); }
+    })();
+    </script>
+    <?php } ?>

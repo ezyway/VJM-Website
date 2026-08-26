@@ -138,17 +138,24 @@ require_once __DIR__ . '/includes/header.php';
 
                     <div class="form-group">
                         <label class="form-label" for="contact_phone_primary">Primary Contact Phone</label>
-                        <input type="text" id="contact_phone_primary" name="contact_phone_primary" class="form-control" value="<?= htmlspecialchars(getSetting('contact_phone_primary', '+91 286 2221234')) ?>">
+                        <input type="text" id="contact_phone_primary" name="contact_phone_primary" class="form-control" value="<?= htmlspecialchars(getSetting('contact_phone_primary', '+91 99788 18009')) ?>">
+                        <span class="form-hint">Shown on the Contact page &amp; site footer.</span>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="contact_email_primary">Primary Contact Email</label>
-                        <input type="email" id="contact_email_primary" name="contact_email_primary" class="form-control" value="<?= htmlspecialchars(getSetting('contact_email_primary', 'info@shrivjmodhacollege.com')) ?>">
+                        <input type="email" id="contact_email_primary" name="contact_email_primary" class="form-control" value="<?= htmlspecialchars(getSetting('contact_email_primary', 'shrivjmodha@gmail.com')) ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="contact_whatsapp_secondary">WhatsApp Secondary Number</label>
+                        <input type="text" id="contact_whatsapp_secondary" name="contact_whatsapp_secondary" class="form-control" value="<?= htmlspecialchars(getSetting('contact_whatsapp_secondary', '+91 98256 73093')) ?>">
+                        <span class="form-hint">Optional alternate WhatsApp helpdesk number.</span>
                     </div>
 
                     <div class="form-group full-width">
                         <label class="form-label" for="contact_address">College Physical Address</label>
-                        <input type="text" id="contact_address" name="contact_address" class="form-control" value="<?= htmlspecialchars(getSetting('contact_address', 'Vidhyadham, Chhaya-Birla Road, Nr. Pakshi Abhiyaran, Porbandar, Gujarat, 360575')) ?>">
+                        <input type="text" id="contact_address" name="contact_address" class="form-control" value="<?= htmlspecialchars(getSetting('contact_address', '"Vidhyadham", Chhaya-Birla Road, Nr. Pakshi Abhiyaran, Porbandar, Gujarat, 360575')) ?>">
                     </div>
                 </div>
 
