@@ -97,6 +97,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // 0c. 1-Click Database Backup Export
+    if ($action === 'download_db_backup') {
+        if (!file_exists(DB_FILE_PATH)) {
+            setFlash('danger', 'Database file not found.');
+            header('Location: settings.php');
+            exit;
+        }
+
+        $dateStr = date('Y-m-d_His');
+        $filename = "vjm_college_db_backup_{$dateStr}.sqlite";
+
+        $tempBackup = tempnam(sys_get_temp_dir(), 'vjm_db_');
+        $useTemp = false;
+        try {
+            $stmt = $db->prepare('VACUUM INTO :dest;');
+            $stmt->execute([':dest' => $tempBackup]);
+            $useTemp = true;
+        } catch (Exception $e) {
+            $tempBackup = DB_FILE_PATH;
+        }
+
+        $filesize = filesize($tempBackup);
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/x-sqlite3');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . $filesize);
+
+        readfile($tempBackup);
+        if ($useTemp && file_exists($tempBackup)) {
+            @unlink($tempBackup);
+        }
+        exit;
+    }
+
     // 1. Update Homepage Counters & Site Identity
     if ($action === 'save_settings') {
         $keys = [
@@ -792,6 +831,14 @@ $htaccessProtected = file_exists($htaccessDbPath);
                             <button type="button" class="btn btn-secondary btn-sm"
                                     data-confirm="Run SQLite VACUUM and index optimization? This may take a few seconds."
                                     data-confirm-form="#vacuum-form-settings">Run Optimize</button>
+                        </form>
+                        <form method="POST" action="settings.php" style="display: inline;">
+                            <?= csrfField() ?>
+                            <input type="hidden" name="action" value="download_db_backup">
+                            <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 8px;">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Download DB Backup
+                            </button>
                         </form>
                     </div>
                 </div>

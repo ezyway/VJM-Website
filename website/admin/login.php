@@ -16,9 +16,28 @@ if (isLoggedIn()) {
 $error = '';
 $username = '';
 
+// Check login attempt throttling
+$clientIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$ipHash = substr(md5($clientIp), 0, 12);
+$rateKey = "login_throttle_{$ipHash}";
+$throttleData = json_decode(getSetting($rateKey, '{}'), true);
+if (!is_array($throttleData)) $throttleData = [];
+
+$attempts = (int)($throttleData['attempts'] ?? 0);
+$lockedUntil = (int)($throttleData['locked_until'] ?? 0);
+$now = time();
+$isLocked = ($lockedUntil > $now);
+
+if ($isLocked) {
+    $waitMins = (int)ceil(($lockedUntil - $now) / 60);
+    $error = "Too many failed login attempts. Access temporarily locked. Please retry in {$waitMins} minute(s).";
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['csrf_token'] ?? '';
-    if (!verifyCSRFToken($token)) {
+    if ($isLocked) {
+        // blocked - ignore request
+    } elseif (!verifyCSRFToken($token)) {
         $error = 'Session expired or invalid security token. Please try again.';
     } else {
         $username = trim($_POST['username'] ?? '');
@@ -29,11 +48,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $res = attemptLogin($username, $password);
             if ($res['success']) {
+                setSetting($rateKey, ''); // Clear failed attempts on success
                 $return = $_GET['return'] ?? 'index.php';
                 header('Location: ' . $return);
                 exit;
             } else {
-                $error = $res['error'];
+                $attempts++;
+                $newLockedUntil = ($attempts >= 5) ? ($now + 900) : 0; // 15 mins lockout after 5 attempts
+                setSetting($rateKey, json_encode(['attempts' => $attempts, 'locked_until' => $newLockedUntil]));
+
+                if ($attempts >= 5) {
+                    $error = 'Too many failed login attempts. Account locked for 15 minutes.';
+                } else {
+                    $remaining = 5 - $attempts;
+                    $error = $res['error'] . " ({$remaining} attempt(s) remaining).";
+                }
             }
         }
     }
