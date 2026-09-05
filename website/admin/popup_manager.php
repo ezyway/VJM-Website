@@ -433,8 +433,12 @@ if ($editItem || $isCreate) {
             var rm = e.target.closest('[data-popup-btn-remove]');
             if (!rm) return;
             var row = rm.closest('.popup-btn-row');
-            if (row && btnRows.children.length > 1) {
-                row.remove();
+            if (row) {
+                if (btnRows.children.length > 1) {
+                    row.remove();
+                } else {
+                    row.querySelectorAll('input').forEach(function(inp) { inp.value = ''; });
+                }
                 updatePreview();
             }
         });
@@ -486,7 +490,10 @@ if ($editItem || $isCreate) {
         var html = '<div class="vjm-pop-overlay-preview"><div class="vjm-pop-card-preview">';
 
         if (data.image) {
-            var src = data.image.startsWith('data:') ? data.image : ('../' + escapeHtml(data.image));
+            var rawImg = data.image;
+            var src = (rawImg.startsWith('data:') || rawImg.startsWith('http://') || rawImg.startsWith('https://'))
+                ? rawImg
+                : ('../' + escapeHtml(rawImg.replace(/^\/+/, '')));
             html += '<img class="vjm-pop-media-preview" src="' + src + '" alt="" onerror="this.style.display=\'none\'">';
         }
 
@@ -557,6 +564,14 @@ if ($editItem || $isCreate) {
 })();
 </script>
 <?php endif; ?>
+
+<?php
+// In drawer mode (inside modal iframe), we only render the create/edit form
+if ($isDrawerMode) {
+    require_once __DIR__ . '/includes/footer.php';
+    exit;
+}
+?>
 
 <?php
 // Calculate statistics

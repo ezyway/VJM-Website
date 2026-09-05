@@ -11,7 +11,13 @@ function getDB(): PDO {
     if ($pdo === null) {
         $dbDir = dirname(DB_FILE_PATH);
         if (!is_dir($dbDir)) {
-            mkdir($dbDir, 0777, true);
+            @mkdir($dbDir, 0777, true);
+        }
+        if (is_dir($dbDir) && !is_writable($dbDir)) {
+            @chmod($dbDir, 0777);
+        }
+        if (file_exists(DB_FILE_PATH) && !is_writable(DB_FILE_PATH)) {
+            @chmod(DB_FILE_PATH, 0666);
         }
 
         $dsn = 'sqlite:' . DB_FILE_PATH;
@@ -21,9 +27,13 @@ function getDB(): PDO {
             PDO::ATTR_TIMEOUT => 10,
         ]);
 
-        // Enable SQLite Write-Ahead Logging for high concurrency and foreign keys
-        $pdo->exec('PRAGMA journal_mode = WAL;');
-        $pdo->exec('PRAGMA foreign_keys = ON;');
+        // Enable SQLite Write-Ahead Logging for high concurrency and foreign keys (gracefully fallback if host disallows WAL)
+        try {
+            $pdo->exec('PRAGMA journal_mode = WAL;');
+        } catch (Throwable $e) {}
+        try {
+            $pdo->exec('PRAGMA foreign_keys = ON;');
+        } catch (Throwable $e) {}
 
         initSchema($pdo);
     }

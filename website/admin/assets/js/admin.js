@@ -207,28 +207,34 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
     }
 
-    drawerFrame.addEventListener('load', () => {
-        autosizeFormFrame();
-        const doc = drawerFrame.contentDocument;
-        if (!doc || !doc.body) return;
+    if (drawerFrame) {
+        drawerFrame.addEventListener('load', () => {
+            autosizeFormFrame();
+            const doc = drawerFrame.contentDocument;
+            if (!doc || !doc.body) return;
 
-        // Keep sizing in sync while the form inside changes (flash toasts,
-        // image previews, validation messages, etc.).
-        if (frameResizeObserver) frameResizeObserver.disconnect();
-        frameResizeObserver = new MutationObserver(autosizeFormFrame);
-        frameResizeObserver.observe(doc.body, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['class', 'style', 'hidden']
+            // Keep sizing in sync while the form inside changes (flash toasts,
+            // image previews, validation messages, etc.).
+            if (frameResizeObserver) frameResizeObserver.disconnect();
+            frameResizeObserver = new MutationObserver(autosizeFormFrame);
+            frameResizeObserver.observe(doc.body, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['class', 'style', 'hidden']
+            });
+
+            // Move focus into the first visible field of the form.
+            const firstField = doc.querySelector('form input:not([type="hidden"]), form textarea, form select');
+            if (firstField && typeof firstField.focus === 'function') firstField.focus();
         });
+    }
 
-        // Move focus into the first visible field of the form.
-        const firstField = doc.querySelector('form input:not([type="hidden"]), form textarea, form select');
-        if (firstField && typeof firstField.focus === 'function') firstField.focus();
+    window.addEventListener('resize', () => {
+        if (drawer && drawer.classList.contains('active')) {
+            autosizeFormFrame();
+        }
     });
-
-    window.addEventListener('resize', autosizeFormFrame);
 
     function closeDrawer(reload = false) {
         drawerOverlay.classList.remove('active');

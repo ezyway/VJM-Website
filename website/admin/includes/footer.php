@@ -2,6 +2,7 @@
     </div>
 </div>
 
+<?php if (!$isDrawerMode): ?>
 <!-- Generic Confirm Modal -->
 <div class="modal-overlay" id="confirmModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
@@ -31,6 +32,7 @@
 </aside>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<?php endif; ?>
 <script src="assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: 1 ?>"></script>
 
 <?php if ($isDrawerMode && isset($flash) && !empty($flash)): ?>
