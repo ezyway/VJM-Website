@@ -4,27 +4,19 @@
  */
 
 require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/crud.php';
 requireAuth();
 
 $db = getDB();
+$isDrawerMode = isset($_GET['drawer']) && $_GET['drawer'] === '1';
 
 // Handle POST actions BEFORE header output
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
-        setFlash('danger', 'Security token expired. Please try again.');
-        header('Location: testimonials.php');
-        exit;
-    }
-
+    crudCsrfGuard('testimonials.php');
     $action = $_POST['action'] ?? '';
 
     if ($action === 'delete') {
-        $id = (int)($_POST['id'] ?? 0);
-        $stmt = $db->prepare('DELETE FROM testimonials WHERE id = :id');
-        $stmt->execute([':id' => $id]);
-        setFlash('success', 'Testimonial deleted.');
-        header('Location: testimonials.php');
-        exit;
+        crudDelete($db, 'testimonials', (int)($_POST['id'] ?? 0), 'Testimonial deleted.', $isDrawerMode, 'testimonials.php');
     }
 
     if ($action === 'save') {
@@ -43,8 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($name) || empty($text)) {
             setFlash('danger', 'Student name and testimonial text are required.');
-            header('Location: testimonials.php');
-            exit;
+            crudRedirect('testimonials.php', $isDrawerMode);
         }
 
         if ($id > 0) {
@@ -72,148 +63,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlash('success', 'New testimonial added.');
         }
 
-        header('Location: testimonials.php');
-        exit;
+        crudRedirect('testimonials.php', $isDrawerMode);
     }
 }
 
 $pageTitle = 'Testimonials';
 require_once __DIR__ . '/includes/header.php';
 
-// Fetch edit target
-$editItem = null;
-if (isset($_GET['edit'])) {
-    $editId = (int)$_GET['edit'];
-    $stmt = $db->prepare('SELECT * FROM testimonials WHERE id = :id LIMIT 1');
-    $stmt->execute([':id' => $editId]);
-    $editItem = $stmt->fetch();
+$editItem = crudLoadItem($db, 'testimonials');
+$isCreate = crudIsCreate();
+$testimonials = $db->query('SELECT * FROM testimonials ORDER BY sort_order ASC, id ASC')->fetchAll();
+
+if ($editItem || $isCreate) {
+    crudFormPanel([
+        'page'        => 'testimonials.php',
+        'pageParam'   => $drawerParam,
+        'item'        => $editItem,
+        'creating'    => $isCreate,
+        'title'       => fn($item) => $item ? 'Edit Testimonial' : 'Add New Student Testimonial',
+        'submitLabel' => 'Save Testimonial',
+        'fields'      => [
+            ['name' => 'name', 'label' => 'Student Name *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. Sida Jay'],
+            ['name' => 'course', 'label' => 'Program / Batch *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. B.B.A. Graduate'],
+            ['name' => 'avatar_text', 'label' => 'Initials Avatar (2 letters)', 'type' => 'text', 'maxlength' => 3, 'placeholder' => 'e.g. SJ'],
+            ['name' => 'stars', 'label' => 'Star Rating', 'type' => 'select', 'createDefault' => 5, 'options' => [5 => '★★★★★ (5 Stars)', 4 => '★★★★☆ (4 Stars)', 3 => '★★★☆☆ (3 Stars)']],
+            ['name' => 'sort_order', 'label' => 'Display Priority', 'type' => 'number', 'default' => '1'],
+            ['name' => 'text', 'label' => 'Review Quote *', 'type' => 'textarea', 'full' => true, 'rows' => 3, 'required' => true, 'placeholder' => "Write the student's quote..."],
+        ],
+    ]);
 }
 
-$isCreate = isset($_GET['action']) && $_GET['action'] === 'create';
-$testimonials = $db->query('SELECT * FROM testimonials ORDER BY sort_order ASC, id ASC')->fetchAll();
-?>
+crudListPanel([
+    'page'              => 'testimonials.php',
+    'pageParam'         => $drawerParam,
+    'suffix'            => $drawerUrlSuffix,
+    'listTitleHtml'     => 'All Student Voices (' . count($testimonials) . ')',
+    'rows'              => $testimonials,
+    'tableId'           => 'testimonialsTable',
+    'reorder'           => 'testimonials',
+    'searchPlaceholder' => 'Search testimonials...',
+    'emptyText'         => 'No testimonials yet. Click <strong>Add New Testimonial</strong> to feature the first student voice.',
+    'add'               => ['url' => 'testimonials.php?action=create', 'drawerTitle' => 'Add New Student Testimonial', 'label' => 'Add New Testimonial'],
+    'columns'           => [
+        [
+            'th' => 'Student',
+            'td' => fn($r) => '<div style="display: flex; align-items: center; gap: 10px;">'
+                . '<div class="user-avatar" style="width: 34px; height: 34px; font-size: 11px;">' . htmlspecialchars($r['avatar_text']) . '</div>'
+                . '<strong style="color: var(--text-main); font-size: 13.5px;">' . htmlspecialchars($r['name']) . '</strong>'
+                . '</div>',
+        ],
+        ['th' => 'Course', 'td' => fn($r) => htmlspecialchars($r['course'])],
+        ['th' => 'Rating', 'td' => fn($r) => '<div style="color: #fbbf24; letter-spacing: 2px;">' . str_repeat('★', (int)$r['stars']) . '</div>'],
+        ['th' => 'Quote', 'td' => fn($r) => '<div style="color: var(--text-muted); font-size: 12.5px; max-width: 350px;">&quot;' . htmlspecialchars(mb_strimwidth($r['text'], 0, 90, '...')) . '&quot;</div>'],
+    ],
+    'editUrl'           => fn($r) => 'testimonials.php?edit=' . $r['id'],
+    'actions'           => ['edit' => ['drawerTitle' => 'Edit Testimonial'], 'delete' => true],
+    'deleteConfirm'     => fn() => 'Delete this testimonial? This cannot be undone.',
+    'formPrefix'        => 'testimonial',
+]);
 
-<?php if ($editItem || $isCreate): ?>
-<div class="panel">
-    <div class="panel-header">
-        <div class="panel-title"><?= $editItem ? 'Edit Testimonial' : 'Add New Student Testimonial' ?></div>
-        <a href="testimonials.php" class="btn btn-secondary btn-sm">← Back to List</a>
-    </div>
-    <div class="panel-body">
-        <form method="POST" action="testimonials.php">
-            <?= csrfField() ?>
-            <input type="hidden" name="action" value="save">
-            <input type="hidden" name="id" value="<?= $editItem ? (int)$editItem['id'] : 0 ?>">
-
-            <div class="form-grid">
-                <div class="form-group">
-                    <label class="form-label" for="name">Student Name *</label>
-                    <input type="text" id="name" name="name" class="form-control" required value="<?= htmlspecialchars($editItem['name'] ?? '') ?>" placeholder="e.g. Sida Jay">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="course">Program / Batch *</label>
-                    <input type="text" id="course" name="course" class="form-control" required value="<?= htmlspecialchars($editItem['course'] ?? '') ?>" placeholder="e.g. B.B.A. Graduate">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="avatar_text">Initials Avatar (2 letters)</label>
-                    <input type="text" id="avatar_text" name="avatar_text" class="form-control" maxlength="3" value="<?= htmlspecialchars($editItem['avatar_text'] ?? '') ?>" placeholder="e.g. SJ">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="stars">Star Rating</label>
-                    <select id="stars" name="stars" class="form-control">
-                        <option value="5" <?= ($editItem['stars'] ?? 5) == 5 ? 'selected' : '' ?>>★★★★★ (5 Stars)</option>
-                        <option value="4" <?= ($editItem['stars'] ?? 5) == 4 ? 'selected' : '' ?>>★★★★☆ (4 Stars)</option>
-                        <option value="3" <?= ($editItem['stars'] ?? 5) == 3 ? 'selected' : '' ?>>★★★☆☆ (3 Stars)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="sort_order">Display Priority</label>
-                    <input type="number" id="sort_order" name="sort_order" class="form-control" value="<?= htmlspecialchars($editItem['sort_order'] ?? '1') ?>">
-                </div>
-
-                <div class="form-group full-width">
-                    <label class="form-label" for="text">Review Quote *</label>
-                    <textarea id="text" name="text" class="form-control" rows="3" required placeholder="Write the student's quote..."><?= htmlspecialchars($editItem['text'] ?? '') ?></textarea>
-                </div>
-            </div>
-
-            <div style="margin-top: 20px; display: flex; gap: 12px;">
-                <button type="submit" class="btn btn-primary">Save Testimonial</button>
-                <a href="testimonials.php" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
-    </div>
-</div>
-<?php endif; ?>
-
-<!-- Testimonials Table List -->
-<div class="panel">
-    <div class="panel-header">
-        <div style="display: flex; align-items: center; gap: 16px; flex: 1;">
-            <div class="panel-title">All Student Voices (<?= count($testimonials) ?>)</div>
-            <input type="text" class="form-control" data-table-search="testimonialsTable" placeholder="Search testimonials..." style="max-width: 320px; font-size: 13px;">
-        </div>
-        <a href="testimonials.php?action=create" class="btn btn-primary btn-sm">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Add New Testimonial
-        </a>
-    </div>
-
-    <div class="panel-body" style="padding: 0;">
-        <div class="table-responsive">
-            <table class="admin-table" id="testimonialsTable">
-                <thead>
-                    <tr>
-                        <th style="width: 50px;">Order</th>
-                        <th>Student</th>
-                        <th>Course</th>
-                        <th>Rating</th>
-                        <th>Quote</th>
-                        <th style="text-align: right;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($testimonials)): ?>
-                        <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No testimonials found.</td></tr>
-                    <?php else: ?>
-                        <?php foreach ($testimonials as $t): ?>
-                        <tr>
-                            <td><span class="badge badge-secondary">#<?= (int)$t['sort_order'] ?></span></td>
-                            <td style="display: flex; align-items: center; gap: 10px;">
-                                <div class="user-avatar" style="width: 34px; height: 34px; font-size: 11px;">
-                                    <?= htmlspecialchars($t['avatar_text']) ?>
-                                </div>
-                                <strong style="color: var(--text-main); font-size: 13.5px;"><?= htmlspecialchars($t['name']) ?></strong>
-                            </td>
-                            <td><?= htmlspecialchars($t['course']) ?></td>
-                            <td style="color: #fbbf24; letter-spacing: 2px;">
-                                <?= str_repeat('★', (int)$t['stars']) ?>
-                            </td>
-                            <td style="color: var(--text-muted); font-size: 12.5px; max-width: 350px;">
-                                "<?= htmlspecialchars(mb_strimwidth($t['text'], 0, 90, '...')) ?>"
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: inline-flex; gap: 6px;">
-                                    <a href="testimonials.php?edit=<?= (int)$t['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="testimonials.php" style="display: inline;" onsubmit="return confirm('Delete this testimonial?');">
-                                        <?= csrfField() ?>
-                                        <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="id" value="<?= (int)$t['id'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+require_once __DIR__ . '/includes/footer.php';

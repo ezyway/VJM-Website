@@ -4,15 +4,17 @@
  */
 
 require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/ui.php';
 requireAuth();
 
 $db = getDB();
+$isDrawerMode = isset($_GET['drawer']) && $_GET['drawer'] === '1';
 
 // Handle POST actions BEFORE header output
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
         setFlash('danger', 'Security token expired. Please try again.');
-        header('Location: scholarships.php');
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
         exit;
     }
 
@@ -23,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $db->prepare('DELETE FROM scholarships WHERE id = :id');
         $stmt->execute([':id' => $id]);
         setFlash('success', 'Scholarship year record removed.');
-        header('Location: scholarships.php');
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
         exit;
     }
 
@@ -37,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($year) || empty($amount_str)) {
             setFlash('danger', 'Year and Amount are required.');
-            header('Location: scholarships.php');
+            header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
             exit;
         }
 
@@ -64,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlash('success', 'New scholarship year added.');
         }
 
-        header('Location: scholarships.php');
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
         exit;
     }
 
@@ -74,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $db->prepare('DELETE FROM scholarship_portals WHERE id = :id');
         $stmt->execute([':id' => $id]);
         setFlash('success', 'Portal removed.');
-        header('Location: scholarships.php?tab=portals');
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php?tab=portals'));
         exit;
     }
 
@@ -90,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($name) || empty($link)) {
             setFlash('danger', 'Portal name and link are required.');
-            header('Location: scholarships.php?tab=portals');
+            header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php?tab=portals'));
             exit;
         }
 
@@ -121,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlash('success', 'New portal added.');
         }
 
-        header('Location: scholarships.php?tab=portals');
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php?tab=portals'));
         exit;
     }
 }
@@ -172,14 +174,14 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 <!-- Tab Navigation -->
 <div class="panel" style="margin-bottom: 24px; padding: 0; background: var(--bg-panel); border-radius: var(--radius-lg); overflow: hidden;">
     <div class="panel-header" style="padding: 0; border: 0; background: var(--bg-input);">
-        <nav style="display: flex; gap: 0;">
-            <a href="scholarships.php?tab=records" class="nav-link <?= $tab === 'records' ? 'active' : '' ?>" style="padding: 14px 24px; border-radius: 0; border-bottom: 3px solid <?= $tab === 'records' ? 'var(--primary)' : 'transparent' ?>;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        <nav class="tab-nav">
+            <a href="scholarships.php?tab=records<?= $drawerSuffix ?>" class="tab-link <?= $tab === 'records' ? 'active' : '' ?>">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                 <span>Yearly Records</span>
                 <span class="badge badge-primary" style="margin-left: 8px;"><?= count($records) ?></span>
             </a>
-            <a href="scholarships.php?tab=portals" class="nav-link <?= $tab === 'portals' ? 'active' : '' ?>" style="padding: 14px 24px; border-radius: 0; border-bottom: 3px solid <?= $tab === 'portals' ? 'var(--primary)' : 'transparent' ?>;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <a href="scholarships.php?tab=portals<?= $drawerSuffix ?>" class="tab-link <?= $tab === 'portals' ? 'active' : '' ?>">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 <span>Portals & Schemes</span>
                 <span class="badge badge-info" style="margin-left: 8px;"><?= count($portals) ?></span>
             </a>
@@ -191,10 +193,10 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title"><?= $editRecord ? 'Edit Scholarship Year' : 'Add Scholarship Year Record' ?></div>
-        <a href="scholarships.php?tab=records" class="btn btn-secondary btn-sm">← Back to List</a>
+        <a href="scholarships.php?tab=records<?= $drawerSuffix ?>" class="btn btn-secondary btn-sm">← Back to List</a>
     </div>
     <div class="panel-body">
-        <form method="POST" action="scholarships.php">
+        <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'scholarships.php') ?>">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="save_record">
             <input type="hidden" name="id" value="<?= $editRecord ? (int)$editRecord['id'] : 0 ?>">
@@ -223,7 +225,7 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 
             <div style="margin-top: 20px; display: flex; gap: 12px;">
                 <button type="submit" class="btn btn-primary">Save Record</button>
-                <a href="scholarships.php?tab=records" class="btn btn-secondary">Cancel</a>
+                <a href="scholarships.php?tab=records<?= $drawerSuffix ?>" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
@@ -234,10 +236,10 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title"><?= $editPortal ? 'Edit Portal' : 'Add Scholarship Portal' ?></div>
-        <a href="scholarships.php?tab=portals" class="btn btn-secondary btn-sm">← Back to List</a>
+        <a href="scholarships.php?tab=portals<?= $drawerSuffix ?>" class="btn btn-secondary btn-sm">← Back to List</a>
     </div>
     <div class="panel-body">
-        <form method="POST" action="scholarships.php">
+        <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'scholarships.php') ?>">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="save_portal">
             <input type="hidden" name="id" value="<?= $editPortal ? (int)$editPortal['id'] : 0 ?>">
@@ -287,7 +289,7 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 
             <div style="margin-top: 20px; display: flex; gap: 12px;">
                 <button type="submit" class="btn btn-primary">Save Portal</button>
-                <a href="scholarships.php?tab=portals" class="btn btn-secondary">Cancel</a>
+                <a href="scholarships.php?tab=portals<?= $drawerSuffix ?>" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
@@ -298,19 +300,22 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 <!-- Records Table -->
 <div class="panel">
     <div class="panel-header">
-        <div class="panel-title">Yearly Disbursement Records (<?= count($records) ?> years)</div>
-        <a href="scholarships.php?tab=records&action=create_record" 
-           data-drawer-url="scholarships.php?tab=records&action=create_record" 
+        <div style="display: flex; align-items: center; gap: 16px; flex: 1;">
+            <div class="panel-title">Yearly Disbursement Records (<?= count($records) ?> years)</div>
+            <input type="text" class="form-control" data-table-search="scholarshipsRecordsTable" placeholder="Search years or status..." style="max-width: 280px; font-size: 13px;">
+        </div>
+        <a href="scholarships.php?tab=records&action=create_record<?= $drawerUrlSuffix ?>" 
+           data-drawer-url="scholarships.php?tab=records&action=create_record<?= $drawerUrlSuffix ?>" 
            data-drawer-title="Add Academic Year" 
            class="btn btn-primary btn-sm">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <?= icon('plus', 14) ?>
             Add Academic Year
         </a>
     </div>
 
     <div class="panel-body" style="padding: 0;">
         <div class="table-responsive">
-            <table class="admin-table" data-reorder="scholarships">
+            <table class="admin-table" id="scholarshipsRecordsTable" data-reorder="scholarships">
                 <thead>
                     <tr>
                         <th class="reorder-col" style="width: 48px;"></th>
@@ -323,7 +328,7 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                 </thead>
                 <tbody>
                     <?php if (empty($records)): ?>
-                        <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No scholarship records found.</td></tr>
+                        <tr><td colspan="6" class="empty-cell">No scholarship records yet. Click <strong>Add Academic Year</strong> to start tracking aid.</td></tr>
                     <?php else: ?>
                         <?php foreach ($records as $r): ?>
                         <tr data-reorder-id="<?= (int)$r['id'] ?>">
@@ -332,7 +337,7 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                                 </button>
                             </td>
-                            <td><span class="badge badge-secondary">#<?= (int)$r['sort_order'] ?></span></td>
+                            <td><span class="badge badge-secondary order-badge">#<?= (int)$r['sort_order'] ?></span></td>
                             <td><strong style="color: var(--text-main);"><?= htmlspecialchars($r['year']) ?></strong></td>
                             <td style="color: var(--success); font-weight: 600; font-size: 14px;"><?= htmlspecialchars($r['amount_str']) ?></td>
                             <td>
@@ -342,11 +347,11 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                             </td>
                             <td style="text-align: right;">
                                 <div style="display: inline-flex; gap: 6px;">
-                                    <a href="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?>" 
-                                       data-drawer-url="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?>" 
+                                    <a href="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?><?= $drawerUrlSuffix ?>" 
+                                       data-drawer-url="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?><?= $drawerUrlSuffix ?>" 
                                        data-drawer-title="Edit Scholarship Year" 
                                        class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="scholarships.php" style="display: inline;" id="delete-record-<?= (int)$r['id'] ?>">
+                                    <form method="POST" action="scholarships.php<?= $drawerParam ?>" style="display: inline;" id="delete-record-<?= (int)$r['id'] ?>">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="action" value="delete_record">
                                         <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
@@ -372,19 +377,22 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 <!-- Portals Table -->
 <div class="panel">
     <div class="panel-header">
-        <div class="panel-title">Government Scholarship Portals (<?= count($portals) ?>)</div>
-        <a href="scholarships.php?tab=portals&action=create_portal" 
-           data-drawer-url="scholarships.php?tab=portals&action=create_portal" 
+        <div style="display: flex; align-items: center; gap: 16px; flex: 1;">
+            <div class="panel-title">Government Scholarship Portals (<?= count($portals) ?>)</div>
+            <input type="text" class="form-control" data-table-search="scholarshipPortalsTable" placeholder="Search portals..." style="max-width: 280px; font-size: 13px;">
+        </div>
+        <a href="scholarships.php?tab=portals&action=create_portal<?= $drawerUrlSuffix ?>" 
+           data-drawer-url="scholarships.php?tab=portals&action=create_portal<?= $drawerUrlSuffix ?>" 
            data-drawer-title="Add Portal" 
            class="btn btn-primary btn-sm">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <?= icon('plus', 14) ?>
             Add Portal
         </a>
     </div>
 
     <div class="panel-body" style="padding: 0;">
         <div class="table-responsive">
-            <table class="admin-table" data-reorder="scholarship_portals">
+            <table class="admin-table" id="scholarshipPortalsTable" data-reorder="scholarship_portals">
                 <thead>
                     <tr>
                         <th class="reorder-col" style="width: 48px;"></th>
@@ -398,7 +406,7 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                 </thead>
                 <tbody>
                     <?php if (empty($portals)): ?>
-                        <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 32px;">No portals configured.</td></tr>
+                        <tr><td colspan="7" class="empty-cell">No scholarship portals configured yet. Click <strong>Add Portal</strong> to link one.</td></tr>
                     <?php else: ?>
                         <?php foreach ($portals as $p): ?>
                         <tr data-reorder-id="<?= (int)$p['id'] ?>">
@@ -407,7 +415,7 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                                 </button>
                             </td>
-                            <td><span class="badge badge-secondary">#<?= (int)$p['sort_order'] ?></span></td>
+                            <td><span class="badge badge-secondary order-badge">#<?= (int)$p['sort_order'] ?></span></td>
                             <td><strong style="color: var(--text-main);"><?= htmlspecialchars($p['name']) ?></strong></td>
                             <td><?= htmlspecialchars($p['provider'] ?: '—') ?></td>
                             <td>
@@ -422,11 +430,11 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
                             </td>
                             <td style="text-align: right;">
                                 <div style="display: inline-flex; gap: 6px;">
-                                    <a href="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?>" 
-                                       data-drawer-url="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?>" 
+                                    <a href="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?><?= $drawerUrlSuffix ?>" 
+                                       data-drawer-url="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?><?= $drawerUrlSuffix ?>" 
                                        data-drawer-title="Edit Portal" 
                                        class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="scholarships.php" style="display: inline;" id="delete-portal-<?= (int)$p['id'] ?>">
+                                    <form method="POST" action="scholarships.php<?= $drawerParam ?>" style="display: inline;" id="delete-portal-<?= (int)$p['id'] ?>">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="action" value="delete_portal">
                                         <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">

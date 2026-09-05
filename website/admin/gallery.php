@@ -4,9 +4,11 @@
  */
 
 require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/ui.php';
 requireAuth();
 
 $db = getDB();
+$isDrawerMode = isset($_GET['drawer']) && $_GET['drawer'] === '1';
 
 // Handle POST actions BEFORE header output
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $db->prepare('DELETE FROM gallery_albums WHERE id = :id');
         $stmt->execute([':id' => $id]);
         setFlash('success', 'Album and its photos deleted successfully.');
-        header('Location: gallery.php');
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'gallery.php'));
         exit;
     }
 
@@ -33,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $db->prepare('DELETE FROM gallery_photos WHERE id = :id');
         $stmt->execute([':id' => $photoId]);
         setFlash('success', 'Photo removed from album.');
-        header("Location: gallery.php?manage_photos={$albumId}");
+        header("Location: gallery.php?manage_photos={$albumId}" . ($isDrawerMode ? '&drawer=1' : ''));
         exit;
     }
 
@@ -45,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([':cov' => $imagePath, ':id' => $albumId]);
             setFlash('success', 'Album cover photo updated.');
         }
-        header("Location: gallery.php?manage_photos={$albumId}");
+        header("Location: gallery.php?manage_photos={$albumId}" . ($isDrawerMode ? '&drawer=1' : ''));
         exit;
     }
 
@@ -58,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([':cap' => $caption, ':id' => $photoId]);
             setFlash('success', 'Caption updated.');
         }
-        header("Location: gallery.php?manage_photos={$albumId}");
+        header("Location: gallery.php?manage_photos={$albumId}" . ($isDrawerMode ? '&drawer=1' : ''));
         exit;
     }
 
@@ -70,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!$albumSlug) {
             setFlash('danger', 'Album not found.');
-            header('Location: gallery.php');
+            header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'gallery.php'));
             exit;
         }
 
@@ -107,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         setFlash('success', "Uploaded {$uploadedCount} photo(s) into album.");
-        header("Location: gallery.php?manage_photos={$albumId}");
+        header("Location: gallery.php?manage_photos={$albumId}" . ($isDrawerMode ? '&drawer=1' : ''));
         exit;
     }
 
@@ -122,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($slug) || empty($title)) {
             setFlash('danger', 'Album title and slug are required.');
-            header('Location: gallery.php');
+            header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'gallery.php'));
             exit;
         }
 
@@ -151,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlash('success', 'New gallery album created. You can now upload photos to it.');
         }
 
-        header('Location: gallery.php');
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'gallery.php'));
         exit;
     }
 }
@@ -203,12 +205,12 @@ $albums = $db->query('
             <div class="panel-title">Photos in: <?= htmlspecialchars($manageAlbum['title']) ?> (<?= count($albumPhotos) ?> photos)</div>
             <span class="form-hint">Category: <?= htmlspecialchars($manageAlbum['category_label'] ?: $manageAlbum['category']) ?></span>
         </div>
-        <a href="gallery.php" class="btn btn-secondary btn-sm">← Back to Albums</a>
+        <a href="gallery.php<?= $drawerParam ?>" class="btn btn-secondary btn-sm">← Back to Albums</a>
     </div>
 
     <div class="panel-body">
         <!-- Batch Upload Form -->
-        <form method="POST" action="gallery.php" enctype="multipart/form-data" style="margin-bottom: 28px; background: rgba(255,255,255,0.02); padding: 18px; border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
+        <form method="POST" action="gallery.php<?= $drawerParam ?>" enctype="multipart/form-data" style="margin-bottom: 28px; background: rgba(255,255,255,0.02); padding: 18px; border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="upload_photos">
             <input type="hidden" name="album_id" value="<?= (int)$manageAlbum['id'] ?>">
@@ -253,7 +255,7 @@ $albums = $db->query('
 
                     <div class="gallery-item-overlay">
                         <?php if (!$isCover): ?>
-                        <form method="POST" action="gallery.php" style="display: inline;">
+                        <form method="POST" action="gallery.php<?= $drawerParam ?>" style="display: inline;">
                             <?= csrfField() ?>
                             <input type="hidden" name="action" value="set_cover">
                             <input type="hidden" name="album_id" value="<?= (int)$manageAlbum['id'] ?>">
@@ -262,7 +264,7 @@ $albums = $db->query('
                         </form>
                         <?php endif; ?>
 
-                        <form method="POST" action="gallery.php" style="display: inline-flex; align-items: center; gap: 6px;">
+                        <form method="POST" action="gallery.php<?= $drawerParam ?>" style="display: inline-flex; align-items: center; gap: 6px;">
                             <?= csrfField() ?>
                             <input type="hidden" name="action" value="update_photo">
                             <input type="hidden" name="photo_id" value="<?= (int)$ph['id'] ?>">
@@ -271,12 +273,14 @@ $albums = $db->query('
                             <button type="submit" class="btn btn-secondary btn-sm" title="Save Caption">✎</button>
                         </form>
 
-                        <form method="POST" action="gallery.php" style="display: inline;" onsubmit="return confirm('Remove this photo?');">
+                        <form method="POST" action="gallery.php<?= $drawerParam ?>" style="display: inline;" id="delete-photo-<?= (int)$ph['id'] ?>">
                             <?= csrfField() ?>
                             <input type="hidden" name="action" value="delete_photo">
                             <input type="hidden" name="photo_id" value="<?= (int)$ph['id'] ?>">
                             <input type="hidden" name="album_id" value="<?= (int)$manageAlbum['id'] ?>">
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete Photo">✕</button>
+                            <button type="button" class="btn btn-danger btn-sm" title="Delete Photo"
+                                    data-confirm="Remove this photo from the album?"
+                                    data-confirm-form="#delete-photo-<?= (int)$ph['id'] ?>">✕</button>
                         </form>
                     </div>
                 </div>
@@ -291,10 +295,10 @@ $albums = $db->query('
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title"><?= $editAlbum ? 'Edit Album Details' : 'Create New Gallery Album' ?></div>
-        <a href="gallery.php" class="btn btn-secondary btn-sm">← Back to Albums</a>
+        <a href="gallery.php<?= $drawerParam ?>" class="btn btn-secondary btn-sm">← Back to Albums</a>
     </div>
     <div class="panel-body">
-        <form method="POST" action="gallery.php">
+        <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'gallery.php') ?>">
             <?= csrfField() ?>
             <input type="hidden" name="action" value="save_album">
             <input type="hidden" name="id" value="<?= $editAlbum ? (int)$editAlbum['id'] : 0 ?>">
@@ -337,7 +341,7 @@ $albums = $db->query('
 
             <div style="margin-top: 20px; display: flex; gap: 12px;">
                 <button type="submit" class="btn btn-primary">Save Album</button>
-                <a href="gallery.php" class="btn btn-secondary">Cancel</a>
+                <a href="gallery.php<?= $drawerParam ?>" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>
@@ -351,11 +355,11 @@ $albums = $db->query('
             <div class="panel-title">Gallery Albums (<?= count($albums) ?>)</div>
             <input type="text" class="form-control" data-table-search="albumsTable" placeholder="Search albums..." style="max-width: 320px; font-size: 13px;">
         </div>
-        <a href="gallery.php?action=create_album" 
-           data-drawer-url="gallery.php?action=create_album" 
+        <a href="gallery.php?action=create_album<?= $drawerUrlSuffix ?>" 
+           data-drawer-url="gallery.php?action=create_album<?= $drawerUrlSuffix ?>" 
            data-drawer-title="Create New Album" 
            class="btn btn-primary btn-sm">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <?= icon('plus', 14) ?>
             Create New Album
         </a>
     </div>
@@ -376,7 +380,7 @@ $albums = $db->query('
                 </thead>
                 <tbody>
                     <?php if (empty($albums)): ?>
-                        <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 32px;">No albums found.</td></tr>
+                        <tr><td colspan="7" class="empty-cell">No albums yet. Click <strong>Create New Album</strong> to build your first gallery.</td></tr>
                     <?php else: ?>
                         <?php foreach ($albums as $a): ?>
                         <tr data-reorder-id="<?= (int)$a['id'] ?>">
@@ -385,7 +389,7 @@ $albums = $db->query('
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                                 </button>
                             </td>
-                            <td><span class="badge badge-secondary">#<?= (int)$a['sort_order'] ?></span></td>
+                            <td><span class="badge badge-secondary order-badge">#<?= (int)$a['sort_order'] ?></span></td>
                             <td>
                                 <img src="../<?= htmlspecialchars($a['cover_image'] ?: 'assets/logo.ico') ?>" alt="" class="preview-thumbnail" onerror="this.src='../assets/logo.ico'">
                             </td>
@@ -401,15 +405,15 @@ $albums = $db->query('
                             </td>
                             <td style="text-align: right;">
                                 <div style="display: inline-flex; gap: 6px;">
-                                    <a href="gallery.php?manage_photos=<?= (int)$a['id'] ?>" class="btn btn-primary btn-sm">
+                                    <a href="gallery.php?manage_photos=<?= (int)$a['id'] ?>" target="_top" class="btn btn-primary btn-sm">
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                         Photos
                                     </a>
-                                    <a href="gallery.php?edit_album=<?= (int)$a['id'] ?>" 
-                                       data-drawer-url="gallery.php?edit_album=<?= (int)$a['id'] ?>" 
+                                    <a href="gallery.php?edit_album=<?= (int)$a['id'] ?><?= $drawerUrlSuffix ?>" 
+                                       data-drawer-url="gallery.php?edit_album=<?= (int)$a['id'] ?><?= $drawerUrlSuffix ?>" 
                                        data-drawer-title="Edit Album Details" 
                                        class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="gallery.php" style="display: inline;" id="delete-album-<?= (int)$a['id'] ?>">
+                                    <form method="POST" action="gallery.php<?= $drawerParam ?>" style="display: inline;" id="delete-album-<?= (int)$a['id'] ?>">
                                         <?= csrfField() ?>
                                         <input type="hidden" name="action" value="delete_album">
                                         <input type="hidden" name="id" value="<?= (int)$a['id'] ?>">

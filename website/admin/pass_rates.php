@@ -4,27 +4,19 @@
  */
 
 require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/crud.php';
 requireAuth();
 
 $db = getDB();
+$isDrawerMode = isset($_GET['drawer']) && $_GET['drawer'] === '1';
 
 // Handle POST actions BEFORE header output
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
-        setFlash('danger', 'Security token expired. Please try again.');
-        header('Location: pass_rates.php');
-        exit;
-    }
-
+    crudCsrfGuard('pass_rates.php');
     $action = $_POST['action'] ?? '';
 
     if ($action === 'delete') {
-        $id = (int)($_POST['id'] ?? 0);
-        $stmt = $db->prepare('DELETE FROM pass_rates WHERE id = :id');
-        $stmt->execute([':id' => $id]);
-        setFlash('success', 'Pass rate record deleted.');
-        header('Location: pass_rates.php');
-        exit;
+        crudDelete($db, 'pass_rates', (int)($_POST['id'] ?? 0), 'Pass rate record deleted.', $isDrawerMode, 'pass_rates.php');
     }
 
     if ($action === 'save') {
@@ -44,8 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (empty($year)) {
             setFlash('danger', 'Academic Year is required.');
-            header('Location: pass_rates.php');
-            exit;
+            crudRedirect('pass_rates.php', $isDrawerMode);
         }
 
         if ($is_latest) {
@@ -89,179 +80,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setFlash('success', 'New academic pass rate year added.');
         }
 
-        header('Location: pass_rates.php');
-        exit;
+        crudRedirect('pass_rates.php', $isDrawerMode);
     }
 }
 
 $pageTitle = 'Academic Pass Rates';
 require_once __DIR__ . '/includes/header.php';
 
-// Fetch edit target
-$editItem = null;
-if (isset($_GET['edit'])) {
-    $editId = (int)$_GET['edit'];
-    $stmt = $db->prepare('SELECT * FROM pass_rates WHERE id = :id LIMIT 1');
-    $stmt->execute([':id' => $editId]);
-    $editItem = $stmt->fetch();
+$editItem = crudLoadItem($db, 'pass_rates');
+$isCreate = crudIsCreate();
+$records = $db->query('SELECT * FROM pass_rates ORDER BY sort_order ASC, year DESC')->fetchAll();
+
+if ($editItem || $isCreate) {
+    crudFormPanel([
+        'page'        => 'pass_rates.php',
+        'pageParam'   => $drawerParam,
+        'item'        => $editItem,
+        'creating'    => $isCreate,
+        'title'       => fn($item) => $item ? 'Edit Pass Rates (' . htmlspecialchars($item['year']) . ')' : 'Add New Academic Year Record',
+        'submitLabel' => 'Save Pass Rates',
+        'fields'      => [
+            ['name' => 'year', 'label' => 'Academic Year *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. 2026 or 2025-26'],
+            ['name' => 'sort_order', 'label' => 'Display Order', 'type' => 'number', 'default' => '1'],
+            ['name' => 'bca', 'label' => 'BCA Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 98.40% or —'],
+            ['name' => 'bsc', 'label' => 'B.Sc. Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 100.00%'],
+            ['name' => 'bba', 'label' => 'BBA Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 96.87%'],
+            ['name' => 'bcom', 'label' => 'B.Com. Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 95.59%'],
+            ['name' => 'bsw', 'label' => 'BSW Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 100.00%'],
+            ['name' => 'pgdca', 'label' => 'PGDCA Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 100.00% or —'],
+            ['name' => 'msc_it', 'label' => 'M.Sc.(IT) Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 100.00%'],
+            ['name' => 'mcom', 'label' => 'M.Com. Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 100.00%'],
+            ['name' => 'msc_chem', 'label' => 'M.Sc.(Chem) Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 97.53%'],
+            ['name' => 'is_latest', 'label' => '', 'type' => 'check', 'full' => true, 'checkText' => 'Highlight as "Latest Batch" on the Homepage table'],
+        ],
+    ]);
 }
 
-$isCreate = isset($_GET['action']) && $_GET['action'] === 'create';
-$records = $db->query('SELECT * FROM pass_rates ORDER BY sort_order ASC, year DESC')->fetchAll();
-?>
+crudListPanel([
+    'page'              => 'pass_rates.php',
+    'pageParam'         => $drawerParam,
+    'suffix'            => $drawerUrlSuffix,
+    'listTitleHtml'     => 'Academic Pass Rate History (' . count($records) . ' years)',
+    'rows'              => $records,
+    'tableId'           => 'passRatesTable',
+    'searchPlaceholder' => 'Search years...',
+    'emptyText'         => 'No pass rate records yet. Click <strong>Add Academic Year</strong> to start.',
+    'add'               => ['url' => 'pass_rates.php?action=create', 'drawerTitle' => 'Add New Academic Year', 'label' => 'Add Academic Year'],
+    'columns'           => [
+        [
+            'th' => 'Year',
+            'td' => fn($r) => '<strong>' . htmlspecialchars($r['year']) . '</strong>' . ($r['is_latest'] ? '<span class="badge badge-success" style="margin-left: 6px;">Latest</span>' : ''),
+        ],
+        ['th' => 'BCA', 'td' => fn($r) => htmlspecialchars($r['bca'])],
+        ['th' => 'B.Sc.', 'td' => fn($r) => htmlspecialchars($r['bsc'])],
+        ['th' => 'BBA', 'td' => fn($r) => htmlspecialchars($r['bba'])],
+        ['th' => 'B.Com.', 'td' => fn($r) => htmlspecialchars($r['bcom'])],
+        ['th' => 'BSW', 'td' => fn($r) => htmlspecialchars($r['bsw'])],
+        ['th' => 'PGDCA', 'td' => fn($r) => htmlspecialchars($r['pgdca'])],
+        ['th' => 'M.Sc.(IT)', 'td' => fn($r) => htmlspecialchars($r['msc_it'])],
+        ['th' => 'M.Com.', 'td' => fn($r) => htmlspecialchars($r['mcom'])],
+        ['th' => 'M.Sc.(Chem)', 'td' => fn($r) => htmlspecialchars($r['msc_chem'])],
+    ],
+    'editUrl'           => fn($r) => 'pass_rates.php?edit=' . $r['id'],
+    'actions'           => ['edit' => ['drawerTitle' => 'Edit Pass Rates'], 'delete' => true],
+    'deleteConfirm'     => fn() => 'Delete this pass rate record? This cannot be undone.',
+    'formPrefix'        => 'passrate',
+]);
 
-<?php if ($editItem || $isCreate): ?>
-<div class="panel">
-    <div class="panel-header">
-        <div class="panel-title"><?= $editItem ? 'Edit Pass Rates (' . htmlspecialchars($editItem['year']) . ')' : 'Add New Academic Year Record' ?></div>
-        <a href="pass_rates.php" class="btn btn-secondary btn-sm">← Back to List</a>
-    </div>
-    <div class="panel-body">
-        <form method="POST" action="pass_rates.php">
-            <?= csrfField() ?>
-            <input type="hidden" name="action" value="save">
-            <input type="hidden" name="id" value="<?= $editItem ? (int)$editItem['id'] : 0 ?>">
-
-            <div class="form-grid">
-                <div class="form-group">
-                    <label class="form-label" for="year">Academic Year *</label>
-                    <input type="text" id="year" name="year" class="form-control" required value="<?= htmlspecialchars($editItem['year'] ?? '') ?>" placeholder="e.g. 2026 or 2025-26">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="sort_order">Display Order</label>
-                    <input type="number" id="sort_order" name="sort_order" class="form-control" value="<?= htmlspecialchars($editItem['sort_order'] ?? '1') ?>">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="bca">BCA Rate</label>
-                    <input type="text" id="bca" name="bca" class="form-control" value="<?= htmlspecialchars($editItem['bca'] ?? '—') ?>" placeholder="e.g. 98.40% or —">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="bsc">B.Sc. Rate</label>
-                    <input type="text" id="bsc" name="bsc" class="form-control" value="<?= htmlspecialchars($editItem['bsc'] ?? '—') ?>" placeholder="e.g. 100.00%">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="bba">BBA Rate</label>
-                    <input type="text" id="bba" name="bba" class="form-control" value="<?= htmlspecialchars($editItem['bba'] ?? '—') ?>" placeholder="e.g. 96.87%">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="bcom">B.Com. Rate</label>
-                    <input type="text" id="bcom" name="bcom" class="form-control" value="<?= htmlspecialchars($editItem['bcom'] ?? '—') ?>" placeholder="e.g. 95.59%">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="bsw">BSW Rate</label>
-                    <input type="text" id="bsw" name="bsw" class="form-control" value="<?= htmlspecialchars($editItem['bsw'] ?? '—') ?>" placeholder="e.g. 100.00%">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="pgdca">PGDCA Rate</label>
-                    <input type="text" id="pgdca" name="pgdca" class="form-control" value="<?= htmlspecialchars($editItem['pgdca'] ?? '—') ?>" placeholder="e.g. 100.00% or —">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="msc_it">M.Sc.(IT) Rate</label>
-                    <input type="text" id="msc_it" name="msc_it" class="form-control" value="<?= htmlspecialchars($editItem['msc_it'] ?? '—') ?>" placeholder="e.g. 100.00%">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="mcom">M.Com. Rate</label>
-                    <input type="text" id="mcom" name="mcom" class="form-control" value="<?= htmlspecialchars($editItem['mcom'] ?? '—') ?>" placeholder="e.g. 100.00%">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="msc_chem">M.Sc.(Chem) Rate</label>
-                    <input type="text" id="msc_chem" name="msc_chem" class="form-control" value="<?= htmlspecialchars($editItem['msc_chem'] ?? '—') ?>" placeholder="e.g. 97.53%">
-                </div>
-
-                <div class="form-group full-width">
-                    <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; cursor: pointer;">
-                        <input type="checkbox" name="is_latest" value="1" <?= !empty($editItem['is_latest']) ? 'checked' : '' ?>>
-                        <strong>Highlight as "Latest Batch" on the Homepage table</strong>
-                    </label>
-                </div>
-            </div>
-
-            <div style="margin-top: 20px; display: flex; gap: 12px;">
-                <button type="submit" class="btn btn-primary">Save Pass Rates</button>
-                <a href="pass_rates.php" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
-    </div>
-</div>
-<?php endif; ?>
-
-<!-- Records Table -->
-<div class="panel">
-    <div class="panel-header">
-        <div class="panel-title">Academic Pass Rate History (<?= count($records) ?> years)</div>
-        <a href="pass_rates.php?action=create" class="btn btn-primary btn-sm">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Add Academic Year
-        </a>
-    </div>
-
-    <div class="panel-body" style="padding: 0;">
-        <div class="table-responsive">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Year</th>
-                        <th>BCA</th>
-                        <th>B.Sc.</th>
-                        <th>BBA</th>
-                        <th>B.Com.</th>
-                        <th>BSW</th>
-                        <th>PGDCA</th>
-                        <th>M.Sc.(IT)</th>
-                        <th>M.Com.</th>
-                        <th>M.Sc.(Chem)</th>
-                        <th style="text-align: right;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($records)): ?>
-                        <tr><td colspan="11" style="text-align: center; color: var(--text-muted); padding: 32px;">No pass rates records.</td></tr>
-                    <?php else: ?>
-                        <?php foreach ($records as $r): ?>
-                        <tr>
-                            <td>
-                                <strong><?= htmlspecialchars($r['year']) ?></strong>
-                                <?php if ($r['is_latest']): ?>
-                                    <span class="badge badge-success" style="margin-left: 6px;">Latest</span>
-                                <?php endif; ?>
-                            </td>
-                            <td><?= htmlspecialchars($r['bca']) ?></td>
-                            <td><?= htmlspecialchars($r['bsc']) ?></td>
-                            <td><?= htmlspecialchars($r['bba']) ?></td>
-                            <td><?= htmlspecialchars($r['bcom']) ?></td>
-                            <td><?= htmlspecialchars($r['bsw']) ?></td>
-                            <td><?= htmlspecialchars($r['pgdca']) ?></td>
-                            <td><?= htmlspecialchars($r['msc_it']) ?></td>
-                            <td><?= htmlspecialchars($r['mcom']) ?></td>
-                            <td><?= htmlspecialchars($r['msc_chem']) ?></td>
-                            <td style="text-align: right;">
-                                <div style="display: inline-flex; gap: 6px;">
-                                    <a href="pass_rates.php?edit=<?= (int)$r['id'] ?>" class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="pass_rates.php" style="display: inline;" onsubmit="return confirm('Delete this record?');">
-                                        <?= csrfField() ?>
-                                        <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
+require_once __DIR__ . '/includes/footer.php';
