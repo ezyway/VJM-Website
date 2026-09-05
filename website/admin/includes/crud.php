@@ -59,6 +59,7 @@ function crudDelete(PDO $db, string $table, int $id, string $flashMsg, bool $isD
 {
     $stmt = $db->prepare("DELETE FROM {$table} WHERE id = :id");
     $stmt->execute([':id' => $id]);
+    logAdminActivity('delete', $table, $id, "Deleted record #{$id} from {$table}");
     setFlash('success', $flashMsg);
     crudRedirect($page, $isDrawerMode);
 }

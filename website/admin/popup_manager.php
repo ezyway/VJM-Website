@@ -88,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setSetting('announcement_popup', $jsonPayload);
         }
 
+        logAdminActivity('save', 'popup', $savedId, "Saved Announcement Popup #{$savedId}" . (!empty($popupName) ? " ({$popupName})" : ''));
         setFlash('success', "Announcement Popup #{$savedId} saved successfully.");
         crudRedirect('popup_manager.php', $isDrawerMode);
     }
@@ -114,6 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     setSetting('announcement_popup', json_encode(['enabled' => 0]));
                 }
             }
+            logAdminActivity('delete', 'popup', $popupId, "Deleted Announcement Popup #{$popupId}");
             setFlash('success', "Popup #{$popupId} deleted.");
         } else {
             setFlash('danger', 'Invalid popup ID.');
@@ -139,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $data['enabled'] = 0; // default duplicates to disabled for safety
                 setSetting("announcement_popup_{$newId}", json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+                logAdminActivity('duplicate', 'popup', $newId, "Duplicated Popup #{$popupId} as #{$newId}");
                 setFlash('success', "Popup #{$popupId} duplicated as #{$newId}.");
             } else {
                 setFlash('danger', 'Could not load popup data to duplicate.');
@@ -161,6 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 setSetting("announcement_popup_{$popupId}", $payload);
                 setSetting('announcement_popup_active_id', (string)$popupId);
                 setSetting('announcement_popup', $payload);
+                logAdminActivity('set_active', 'popup', $popupId, "Activated Announcement Popup #{$popupId} on Homepage");
                 setFlash('success', "Popup #{$popupId} is now live on the homepage.");
             } else {
                 setFlash('danger', 'Could not find popup configuration.');

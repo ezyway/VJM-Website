@@ -242,3 +242,42 @@ function optimizeUploadedImage(string $filePath, string $ext, int $maxDimension 
     imagedestroy($src);
     imagedestroy($dst);
 }
+
+/**
+ * Record an administrative activity audit log entry.
+ */
+function logAdminActivity(string $action, string $entityType, int $entityId = 0, string $details = ''): void {
+    try {
+        $db = getDB();
+        $admin = getCurrentAdmin();
+        $adminId = $admin ? (int)$admin['id'] : 0;
+        $adminUsername = $admin ? $admin['username'] : 'system';
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+
+        $stmt = $db->prepare('INSERT INTO activity_logs (admin_id, admin_username, action, entity_type, entity_id, details, ip_address) VALUES (:aid, :u, :act, :ent, :eid, :det, :ip)');
+        $stmt->execute([
+            ':aid' => $adminId,
+            ':u'   => $adminUsername,
+            ':act' => $action,
+            ':ent' => $entityType,
+            ':eid' => $entityId,
+            ':det' => $details,
+            ':ip'  => $ip
+        ]);
+    } catch (Exception $e) {}
+}
+
+/**
+ * Fetch recent activity audit trail entries.
+ */
+function getRecentActivityLogs(int $limit = 10): array {
+    try {
+        $db = getDB();
+        $stmt = $db->prepare('SELECT * FROM activity_logs ORDER BY created_at DESC, id DESC LIMIT :limit');
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll() ?: [];
+    } catch (Exception $e) {
+        return [];
+    }
+}

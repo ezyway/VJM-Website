@@ -200,6 +200,19 @@ function initSchema(PDO $pdo): void {
         value TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS activity_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        admin_id INTEGER,
+        admin_username TEXT NOT NULL,
+        action TEXT NOT NULL,
+        entity_type TEXT NOT NULL,
+        entity_id INTEGER DEFAULT 0,
+        details TEXT,
+        ip_address TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_activity_logs_created ON activity_logs(created_at DESC);
     CREATE INDEX IF NOT EXISTS idx_faculties_sort ON faculties(sort_order, id);
     CREATE INDEX IF NOT EXISTS idx_courses_sort ON courses(sort_order, id);
     CREATE INDEX IF NOT EXISTS idx_events_sort ON events(event_type, sort_order, id);

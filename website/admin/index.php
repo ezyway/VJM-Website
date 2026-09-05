@@ -136,6 +136,9 @@ if (file_exists($sitemapPath)) {
 $manifestExists = file_exists($siteRoot . '/manifest.json');
 $swExists = file_exists($siteRoot . '/sw.js');
 
+// Recent Activity Audit Trail + Fallback Content
+$activityLogs = getRecentActivityLogs(6);
+
 $healthRows = [
     ['label' => 'Database Integrity', 'icon' => 'database', 'value' => 'OK — ' . strtoupper($journalMode) . ' (WAL)', 'good' => $integrityRes === 'ok'],
     ['label' => 'PHP Version', 'icon' => 'cpu', 'value' => 'PHP ' . $phpVer, 'good' => true],
@@ -206,13 +209,55 @@ $firstName = explode(' ', $currentAdmin['name'])[0];
         <div class="panel-header">
             <div>
                 <div class="panel-title"><?= icon('clock', 18) ?> Recent Activity</div>
-                <span class="form-hint">Latest content added to the site</span>
+                <span class="form-hint">Audit trail of admin actions and recent site changes</span>
             </div>
         </div>
         <div class="panel-body" style="padding: 0;">
             <div class="recent-list">
-                <?php if (empty($recent)): ?>
-                    <div class="empty-cell">Nothing added yet — use Quick Actions to publish your first item.</div>
+                <?php if (empty($activityLogs) && empty($recent)): ?>
+                    <div class="empty-cell">Nothing logged yet — actions and updates will appear here in real-time.</div>
+                <?php elseif (!empty($activityLogs)): ?>
+                    <?php foreach ($activityLogs as $log): 
+                        $actionIcon = 'clock';
+                        $actionColor = 'var(--text-muted)';
+                        if ($log['action'] === 'login' || $log['action'] === 'logout') {
+                            $actionIcon = 'user';
+                            $actionColor = 'var(--primary)';
+                        } elseif ($log['action'] === 'create' || $log['action'] === 'save') {
+                            $actionIcon = 'plus';
+                            $actionColor = '#16a34a';
+                        } elseif ($log['action'] === 'delete') {
+                            $actionIcon = 'trash';
+                            $actionColor = '#dc2626';
+                        } elseif (in_array($log['action'], ['vacuum', 'clean_media', 'backup'])) {
+                            $actionIcon = 'settings';
+                            $actionColor = '#d97706';
+                        }
+                        $timeAgo = date('M j, H:i', strtotime($log['created_at']));
+                    ?>
+                        <div class="recent-item" style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border-color, rgba(0,0,0,0.06));">
+                            <div class="recent-icon" style="color: <?= $actionColor ?>; margin-top: 2px;">
+                                <?= icon($actionIcon, 17) ?>
+                            </div>
+                            <div class="recent-content" style="flex: 1; min-width: 0;">
+                                <div class="recent-title" style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px;">
+                                    <span>
+                                        <strong><?= htmlspecialchars($log['admin_username']) ?></strong>
+                                        <span style="font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--bg-hover, #f1f5f9); text-transform: uppercase; font-weight: 600;">
+                                            <?= htmlspecialchars($log['action']) ?>
+                                        </span>
+                                        <?php if (!empty($log['entity_type'])): ?>
+                                            <span style="color: var(--text-muted); font-size: 12px;"> &bull; <?= htmlspecialchars($log['entity_type']) ?></span>
+                                        <?php endif; ?>
+                                    </span>
+                                    <span style="font-size: 11px; color: var(--text-muted); white-space: nowrap;"><?= $timeAgo ?></span>
+                                </div>
+                                <div class="recent-meta" style="font-size: 12px; color: var(--text-muted); margin-top: 2px; word-break: break-word;">
+                                    <?= htmlspecialchars($log['details'] ?: ($log['action'] . ' on ' . $log['entity_type'])) ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <?php foreach ($recent as $item): ?>
                         <a href="<?= $item['href'] ?>" class="recent-item" style="text-decoration: none; color: inherit;">

@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db->exec('VACUUM;');
             $db->exec('PRAGMA optimize;');
             $elapsed = round((microtime(true) - $t0) * 1000, 2);
+            logAdminActivity('vacuum', 'database', 0, "Database VACUUM & optimization ran in {$elapsed} ms");
             setFlash('success', "Database VACUUM and index optimization executed successfully in {$elapsed} ms.");
         } catch (Exception $e) {
             setFlash('danger', "Database optimization error: " . $e->getMessage());
@@ -89,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ? round($deletedBytes / 1048576, 2) . ' MB'
                 : round($deletedBytes / 1024, 1) . ' KB';
 
+            logAdminActivity('clean', 'media', 0, "Cleaned {$deletedCount} orphaned media files ({$freedStr} freed)");
             setFlash('success', "Orphaned media cleanup completed: removed {$deletedCount} unreferenced files ({$freedStr} freed).");
         } catch (Exception $e) {
             setFlash('danger', "Media clean error: " . $e->getMessage());
@@ -119,6 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $filesize = filesize($tempBackup);
+
+        logAdminActivity('backup', 'database', 0, "Downloaded database backup ({$filename})");
 
         header('Content-Description: File Transfer');
         header('Content-Type: application/x-sqlite3');
