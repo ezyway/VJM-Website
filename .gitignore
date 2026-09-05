@@ -6,5 +6,7 @@ test_nvapi.py
 *.sqlite-shm
 *.sqlite-wal
 website/upload.zip
+htdocs.zip
+*.zip
 .freebuff/
 
