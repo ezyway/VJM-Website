@@ -153,10 +153,85 @@ function handleAdminUpload(array $file, string $subDirectory, array $allowedExts
     $targetPath = $baseUploadDir . $filename;
 
     if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+        // Automatically optimize and downscale oversized images if GD is available
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'], true)) {
+            optimizeUploadedImage($targetPath, $ext);
+        }
+
         // Return web-relative path
         $webPath = 'assets/uploads/' . trim($subDirectory, '/') . '/' . $filename;
         return ['success' => true, 'path' => $webPath, 'filename' => $filename];
     }
 
     return ['success' => false, 'error' => 'Failed to move uploaded file to target folder. Check write permissions.'];
+}
+
+/**
+ * Proportional image resizer & compressor for uploaded assets.
+ * Scales down images larger than $maxDimension (default 1920px) while maintaining
+ * aspect ratio and preserving PNG/WebP alpha channels.
+ */
+function optimizeUploadedImage(string $filePath, string $ext, int $maxDimension = 1920, int $quality = 85): void {
+    if (!function_exists('imagecreatetruecolor') || !file_exists($filePath)) {
+        return;
+    }
+
+    $info = @getimagesize($filePath);
+    if (!$info) return;
+
+    [$width, $height, $type] = $info;
+
+    $src = null;
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            $src = @imagecreatefromjpeg($filePath);
+            break;
+        case IMAGETYPE_PNG:
+            $src = @imagecreatefrompng($filePath);
+            break;
+        case IMAGETYPE_WEBP:
+            if (function_exists('imagecreatefromwebp')) {
+                $src = @imagecreatefromwebp($filePath);
+            }
+            break;
+    }
+    if (!$src) return;
+
+    // Check if resizing or re-encoding is needed
+    $newWidth = $width;
+    $newHeight = $height;
+    if ($width > $maxDimension || $height > $maxDimension) {
+        $ratio = min($maxDimension / $width, $maxDimension / $height);
+        $newWidth = (int)round($width * $ratio);
+        $newHeight = (int)round($height * $ratio);
+    }
+
+    $dst = imagecreatetruecolor($newWidth, $newHeight);
+
+    // Preserve transparency for PNG and WebP
+    if ($type === IMAGETYPE_PNG || $type === IMAGETYPE_WEBP) {
+        imagealphablending($dst, false);
+        imagesavealpha($dst, true);
+        $transparent = imagecolorallocatealpha($dst, 255, 255, 255, 127);
+        imagefilledrectangle($dst, 0, 0, $newWidth, $newHeight, $transparent);
+    }
+
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            imagejpeg($dst, $filePath, $quality);
+            break;
+        case IMAGETYPE_PNG:
+            imagepng($dst, $filePath, 8);
+            break;
+        case IMAGETYPE_WEBP:
+            if (function_exists('imagewebp')) {
+                imagewebp($dst, $filePath, $quality);
+            }
+            break;
+    }
+
+    imagedestroy($src);
+    imagedestroy($dst);
 }

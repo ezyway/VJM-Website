@@ -37,6 +37,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // 0b. Clean Orphaned Uploaded Media Files
+    if ($action === 'clean_orphaned_media') {
+        try {
+            $siteRoot = dirname(__DIR__);
+            $uploadsDir = $siteRoot . '/assets/uploads';
+            $referencedFiles = [];
+
+            $dbFiles = [];
+            $dbFiles = array_merge($dbFiles, $db->query("SELECT image FROM faculties WHERE image IS NOT NULL AND image != ''")->fetchAll(PDO::FETCH_COLUMN));
+            $dbFiles = array_merge($dbFiles, $db->query("SELECT image FROM rankers WHERE image IS NOT NULL AND image != ''")->fetchAll(PDO::FETCH_COLUMN));
+            $dbFiles = array_merge($dbFiles, $db->query("SELECT file_path FROM magazines WHERE file_path IS NOT NULL AND file_path != ''")->fetchAll(PDO::FETCH_COLUMN));
+            $dbFiles = array_merge($dbFiles, $db->query("SELECT image_path FROM gallery_photos WHERE image_path IS NOT NULL AND image_path != ''")->fetchAll(PDO::FETCH_COLUMN));
+            $dbFiles = array_merge($dbFiles, $db->query("SELECT cover_image FROM gallery_albums WHERE cover_image IS NOT NULL AND cover_image != ''")->fetchAll(PDO::FETCH_COLUMN));
+
+            $popupSettings = $db->query("SELECT value FROM site_settings WHERE key LIKE 'announcement_popup%'")->fetchAll(PDO::FETCH_COLUMN);
+            foreach ($popupSettings as $json) {
+                $dec = json_decode($json, true);
+                if (is_array($dec) && !empty($dec['image'])) {
+                    $dbFiles[] = $dec['image'];
+                }
+            }
+
+            foreach ($dbFiles as $f) {
+                $referencedFiles[ltrim(str_replace('\\', '/', (string)$f), '/')] = true;
+            }
+
+            $deletedCount = 0;
+            $deletedBytes = 0;
+            if (is_dir($uploadsDir)) {
+                $it = new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($uploadsDir, FilesystemIterator::SKIP_DOTS),
+                    RecursiveIteratorIterator::CHILD_FIRST
+                );
+                foreach ($it as $file) {
+                    if ($file->isFile()) {
+                        $fullPath = str_replace('\\', '/', $file->getRealPath());
+                        $relPath = 'assets/uploads/' . ltrim(substr($fullPath, strlen(str_replace('\\', '/', $uploadsDir))), '/');
+                        if (!isset($referencedFiles[$relPath])) {
+                            $size = $file->getSize();
+                            if (@unlink($file->getRealPath())) {
+                                $deletedCount++;
+                                $deletedBytes += $size;
+                            }
+                        }
+                    }
+                }
+            }
+
+            $freedStr = ($deletedBytes > 1048576)
+                ? round($deletedBytes / 1048576, 2) . ' MB'
+                : round($deletedBytes / 1024, 1) . ' KB';
+
+            setFlash('success', "Orphaned media cleanup completed: removed {$deletedCount} unreferenced files ({$freedStr} freed).");
+        } catch (Exception $e) {
+            setFlash('danger', "Media clean error: " . $e->getMessage());
+        }
+        header('Location: settings.php');
+        exit;
+    }
+
     // 1. Update Homepage Counters & Site Identity
     if ($action === 'save_settings') {
         $keys = [
@@ -242,6 +302,51 @@ $storageGallery = getStorageStats([$siteRoot . '/assets/photos/gallery', $siteRo
 $storageEmag    = getStorageStats([$siteRoot . '/assets/e_mags', $siteRoot . '/assets/uploads/emag']);
 $storageRankers = getStorageStats([$siteRoot . '/assets/photos/index/pride_of_college', $siteRoot . '/assets/uploads/rankers']);
 $storageDocs    = getStorageStats([$siteRoot . '/data']);
+
+// Scan for orphaned upload files not referenced in the database
+$orphanedCount = 0;
+$orphanedBytes = 0;
+$uploadsDir = $siteRoot . '/assets/uploads';
+if (is_dir($uploadsDir)) {
+    $activeRefs = [];
+    $allRefs = [];
+    try {
+        $allRefs = array_merge($allRefs, $db->query("SELECT image FROM faculties WHERE image IS NOT NULL AND image != ''")->fetchAll(PDO::FETCH_COLUMN));
+        $allRefs = array_merge($allRefs, $db->query("SELECT image FROM rankers WHERE image IS NOT NULL AND image != ''")->fetchAll(PDO::FETCH_COLUMN));
+        $allRefs = array_merge($allRefs, $db->query("SELECT file_path FROM magazines WHERE file_path IS NOT NULL AND file_path != ''")->fetchAll(PDO::FETCH_COLUMN));
+        $allRefs = array_merge($allRefs, $db->query("SELECT image_path FROM gallery_photos WHERE image_path IS NOT NULL AND image_path != ''")->fetchAll(PDO::FETCH_COLUMN));
+        $allRefs = array_merge($allRefs, $db->query("SELECT cover_image FROM gallery_albums WHERE cover_image IS NOT NULL AND cover_image != ''")->fetchAll(PDO::FETCH_COLUMN));
+        $popJsons = $db->query("SELECT value FROM site_settings WHERE key LIKE 'announcement_popup%'")->fetchAll(PDO::FETCH_COLUMN);
+        foreach ($popJsons as $pj) {
+            $pdec = json_decode($pj, true);
+            if (is_array($pdec) && !empty($pdec['image'])) $allRefs[] = $pdec['image'];
+        }
+    } catch (Exception $e) {}
+
+    foreach ($allRefs as $ar) {
+        $activeRefs[ltrim(str_replace('\\', '/', (string)$ar), '/')] = true;
+    }
+
+    try {
+        $it = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($uploadsDir, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($it as $f) {
+            if ($f->isFile()) {
+                $fPath = str_replace('\\', '/', $f->getRealPath());
+                $rel = 'assets/uploads/' . ltrim(substr($fPath, strlen(str_replace('\\', '/', $uploadsDir))), '/');
+                if (!isset($activeRefs[$rel])) {
+                    $orphanedCount++;
+                    $orphanedBytes += $f->getSize();
+                }
+            }
+        }
+    } catch (Exception $e) {}
+}
+$orphanedSize = ($orphanedBytes > 1048576)
+    ? round($orphanedBytes / 1048576, 2) . ' MB'
+    : round($orphanedBytes / 1024, 1) . ' KB';
 
 $sitemapPath = $siteRoot . '/sitemap.xml';
 $sitemapCount = 0;
@@ -637,6 +742,25 @@ $htaccessProtected = file_exists($htaccessDbPath);
                             </div>
                         </div>
                         <?php endforeach; ?>
+                        <div class="storage-row" style="margin-bottom: 0; padding-top: 10px; border-top: 1px dashed var(--border-color);">
+                            <div class="storage-info"><span>Unreferenced / Orphaned Uploads</span></div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <?php if ($orphanedCount > 0): ?>
+                                    <span class="badge badge-warning"><?= $orphanedCount ?> files (<?= $orphanedSize ?>)</span>
+                                    <form method="POST" action="settings.php" style="display: inline;" id="clean-orphaned-form">
+                                        <?= csrfField() ?>
+                                        <input type="hidden" name="action" value="clean_orphaned_media">
+                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                data-confirm="Safely delete <?= $orphanedCount ?> unreferenced media files (<?= $orphanedSize ?>) from disk?"
+                                                data-confirm-form="#clean-orphaned-form">
+                                            Clean Media
+                                        </button>
+                                    </form>
+                                <?php else: ?>
+                                    <span class="badge badge-success">Clean (0 orphaned)</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
