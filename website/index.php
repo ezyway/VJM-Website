@@ -81,6 +81,8 @@
     <?php include("components/photos.php"); ?>
 
 
+    <?php include("components/announcement_popup.php"); ?>
+
     <!-- Back to Top Button with smooth floating icon -->
     <button id="backToTop" class="back-to-top" aria-label="Back to top">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
