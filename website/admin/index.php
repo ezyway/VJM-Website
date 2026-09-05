@@ -2,501 +2,271 @@
 /**
  * Executive Admin Dashboard & Institutional Intelligence Center
  * Shri V.J. Modha College Portal
+ *
+ * Task-focused CMS home: section stats, quick actions, recent activity
+ * and a compact system health panel.
  */
 
-$pageTitle = 'Executive Dashboard';
-require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/ui.php';
+requireAuth();
 
 $db = getDB();
-
-// 1. Core Entity Counts
-$facultyCount = (int)$db->query('SELECT COUNT(*) FROM faculties')->fetchColumn();
-$courseCount  = (int)$db->query('SELECT COUNT(*) FROM courses')->fetchColumn();
-$labCount     = (int)$db->query('SELECT COUNT(*) FROM labs')->fetchColumn();
-$eventCount   = (int)$db->query("SELECT COUNT(*) FROM events WHERE event_type = 'event'")->fetchColumn();
-$newsCount    = (int)$db->query("SELECT COUNT(*) FROM events WHERE event_type = 'news'")->fetchColumn();
-$rankerCount  = (int)$db->query('SELECT COUNT(*) FROM rankers')->fetchColumn();
-$albumCount   = (int)$db->query('SELECT COUNT(*) FROM gallery_albums')->fetchColumn();
-$photoCount   = (int)$db->query('SELECT COUNT(*) FROM gallery_photos')->fetchColumn();
-$testimCount  = (int)$db->query('SELECT COUNT(*) FROM testimonials')->fetchColumn();
-$magCount     = (int)$db->query('SELECT COUNT(*) FROM magazines')->fetchColumn();
-
-// 2. Financial Aid & Scholarships
-$totalDisbursed = (int)$db->query('SELECT SUM(amount_numeric) FROM scholarships')->fetchColumn() ?: 0;
-$latestScholarship = $db->query('SELECT * FROM scholarships ORDER BY sort_order ASC, id ASC LIMIT 1')->fetch();
-
-// 3. Faculty Department Distribution
-$faculties = $db->query('SELECT depts FROM faculties')->fetchAll();
-$deptStats = [
-    'bca'        => ['label' => 'B.C.A. & M.Sc.(IT)', 'count' => 0, 'color' => '#3b82f6'],
-    'bsc'        => ['label' => 'B.Sc. & M.Sc.(Chem)', 'count' => 0, 'color' => '#10b981'],
-    'bcom'       => ['label' => 'B.Com. & M.Com.',     'count' => 0, 'color' => '#f59e0b'],
-    'bba'        => ['label' => 'B.B.A.',              'count' => 0, 'color' => '#8b5cf6'],
-    'bsw'        => ['label' => 'B.S.W.',              'count' => 0, 'color' => '#06b6d4'],
-    'admin'      => ['label' => 'Administration',      'count' => 0, 'color' => '#64748b'],
-];
-
-foreach ($faculties as $f) {
-    $depts = explode(',', $f['depts'] ?? '');
-    foreach ($depts as $d) {
-        $d = trim($d);
-        if (isset($deptStats[$d])) {
-            $deptStats[$d]['count']++;
-        }
-    }
-}
-
-// 4. Latest Academic Pass Rates
-$latestPassRates = $db->query('SELECT * FROM pass_rates WHERE is_latest = 1 LIMIT 1')->fetch();
-if (!$latestPassRates) {
-    $latestPassRates = $db->query('SELECT * FROM pass_rates ORDER BY year DESC LIMIT 1')->fetch();
-}
-
-// 5. Recent Events & Academic Notices (Activity Radar)
-$recentEvents = $db->query('SELECT * FROM events ORDER BY sort_order ASC, id DESC LIMIT 5')->fetchAll();
-
-// 6. Latest E-Magazine Edition
-$latestMag = $db->query('SELECT * FROM magazines ORDER BY sort_order ASC, year DESC LIMIT 1')->fetch();
-
-// 7. Storage & Asset Metrics
 $siteRoot = dirname(__DIR__);
 
-function getStorageStats(array $dirs): array {
-    $count = 0;
-    $bytes = 0;
-    foreach ($dirs as $d) {
-        if (!is_dir($d)) continue;
-        try {
-            $it = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($d, FilesystemIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::SELF_FIRST
-            );
-            foreach ($it as $item) {
-                if ($item->isFile()) {
-                    $count++;
-                    $bytes += $item->getSize();
-                }
+// Handle Database Optimization Action BEFORE header output
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    $token = $_POST['csrf_token'] ?? '';
+    if (verifyCSRFToken($token)) {
+        if ($_POST['action'] === 'vacuum_db') {
+            try {
+                $t0 = microtime(true);
+                $db->exec('VACUUM;');
+                $db->exec('PRAGMA optimize;');
+                $elapsed = round((microtime(true) - $t0) * 1000, 2);
+                setFlash('success', "Database VACUUM and index optimization executed successfully in {$elapsed} ms.");
+            } catch (Exception $e) {
+                setFlash('danger', "Database optimization error: " . $e->getMessage());
             }
-        } catch (Exception $e) {}
+            header('Location: index.php');
+            exit;
+        }
+    } else {
+        setFlash('danger', 'Invalid security token.');
+        header('Location: index.php');
+        exit;
     }
-    $sizeStr = ($bytes > 1048576) 
-        ? round($bytes / 1048576, 1) . ' MB' 
-        : round($bytes / 1024, 1) . ' KB';
-    return ['count' => $count, 'bytes' => $bytes, 'size' => $sizeStr];
 }
+
+$pageTitle = 'Dashboard';
+require_once __DIR__ . '/includes/header.php';
+
+// ---- Section record counts (drives the stat cards) ----
+$sectionStats = [
+    ['key' => 'faculties',           'label' => 'Faculty Members',        'href' => 'faculties.php',    'icon' => 'users',     'tone' => 'primary'],
+    ['key' => 'courses',             'label' => 'Courses & Programs',     'href' => 'courses.php',      'icon' => 'book',      'tone' => 'info'],
+    ['key' => 'labs',                'label' => 'Labs & Facilities',      'href' => 'labs.php',         'icon' => 'cpu',       'tone' => 'purple'],
+    ['key' => 'events',              'label' => 'Events & Notices',       'href' => 'events.php',       'icon' => 'calendar',  'tone' => 'warning'],
+    ['key' => 'rankers',             'label' => 'Rankers & Achievers',    'href' => 'rankers.php',      'icon' => 'award',     'tone' => 'success'],
+    ['key' => 'gallery_photos',      'label' => 'Gallery Photos',         'href' => 'gallery.php',      'icon' => 'image',     'tone' => 'warning'],
+    ['key' => 'testimonials',        'label' => 'Testimonials',           'href' => 'testimonials.php', 'icon' => 'quote',     'tone' => 'info'],
+    ['key' => 'magazines',           'label' => 'E-Magazines',            'href' => 'magazines.php',    'icon' => 'file',      'tone' => 'purple'],
+    ['key' => 'scholarships',        'label' => 'Scholarship Years',      'href' => 'scholarships.php?tab=records', 'icon' => 'dollar', 'tone' => 'success'],
+    ['key' => 'pass_rates',          'label' => 'Pass Rate Years',        'href' => 'pass_rates.php',   'icon' => 'chart',     'tone' => 'primary'],
+];
+
+foreach ($sectionStats as $i => $s) {
+    try {
+        $sectionStats[$i]['count'] = (int)$db->query("SELECT COUNT(*) FROM {$s['key']}")->fetchColumn();
+    } catch (Exception $e) {
+        $sectionStats[$i]['count'] = 0;
+    }
+}
+
+// ---- Quick actions (open the forms in a slide-over drawer) ----
+$quickActions = [
+    ['href' => 'faculties.php?action=create',   'title' => 'Add Faculty',     'icon' => 'user-plus'],
+    ['href' => 'courses.php?action=create',     'title' => 'Add Course',      'icon' => 'plus'],
+    ['href' => 'events.php?action=create',      'title' => 'Post Event',      'icon' => 'plus'],
+    ['href' => 'rankers.php?action=create',     'title' => 'Add Ranker',      'icon' => 'plus'],
+    ['href' => 'testimonials.php?action=create','title' => 'Add Testimonial', 'icon' => 'plus'],
+    ['href' => 'gallery.php?action=create_album','title' => 'New Album',      'icon' => 'folder'],
+    ['href' => 'magazines.php?action=create',   'title' => 'Upload Magazine', 'icon' => 'upload'],
+    ['href' => 'labs.php?action=create',        'title' => 'Add Lab',         'icon' => 'plus'],
+];
+
+// ---- Recent activity ----
+$recentEvents = $db->query('SELECT * FROM events ORDER BY id DESC LIMIT 3')->fetchAll();
+$recentRankers = $db->query('SELECT * FROM rankers ORDER BY id DESC LIMIT 2')->fetchAll();
+$recentFaculties = $db->query('SELECT * FROM faculties ORDER BY id DESC LIMIT 2')->fetchAll();
+$recent = [];
+
+foreach ($recentEvents as $e) {
+    $recent[] = [
+        'icon' => 'calendar',
+        'tone' => 'warning',
+        'title' => $e['title'],
+        'meta' => 'Event / Notice' . (!empty($e['badge']) ? ' &bull; ' . $e['badge'] : ''),
+        'href' => 'events.php',
+    ];
+}
+foreach ($recentRankers as $r) {
+    $recent[] = [
+        'icon' => 'award',
+        'tone' => 'success',
+        'title' => $r['name'],
+        'meta' => 'Ranker &bull; ' . $r['course'],
+        'href' => 'rankers.php',
+    ];
+}
+foreach ($recentFaculties as $f) {
+    $recent[] = [
+        'icon' => 'users',
+        'tone' => 'primary',
+        'title' => $f['name'],
+        'meta' => 'Faculty &bull; ' . $f['designation'],
+        'href' => 'faculties.php',
+    ];
+}
+
+// ---- Compact system health (getStorageStats lives in includes/db.php) ----
+$phpVer       = PHP_VERSION;
+$sqliteVer    = $db->query('SELECT sqlite_version()')->fetchColumn();
+$journalMode  = $db->query('PRAGMA journal_mode')->fetchColumn();
+$integrityRes = $db->query('PRAGMA integrity_check')->fetchColumn();
+$dbFileSize   = file_exists(DB_FILE_PATH) ? round(filesize(DB_FILE_PATH) / 1024, 1) . ' KB' : '0 KB';
 
 $storageFaculty = getStorageStats([$siteRoot . '/assets/photos/faculties', $siteRoot . '/assets/uploads/faculties']);
 $storageGallery = getStorageStats([$siteRoot . '/assets/photos/gallery', $siteRoot . '/assets/uploads/gallery']);
 $storageEmag    = getStorageStats([$siteRoot . '/assets/e_mags', $siteRoot . '/assets/uploads/emag']);
 $storageRankers = getStorageStats([$siteRoot . '/assets/photos/index/pride_of_college', $siteRoot . '/assets/uploads/rankers']);
-
 $totalMediaBytes = $storageFaculty['bytes'] + $storageGallery['bytes'] + $storageEmag['bytes'] + $storageRankers['bytes'];
 $totalMediaFiles = $storageFaculty['count'] + $storageGallery['count'] + $storageEmag['count'] + $storageRankers['count'];
 $totalMediaSizeStr = ($totalMediaBytes > 1048576)
-    ? round($totalMediaBytes / 1048576, 1) . ' MB'
+    ? round($totalMediaBytes / 1048576, 2) . ' MB'
     : round($totalMediaBytes / 1024, 1) . ' KB';
 
-$dbFileSize = file_exists(DB_FILE_PATH) ? round(filesize(DB_FILE_PATH) / 1024, 1) . ' KB' : '0 KB';
-$activeTicker = getSetting('announcement_banner', 'Admissions Open for Academic Year 2025-26');
-$counterPassRate = getSetting('counter_pass_rate', '97.6');
-
-// Compute benchmark pass rate from latest pass_rates record (average of numeric values)
-$benchmarkPassRate = $counterPassRate; // fallback
-if ($latestPassRates) {
-    $streams = ['bca','bsc','bba','bcom','bsw','pgdca','msc_it','mcom','msc_chem'];
-    $vals = [];
-    foreach ($streams as $s) {
-        $v = $latestPassRates[$s] ?? '—';
-        $num = (float)preg_replace('/[^0-9.]/', '', $v);
-        if ($num > 0) $vals[] = $num;
-    }
-    if (!empty($vals)) {
-        $benchmarkPassRate = number_format(array_sum($vals) / count($vals), 2);
-    }
+$uploadDirWritable = is_writable($siteRoot . '/assets/uploads') || is_writable($siteRoot . '/assets');
+$sitemapPath = $siteRoot . '/sitemap.xml';
+$sitemapCount = 0;
+if (file_exists($sitemapPath)) {
+    $xml = @simplexml_load_file($sitemapPath);
+    if ($xml && isset($xml->url)) $sitemapCount = count($xml->url);
 }
+$manifestExists = file_exists($siteRoot . '/manifest.json');
+$swExists = file_exists($siteRoot . '/sw.js');
+
+$healthRows = [
+    ['label' => 'Database Integrity', 'icon' => 'database', 'value' => 'OK — ' . strtoupper($journalMode) . ' (WAL)', 'good' => $integrityRes === 'ok'],
+    ['label' => 'PHP Version', 'icon' => 'cpu', 'value' => 'PHP ' . $phpVer, 'good' => true],
+    ['label' => 'Uploads Directory', 'icon' => 'folder', 'value' => $uploadDirWritable ? 'Writable' : 'Read-Only', 'good' => $uploadDirWritable],
+    ['label' => 'Media Storage', 'icon' => 'image', 'value' => $totalMediaFiles . ' files / ' . $totalMediaSizeStr, 'good' => true],
+    ['label' => 'XML Sitemap', 'icon' => 'globe', 'value' => $sitemapCount . ' URLs indexed', 'good' => $sitemapCount > 0],
+    ['label' => 'PWA / Mobile App', 'icon' => 'shield', 'value' => ($manifestExists && $swExists) ? 'Ready' : 'Partial', 'good' => $manifestExists && $swExists],
+];
+
+$firstName = explode(' ', $currentAdmin['name'])[0];
 ?>
 
-<!-- Executive Banner -->
-<div class="dash-banner">
+<!-- Welcome Banner -->
+<div class="welcome-banner">
     <div>
-        <div class="dash-banner-title">
-            <span class="status-dot online"></span>
-            Shri V.J. Modha College Portal Center
-        </div>
-        <div class="dash-banner-sub">
-            Affiliated to BKNMU Junagadh &bull; System Status: <strong>Operational &amp; Dynamic</strong> &bull; <?= date('l, d F Y') ?>
-        </div>
+        <div class="welcome-eyebrow">Admin Dashboard</div>
+        <div class="welcome-title">Welcome back, <?= htmlspecialchars($firstName) ?> 👋</div>
+        <div class="welcome-sub"><?= date('l, j F Y') ?> &bull; Here&rsquo;s a quick look at what&rsquo;s live on your website.</div>
     </div>
-    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-        <div class="dash-ticker-box">
-            <span style="font-weight: 700; color: var(--primary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Live Ticker:</span>
-            <span style="color: var(--text-muted); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 320px;">
-                <?= htmlspecialchars($activeTicker ?: 'No active ticker text broadcasted.') ?>
-            </span>
-        </div>
-        <a href="../index.php" target="_blank" class="btn btn-secondary btn-sm" title="Open Public Website">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-            View Live Site
-        </a>
-    </div>
+    <a href="../index.php" target="_blank" class="btn btn-secondary btn-sm" style="gap: 8px;">
+        <?= icon('external', 14) ?>
+        View Live Site
+    </a>
 </div>
 
-<!-- High-Level Key Performance Indicators -->
+<!-- Section Stats -->
 <div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-info">
-            <div class="stat-label">Faculty Strength</div>
-            <div class="stat-value"><?= $facultyCount ?> <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">Professors</span></div>
-        </div>
-        <div class="stat-icon primary">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-        </div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-info">
-            <div class="stat-label">Total Student Aid Disbursed</div>
-            <div class="stat-value">₹ <?= number_format($totalDisbursed) ?></div>
-        </div>
-        <div class="stat-icon success">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-        </div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-info">
-            <div class="stat-label">Benchmark Pass Rate</div>
-            <div class="stat-value"><?= htmlspecialchars($benchmarkPassRate) ?>%</div>
-            <span class="form-hint">Avg. of latest record (<?= htmlspecialchars($latestPassRates['year'] ?? 'N/A') ?>); <a href="settings.php" style="color:var(--primary)">manual override</a></span>
-        </div>
-        <div class="stat-icon warning">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-        </div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-info">
-            <div class="stat-label">Media &amp; Publication Assets</div>
-            <div class="stat-value"><?= $photoCount ?> <span style="font-size: 13px; font-weight: 500; color: var(--text-muted);">(<?= $albumCount ?> Albums, <?= $magCount ?> Mags)</span></div>
-        </div>
-        <div class="stat-icon info">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-        </div>
-    </div>
+    <?php foreach ($sectionStats as $s): ?>
+        <a class="stat-card" href="<?= $s['href'] ?>">
+            <div class="stat-info">
+                <div class="stat-label"><?= htmlspecialchars($s['label']) ?></div>
+                <div class="stat-value"><?= (int)$s['count'] ?></div>
+                <span class="stat-link-hint">Manage &rarr;</span>
+            </div>
+            <div class="stat-icon <?= $s['tone'] ?>">
+                <?= icon($s['icon'], 24) ?>
+            </div>
+        </a>
+    <?php endforeach; ?>
 </div>
 
-<!-- Two-Column Primary Analytics Grid -->
-<div class="dash-grid-2">
-    
-    <!-- Left Column: Academic Intelligence & Distribution -->
-    <div style="display: flex; flex-direction: column; gap: 24px;">
-        
-        <!-- Department Faculty Distribution -->
-        <div class="panel">
-            <div class="panel-header">
-                <div>
-                    <div class="panel-title">Faculty Strength by Academic Department</div>
-                    <span class="form-hint">Staff distribution across specialized wings</span>
-                </div>
-                <a href="faculties.php" class="btn btn-secondary btn-sm">Manage Faculty</a>
-            </div>
-            <div class="panel-body">
-                <div class="dept-bar-group">
-                    <?php 
-                    $maxCount = max(array_column($deptStats, 'count')) ?: 1;
-                    foreach ($deptStats as $key => $d): 
-                        $pct = round(($d['count'] / $maxCount) * 100);
-                    ?>
-                    <div class="dept-bar-item">
-                        <div class="dept-bar-label">
-                            <span><?= htmlspecialchars($d['label']) ?></span>
-                            <span style="font-weight: 700;"><?= $d['count'] ?> Members</span>
-                        </div>
-                        <div class="dept-bar-track">
-                            <div class="dept-bar-fill" style="width: <?= $pct ?>%; background-color: <?= $d['color'] ?>;"></div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-
-        <!-- Academic Performance Pulse -->
-        <div class="panel">
-            <div class="panel-header">
-                <div>
-                    <div class="panel-title">Latest Academic Pass Rate Matrix (<?= htmlspecialchars($latestPassRates['year'] ?? 'Latest') ?>)</div>
-                    <span class="form-hint">Stream-wise graduation success benchmarks</span>
-                </div>
-                <a href="pass_rates.php" class="btn btn-secondary btn-sm">All Batches</a>
-            </div>
-            <div class="panel-body">
-                <?php if ($latestPassRates): ?>
-                <div class="pass-rates-mini-grid">
-                    <div class="pass-rate-pill">
-                        <span class="pass-rate-pill-stream">B.Sc.</span>
-                        <span class="pass-rate-pill-value <?= (strpos($latestPassRates['bsc'], '100') !== false) ? 'perfect' : '' ?>"><?= htmlspecialchars($latestPassRates['bsc']) ?></span>
-                    </div>
-                    <div class="pass-rate-pill">
-                        <span class="pass-rate-pill-stream">B.Com.</span>
-                        <span class="pass-rate-pill-value <?= (strpos($latestPassRates['bcom'], '100') !== false) ? 'perfect' : '' ?>"><?= htmlspecialchars($latestPassRates['bcom']) ?></span>
-                    </div>
-                    <div class="pass-rate-pill">
-                        <span class="pass-rate-pill-stream">B.S.W.</span>
-                        <span class="pass-rate-pill-value <?= (strpos($latestPassRates['bsw'], '100') !== false) ? 'perfect' : '' ?>"><?= htmlspecialchars($latestPassRates['bsw']) ?></span>
-                    </div>
-                    <div class="pass-rate-pill">
-                        <span class="pass-rate-pill-stream">B.B.A.</span>
-                        <span class="pass-rate-pill-value <?= (strpos($latestPassRates['bba'], '100') !== false) ? 'perfect' : '' ?>"><?= htmlspecialchars($latestPassRates['bba']) ?></span>
-                    </div>
-                    <div class="pass-rate-pill">
-                        <span class="pass-rate-pill-stream">B.C.A.</span>
-                        <span class="pass-rate-pill-value <?= (strpos($latestPassRates['bca'], '100') !== false) ? 'perfect' : '' ?>"><?= htmlspecialchars($latestPassRates['bca']) ?></span>
-                    </div>
-                    <div class="pass-rate-pill">
-                        <span class="pass-rate-pill-stream">M.Sc. IT</span>
-                        <span class="pass-rate-pill-value <?= (strpos($latestPassRates['msc_it'], '100') !== false) ? 'perfect' : '' ?>"><?= htmlspecialchars($latestPassRates['msc_it']) ?></span>
-                    </div>
-                </div>
-                <?php else: ?>
-                    <p style="color: var(--text-muted); font-size: 13px;">No pass rates recorded yet.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Right Column: Live Activity Radar & Publications -->
-    <div style="display: flex; flex-direction: column; gap: 24px;">
-        
-        <!-- Events & Academic Notices Radar -->
-        <div class="panel">
-            <div class="panel-header">
-                <div>
-                    <div class="panel-title">Campus Events &amp; Circulars Radar</div>
-                    <span class="form-hint"><?= $eventCount ?> Upcoming Events &bull; <?= $newsCount ?> Academic Notices</span>
-                </div>
-                <a href="events.php" class="btn btn-secondary btn-sm">Manage Feed</a>
-            </div>
-            <div class="panel-body">
-                <div class="radar-timeline">
-                    <?php if (empty($recentEvents)): ?>
-                        <p style="color: var(--text-muted); font-size: 13px;">No active events or notices scheduled.</p>
-                    <?php else: ?>
-                        <?php foreach ($recentEvents as $ev): 
-                            $isEvent = ($ev['event_type'] === 'event');
-                        ?>
-                        <div class="radar-item">
-                            <div class="radar-icon" style="background: <?= $isEvent ? 'rgba(59,130,246,0.15)' : 'rgba(16,185,129,0.15)' ?>; color: <?= $isEvent ? 'var(--primary)' : 'var(--success)' ?>;">
-                                <?php if ($isEvent): ?>
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
-                                <?php else: ?>
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                                <?php endif; ?>
-                            </div>
-                            <div class="radar-content">
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px;">
-                                    <div class="radar-title"><?= htmlspecialchars($ev['title']) ?></div>
-                                    <span class="badge badge-<?= $ev['badge_type'] === 'confirmed' ? 'success' : ($ev['badge_type'] === 'latest' ? 'info' : 'secondary') ?>" style="font-size: 10.5px;">
-                                        <?= htmlspecialchars($ev['badge']) ?>
-                                    </span>
-                                </div>
-                                <div class="radar-meta">
-                                    <?= htmlspecialchars(mb_strimwidth($ev['description'] ?? '', 0, 75, '...')) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-
-        <!-- Latest Publication & Scholarship Highlight -->
-        <div class="panel">
-            <div class="panel-header">
-                <div>
-                    <div class="panel-title">Institutional Highlights</div>
-                    <span class="form-hint">E-Magazine edition &amp; student aid record</span>
-                </div>
-            </div>
-            <div class="panel-body" style="display: flex; flex-direction: column; gap: 16px;">
-                <!-- E-Mag Highlight -->
-                <?php if ($latestMag): ?>
-                <div style="background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div class="radar-icon" style="background: rgba(139,92,246,0.15); color: #a78bfa;">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                        </div>
-                        <div>
-                            <div style="font-weight: 600; font-size: 13.5px; color: var(--text-main);"><?= htmlspecialchars($latestMag['title']) ?></div>
-                            <div style="font-size: 11.5px; color: var(--text-muted);"><?= htmlspecialchars($latestMag['edition']) ?> &bull; <?= htmlspecialchars($latestMag['file_size']) ?></div>
-                        </div>
-                    </div>
-                    <a href="../<?= htmlspecialchars($latestMag['file_path']) ?>" target="_blank" class="btn btn-secondary btn-sm">View PDF</a>
-                </div>
-                <?php endif; ?>
-
-                <!-- Latest Scholarship Highlight -->
-                <?php if ($latestScholarship): ?>
-                <div style="background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div class="radar-icon" style="background: rgba(16,185,129,0.15); color: var(--success);">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                        </div>
-                        <div>
-                            <div style="font-weight: 600; font-size: 13.5px; color: var(--text-main);">Year <?= htmlspecialchars($latestScholarship['year']) ?> Aid</div>
-                            <div style="font-size: 11.5px; color: var(--text-muted);">Disbursed: <strong style="color: var(--success);"><?= htmlspecialchars($latestScholarship['amount_str']) ?></strong></div>
-                        </div>
-                    </div>
-                    <span class="badge badge-success"><?= htmlspecialchars($latestScholarship['status']) ?></span>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- Storage Utilization & System Health Diagnostics -->
-<div class="dash-grid-2">
-    
-    <!-- Media & Storage Health -->
-    <div class="panel">
-        <div class="panel-header">
-            <div class="panel-title">Media Storage &amp; Asset Footprint</div>
-            <span class="badge badge-primary"><?= $totalMediaFiles ?> Files &bull; <?= $totalMediaSizeStr ?></span>
-        </div>
-        <div class="panel-body">
-            <div class="storage-bar-group">
-                <div class="storage-row">
-                    <div class="storage-info">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>Faculty Profile Images</span>
-                    </div>
-                    <div>
-                        <strong style="color: var(--text-main);"><?= $storageFaculty['count'] ?> files</strong>
-                        <span style="color: var(--text-muted); font-size: 11.5px; margin-left: 6px;">(<?= $storageFaculty['size'] ?>)</span>
-                    </div>
-                </div>
-
-                <div class="storage-row">
-                    <div class="storage-info">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                        <span>Gallery Photos &amp; Albums</span>
-                    </div>
-                    <div>
-                        <strong style="color: var(--text-main);"><?= $storageGallery['count'] ?> files</strong>
-                        <span style="color: var(--text-muted); font-size: 11.5px; margin-left: 6px;">(<?= $storageGallery['size'] ?>)</span>
-                    </div>
-                </div>
-
-                <div class="storage-row">
-                    <div class="storage-info">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                        <span>E-Magazines &amp; Publications</span>
-                    </div>
-                    <div>
-                        <strong style="color: var(--text-main);"><?= $storageEmag['count'] ?> files</strong>
-                        <span style="color: var(--text-muted); font-size: 11.5px; margin-left: 6px;">(<?= $storageEmag['size'] ?>)</span>
-                    </div>
-                </div>
-
-                <div class="storage-row">
-                    <div class="storage-info">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                        <span>Student Laurels &amp; Rankers</span>
-                    </div>
-                    <div>
-                        <strong style="color: var(--text-main);"><?= $storageRankers['count'] ?> files</strong>
-                        <span style="color: var(--text-muted); font-size: 11.5px; margin-left: 6px;">(<?= $storageRankers['size'] ?>)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Security & System Architecture Info -->
-    <div class="panel">
-        <div class="panel-header">
-            <div class="panel-title">Server &amp; Security Diagnostics</div>
-            <span class="badge badge-success">Healthy</span>
-        </div>
-        <div class="panel-body" style="padding: 0;">
-            <table class="admin-table">
-                <tbody>
-                    <tr>
-                        <td><strong>Database Engine</strong></td>
-                        <td>SQLite 3 (PDO WAL Mode &bull; <?= $dbFileSize ?>)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Runtime Stack</strong></td>
-                        <td>PHP <?= phpversion() ?> &bull; Apache 2.4 Server</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Session Security</strong></td>
-                        <td><span class="badge badge-success">Strict Mode &bull; HttpOnly &bull; SameSite=Lax</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>CSRF Protection</strong></td>
-                        <td><span class="badge badge-success">Active on all POST operations</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Directory Protection</strong></td>
-                        <td><span class="badge badge-info"><code>website/data/.htaccess</code> Active</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div>
-
-<!-- Jump-to-Module Navigation Cards -->
-<div class="panel">
+<!-- Quick Actions -->
+<div class="panel" style="margin-top: 4px;">
     <div class="panel-header">
-        <div class="panel-title">Administration Modules Hub</div>
-        <span class="form-hint">Direct access to specialized content sections</span>
+        <div>
+            <div class="panel-title"><?= icon('plus', 18) ?> Quick Actions</div>
+            <span class="form-hint">Add or publish new content in a few clicks</span>
+        </div>
     </div>
     <div class="panel-body">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
-            <a href="faculties.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Faculties</span>
-                <span class="badge badge-primary"><?= $facultyCount ?></span>
-            </a>
-            <a href="courses.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Courses</span>
-                <span class="badge badge-success"><?= $courseCount ?></span>
-            </a>
-            <a href="labs.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Labs</span>
-                <span class="badge badge-info"><?= $labCount ?></span>
-            </a>
-            <a href="events.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Events</span>
-                <span class="badge badge-warning"><?= $eventCount + $newsCount ?></span>
-            </a>
-            <a href="rankers.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Rankers</span>
-                <span class="badge badge-primary"><?= $rankerCount ?></span>
-            </a>
-            <a href="gallery.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Gallery</span>
-                <span class="badge badge-info"><?= $albumCount ?></span>
-            </a>
-            <a href="pass_rates.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Pass Rates</span>
-                <span class="badge badge-secondary">Matrix</span>
-            </a>
-            <a href="scholarships.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Scholarships</span>
-                <span class="badge badge-success">Aid</span>
-            </a>
-            <a href="settings.php" class="dash-ticker-box" style="justify-content: space-between; text-decoration: none; transition: transform 0.2s;">
-                <span style="font-weight: 600; color: var(--text-main);">Settings</span>
-                <span class="badge badge-secondary">Stats</span>
-            </a>
+        <div class="quick-actions">
+            <?php foreach ($quickActions as $qa): ?>
+                <a href="<?= $qa['href'] ?>"
+                   data-drawer-url="<?= $qa['href'] ?>&amp;drawer=1"
+                   data-drawer-title="<?= htmlspecialchars($qa['title']) ?>"
+                   class="quick-action">
+                    <?= icon($qa['icon'], 20) ?>
+                    <span><?= htmlspecialchars($qa['title']) ?></span>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity + System Health -->
+<div class="dash-grid-2">
+    <div class="panel" style="margin-bottom: 0;">
+        <div class="panel-header">
+            <div>
+                <div class="panel-title"><?= icon('clock', 18) ?> Recent Activity</div>
+                <span class="form-hint">Latest content added to the site</span>
+            </div>
+        </div>
+        <div class="panel-body" style="padding: 0;">
+            <div class="recent-list">
+                <?php if (empty($recent)): ?>
+                    <div class="empty-cell">Nothing added yet — use Quick Actions to publish your first item.</div>
+                <?php else: ?>
+                    <?php foreach ($recent as $item): ?>
+                        <a href="<?= $item['href'] ?>" class="recent-item" style="text-decoration: none; color: inherit;">
+                            <div class="recent-icon" style="color: var(--primary);">
+                                <?= icon($item['icon'], 17) ?>
+                            </div>
+                            <div class="recent-content">
+                                <div class="recent-title"><?= htmlspecialchars($item['title']) ?></div>
+                                <div class="recent-meta"><?= $item['meta'] ?></div>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel" style="margin-bottom: 0;">
+        <div class="panel-header">
+            <div>
+                <div class="panel-title"><?= icon('shield', 18) ?> System Health</div>
+                <span class="form-hint">Core services &amp; storage at a glance</span>
+            </div>
+            <span class="badge badge-success">All Systems Nominal</span>
+        </div>
+        <div class="panel-body" style="padding: 0;">
+            <div class="health-list">
+                <?php foreach ($healthRows as $h): ?>
+                    <div class="health-row">
+                        <div class="health-label"><?= icon($h['icon'], 15) ?> <?= htmlspecialchars($h['label']) ?></div>
+                        <div class="health-value">
+                            <?= htmlspecialchars($h['value']) ?>
+                            <span class="badge badge-<?= $h['good'] ? 'success' : 'danger' ?>" style="margin-left: 6px;">
+                                <?= $h['good'] ? 'OK' : 'Attention' ?>
+                            </span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                <div class="health-row">
+                    <div class="health-label"><?= icon('database', 15) ?> SQLite Database</div>
+                    <div class="health-value"><?= $dbFileSize ?>
+                        <form method="POST" action="index.php" style="display: inline-block; margin-left: 10px;" id="vacuum-form-dash">
+                            <?= csrfField() ?>
+                            <input type="hidden" name="action" value="vacuum_db">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                    data-confirm="Run SQLite VACUUM and index optimization? This may take a few seconds."
+                                    data-confirm-form="#vacuum-form-dash">Optimize</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding: 14px 20px; border-top: 1px solid var(--border-color); background: var(--bg-card-header);">
+            <a href="settings.php" class="btn btn-secondary btn-sm"><?= icon('globe', 14) ?> View Full Diagnostics &amp; Settings</a>
         </div>
     </div>
 </div>

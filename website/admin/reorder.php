@@ -88,7 +88,7 @@ try {
 
     $update = $db->prepare("UPDATE {$table} SET sort_order = :so WHERE id = :id");
 
-    $position = 10;
+    $position = 1;
     foreach ($ids as $id) {
         $check->execute([':id' => $id]);
         if (!$check->fetchColumn()) {
@@ -96,7 +96,7 @@ try {
             continue;
         }
         $update->execute([':so' => $position, ':id' => $id]);
-        $position += 10;
+        $position++;
     }
 
     $db->commit();

@@ -231,3 +231,31 @@ function setSetting(string $key, string $value): bool {
         return false;
     }
 }
+
+/**
+ * Recursively count files + total bytes inside the given directories.
+ * Shared by the dashboard and the settings diagnostics.
+ */
+function getStorageStats(array $dirs): array {
+    $count = 0;
+    $bytes = 0;
+    foreach ($dirs as $d) {
+        if (!is_dir($d)) continue;
+        try {
+            $it = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($d, FilesystemIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+            foreach ($it as $item) {
+                if ($item->isFile()) {
+                    $count++;
+                    $bytes += $item->getSize();
+                }
+            }
+        } catch (Exception $e) {}
+    }
+    $sizeStr = ($bytes > 1048576)
+        ? round($bytes / 1048576, 2) . ' MB'
+        : round($bytes / 1024, 1) . ' KB';
+    return ['count' => $count, 'bytes' => $bytes, 'size' => $sizeStr];
+}

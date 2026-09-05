@@ -32,5 +32,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script src="assets/js/admin.js?v=<?= time() ?>"></script>
+
+<?php if ($isDrawerMode && isset($flash) && !empty($flash)): ?>
+<!-- Tell the parent drawer to close + show feedback after a successful save -->
+<script>
+(function () {
+    var toastType = '<?= htmlspecialchars($flash['type'], ENT_QUOTES) ?>';
+    var message = '<?= htmlspecialchars($flash['message'], ENT_QUOTES) ?>';
+    window.parent.postMessage({ type: 'admin:saved', toastType: toastType, message: message }, '*');
+})();
+</script>
+<?php endif; ?>
 </body>
 </html>

@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <?php if (!empty($error)): ?>
-        <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; text-align: center;">
+        <div class="login-error">
             <?= htmlspecialchars($error) ?>
         </div>
     <?php endif; ?>
@@ -71,12 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="form-group">
             <label class="form-label" for="username">Username</label>
-            <input type="text" id="username" name="username" class="form-control" required autofocus value="<?= htmlspecialchars($username) ?>" placeholder="e.g. admin">
+            <input type="text" id="username" name="username" class="form-control" required autofocus autocomplete="username" value="<?= htmlspecialchars($username) ?>" placeholder="e.g. admin">
         </div>
 
-        <div class="form-group" style="margin-bottom: 24px;">
+        <div class="form-group" style="margin-bottom: 24px; position: relative;">
             <label class="form-label" for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" required placeholder="Enter password">
+            <input type="password" id="password" name="password" class="form-control" required autocomplete="current-password" placeholder="Enter password" style="padding-right: 64px;">
+            <button type="button" id="togglePassword" class="btn btn-secondary btn-sm"
+                    style="position: absolute; right: 8px; bottom: 8px; padding: 5px 10px; font-size: 11.5px; z-index: 2;"
+                    title="Show / Hide password">Show</button>
         </div>
 
         <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 14px;">
@@ -90,6 +93,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('togglePassword');
+    const pwd = document.getElementById('password');
+    if (toggle && pwd) {
+        toggle.addEventListener('click', () => {
+            const show = pwd.type === 'password';
+            pwd.type = show ? 'text' : 'password';
+            toggle.textContent = show ? 'Hide' : 'Show';
+        });
+    }
+});
+</script>
 
 </body>
 </html>
