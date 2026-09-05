@@ -95,6 +95,12 @@
         ExpiresActive Off
     </Files>
 
+    # Prevent stale browser/proxy caching of dynamic HTML and PHP pages (ensures fresh CMS updates & popups)
+    <FilesMatch "\.(php|html)$">
+        Header set Cache-Control "no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+    </FilesMatch>
+
     # Cache static assets with public immutable header
     <FilesMatch "\.(ico|jpe?g|png|gif|webp|svg|woff2?|mp4|webm)$">
         Header set Cache-Control "public, max-age=31536000, immutable"

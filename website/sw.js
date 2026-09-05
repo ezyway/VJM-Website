@@ -5,17 +5,11 @@
  * ====================================================
  */
 
-const CACHE_NAME = "vjm-portal-v1";
+const CACHE_NAME = "vjm-portal-v2";
 
 const CORE_ASSETS = [
     "./",
     "index.php",
-    "about.php",
-    "courses.php",
-    "faculties.php",
-    "labs.php",
-    "gallery.php",
-    "contact.php",
     "styles/global.css",
     "styles/nav.css",
     "styles/footer.css",
@@ -31,9 +25,9 @@ const CORE_ASSETS = [
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(CORE_ASSETS).catch((err) => {
-                console.warn("PWA pre-cache warning:", err);
-            });
+            return Promise.allSettled(
+                CORE_ASSETS.map((asset) => cache.add(asset))
+            );
         }).then(() => self.skipWaiting())
     );
 });
@@ -61,12 +55,15 @@ self.addEventListener("fetch", (event) => {
     if (request.method !== "GET") return;
     if (request.url.includes("google-analytics.com") || request.url.includes("googletagmanager.com")) return;
 
+    // Never intercept or cache Admin CMS panel requests
+    if (request.url.includes("/admin/")) return;
+
     // HTML / Page Navigation: Network First -> Cache Fallback
     if (request.mode === "navigate" || request.headers.get("accept")?.includes("text/html")) {
         event.respondWith(
             fetch(request)
                 .then((networkResponse) => {
-                    if (networkResponse && networkResponse.status === 200) {
+                    if (networkResponse && networkResponse.ok && networkResponse.status === 200) {
                         const responseToCache = networkResponse.clone();
                         caches.open(CACHE_NAME).then((cache) => cache.put(request, responseToCache));
                     }
@@ -82,13 +79,13 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
-    // Static Assets (Images, CSS, JS, Fonts): Cache First -> Network Fallback
+    // Static Assets (Images, CSS, JS, Fonts): Cache First with background revalidation -> Network Fallback
     event.respondWith(
         caches.match(request).then((cachedResponse) => {
             if (cachedResponse) {
-                // Fetch in background to revalidate cache
+                // Fetch in background to revalidate cache (Stale-While-Revalidate)
                 fetch(request).then((networkResponse) => {
-                    if (networkResponse && networkResponse.status === 200) {
+                    if (networkResponse && networkResponse.ok && networkResponse.status === 200) {
                         caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
                     }
                 }).catch(() => {});
@@ -96,11 +93,13 @@ self.addEventListener("fetch", (event) => {
             }
 
             return fetch(request).then((networkResponse) => {
-                if (networkResponse && networkResponse.status === 200) {
+                if (networkResponse && networkResponse.ok && networkResponse.status === 200) {
                     const responseToCache = networkResponse.clone();
                     caches.open(CACHE_NAME).then((cache) => cache.put(request, responseToCache));
                 }
                 return networkResponse;
+            }).catch(() => {
+                return new Response("", { status: 408, statusText: "Offline" });
             });
         })
     );

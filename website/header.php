@@ -1,4 +1,11 @@
 <?php
+    if (!headers_sent()) {
+        header('Cache-Control: no-cache, must-revalidate, max-age=0');
+        header('Pragma: no-cache');
+        header('X-Content-Type-Options: nosniff');
+        header('X-Frame-Options: SAMEORIGIN');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+    }
     $currentFileName = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
     $title_data = [
         "index" => "Shri V.J. Modha College",
@@ -137,10 +144,13 @@
 ?>
 
 <script>
-    // Register PWA Service Worker for offline performance
+    // Register PWA Service Worker for offline performance and fresh content sync
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js')
+                .then((registration) => {
+                    registration.update().catch(() => {});
+                })
                 .catch((err) => console.debug('ServiceWorker registration note:', err));
         });
     }
