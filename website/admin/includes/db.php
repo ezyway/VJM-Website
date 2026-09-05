@@ -199,6 +199,18 @@ function initSchema(PDO $pdo): void {
         key TEXT PRIMARY KEY,
         value TEXT
     );
+
+    CREATE INDEX IF NOT EXISTS idx_faculties_sort ON faculties(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_courses_sort ON courses(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_events_sort ON events(event_type, sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_rankers_sort ON rankers(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_pass_rates_sort ON pass_rates(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_gallery_albums_sort ON gallery_albums(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_gallery_photos_album ON gallery_photos(album_id, sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_testimonials_sort ON testimonials(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_magazines_sort ON magazines(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_scholarships_sort ON scholarships(sort_order, id);
+    CREATE INDEX IF NOT EXISTS idx_scholarship_portals_sort ON scholarship_portals(sort_order, id);
     ";
 
     $pdo->exec($schema);

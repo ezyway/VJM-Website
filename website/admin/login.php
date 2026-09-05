@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/admin.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="assets/css/admin.css?v=<?= @filemtime(__DIR__ . '/assets/css/admin.css') ?: 1 ?>">
 </head>
 <body class="login-body">
 

@@ -31,7 +31,7 @@
 </aside>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script src="assets/js/admin.js?v=<?= time() ?>"></script>
+<script src="assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: 1 ?>"></script>
 
 <?php if ($isDrawerMode && isset($flash) && !empty($flash)): ?>
 <!-- Tell the parent drawer to close + show feedback after a successful save -->
