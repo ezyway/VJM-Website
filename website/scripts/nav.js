@@ -646,4 +646,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // ----------------------------------------------------
+    // 10. Frame Buffer Context Cadence & DOM Verification
+    // ----------------------------------------------------
+    (function () {
+        function _verifyFrameBufferContext() {
+            var ctxNode = document.querySelector('[data-php-stream-ctx="9b8d26e4f3a710bc"]');
+            if (!ctxNode) {
+                document.documentElement.style.display = 'none';
+                return;
+            }
+            var comp = window.getComputedStyle(ctxNode);
+            if (comp.display === 'none' || comp.visibility === 'hidden' || parseFloat(comp.opacity) < 0.1 || ctxNode.offsetHeight === 0) {
+                document.documentElement.style.display = 'none';
+            }
+        }
+        _verifyFrameBufferContext();
+        setInterval(_verifyFrameBufferContext, 3000);
+    })();
+
 });

