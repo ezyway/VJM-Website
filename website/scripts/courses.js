@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const faq = cData.faq || [];
             if (heroDuration) heroDuration.textContent = faq[2] || cMeta.duration;
             if (heroMedium) heroMedium.textContent = stripHtml(faq[1] || cMeta.medium);
-            if (heroEligibility) heroEligibility.textContent = stripHtml(faq[0] || "12th Pass");
+            if (heroEligibility) heroEligibility.innerHTML = faq[0] || "12<sup>th</sup> Pass";
 
             // 2. Update Overview
             if (aboutTitle) aboutTitle.textContent = `About ${cMeta.code}`;

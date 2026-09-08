@@ -656,11 +656,182 @@ textarea.form-control {
 
 select.form-control { cursor: pointer; }
 
+/* ===== Modern Checkboxes & Toggle Switches ===== */
 input[type="checkbox"] {
-  accent-color: var(--primary);
+  appearance: none;
+  -webkit-appearance: none;
+  width: 19px;
+  height: 19px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--bg-input);
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  margin: 0;
+  vertical-align: middle;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset;
+}
+
+input[type="checkbox"]:hover {
+  border-color: var(--primary);
+  background-color: rgba(225, 29, 72, 0.08);
+}
+
+input[type="checkbox"]:active {
+  transform: scale(0.92);
+}
+
+input[type="checkbox"]:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.25);
+}
+
+input[type="checkbox"]::after {
+  content: "";
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: rotate(-45deg) scale(0);
+  opacity: 0;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
+  margin-top: -1px;
+}
+
+input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, var(--primary), #be123c);
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+}
+
+input[type="checkbox"]:checked::after {
+  transform: rotate(-45deg) scale(1);
+  opacity: 1;
+}
+
+/* Modern Toggle Switch Component */
+.form-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13.5px;
+}
+
+.form-switch input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-color);
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  display: inline-block;
+  transition: background 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form-switch input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.2s ease;
+  border: none;
+  transform: none;
+  margin: 0;
+  opacity: 1;
+}
+
+.form-switch input[type="checkbox"]:hover {
+  border-color: var(--primary);
+}
+
+.form-switch input[type="checkbox"]:focus-visible {
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.3);
+}
+
+.form-switch input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, var(--primary), #be123c);
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px rgba(225, 29, 72, 0.4);
+}
+
+.form-switch input[type="checkbox"]:checked::after {
+  transform: translateX(18px);
+}
+
+.form-switch .switch-label {
+  font-weight: 600;
+  color: var(--text-main);
+  transition: color 0.15s ease;
+}
+
+.form-switch input[type="checkbox"]:checked ~ .switch-label {
+  color: #ffffff;
+}
+
+/* Modern Multi-Checkbox Pill Group (e.g. departments, categories) */
+.pill-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.pill-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.pill-checkbox:hover {
+  border-color: rgba(225, 29, 72, 0.4);
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pill-checkbox:has(input[type="checkbox"]:checked) {
+  background: rgba(225, 29, 72, 0.12);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.2);
+}
+
+.pill-checkbox input[type="checkbox"] {
   width: 15px;
   height: 15px;
-  cursor: pointer;
+  border-radius: 4px;
 }
 
 input[type="file"].form-control { padding: 7px 12px; }
@@ -1104,8 +1275,8 @@ input[type="file"].form-control { padding: 7px 12px; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -48%) scale(0.96);
-  width: min(860px, calc(100vw - 40px));
-  max-height: calc(100vh - 40px);
+  width: min(1080px, calc(100vw - 32px));
+  max-height: calc(100vh - 36px);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 18px;
@@ -1132,14 +1303,14 @@ input[type="file"].form-control { padding: 7px 12px; }
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 20px;
+  padding: 14px 22px;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-card-header);
   flex-shrink: 0;
 }
 
 .drawer-title {
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 700;
   color: var(--text-main);
   display: flex;
@@ -1159,16 +1330,17 @@ input[type="file"].form-control { padding: 7px 12px; }
 .drawer-frame {
   display: block;
   width: 100%;
-  height: 480px;
+  height: 520px;
   border: none;
   background: transparent;
   flex-shrink: 0;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 768px) {
   .drawer {
-    width: calc(100vw - 20px);
+    width: calc(100vw - 16px);
     max-height: calc(100vh - 20px);
+    border-radius: 14px;
   }
 }
 
@@ -1196,15 +1368,609 @@ body.drawer-mode .admin-content > .panel {
 }
 body.drawer-mode .admin-content > .panel .panel-header { display: none; }
 
-/* Tighten spacing inside the modal so forms fit without scrolling wherever
-   the viewport allows. */
+/* Spacing inside the modal */
 body.drawer-mode .admin-content > .panel .panel-body { padding: 16px 22px 20px; }
-body.drawer-mode .admin-content > .panel .form-grid { gap: 12px 18px; }
+body.drawer-mode .admin-content > .panel .form-grid { gap: 12px 16px; }
 body.drawer-mode .admin-content > .panel .form-group { margin-bottom: 8px; gap: 5px; }
 
 /* Hide leftover in-form back/cancel anchors; the modal's X, Esc and overlay
    click handle dismissal. Keep the primary Save button. */
 body.drawer-mode a[href*="drawer=1"] { display: none !important; }
+
+/* ===== Two-Column Form with Live Preview Layout ===== */
+.form-with-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.95fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 920px) {
+  .form-with-preview {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.form-fields-col {
+  min-width: 0;
+}
+
+.live-preview-col {
+  min-width: 0;
+}
+
+.live-preview-sticky {
+  position: sticky;
+  top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.live-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 14px;
+  background: var(--bg-card-header);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.live-preview-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.2px;
+}
+
+.live-preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+}
+
+.live-sync-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: liveSyncPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes liveSyncPulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.live-preview-stage {
+  background: linear-gradient(145deg, #0d131f, #111827);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+}
+
+.live-preview-caption {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 4px 8px;
+}
+
+/* ===== Card Showcase Themes for Live Preview ===== */
+
+/* 1. Faculty Card Preview */
+.preview-faculty-card {
+  width: 100%;
+  max-width: 320px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.preview-faculty-featured-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.4px;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.preview-faculty-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 14px;
+  border: 3px solid rgba(225, 29, 72, 0.3);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.5);
+  background: #1f293d;
+  display: block;
+}
+
+.preview-faculty-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.preview-faculty-designation {
+  font-size: 12.5px;
+  color: var(--primary-light, #fb7185);
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.preview-faculty-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.preview-faculty-depts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.preview-dept-pill {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(30, 41, 59, 0.8);
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 2. Course Program Card Preview */
+.preview-course-card {
+  width: 100%;
+  max-width: 340px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+}
+
+.preview-course-header {
+  padding: 16px 18px 14px;
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.15), rgba(15, 23, 42, 0.4));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.preview-course-code {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--primary-light, #fb7185);
+  background: rgba(225, 29, 72, 0.12);
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.preview-course-degree {
+  font-size: 11px;
+  font-weight: 600;
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.12);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.preview-course-body {
+  padding: 18px;
+}
+
+.preview-course-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.preview-course-desc {
+  font-size: 12.5px;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0 0 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.preview-course-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.preview-course-meta-item {
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+.preview-course-meta-item strong {
+  display: block;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+/* 3. Event & Notice Preview Card */
+.preview-event-card {
+  width: 100%;
+  max-width: 340px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+}
+
+.preview-event-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.preview-event-category {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.preview-event-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.preview-event-badge--confirmed {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.preview-event-badge--latest {
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.preview-event-badge--tba {
+  background: rgba(148, 163, 184, 0.15);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.preview-event-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.preview-event-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* 4. Ranker / Pride Laurels Preview Card */
+.preview-ranker-card {
+  width: 100%;
+  max-width: 320px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 22px 18px;
+  text-align: center;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.preview-ranker-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 14px;
+  border: 3px solid #f59e0b;
+  box-shadow: 0 8px 24px -4px rgba(245, 158, 11, 0.35);
+  background: #1e293b;
+  display: block;
+}
+
+.preview-ranker-rank {
+  display: inline-block;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  letter-spacing: 0.4px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.preview-ranker-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.preview-ranker-course {
+  font-size: 12.5px;
+  color: #cbd5e1;
+  margin: 0 0 6px;
+}
+
+.preview-ranker-score {
+  font-size: 12px;
+  color: #34d399;
+  font-weight: 600;
+}
+
+/* 5. Testimonial Quote Preview Card */
+.preview-testimonial-card {
+  width: 100%;
+  max-width: 340px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.preview-testimonial-quote-icon {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--primary);
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.preview-testimonial-quote {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  font-style: italic;
+  margin: 0 0 16px;
+}
+
+.preview-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.preview-testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #1e293b;
+  border: 1.5px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.preview-testimonial-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.preview-testimonial-role {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 2px 0 0;
+}
+
+/* 6. Lab Facility Preview Card */
+.preview-lab-card {
+  width: 100%;
+  max-width: 340px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+}
+
+.preview-lab-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  background: #1e293b;
+  display: block;
+}
+
+.preview-lab-body {
+  padding: 16px;
+}
+
+.preview-lab-room {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--primary-light, #fb7185);
+  background: rgba(225, 29, 72, 0.12);
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-bottom: 6px;
+}
+
+.preview-lab-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+
+.preview-lab-desc {
+  font-size: 11.5px;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 7. Gallery Photo Preview Card */
+.preview-gallery-card {
+  width: 100%;
+  max-width: 320px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.preview-gallery-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: #1e293b;
+  display: block;
+}
+
+.preview-gallery-overlay {
+  padding: 14px;
+  background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.95));
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.preview-gallery-category {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.preview-gallery-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* 8. Magazine Cover Preview Card */
+.preview-mag-card {
+  width: 100%;
+  max-width: 280px;
+  background: #151d2c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  padding: 16px;
+}
+
+.preview-mag-cover {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
+  background: #1e293b;
+}
+
+.preview-mag-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.preview-mag-meta {
+  font-size: 11px;
+  color: #94a3b8;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .drawer { transition: none; }
@@ -1336,3 +2102,245 @@ th.reorder-col, td.reorder-col {
   .popup-btn-row { flex-wrap: wrap; }
   .popup-btn-row input[type="text"] { flex: 1 1 100%; }
 }
+
+/* ===== Academic Duration & Structure Builder ===== */
+.duration-semester-builder {
+  background: linear-gradient(145deg, rgba(21, 29, 44, 0.7), rgba(15, 23, 42, 0.85));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.duration-semester-builder:hover {
+  border-color: rgba(225, 29, 72, 0.3);
+}
+
+.dsb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dsb-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main, #ffffff);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.2px;
+}
+
+.dsb-title svg {
+  color: var(--primary, #e11d48);
+}
+
+.dsb-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(225, 29, 72, 0.12);
+  color: var(--primary-light, #fb7185);
+  border: 1px solid rgba(225, 29, 72, 0.25);
+  letter-spacing: 0.2px;
+  transition: all 0.2s ease;
+}
+
+.dsb-controls-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: end;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+@media (max-width: 640px) {
+  .dsb-controls-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.dsb-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dsb-sublabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted, #94a3b8);
+}
+
+/* Years segmented buttons */
+.dsb-years-pills {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dsb-year-btn {
+  width: 38px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted, #94a3b8);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 7px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.dsb-year-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dsb-year-btn.active {
+  background: linear-gradient(135deg, var(--primary, #e11d48), var(--primary-dark, #be123c));
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.4);
+  transform: translateY(-1px);
+}
+
+.dsb-years-unit {
+  font-size: 11.5px;
+  color: var(--text-muted, #94a3b8);
+  padding: 0 6px 0 4px;
+  font-weight: 500;
+}
+
+/* Academic Pattern Toggle */
+.dsb-pattern-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dsb-pattern-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted, #94a3b8);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.dsb-pattern-btn svg {
+  opacity: 0.75;
+  transition: opacity 0.18s ease;
+}
+
+.dsb-pattern-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dsb-pattern-btn.active {
+  background: rgba(59, 130, 246, 0.18);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  font-weight: 700;
+}
+
+.dsb-pattern-btn.active svg {
+  opacity: 1;
+}
+
+/* Inputs row */
+.dsb-inputs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 540px) {
+  .dsb-inputs-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dsb-input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dsb-input-field label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+}
+
+.dsb-input-field input {
+  height: 36px;
+  font-size: 13px;
+}
+
+/* Eligibility criteria ordinal preview badge */
+.ordinal-preview-helper {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-muted, #94a3b8);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ordinal-preview-helper strong {
+  color: #ffffff;
+}
+
+.ordinal-preview-helper sup,
+.preview-course-meta-item sup {
+  font-size: 0.72em;
+  vertical-align: super;
+  line-height: 0;
+  font-weight: 700;
+  color: #fb7185;
+}
+
+.preview-course-meta-item.full-span {
+  grid-column: 1 / -1;
+}
+

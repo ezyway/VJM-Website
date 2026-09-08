@@ -537,9 +537,9 @@ $htaccessProtected = file_exists($htaccessDbPath);
                 <input type="hidden" name="current_image" value="<?= htmlspecialchars($popImage) ?>">
 
                 <div class="form-group" style="margin-bottom: 18px;">
-                    <label style="display: inline-flex; align-items: center; gap: 9px; font-size: 13.5px; cursor: pointer;">
+                    <label class="form-switch">
                         <input type="checkbox" name="enabled" value="1" <?= $popEnabled ? 'checked' : '' ?>>
-                        <strong>Show announcement popup on the homepage</strong>
+                        <span class="switch-label"><strong>Show announcement popup on the homepage</strong></span>
                     </label>
                     <div class="form-hint" style="margin-top: 5px;">Replaces the old header ticker. Visitors dismiss it with the &times; button; it returns automatically whenever you save new content.</div>
                 </div>

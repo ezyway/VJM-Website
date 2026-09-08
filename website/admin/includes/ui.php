@@ -187,10 +187,17 @@ function formField(array $f, ?array $item): string
 
     $html = '<div class="form-group' . $full . '">';
 
-    if ($type === 'check') {
-        $html .= '<label style="display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; cursor: pointer;">'
-            . '<input type="checkbox" name="' . htmlspecialchars($name) . '" value="1"' . (!empty($raw) ? ' checked' : '') . '>'
-            . '<strong>' . ($f['checkText'] ?? '') . '</strong>'
+    if ($type === 'switch') {
+        $checked = !empty($raw) ? ' checked' : '';
+        $html .= '<label class="form-switch">'
+            . '<input type="checkbox" name="' . htmlspecialchars($name) . '" id="' . htmlspecialchars($name) . '" value="1"' . $checked . '>'
+            . '<span class="switch-label">' . ($f['checkText'] ?? $f['label'] ?? '') . '</span>'
+            . '</label>';
+    } elseif ($type === 'check') {
+        $checked = !empty($raw) ? ' checked' : '';
+        $html .= '<label style="display: inline-flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer; user-select: none;">'
+            . '<input type="checkbox" name="' . htmlspecialchars($name) . '" id="' . htmlspecialchars($name) . '" value="1"' . $checked . '>'
+            . '<span style="color: var(--text-main); font-weight: 600;">' . ($f['checkText'] ?? '') . '</span>'
             . '</label>';
     } else {
         $label = $f['label'] ?? '';

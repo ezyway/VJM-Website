@@ -259,13 +259,13 @@ if ($editItem || $isCreate) {
             <input type="hidden" name="current_image" id="currentImageField" value="<?= htmlspecialchars($itemImage) ?>">
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; background: var(--bg-input); padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-                <label style="display: inline-flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer;">
+                <label class="form-switch">
                     <input type="checkbox" name="enabled" value="1" id="popupEnabled" <?= $itemEnabled ? 'checked' : '' ?>>
-                    <span><strong>Enable this popup</strong> (Mark active)</span>
+                    <span class="switch-label"><strong>Enable this popup</strong> (Mark active)</span>
                 </label>
-                <label style="display: inline-flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer;">
+                <label class="form-switch">
                     <input type="checkbox" name="set_as_homepage" value="1" id="popupSetHomepage" <?= $itemIsLive ? 'checked' : '' ?>>
-                    <span><strong style="color: var(--primary);">Set as live homepage announcement</strong></span>
+                    <span class="switch-label"><strong style="color: var(--primary);">Set as live homepage announcement</strong></span>
                 </label>
             </div>
 

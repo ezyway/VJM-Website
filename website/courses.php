@@ -184,7 +184,7 @@
                         </div>
                         <div class="course-spec-pill">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                            <span><strong>Eligibility:</strong> <span id="courseHeroEligibility"><?= htmlspecialchars(strip_tags($initialFaq[0] ?? '12th Pass')) ?></span></span>
+                            <span><strong>Eligibility:</strong> <span id="courseHeroEligibility"><?= strip_tags($initialFaq[0] ?? '12<sup>th</sup> Pass', '<sup>') ?></span></span>
                         </div>
                     </div>
                 </div>
@@ -476,7 +476,7 @@
                                 <p class="program-card__desc"><?= htmlspecialchars($shortDesc) ?></p>
 
                                 <div class="program-card__specs-row">
-                                    <span><strong>Eligibility:</strong> <?= strip_tags($faq[0] ?? '12th Pass') ?></span>
+                                    <span><strong>Eligibility:</strong> <?= strip_tags($faq[0] ?? '12<sup>th</sup> Pass', '<sup>') ?></span>
                                     <span><strong>Medium:</strong> <?= strip_tags($faq[1] ?? 'English') ?></span>
                                 </div>
                             </div>

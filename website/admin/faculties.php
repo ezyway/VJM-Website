@@ -120,18 +120,19 @@ if ($editItem || $isCreate) {
                     $active = $item ? explode(',', $item['depts']) : [];
                     $html = '<div class="form-group full-width">'
                         . '<label class="form-label">Associated Departments *</label>'
-                        . '<div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 6px;">';
+                        . '<div class="pill-checkbox-group">';
                     foreach ($departments as $key => $label) {
                         $checked = in_array($key, $active) ? ' checked' : '';
-                        $html .= '<label style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">'
+                        $html .= '<label class="pill-checkbox">'
                             . '<input type="checkbox" name="depts[]" value="' . $key . '"' . $checked . '>'
                             . '<span>' . htmlspecialchars($label) . '</span>'
                             . '</label>';
                     }
-                    return $html . '</div></div>';
+                    $html .= '</div><span class="form-hint" style="margin-top: 6px;">Select all academic departments this faculty belongs to.</span></div>';
+                    return $html;
                 },
             ],
-            ['name' => 'featured', 'label' => '', 'type' => 'check', 'full' => true, 'checkText' => 'Feature on Leadership / Highlights Header'],
+            ['name' => 'featured', 'label' => '', 'type' => 'switch', 'full' => true, 'checkText' => 'Feature on Leadership / Highlights Header'],
         ],
     ]);
 }

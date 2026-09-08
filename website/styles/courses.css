@@ -158,6 +158,15 @@
     flex-shrink: 0;
 }
 
+.course-spec-pill sup,
+.course-spec-row__value sup,
+.program-card__specs-row sup {
+    font-size: 0.72em;
+    vertical-align: super;
+    line-height: 0;
+    font-weight: 700;
+}
+
 
 /* ====================================================
    2. SINGLE COURSE DETAIL VIEW

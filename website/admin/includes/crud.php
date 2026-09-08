@@ -88,6 +88,24 @@ function crudFormPanel(array $cfg): void
     if (is_callable($hiddenHtml)) $hiddenHtml = $hiddenHtml($item);
 
     $title = $cfg['title']($item);
+    $previewType = $cfg['previewType'] ?? null;
+    if ($previewType === null) {
+        // Auto-detect preview type from base page filename
+        $base = basename($page, '.php');
+        $map = [
+            'faculties'    => 'faculty',
+            'courses'      => 'course',
+            'events'       => 'event',
+            'rankers'      => 'ranker',
+            'testimonials' => 'testimonial',
+            'labs'         => 'lab',
+            'gallery'      => 'gallery',
+            'magazines'    => 'magazine',
+            'scholarships' => 'scholarship',
+        ];
+        $previewType = $map[$base] ?? '';
+    }
+    $hasPreview = !empty($previewType) && $previewType !== 'none';
     ?>
     <div class="panel">
         <div class="panel-header">
@@ -95,7 +113,12 @@ function crudFormPanel(array $cfg): void
             <a href="<?= $page . $param ?>" class="btn btn-secondary btn-sm">← Back to List</a>
         </div>
         <div class="panel-body">
-            <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? $page) ?>"<?= $multipart ?>>
+            <?php if ($hasPreview): ?>
+            <div class="form-with-preview" data-live-preview="<?= htmlspecialchars($previewType) ?>">
+                <div class="form-fields-col">
+            <?php endif; ?>
+
+            <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? $page) ?>"<?= $multipart ?> id="crudAdminForm">
                 <?= csrfField() ?>
                 <input type="hidden" name="action" value="save">
                 <input type="hidden" name="id" value="<?= $item ? (int)$item['id'] : 0 ?>">
@@ -105,11 +128,30 @@ function crudFormPanel(array $cfg): void
                         <?= formField($field, $item) ?>
                     <?php endforeach; ?>
                 </div>
-                <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <div style="margin-top: 22px; display: flex; gap: 12px;">
                     <button type="submit" class="btn btn-primary"><?= $cfg['submitLabel'] ?></button>
                     <a href="<?= $page . $param ?>" class="btn btn-secondary">Cancel</a>
                 </div>
             </form>
+
+            <?php if ($hasPreview): ?>
+                </div>
+                <div class="live-preview-col">
+                    <div class="live-preview-sticky">
+                        <div class="live-preview-header">
+                            <div class="live-preview-title">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Live Visual Preview
+                            </div>
+                        </div>
+                        <div class="live-preview-stage" id="livePreviewContainer">
+                            <div style="color: var(--text-muted); font-size: 13px;">Generating live preview...</div>
+                        </div>
+                        <div class="live-preview-caption">Instant live preview of changes before saving</div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
     <?php
