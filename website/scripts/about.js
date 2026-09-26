@@ -8,65 +8,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ----------------------------------------------------
-    // 1. Animated Stats Counters (IntersectionObserver)
-    // ----------------------------------------------------
-    const counters = document.querySelectorAll("[data-target]");
-
-    function animateCount(element, duration = 2000) {
-        const targetString = element.getAttribute("data-target") || "0";
-        const isFloat = targetString.includes(".");
-        const percentSuffix = element.classList.contains("counter-section__pass-percentage");
-        const plusSuffix = element.classList.contains("counter-section__enrolled") ||
-                           element.classList.contains("counter-section__passouts");
-
-        const target = isFloat ? parseFloat(targetString) : parseInt(targetString, 10);
-        const decimalPlaces = isFloat ? (targetString.split(".")[1] || "").length : 0;
-        let startTime = null;
-
-        function easeOutQuad(t) {
-            return t * (2 - t);
-        }
-
-        function updateCount(timestamp) {
-            if (!startTime) startTime = timestamp;
-            const elapsed = timestamp - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easedProgress = easeOutQuad(progress);
-
-            if (progress < 1) {
-                const current = easedProgress * target;
-                element.textContent = isFloat ? current.toFixed(decimalPlaces) : Math.floor(current).toLocaleString();
-                requestAnimationFrame(updateCount);
-            } else {
-                element.textContent = isFloat ? target.toFixed(decimalPlaces) : target.toLocaleString();
-                if (plusSuffix) {
-                    element.textContent += "+";
-                }
-                if (percentSuffix) {
-                    element.textContent += "%";
-                }
-            }
-        }
-
-        requestAnimationFrame(updateCount);
-    }
-
-    if (counters.length > 0) {
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCount(entry.target, 2000);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        counters.forEach(counter => counterObserver.observe(counter));
-    }
-
-
-    // ----------------------------------------------------
-    // 2. Board of Trustees Responsive Carousel
+    // 1. Board of Trustees Responsive Carousel
     // ----------------------------------------------------
     const trusteeSlider = document.querySelector(".trustee-section__slider");
     const trusteeWrapper = document.getElementById("trusteeSliderWrapper");
@@ -236,34 +178,5 @@ document.addEventListener("DOMContentLoaded", () => {
         startAutoPlay();
     }
 
-
-    // ----------------------------------------------------
-    // 3. Back To Top Button Handler
-    // ----------------------------------------------------
-    const backToTopBtn = document.getElementById("backToTop");
-    const aboutHero = document.getElementById("about-hero");
-
-    function toggleBackToTop() {
-        if (!backToTopBtn) return;
-        const triggerPoint = aboutHero ? aboutHero.offsetHeight * 0.6 : 300;
-
-        if (window.scrollY > triggerPoint) {
-            backToTopBtn.classList.add("is-visible");
-        } else {
-            backToTopBtn.classList.remove("is-visible");
-        }
-    }
-
-    window.addEventListener("scroll", toggleBackToTop, { passive: true });
-    toggleBackToTop();
-
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
 
 });

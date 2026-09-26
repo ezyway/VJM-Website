@@ -181,6 +181,8 @@
      =================================================== -->
 <script src='scripts/bg_particles.js?v=<?= filemtime('scripts/bg_particles.js') ?>' defer></script>
 <script src='scripts/nav.js?v=<?= filemtime('scripts/nav.js') ?>' defer></script>
+<script src='scripts/back_to_top.js?v=<?= filemtime('scripts/back_to_top.js') ?>' defer></script>
+<script src='scripts/counter_animate.js?v=<?= filemtime('scripts/counter_animate.js') ?>' defer></script>
 <?php
     $path = "scripts/".$currentFileName.".js";
     if(file_exists($path)){

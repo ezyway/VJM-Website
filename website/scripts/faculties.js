@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentDept = "all";
     let currentQuery = "";
-    let isTransitioning = false;
 
     /**
      * Filter and smoothly animate faculty cards
@@ -76,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
      * Set active department tab
      */
     function setActiveDepartment(deptKey) {
-        if (isTransitioning && currentDept === deptKey) return;
+        if (currentDept === deptKey) return;
         currentDept = deptKey;
 
         tabButtons.forEach(btn => {
@@ -157,34 +156,5 @@ document.addEventListener("DOMContentLoaded", () => {
         filterFaculties();
     }
 
-
-    // ----------------------------------------------------
-    // Back To Top Button Handler
-    // ----------------------------------------------------
-    const backToTopBtn = document.getElementById("backToTop");
-    const facultiesHero = document.getElementById("faculties-hero");
-
-    function toggleBackToTop() {
-        if (!backToTopBtn) return;
-        const triggerPoint = facultiesHero ? facultiesHero.offsetHeight * 0.6 : 300;
-
-        if (window.scrollY > triggerPoint) {
-            backToTopBtn.classList.add("is-visible");
-        } else {
-            backToTopBtn.classList.remove("is-visible");
-        }
-    }
-
-    window.addEventListener("scroll", toggleBackToTop, { passive: true });
-    toggleBackToTop();
-
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
 
 });

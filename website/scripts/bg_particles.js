@@ -214,8 +214,33 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
+    let rafId = null;
+
+    function cleanup() {
+        window.removeEventListener("resize", resize);
+        window.removeEventListener("pointermove", onPointer);
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+    }
+
+    function onVisibilityChange() {
+        if (document.hidden) {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+        } else {
+            if (!rafId) {
+                rafId = requestAnimationFrame(draw);
+            }
+        }
+    }
+
     function draw(time) {
-        requestAnimationFrame(draw);
+        rafId = requestAnimationFrame(draw);
         if (document.hidden) return;
 
         const t = time / 1000;
@@ -261,11 +286,12 @@
         window.addEventListener("resize", resize, { passive: true });
         // pointermove covers mouse, pen and touch-drag in one listener
         window.addEventListener("pointermove", onPointer, { passive: true });
+        document.addEventListener("visibilitychange", onVisibilityChange);
 
         // Rest at the centre of the viewport until the pointer first moves
         target.x = blobPos.x = width / 2;
         target.y = blobPos.y = height / 2;
-        requestAnimationFrame(draw);
+        rafId = requestAnimationFrame(draw);
     }
 
     if (document.readyState === "loading") {
