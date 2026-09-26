@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="login-card">
     <div class="login-header">
-        <img src="../assets/logo.ico" alt="Logo" class="login-logo">
+        <img src="../assets/logo.ico" alt="Logo" class="login-logo" loading="lazy">
         <h1 class="login-title">VJM College Admin</h1>
         <p class="login-subtitle">Content Management &amp; Administration</p>
     </div>

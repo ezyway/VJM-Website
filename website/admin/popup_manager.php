@@ -305,7 +305,7 @@ if ($editItem || $isCreate) {
                     <div style="margin-top: 10px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
                         <img id="popupImagePreview" class="preview-thumbnail" 
                              src="<?= $itemImage !== '' ? '../' . htmlspecialchars($itemImage) : '' ?>" 
-                             alt="Popup banner" 
+                             alt="Popup banner" loading="lazy"
                              style="width: 140px; height: 60px; object-fit: cover; border-radius: var(--radius-md); <?= $itemImage === '' ? 'display: none;' : '' ?>">
                         <?php if ($itemImage !== ''): ?>
                             <label style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer;">
@@ -494,7 +494,7 @@ if ($editItem || $isCreate) {
             var src = (rawImg.startsWith('data:') || rawImg.startsWith('http://') || rawImg.startsWith('https://'))
                 ? rawImg
                 : ('../' + escapeHtml(rawImg.replace(/^\/+/, '')));
-            html += '<img class="vjm-pop-media-preview" src="' + src + '" alt="" onerror="this.style.display=\'none\'">';
+            html += '<img class="vjm-pop-media-preview" src="' + src + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">';
         }
 
         html += '<button class="vjm-pop-close-preview" type="button" aria-label="Close"></button>';
@@ -707,7 +707,7 @@ if (isset($popups[$activeHomepageId])) {
                                 </td>
                                 <td>
                                     <?php if ($hasImage): ?>
-                                        <img src="../<?= htmlspecialchars($popup['image']) ?>" alt="Banner" style="width: 48px; height: 28px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);" onerror="this.style.display='none'">
+                                        <img src="../<?= htmlspecialchars($popup['image']) ?>" alt="Banner" loading="lazy" style="width: 48px; height: 28px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);" onerror="this.style.display='none'">
                                     <?php else: ?>
                                         <span style="color: var(--text-muted); font-size: 12px;">—</span>
                                     <?php endif; ?>

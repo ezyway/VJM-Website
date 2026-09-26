@@ -64,7 +64,7 @@ $image = trim($vjmPopup['image'] ?? '');
 <div class="vjm-pop-overlay" id="vjmPopOverlay" role="dialog" aria-modal="true" aria-labelledby="vjmPopTitle" hidden>
     <div class="vjm-pop-card" id="vjmPopCard">
         <?php if ($image !== ''): ?>
-            <img class="vjm-pop-media" id="vjmPopMedia" src="<?= htmlspecialchars($image) ?>" alt="">
+            <img class="vjm-pop-media" id="vjmPopMedia" src="<?= htmlspecialchars($image) ?>" alt="" loading="lazy">
         <?php endif; ?>
         <button class="vjm-pop-close" id="vjmPopClose" type="button" aria-label="Close announcement"></button>
         <div class="vjm-pop-body">

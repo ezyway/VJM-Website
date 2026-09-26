@@ -549,7 +549,7 @@ $htaccessProtected = file_exists($htaccessDbPath);
                         <label class="form-label">Optional Banner Image (top of popup)</label>
                         <input type="file" name="image" class="form-control image-preview-input" data-preview-target="popupImagePreview" accept="image/*">
                         <div style="margin-top: 8px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                            <img id="popupImagePreview" class="popup-image-preview" src="<?= $popImage !== '' ? '../' . htmlspecialchars($popImage) : '' ?>" alt="Popup banner preview" <?= $popImage === '' ? 'hidden' : '' ?> style="width: 140px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <img id="popupImagePreview" class="popup-image-preview" src="<?= $popImage !== '' ? '../' . htmlspecialchars($popImage) : '' ?>" alt="Popup banner preview" <?= $popImage === '' ? 'hidden' : '' ?> style="width: 140px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color);" loading="lazy">
                             <?php if ($popImage !== ''): ?>
                                 <label style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer;">
                                     <input type="checkbox" name="remove_image" value="1"> Remove current image

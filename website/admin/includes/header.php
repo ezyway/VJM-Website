@@ -62,7 +62,7 @@ $navItems = [
     <!-- Sidebar Navigation -->
     <aside class="admin-sidebar">
         <div class="sidebar-header">
-            <img src="../assets/logo.ico" alt="Logo" class="sidebar-logo">
+            <img src="../assets/logo.ico" alt="Logo" class="sidebar-logo" loading="lazy">
             <div>
                 <div class="sidebar-title">VJM College</div>
                 <div class="sidebar-subtitle">CMS Administration</div>

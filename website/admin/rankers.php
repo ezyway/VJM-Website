@@ -120,7 +120,7 @@ crudListPanel([
         [
             'th' => 'Student',
             'td' => fn($r) => '<div style="display: flex; align-items: center; gap: 12px;">'
-                . '<img src="../' . htmlspecialchars($r['image'] ?: 'assets/logo.ico') . '" alt="" class="preview-avatar" onerror="this.src=\'../assets/logo.ico\'">'
+                . '<img src="../' . htmlspecialchars($r['image'] ?: 'assets/logo.ico') . '" alt="" class="preview-avatar" loading="lazy" onerror="this.src=\'../assets/logo.ico\'">'
                 . '<strong style="color: var(--text-main); font-size: 13.5px;">' . htmlspecialchars($r['name']) . '</strong>'
                 . '</div>',
         ],

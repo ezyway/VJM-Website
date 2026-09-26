@@ -250,7 +250,7 @@ function formField(array $f, ?array $item): string
         $imgPath = is_callable($p['img'] ?? null) ? $p['img']($item) : ($p['img'] ?? 'assets/logo.ico');
         $hint = $p['hint'] ?? 'Upload JPG, PNG or WebP image.';
         $html .= '<div style="margin-top: 8px; display: flex; align-items: center; gap: 12px;">'
-            . '<img id="' . htmlspecialchars($p['id'] ?? '') . '" class="preview-avatar" src="../' . htmlspecialchars($imgPath) . '" onerror="this.src=\'../assets/logo.ico\'">'
+            . '<img id="' . htmlspecialchars($p['id'] ?? '') . '" class="preview-avatar" src="../' . htmlspecialchars($imgPath) . '" loading="lazy" onerror="this.src=\'../assets/logo.ico\'">'
             . '<span class="form-hint">' . $hint . '</span>'
             . '</div>';
     }

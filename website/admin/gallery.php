@@ -391,7 +391,7 @@ $albums = $db->query('
                             </td>
                             <td><span class="badge badge-secondary order-badge">#<?= (int)$a['sort_order'] ?></span></td>
                             <td>
-                                <img src="../<?= htmlspecialchars($a['cover_image'] ?: 'assets/logo.ico') ?>" alt="" class="preview-thumbnail" onerror="this.src='../assets/logo.ico'">
+                                <img src="../<?= htmlspecialchars($a['cover_image'] ?: 'assets/logo.ico') ?>" alt="" class="preview-thumbnail" loading="lazy" onerror="this.src='../assets/logo.ico'">
                             </td>
                             <td>
                                 <strong style="color: var(--text-main); font-size: 13.5px;"><?= htmlspecialchars($a['title']) ?></strong>
