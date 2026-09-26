@@ -4,125 +4,6 @@
    ==================================================== */
 
 /* ====================================================
-   1. HERO HEADER BANNER
-   ==================================================== */
-
-.contact-hero {
-    position: relative;
-    width: 100%;
-    min-height: 480px;
-    padding: 10.5rem 1.5rem 4.5rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(10, 55, 46, 0.88) 0%, rgba(7, 29, 24, 0.92) 100%);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    overflow: hidden;
-    box-sizing: border-box;
-}
-
-.contact-hero__overlay {
-    position: relative;
-    z-index: 2;
-    max-width: 960px;
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.contact-hero__content {
-    background: rgba(10, 42, 36, 0.65);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: var(--radius-lg);
-    padding: 3rem 2.5rem;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
-    animation: heroFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes heroFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.contact-hero__breadcrumb {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 1.25rem;
-}
-
-.contact-hero__breadcrumb a {
-    color: #FDE68A;
-    text-decoration: none;
-    transition: color var(--transition-fast);
-}
-
-.contact-hero__breadcrumb a:hover {
-    color: #FFFFFF;
-    text-decoration: underline;
-}
-
-.contact-hero__breadcrumb-sep {
-    opacity: 0.4;
-}
-
-.contact-hero__badge {
-    display: inline-block;
-    padding: 5px 16px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: #FDE68A;
-    background: rgba(217, 119, 6, 0.2);
-    border: 1px solid rgba(251, 191, 36, 0.35);
-    border-radius: var(--radius-full);
-    margin-bottom: 1rem;
-}
-
-.contact-hero__title {
-    font-size: 2.65rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-    color: #FFFFFF;
-    margin-bottom: 0.75rem;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-
-.contact-hero__slogan {
-    font-size: 1.45rem;
-    font-weight: 700;
-    color: #FDE047;
-    margin-bottom: 1.25rem;
-    letter-spacing: 0.8px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-}
-
-.contact-hero__subtitle {
-    font-size: 1.05rem;
-    color: #E2E8F0;
-    font-weight: 400;
-    max-width: 680px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
-
-/* ====================================================
    2. MAIN CONTACT SECTION & GRID
    ==================================================== */
 
@@ -186,6 +67,14 @@
     color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 1.5rem;
+}
+
+.contact-card__title--compact {
+    margin-bottom: 0.2rem;
+}
+
+.contact-card__desc--compact {
+    margin-bottom: 0;
 }
 
 /* Channels List */
