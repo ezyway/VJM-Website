@@ -87,25 +87,20 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="emag-hero" id="emag-hero">
-        <div class="emag-hero__overlay">
-            <div class="emag-hero__content">
-                <nav class="emag-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="emag-hero__breadcrumb-sep">/</span>
-                    <span>More</span>
-                    <span class="emag-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">E-Magazine</span>
-                </nav>
-                <span class="emag-hero__badge">Annual Publications &amp; Creative Expressions</span>
-                <h1 class="emag-hero__title">College E-Magazines</h1>
-                <p class="emag-hero__slogan">॥ साहित्य संगीत कला विहीनः ॥</p>
-                <p class="emag-hero__subtitle">
-                    A vibrant chronicle showcasing student literature, original artwork, faculty articles, event photo retrospectives, and academic achievements.
-                </p>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => 'College E-Magazines',
+        'badge' => 'Annual Publications & Creative Expressions',
+        'slogan' => '॥ साहित्य संगीत कला विहीनः ॥',
+        'subtitle' => 'A vibrant chronicle showcasing student literature, original artwork, faculty articles, event photo retrospectives, and academic achievements.',
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'More', 'url' => null],
+            ['label' => 'E-Magazine', 'current' => true],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -168,21 +163,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="emag-cta" id="cta">
-        <div class="emag-cta__container">
-            <div class="emag-cta__box">
-                <span class="emag-cta__badge">Student Editorial Board</span>
-                <h2 class="emag-cta__title">Submit Your Creative Work</h2>
-                <p class="emag-cta__subtitle">
-                    Students and faculty are invited to contribute articles, poems, technology research, and artwork for the upcoming edition.
-                </p>
-                <div class="emag-cta__actions">
-                    <a href="contact.php" class="btn btn--primary">Contact Editorial Team</a>
-                    <a href="gallery.php" class="btn btn--secondary">View Photo Gallery</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Student Editorial Board',
+        'title' => 'Submit Your Creative Work',
+        'subtitle' => 'Students and faculty are invited to contribute articles, poems, technology research, and artwork for the upcoming edition.',
+        'actions' => [
+            ['label' => 'Contact Editorial Team', 'url' => 'contact.php', 'class' => 'btn--primary'],
+            ['label' => 'View Photo Gallery', 'url' => 'gallery.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->

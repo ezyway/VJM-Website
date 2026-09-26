@@ -176,25 +176,20 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="gallery-hero" id="gallery-hero">
-        <div class="gallery-hero__overlay">
-            <div class="gallery-hero__content">
-                <nav class="gallery-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="gallery-hero__breadcrumb-sep">/</span>
-                    <span>Facilities</span>
-                    <span class="gallery-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Photo Gallery</span>
-                </nav>
-                <span class="gallery-hero__badge">Campus Life &amp; Events</span>
-                <h1 class="gallery-hero__title">Our Photo Gallery</h1>
-                <p class="gallery-hero__slogan">॥ स्मरणीयाः सुखदाः क्षणाः ॥</p>
-                <p class="gallery-hero__subtitle">
-                    Immerse yourself in the vibrant student life, state-of-the-art campus amenities, festive celebrations, and academic milestones at Shri V. J. Modha College.
-                </p>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => 'Our Photo Gallery',
+        'badge' => 'Campus Life & Events',
+        'slogan' => '॥ स्मरणीयाः सुखदाः क्षणाः ॥',
+        'subtitle' => 'Immerse yourself in the vibrant student life, state-of-the-art campus amenities, festive celebrations, and academic milestones at Shri V. J. Modha College.',
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'Facilities', 'url' => null],
+            ['label' => 'Photo Gallery', 'current' => true],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -311,7 +306,7 @@
                 </button>
 
                 <div class="gallery-modal__image-wrapper">
-                    <img id="modalMainImage" src="" alt="Album photo" class="gallery-modal__main-image" />
+                    <img id="modalMainImage" src="" alt="Album photo" class="gallery-modal__main-image" loading="lazy" />
                     <div id="modalLoadingSpinner" class="gallery-modal__spinner" style="display: none;"></div>
                 </div>
 
@@ -338,21 +333,18 @@
     <!-- ===================================================
          4. Reusable Call to Action
          =================================================== -->
-    <section class="gallery-cta" id="cta">
-        <div class="gallery-cta__container">
-            <div class="gallery-cta__box">
-                <span class="gallery-cta__badge">Experience Campus Life</span>
-                <h2 class="gallery-cta__title">Want to Experience Our Vibrant Campus?</h2>
-                <p class="gallery-cta__subtitle">
-                    Schedule a campus tour or connect with our admissions counselors to learn more about our thriving student community.
-                </p>
-                <div class="gallery-cta__actions">
-                    <a href="contact.php" class="btn btn--primary">Schedule a Campus Visit</a>
-                    <a href="about.php" class="btn btn--secondary">About Our Campus</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Experience Campus Life',
+        'title' => 'Want to Experience Our Vibrant Campus?',
+        'subtitle' => 'Schedule a campus tour or connect with our admissions counselors to learn more about our thriving student community.',
+        'actions' => [
+            ['label' => 'Schedule a Campus Visit', 'url' => 'contact.php', 'class' => 'btn--primary'],
+            ['label' => 'About Our Campus', 'url' => 'about.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->

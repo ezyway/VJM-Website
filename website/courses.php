@@ -158,38 +158,25 @@
     <div id="courseDetailView" class="course-view-wrapper" style="<?= $isSingleCourse ? '' : 'display: none;' ?>">
         
         <!-- Hero Header -->
-        <header class="course-hero" id="course-hero">
-            <div class="course-hero__overlay">
-                <div class="course-hero__content">
-                    <nav class="course-hero__breadcrumb" aria-label="Breadcrumb">
-                        <a href="index.php">Home</a>
-                        <span class="course-hero__breadcrumb-sep">/</span>
-                        <a href="courses.php" class="breadcrumb-all-courses" data-course="all">Courses</a>
-                        <span class="course-hero__breadcrumb-sep">/</span>
-                        <span id="courseHeroBreadcrumb" aria-current="page"><?= htmlspecialchars($initialMeta['code']) ?></span>
-                    </nav>
-                    <span id="courseHeroBadge" class="course-hero__badge"><?= htmlspecialchars($initialMeta['level']) ?> • <?= htmlspecialchars($initialMeta['dept']) ?></span>
-                    <h1 id="courseHeroTitle" class="course-hero__title"><?= htmlspecialchars($initialTitle) ?> (<?= htmlspecialchars($initialMeta['code']) ?>)</h1>
-                    <p class="course-hero__slogan">॥ विद्यार्थी लभते विद्यां ॥</p>
-                    
-                    <!-- Quick Pill Specs in Hero -->
-                    <div class="course-hero__specs">
-                        <div class="course-spec-pill">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span><strong>Duration:</strong> <span id="courseHeroDuration"><?= htmlspecialchars($initialFaq[2] ?? $initialMeta['duration']) ?></span></span>
-                        </div>
-                        <div class="course-spec-pill">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                            <span><strong>Medium:</strong> <span id="courseHeroMedium"><?= htmlspecialchars(strip_tags($initialFaq[1] ?? $initialMeta['medium'])) ?></span></span>
-                        </div>
-                        <div class="course-spec-pill">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                            <span><strong>Eligibility:</strong> <span id="courseHeroEligibility"><?= strip_tags($initialFaq[0] ?? '12<sup>th</sup> Pass', '<sup>') ?></span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+<?php
+$hero = [
+    'title' => htmlspecialchars($initialTitle) . ' (' . htmlspecialchars($initialMeta['code']) . ')',
+    'badge' => htmlspecialchars($initialMeta['level']) . ' • ' . htmlspecialchars($initialMeta['dept']),
+    'slogan' => '॥ विद्यार्थी लभते विद्यां ॥',
+    'subtitle' => '',
+    'breadcrumb' => [
+        ['label' => 'Home', 'url' => 'index.php'],
+        ['label' => 'Courses', 'url' => 'courses.php'],
+        ['label' => htmlspecialchars($initialMeta['code']), 'current' => true],
+    ],
+    'specs' => [
+        ['icon' => 'clock', 'label' => 'Duration:', 'value' => htmlspecialchars($initialFaq[2] ?? $initialMeta['duration'])],
+        ['icon' => 'book', 'label' => 'Medium:', 'value' => htmlspecialchars(strip_tags($initialFaq[1] ?? $initialMeta['medium']))],
+        ['icon' => 'graduation', 'label' => 'Eligibility:', 'value' => strip_tags($initialFaq[0] ?? '12<sup>th</sup> Pass', '<sup>')],
+    ],
+];
+include('components/hero.php');
+?>
 
         <!-- Main Detail Section -->
         <main class="course-detail-section" id="course-main">
@@ -362,23 +349,19 @@
          =================================================== -->
     <div id="coursesDirectoryView" class="course-view-wrapper" style="<?= $isSingleCourse ? 'display: none;' : '' ?>">
 
-        <header class="courses-hero" id="courses-hero">
-            <div class="courses-hero__overlay">
-                <div class="courses-hero__content">
-                    <nav class="courses-hero__breadcrumb" aria-label="Breadcrumb">
-                        <a href="index.php">Home</a>
-                        <span class="courses-hero__breadcrumb-sep">/</span>
-                        <span aria-current="page">Courses</span>
-                    </nav>
-                    <span class="courses-hero__badge">Academic Offerings • Shri V. J. Modha College</span>
-                    <h1 class="courses-hero__title">Our Academic Programs</h1>
-                    <p class="courses-hero__slogan">॥ विद्यार्थी लभते विद्यां ॥</p>
-                    <p class="courses-hero__subtitle">
-                        Explore industry-aligned undergraduate and postgraduate degree courses designed to foster critical thinking, technological excellence, and career success.
-                    </p>
-                </div>
-            </div>
-        </header>
+<?php
+$heroDir = [
+    'title' => 'Our Academic Programs',
+    'badge' => 'Academic Offerings • Shri V. J. Modha College',
+    'slogan' => '॥ विद्यार्थी लभते विद्यां ॥',
+    'subtitle' => 'Explore industry-aligned undergraduate and postgraduate degree courses designed to foster critical thinking, technological excellence, and career success.',
+    'breadcrumb' => [
+        ['label' => 'Home', 'url' => 'index.php'],
+        ['label' => 'Courses', 'current' => true],
+    ],
+];
+include('components/hero.php');
+?>
 
         <main class="courses-directory-section" id="courses-directory">
             <div class="courses-directory__container">
@@ -504,21 +487,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="courses-cta" id="cta">
-        <div class="courses-cta__container">
-            <div class="courses-cta__box">
-                <span class="courses-cta__badge">Admissions Open</span>
-                <h2 class="courses-cta__title">Start Your Academic Journey Today</h2>
-                <p class="courses-cta__subtitle">
-                    Need guidance choosing the right course? Reach out to our academic counseling desk.
-                </p>
-                <div class="courses-cta__actions">
-                    <a href="contact.php" class="btn btn--primary">Get in Touch</a>
-                    <a href="about.php" class="btn btn--secondary">About Our Campus</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<?php
+$cta = [
+    'badge' => 'Admissions Open',
+    'title' => 'Start Your Academic Journey Today',
+    'subtitle' => 'Need guidance choosing the right course? Reach out to our academic counseling desk.',
+    'actions' => [
+        ['label' => 'Get in Touch', 'url' => 'contact.php', 'class' => 'btn--primary'],
+        ['label' => 'About Our Campus', 'url' => 'about.php', 'class' => 'btn--secondary'],
+    ],
+];
+include('components/cta.php');
+?>
 
 
     <!-- Back to Top Button -->

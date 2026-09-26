@@ -502,23 +502,19 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="faculties-hero" id="faculties-hero">
-        <div class="faculties-hero__overlay">
-            <div class="faculties-hero__content">
-                <nav class="faculties-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="faculties-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Faculties</span>
-                </nav>
-                <span class="faculties-hero__badge">Academic Mentors • Shri V. J. Modha College</span>
-                <h1 class="faculties-hero__title">Our Esteemed Faculty</h1>
-                <p class="faculties-hero__slogan">॥ विद्या विनयेन शोभते ॥</p>
-                <p class="faculties-hero__subtitle">
-                    Dedicated educators, industry specialists, and researchers shaping competent young professionals across IT, Commerce, Sciences, and Management.
-                </p>
-            </div>
-        </div>
-    </header>
+<?php
+$hero = [
+    'title' => 'Our Esteemed Faculty',
+    'badge' => 'Academic Mentors • Shri V. J. Modha College',
+    'slogan' => '॥ विद्या विनयेन शोभते ॥',
+    'subtitle' => 'Dedicated educators, industry specialists, and researchers shaping competent young professionals across IT, Commerce, Sciences, and Management.',
+    'breadcrumb' => [
+        ['label' => 'Home', 'url' => 'index.php'],
+        ['label' => 'Faculties', 'current' => true],
+    ],
+];
+include('components/hero.php');
+?>
 
 
     <!-- ===================================================
@@ -606,21 +602,18 @@
     <!-- ===================================================
          3. Call to Action Banner
          =================================================== -->
-    <section class="faculties-cta" id="cta">
-        <div class="faculties-cta__container">
-            <div class="faculties-cta__box">
-                <span class="faculties-cta__badge">Learn With Experts</span>
-                <h2 class="faculties-cta__title">Empowering Your Academic Journey</h2>
-                <p class="faculties-cta__subtitle">
-                    Experience personalized mentorship and high-standard curricula at Shri V. J. Modha College.
-                </p>
-                <div class="faculties-cta__actions">
-                    <a href="courses.php" class="btn btn--primary">Explore Programs</a>
-                    <a href="contact.php" class="btn btn--secondary">Connect With Us</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<?php
+$cta = [
+    'badge' => 'Learn With Experts',
+    'title' => 'Empowering Your Academic Journey',
+    'subtitle' => 'Experience personalized mentorship and high-standard curricula at Shri V. J. Modha College.',
+    'actions' => [
+        ['label' => 'Explore Programs', 'url' => 'courses.php', 'class' => 'btn--primary'],
+        ['label' => 'Connect With Us', 'url' => 'contact.php', 'class' => 'btn--secondary'],
+    ],
+];
+include('components/cta.php');
+?>
 
 
     <!-- Back to Top Button -->

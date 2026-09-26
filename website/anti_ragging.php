@@ -63,25 +63,20 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="anti-ragging-hero" id="anti-ragging-hero">
-        <div class="anti-ragging-hero__overlay">
-            <div class="anti-ragging-hero__content">
-                <nav class="anti-ragging-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="anti-ragging-hero__breadcrumb-sep">/</span>
-                    <span>More</span>
-                    <span class="anti-ragging-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Anti-Ragging</span>
-                </nav>
-                <span class="anti-ragging-hero__badge">Campus Discipline &amp; Student Safety</span>
-                <h1 class="anti-ragging-hero__title">Anti-Ragging Committee</h1>
-                <p class="anti-ragging-hero__slogan">॥ अहिंसा परमो धर्मः ॥</p>
-                <p class="anti-ragging-hero__subtitle">
-                    Shri V. J. Modha College maintains a strict Zero-Tolerance Policy against ragging in any form, ensuring a safe, supportive, and dignified educational atmosphere.
-                </p>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => 'Anti-Ragging Committee',
+        'badge' => 'Campus Discipline & Student Safety',
+        'slogan' => '॥ अहिंसा परमो धर्मः ॥',
+        'subtitle' => 'Shri V. J. Modha College maintains a strict Zero-Tolerance Policy against ragging in any form, ensuring a safe, supportive, and dignified educational atmosphere.',
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'More', 'url' => null],
+            ['label' => 'Anti-Ragging', 'current' => true],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -159,21 +154,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="anti-ragging-cta" id="cta">
-        <div class="anti-ragging-cta__container">
-            <div class="anti-ragging-cta__box">
-                <span class="anti-ragging-cta__badge">Confidential Assistance</span>
-                <h2 class="anti-ragging-cta__title">Report a Concern or Seek Guidance</h2>
-                <p class="anti-ragging-cta__subtitle">
-                    Students can submit grievances in person or connect directly with college authorities with complete confidentiality.
-                </p>
-                <div class="anti-ragging-cta__actions">
-                    <a href="contact.php" class="btn btn--primary">Contact College Administration</a>
-                    <a href="about.php" class="btn btn--secondary">About Our Institution</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Confidential Assistance',
+        'title' => 'Report a Concern or Seek Guidance',
+        'subtitle' => 'Students can submit grievances in person or connect directly with college authorities with complete confidentiality.',
+        'actions' => [
+            ['label' => 'Contact College Administration', 'url' => 'contact.php', 'class' => 'btn--primary'],
+            ['label' => 'About Our Institution', 'url' => 'about.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->
