@@ -79,7 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Update button states
             if (prevBtn && nextBtn) {
-                prevBtn.disabled = currentIndex === 0 && maxIndex > 0 ? false : false; // Allow loop or enable
+                prevBtn.disabled = false;
+                nextBtn.disabled = false;
             }
 
             updateDots();

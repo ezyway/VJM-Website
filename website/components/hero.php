@@ -48,7 +48,7 @@ $hero = array_merge($hero_defaults, $hero ?? []);
                     <?php if (!empty($crumb['url'])): ?>
                         <a href="<?= htmlspecialchars($crumb['url']) ?>"><?= htmlspecialchars($crumb['label']) ?></a>
                     <?php elseif (isset($crumb['current']) && $crumb['current']): ?>
-                        <span aria-current="page"><?= htmlspecialchars($crumb['label']) ?></span>
+                        <span aria-current="page" id="heroBreadcrumbCurrent"><?= htmlspecialchars($crumb['label']) ?></span>
                     <?php else: ?>
                         <span><?= htmlspecialchars($crumb['label']) ?></span>
                     <?php endif; ?>
@@ -57,11 +57,11 @@ $hero = array_merge($hero_defaults, $hero ?? []);
             <?php endif; ?>
 
             <?php if (!empty($hero['badge'])): ?>
-                <span class="page-hero__badge"><?= htmlspecialchars($hero['badge']) ?></span>
+                <span class="page-hero__badge" id="heroBadge"><?= htmlspecialchars($hero['badge']) ?></span>
             <?php endif; ?>
 
             <?php if (!empty($hero['title'])): ?>
-                <h1 class="page-hero__title"><?= htmlspecialchars($hero['title']) ?></h1>
+                <h1 class="page-hero__title" id="heroTitle"><?= htmlspecialchars($hero['title']) ?></h1>
             <?php endif; ?>
 
             <?php if (!empty($hero['slogan'])): ?>
@@ -69,7 +69,7 @@ $hero = array_merge($hero_defaults, $hero ?? []);
             <?php endif; ?>
 
             <?php if (!empty($hero['subtitle'])): ?>
-                <p class="page-hero__subtitle"><?= htmlspecialchars($hero['subtitle']) ?></p>
+                <p class="page-hero__subtitle" id="heroSubtitle"><?= htmlspecialchars($hero['subtitle']) ?></p>
             <?php endif; ?>
 
             <?php if (!empty($hero['metrics'])): ?>

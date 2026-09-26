@@ -144,10 +144,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     const chip = document.createElement("div");
                     chip.className = "job-role-chip";
                     chip.style.animation = `facultyCardPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${Math.min(idx * 30, 200)}ms forwards`;
-                    chip.innerHTML = `
-                        <div class="job-role-chip__bullet"></div>
-                        <span>${role}</span>
-                    `;
+                    const bullet = document.createElement('div');
+                    bullet.className = 'job-role-chip__bullet';
+                    const span = document.createElement('span');
+                    span.textContent = role;
+                    chip.innerHTML = '';
+                    chip.appendChild(bullet);
+                    chip.appendChild(span);
                     jobRolesGrid.appendChild(chip);
                 });
             }

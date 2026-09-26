@@ -123,7 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     btn.type = "button";
                     btn.className = `lab-thumb-btn ${idx === 0 ? 'is-active' : ''}`;
                     btn.setAttribute("data-index", idx);
-                    btn.innerHTML = `<img src="${src}" alt="Lab photo thumbnail ${idx + 1}" loading="lazy" />`;
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = `Lab photo thumbnail ${idx + 1}`;
+                    img.loading = 'lazy';
+                    btn.appendChild(img);
                     btn.addEventListener("click", () => updatePhoto(idx));
                     thumbnailsStrip.appendChild(btn);
                 });
@@ -141,12 +145,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     const item = document.createElement("div");
                     item.className = "lab-feature-item";
                     item.style.animation = `facultyCardPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 30}ms forwards`;
-                    item.innerHTML = `
-                        <div class="lab-feature-icon">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        </div>
-                        <span>${feat}</span>
-                    `;
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'lab-feature-icon';
+                    iconDiv.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                    const span = document.createElement('span');
+                    span.textContent = feat;
+                    item.appendChild(iconDiv);
+                    item.appendChild(span);
                     featuresList.appendChild(item);
                 });
             }
@@ -157,10 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 Object.entries(lab.specs).forEach(([label, val]) => {
                     const box = document.createElement("div");
                     box.className = "lab-spec-box";
-                    box.innerHTML = `
-                        <span class="lab-spec-box__label">${label}</span>
-                        <strong class="lab-spec-box__value">${val}</strong>
-                    `;
+                    const labelSpan = document.createElement('span');
+                    labelSpan.className = 'lab-spec-box__label';
+                    labelSpan.textContent = label;
+                    const valueStrong = document.createElement('strong');
+                    valueStrong.className = 'lab-spec-box__value';
+                    valueStrong.textContent = val;
+                    box.appendChild(labelSpan);
+                    box.appendChild(valueStrong);
                     specsGrid.appendChild(box);
                 });
             }
