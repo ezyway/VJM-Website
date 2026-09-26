@@ -93,15 +93,15 @@ try {
     $db = getDB();
     $db->beginTransaction();
 
-    $check = $db->prepare("SELECT COUNT(*) FROM {$table} WHERE id = :id");
+    // Fetch all valid IDs in one query before the loop
+    $validIds = $db->query("SELECT id FROM {$table}")->fetchAll(PDO::FETCH_COLUMN);
+    $validIdSet = array_flip($validIds);
 
     $update = $db->prepare("UPDATE {$table} SET sort_order = :so WHERE id = :id");
 
     $position = 1;
     foreach ($ids as $id) {
-        $check->execute([':id' => $id]);
-        if (!$check->fetchColumn()) {
-            // ID does not exist for this table; skip silently
+        if (!isset($validIdSet[$id])) {
             continue;
         }
         $update->execute([':so' => $position, ':id' => $id]);

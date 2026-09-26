@@ -17,7 +17,7 @@ $error = '';
 $username = '';
 
 // Check login attempt throttling
-$clientIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 $ipHash = substr(md5($clientIp), 0, 12);
 $rateKey = "login_throttle_{$ipHash}";
 $throttleData = json_decode(getSetting($rateKey, '{}'), true);

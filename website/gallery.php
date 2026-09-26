@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . '/admin/includes/db.php';
+    if (session_status() === PHP_SESSION_NONE) session_start();
     $galleryDir = 'assets/photos/gallery';
     
     function getImageURLs($folderPath) {
@@ -22,10 +23,13 @@
         $db = getDB();
         $dbAlbums = $db->query('SELECT * FROM gallery_albums ORDER BY sort_order ASC, id ASC')->fetchAll();
         if (!empty($dbAlbums)) {
-            $stmtPhotos = $db->prepare('SELECT image_path FROM gallery_photos WHERE album_id = :aid ORDER BY sort_order ASC, id ASC');
+            $allPhotos = $db->query('SELECT album_id, image_path FROM gallery_photos ORDER BY sort_order ASC, id ASC')->fetchAll();
+            $photosByAlbum = [];
+            foreach ($allPhotos as $photo) {
+                $photosByAlbum[$photo['album_id']][] = $photo['image_path'];
+            }
             foreach ($dbAlbums as $alb) {
-                $stmtPhotos->execute([':aid' => $alb['id']]);
-                $photos = $stmtPhotos->fetchAll(PDO::FETCH_COLUMN);
+                $photos = $photosByAlbum[$alb['id']] ?? [];
 
                 // Fallback to disk scan if no photos in DB yet
                 if (empty($photos)) {
@@ -121,6 +125,14 @@
 
     // AJAX endpoint support
     if (isset($_GET['album']) && isset($_GET['action']) && $_GET['action'] === 'json') {
+        // Simple rate limiting per session
+        $lastGalleryAjax = $_SESSION['last_gallery_ajax'] ?? 0;
+        if (time() - $lastGalleryAjax < 1) {
+            http_response_code(429);
+            exit;
+        }
+        $_SESSION['last_gallery_ajax'] = time();
+
         $album = basename($_GET['album']);
         $path = "$galleryDir/$album";
         if (is_dir($path)) {

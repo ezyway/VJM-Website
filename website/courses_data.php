@@ -128,7 +128,7 @@
 				"4 Years",
 				"7 to 8",
 				"MSc. IT / MCA",
-				"English: Morning <br><b style='color: transparent; user-select: none;'>Session Timing: </b> Gujarati: Afternoon",
+				"English: Morning <br> Gujarati: Afternoon",
 				"https://www.bknmu.edu.in/Academic/page/Syllabus"
 			]
 		],
