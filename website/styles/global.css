@@ -573,3 +573,62 @@ body {
     outline: 3px solid var(--brand-primary-light);
     outline-offset: 2px;
 }
+
+/* ====================================================
+    NOSCRIPT FALLBACK
+    ==================================================== */
+
+noscript {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    background: #FDE68A;
+    color: #1F2937;
+    font-weight: 600;
+}
+
+/* ====================================================
+    SCREEN READER ONLY UTILITY
+    ==================================================== */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* ====================================================
+    PRINT STYLES
+    ==================================================== */
+
+@media print {
+    .navbar_container,
+    .back-to-top,
+    .page-hero,
+    .page-cta,
+    .skip-link,
+    .filter-tabs {
+        display: none !important;
+    }
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+    .info-card,
+    .counter-section__box {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        break-inside: avoid;
+    }
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}
