@@ -1,0 +1,4 @@
+admin/assets/
+node_modules/
+*.min.js
+*.min.css
