@@ -46,6 +46,8 @@
         header('X-Content-Type-Options: nosniff');
         header('X-Frame-Options: SAMEORIGIN');
         header('Referrer-Policy: strict-origin-when-cross-origin');
+        header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+        header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://www.google.com; connect-src 'self' https://www.google-analytics.com");
     }
     $currentFileName = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
     $title_data = [
@@ -140,6 +142,7 @@
      Mobile & App Shell Metadata
      =================================================== -->
 <meta name="theme-color" content="#155C4F">
+<meta name="color-scheme" content="light dark">
 <meta name="msapplication-TileColor" content="#155C4F">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -163,6 +166,7 @@
 
 <!-- Custom Styles -->
 <link href="styles/global.css?v=<?= filemtime('styles/global.css') ?>" rel="stylesheet">
+<link href="styles/components.css?v=<?= filemtime('styles/components.css') ?>" rel="stylesheet">
 <link href="styles/nav.css?v=<?= filemtime('styles/nav.css') ?>" rel="stylesheet">
 <link href="styles/footer.css?v=<?= filemtime('styles/footer.css') ?>" rel="stylesheet">
 <?php
@@ -215,5 +219,12 @@
         </script>
         <?php
     }
+?>
+
+<noscript>
+    <div style="text-align: center; padding: 1rem; background: #FDE68A; color: #1F2937; font-weight: 600;">
+        This website requires JavaScript for full functionality. Please enable JavaScript in your browser settings.
+    </div>
+</noscript>
 ?>
 
