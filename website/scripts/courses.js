@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentActiveCourse = payload.initialCourse || null;
     let isTransitioning = false;
+    let renderTimer = null;
 
     /**
      * Strip HTML helper
@@ -62,6 +63,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const tmp = document.createElement("DIV");
         tmp.innerHTML = html;
         return tmp.textContent || tmp.innerText || "";
+    }
+
+    /**
+     * Safe HTML helper - escapes all but <sup> tags
+     */
+    function safeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        let html = div.innerHTML;
+        html = html.replace(/&lt;(\/?sup)&gt;/gi, '<$1>');
+        return html;
     }
 
     /**
@@ -104,7 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
             detailGrid.style.transform = "translateY(8px) scale(0.995)";
         }
 
-        setTimeout(() => {
+        if (renderTimer) {
+            clearTimeout(renderTimer);
+            renderTimer = null;
+        }
+
+        renderTimer = setTimeout(() => {
             // 1. Update Hero
             if (heroBreadcrumb) heroBreadcrumb.textContent = cMeta.code;
             if (heroBadge) heroBadge.textContent = `${cMeta.level} • ${cMeta.dept}`;
@@ -189,6 +207,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             }
+
+            renderTimer = null;
         }, 120);
     }
 
@@ -364,34 +384,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    // ----------------------------------------------------
-    // 4. Back To Top Button Handler
-    // ----------------------------------------------------
-    const backToTopBtn = document.getElementById("backToTop");
-    const heroSection = document.getElementById("course-hero") || document.getElementById("courses-hero");
-
-    function toggleBackToTop() {
-        if (!backToTopBtn) return;
-        const triggerPoint = heroSection ? heroSection.offsetHeight * 0.6 : 300;
-
-        if (window.scrollY > triggerPoint) {
-            backToTopBtn.classList.add("is-visible");
-        } else {
-            backToTopBtn.classList.remove("is-visible");
-        }
-    }
-
-    window.addEventListener("scroll", toggleBackToTop, { passive: true });
-    toggleBackToTop();
-
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
 
 });

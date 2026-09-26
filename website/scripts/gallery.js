@@ -394,33 +394,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // ----------------------------------------------------
-    // 2. Back To Top Button Handler
-    // ----------------------------------------------------
-    const backToTopBtn = document.getElementById("backToTop");
-    const heroSection = document.getElementById("gallery-hero");
-
-    function toggleBackToTop() {
-        if (!backToTopBtn) return;
-        const triggerPoint = heroSection ? heroSection.offsetHeight * 0.6 : 300;
-
-        if (window.scrollY > triggerPoint) {
-            backToTopBtn.classList.add("is-visible");
-        } else {
-            backToTopBtn.classList.remove("is-visible");
-        }
-    }
-
-    window.addEventListener("scroll", toggleBackToTop, { passive: true });
-    toggleBackToTop();
-
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
-
 });

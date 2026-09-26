@@ -332,9 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             window.location.reload();
                         }
                     })
-                    .catch(err => {
-                        console.error('Reorder error:', err);
-                        showToast('Network error', 'danger');
+                    .catch(() => {
+                        showToast('Network error while saving order. Please try again.', 'danger');
                         window.location.reload();
                     });
                 }

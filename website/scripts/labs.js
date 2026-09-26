@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentPhotos = (labs[currentLabKey] && labs[currentLabKey].images) || [];
     let currentPhotoIndex = 0;
     let autoPlayTimer = null;
+    let renderTimer = null;
 
     /**
      * Update Carousel Image
@@ -102,7 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
             detailLayout.style.transform = "translateY(8px) scale(0.995)";
         }
 
-        setTimeout(() => {
+        if (renderTimer) {
+            clearTimeout(renderTimer);
+            renderTimer = null;
+        }
+
+        renderTimer = setTimeout(() => {
             // 1. Update Hero
             if (heroBreadcrumb) heroBreadcrumb.textContent = lab.code;
             if (heroBadge) heroBadge.textContent = lab.badge;
@@ -176,6 +182,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 detailLayout.style.opacity = "1";
                 detailLayout.style.transform = "translateY(0) scale(1)";
             }
+
+            renderTimer = null;
         }, 120);
     }
 
@@ -231,34 +239,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-
-    // ----------------------------------------------------
-    // Back To Top Button Handler
-    // ----------------------------------------------------
-    const backToTopBtn = document.getElementById("backToTop");
-    const heroSection = document.getElementById("labs-hero");
-
-    function toggleBackToTop() {
-        if (!backToTopBtn) return;
-        const triggerPoint = heroSection ? heroSection.offsetHeight * 0.6 : 300;
-
-        if (window.scrollY > triggerPoint) {
-            backToTopBtn.classList.add("is-visible");
-        } else {
-            backToTopBtn.classList.remove("is-visible");
-        }
-    }
-
-    window.addEventListener("scroll", toggleBackToTop, { passive: true });
-    toggleBackToTop();
-
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
 
 });

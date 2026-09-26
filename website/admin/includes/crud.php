@@ -36,6 +36,10 @@ function crudRedirect(string $page, bool $isDrawerMode): void
  */
 function crudLoadItem(PDO $db, string $table): ?array
 {
+    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos'];
+    if (!in_array($table, $allowedTables, true)) {
+        throw new InvalidArgumentException("Invalid table name");
+    }
     if (!isset($_GET['edit'])) return null;
     $id = (int)$_GET['edit'];
     $stmt = $db->prepare("SELECT * FROM {$table} WHERE id = :id LIMIT 1");
@@ -57,6 +61,10 @@ function crudIsCreate(): bool
  */
 function crudDelete(PDO $db, string $table, int $id, string $flashMsg, bool $isDrawerMode, string $page): void
 {
+    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos'];
+    if (!in_array($table, $allowedTables, true)) {
+        throw new InvalidArgumentException("Invalid table name");
+    }
     $stmt = $db->prepare("DELETE FROM {$table} WHERE id = :id");
     $stmt->execute([':id' => $id]);
     logAdminActivity('delete', $table, $id, "Deleted record #{$id} from {$table}");

@@ -51,6 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 setSetting($rateKey, ''); // Clear failed attempts on success
                 logAdminActivity('login', 'admin', (int)$_SESSION['admin_id'], "Admin signed in as {$username}");
                 $return = $_GET['return'] ?? 'index.php';
+                if (!preg_match('/^[a-z_][a-z0-9_]*\.php$/i', $return)) {
+                    $return = 'index.php';
+                }
                 header('Location: ' . $return);
                 exit;
             } else {
