@@ -5,6 +5,8 @@
  * =======================================================
  */
 
+const MOBILE_BREAKPOINT = 1120;
+
 document.addEventListener("DOMContentLoaded", () => {
     const navbar = document.getElementById("siteNavbar");
     const hamburger = document.getElementById("navbarHamburger");
@@ -349,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const directLinks = navLinks.querySelectorAll("a:not([aria-haspopup='true'])");
         directLinks.forEach(link => {
             link.addEventListener("click", () => {
-                if (window.innerWidth <= 1120) {
+                if (window.innerWidth <= MOBILE_BREAKPOINT) {
                     toggleMobileNav(true);
                 }
             });
@@ -365,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close any stuck dropdowns when hovering over ANY nav link
     allNavItems.forEach(navItem => {
         navItem.addEventListener("mouseenter", () => {
-            if (window.innerWidth > 1120) {
+            if (window.innerWidth > MOBILE_BREAKPOINT) {
                 dropdownItems.forEach(d => {
                     if (d !== navItem) {
                         d.classList.remove("js-dropdown-active");
@@ -385,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Desktop Smooth Hover Intent with grace buffer
         item.addEventListener("mouseenter", () => {
-            if (window.innerWidth > 1120) {
+            if (window.innerWidth > MOBILE_BREAKPOINT) {
                 clearTimeout(leaveTimer);
                 closeAllDropdowns(item);
                 item.classList.add("js-dropdown-active");
@@ -394,7 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         item.addEventListener("mouseleave", () => {
-            if (window.innerWidth > 1120) {
+            if (window.innerWidth > MOBILE_BREAKPOINT) {
                 leaveTimer = setTimeout(() => {
                     item.classList.remove("js-dropdown-active");
                     link.setAttribute("aria-expanded", "false");
@@ -421,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close dropdowns when clicking outside or when mouse leaves the navbar on desktop
     if (navbar) {
         navbar.addEventListener("mouseleave", () => {
-            if (window.innerWidth > 1120) {
+            if (window.innerWidth > MOBILE_BREAKPOINT) {
                 closeAllDropdowns();
             }
         });

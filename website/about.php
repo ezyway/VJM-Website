@@ -164,7 +164,7 @@ include('components/hero.php');
     <!-- ===================================================
          3. Reusable Animated Metrics Counter
          =================================================== -->
-    <?php include("components/counter.html"); ?>
+    <?php include("components/counter.php"); ?>
 
 
     <!-- ===================================================
