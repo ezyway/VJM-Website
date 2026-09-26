@@ -22,6 +22,15 @@ if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
     exit;
 }
 
+// Rate limiting: prevent rapid-fire reorder requests
+$lastOrder = $_SESSION['last_reorder'] ?? 0;
+if (time() - $lastOrder < 2) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'error' => 'Please wait before reordering again']);
+    exit;
+}
+$_SESSION['last_reorder'] = time();
+
 $table = preg_replace('/[^a-z_]/', '', (string)($_POST['table'] ?? ''));
 
 $allowed = [

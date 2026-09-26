@@ -101,6 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 0c. 1-Click Database Backup Export
     if ($action === 'download_db_backup') {
+        // Require explicit confirmation via POST parameter
+        if (($_POST['confirm_backup'] ?? '') !== 'yes') {
+            setFlash('danger', 'Please confirm the database backup download.');
+            header('Location: settings.php');
+            exit;
+        }
+
         if (!file_exists(DB_FILE_PATH)) {
             setFlash('danger', 'Database file not found.');
             header('Location: settings.php');
@@ -836,10 +843,13 @@ $htaccessProtected = file_exists($htaccessDbPath);
                                     data-confirm="Run SQLite VACUUM and index optimization? This may take a few seconds."
                                     data-confirm-form="#vacuum-form-settings">Run Optimize</button>
                         </form>
-                        <form method="POST" action="settings.php" style="display: inline;">
+                        <form method="POST" action="settings.php" style="display: inline;" id="backup-confirm-form">
                             <?= csrfField() ?>
                             <input type="hidden" name="action" value="download_db_backup">
-                            <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 8px;">
+                            <input type="hidden" name="confirm_backup" value="yes">
+                            <button type="button" class="btn btn-primary btn-sm" style="margin-left: 8px;"
+                                    data-confirm="Download a full backup of the database? This includes all admin credentials and site content."
+                                    data-confirm-form="#backup-confirm-form">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 Download DB Backup
                             </button>

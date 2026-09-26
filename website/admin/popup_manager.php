@@ -360,20 +360,7 @@ if ($editItem || $isCreate) {
 
                 <div id="popupPreviewContainer" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; min-height: 300px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
                     <style>
-                        .vjm-pop-overlay-preview{position:relative;display:flex;align-items:center;justify-content:center;padding:10px;margin:0 auto;width:100%;max-width:440px}
-                        .vjm-pop-card-preview{position:relative;width:100%;background:#ffffff;border-radius:18px;box-shadow:0 20px 60px -10px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.1) inset;overflow:hidden}
-                        .vjm-pop-close-preview{position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.35);border:0;color:#fff;font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
-                        .vjm-pop-close-preview::before{content:"×"}
-                        .vjm-pop-media-preview{width:100%;height:120px;object-fit:cover;display:block}
-                        .vjm-pop-body-preview{padding:22px 24px 24px;color:#16302b;font-family:'Montserrat',sans-serif}
-                        .vjm-pop-badge-preview{display:inline-block;background:linear-gradient(90deg,#155C4F,#1c8a72);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:10px}
-                        .vjm-pop-title-preview{font-size:18px;font-weight:800;line-height:1.25;margin:0 0 8px;color:#0e2a24}
-                        .vjm-pop-message-preview{font-size:13px;line-height:1.65;color:#42534e;margin:0 0 18px;white-space:pre-line}
-                        .vjm-pop-actions-preview{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-                        .vjm-pop-btn-preview{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:12.5px;font-weight:700;padding:9px 18px;border-radius:8px;transition:transform .15s ease}
-                        .vjm-pop-btn-preview--primary{background:linear-gradient(90deg,#155C4F,#1c8a72);color:#fff;box-shadow:0 4px 14px -3px rgba(21,92,79,.5)}
-                        .vjm-pop-btn-preview--secondary{background:#0e2a24;color:#fff}
-                        .vjm-pop-btn-preview--outline{background:transparent;color:#155C4F;border:1.5px solid #155C4F}
+                        .vjm-pop-preview-container{position:relative;display:flex;align-items:center;justify-content:center;padding:10px;margin:0 auto;width:100%;max-width:440px}
                     </style>
                     <div id="previewContent" style="width: 100%;"></div>
                 </div>
@@ -487,36 +474,36 @@ if ($editItem || $isCreate) {
             return;
         }
 
-        var html = '<div class="vjm-pop-overlay-preview"><div class="vjm-pop-card-preview">';
+        var html = '<div class="vjm-pop-preview-container"><div class="vjm-pop-card">';
 
         if (data.image) {
             var rawImg = data.image;
             var src = (rawImg.startsWith('data:') || rawImg.startsWith('http://') || rawImg.startsWith('https://'))
                 ? rawImg
                 : ('../' + escapeHtml(rawImg.replace(/^\/+/, '')));
-            html += '<img class="vjm-pop-media-preview" src="' + src + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">';
+            html += '<img class="vjm-pop-media" src="' + src + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">';
         }
 
-        html += '<button class="vjm-pop-close-preview" type="button" aria-label="Close"></button>';
-        html += '<div class="vjm-pop-body-preview">';
+        html += '<button class="vjm-pop-close" type="button" aria-label="Close"></button>';
+        html += '<div class="vjm-pop-body">';
 
         if (data.badge) {
-            html += '<span class="vjm-pop-badge-preview">' + escapeHtml(data.badge) + '</span>';
+            html += '<span class="vjm-pop-badge">' + escapeHtml(data.badge) + '</span>';
         }
 
         if (data.title) {
-            html += '<h2 class="vjm-pop-title-preview">' + escapeHtml(data.title) + '</h2>';
+            html += '<h2 class="vjm-pop-title">' + escapeHtml(data.title) + '</h2>';
         }
 
         if (data.message) {
-            html += '<p class="vjm-pop-message-preview">' + escapeHtml(data.message).replace(/\n/g, '<br>') + '</p>';
+            html += '<p class="vjm-pop-message">' + escapeHtml(data.message).replace(/\n/g, '<br>') + '</p>';
         }
 
         if (data.buttons.length > 0) {
-            html += '<div class="vjm-pop-actions-preview">';
+            html += '<div class="vjm-pop-actions">';
             data.buttons.forEach(function(b) {
                 var btnStyle = b.style || 'primary';
-                html += '<a href="' + (escapeHtml(b.url) || '#') + '" class="vjm-pop-btn-preview vjm-pop-btn-preview--' + escapeHtml(btnStyle) + '">' + escapeHtml(b.label || 'Learn More') + '</a>';
+                html += '<a href="' + (escapeHtml(b.url) || '#') + '" class="vjm-pop-btn vjm-pop-btn--' + escapeHtml(btnStyle) + '">' + escapeHtml(b.label || 'Learn More') + '</a>';
             });
             html += '</div>';
         }

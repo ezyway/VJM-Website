@@ -32,8 +32,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'delete_photo') {
         $photoId = (int)($_POST['photo_id'] ?? 0);
         $albumId = (int)($_POST['album_id'] ?? 0);
+        // Fetch the image path before deleting the DB record
+        $stmtPath = $db->prepare('SELECT image_path FROM gallery_photos WHERE id = :id');
+        $stmtPath->execute([':id' => $photoId]);
+        $photoPath = $stmtPath->fetchColumn();
         $stmt = $db->prepare('DELETE FROM gallery_photos WHERE id = :id');
         $stmt->execute([':id' => $photoId]);
+        // Delete the physical file from disk
+        if ($photoPath) {
+            $fullPath = dirname(__DIR__) . '/' . $photoPath;
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
+        }
         setFlash('success', 'Photo removed from album.');
         header("Location: gallery.php?manage_photos={$albumId}" . ($isDrawerMode ? '&drawer=1' : ''));
         exit;
@@ -239,7 +250,7 @@ $albums = $db->query('
                     $caption = htmlspecialchars($ph['caption'] ?? '');
                 ?>
                 <div class="gallery-admin-item" style="<?= $isCover ? 'border: 2px solid #3b82f6;' : '' ?>">
-                    <img src="../<?= htmlspecialchars($ph['image_path']) ?>" alt="Photo" loading="lazy">
+                    <img src="../<?= htmlspecialchars($ph['image_path']) ?>" alt="<?= htmlspecialchars($manageAlbum['title'] . ' photo' . ($ph['caption'] ? ': ' . $ph['caption'] : '')) ?>" loading="lazy">
                     
                     <?php if ($isCover): ?>
                         <div style="position: absolute; top: 6px; left: 6px; background: #3b82f6; color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">

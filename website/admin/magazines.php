@@ -16,7 +16,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if ($action === 'delete') {
-        crudDelete($db, 'magazines', (int)($_POST['id'] ?? 0), 'Magazine edition deleted.', $isDrawerMode, 'magazines.php');
+        $id = (int)($_POST['id'] ?? 0);
+        // Fetch the file path before deleting the DB record
+        $stmtFile = $db->prepare('SELECT file_path FROM magazines WHERE id = :id');
+        $stmtFile->execute([':id' => $id]);
+        $filePath = $stmtFile->fetchColumn();
+        crudDelete($db, 'magazines', $id, 'Magazine edition deleted.', $isDrawerMode, 'magazines.php');
+        // Delete the physical PDF file from disk
+        if ($filePath) {
+            $fullPath = dirname(__DIR__) . '/' . $filePath;
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
+        }
     }
 
     if ($action === 'save') {

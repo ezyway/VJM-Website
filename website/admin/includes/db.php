@@ -11,13 +11,19 @@ function getDB(): PDO {
     if ($pdo === null) {
         $dbDir = dirname(DB_FILE_PATH);
         if (!is_dir($dbDir)) {
-            @mkdir($dbDir, 0777, true);
+            if (!mkdir($dbDir, 0777, true) && !is_dir($dbDir)) {
+                throw new RuntimeException("Unable to create database directory: {$dbDir}");
+            }
         }
         if (is_dir($dbDir) && !is_writable($dbDir)) {
-            @chmod($dbDir, 0777);
+            if (!chmod($dbDir, 0777)) {
+                error_log("Warning: Unable to set write permissions on database directory: {$dbDir}");
+            }
         }
         if (file_exists(DB_FILE_PATH) && !is_writable(DB_FILE_PATH)) {
-            @chmod(DB_FILE_PATH, 0666);
+            if (!chmod(DB_FILE_PATH, 0666)) {
+                error_log("Warning: Unable to set write permissions on database file: " . DB_FILE_PATH);
+            }
         }
 
         $dsn = 'sqlite:' . DB_FILE_PATH;

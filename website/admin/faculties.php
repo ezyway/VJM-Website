@@ -25,7 +25,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if ($action === 'delete') {
-        crudDelete($db, 'faculties', (int)($_POST['id'] ?? 0), 'Faculty member removed successfully.', $isDrawerMode, 'faculties.php');
+        $id = (int)($_POST['id'] ?? 0);
+        // Fetch the image path before deleting the DB record
+        $stmtImg = $db->prepare('SELECT image FROM faculties WHERE id = :id');
+        $stmtImg->execute([':id' => $id]);
+        $imagePath = $stmtImg->fetchColumn();
+        crudDelete($db, 'faculties', $id, 'Faculty member removed successfully.', $isDrawerMode, 'faculties.php');
+        // Delete the physical file from disk
+        if ($imagePath) {
+            $fullPath = dirname(__DIR__) . '/' . $imagePath;
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
+        }
     }
 
     if ($action === 'save') {
