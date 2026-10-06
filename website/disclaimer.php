@@ -39,25 +39,20 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="disclaimer-hero" id="disclaimer-hero">
-        <div class="disclaimer-hero__overlay">
-            <div class="disclaimer-hero__content">
-                <nav class="disclaimer-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="disclaimer-hero__breadcrumb-sep">/</span>
-                    <span>More</span>
-                    <span class="disclaimer-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Disclaimer</span>
-                </nav>
-                <span class="disclaimer-hero__badge">Terms of Use &amp; Legal Notices</span>
-                <h1 class="disclaimer-hero__title">Disclaimer &amp; Copyright</h1>
-                <p class="disclaimer-hero__slogan">॥ सत्यमेव जयते नानृतम् ॥</p>
-                <p class="disclaimer-hero__subtitle">
-                    Official terms of use, informational disclaimers, intellectual property protections, and website engineering credits.
-                </p>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => 'Disclaimer & Copyright',
+        'badge' => 'Terms of Use & Legal Notices',
+        'slogan' => '॥ सत्यमेव जयते नानृतम् ॥',
+        'subtitle' => 'Official terms of use, informational disclaimers, intellectual property protections, and website engineering credits.',
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'More', 'url' => null],
+            ['label' => 'Disclaimer', 'current' => true],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -149,21 +144,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="disclaimer-cta" id="cta">
-        <div class="disclaimer-cta__container">
-            <div class="disclaimer-cta__box">
-                <span class="disclaimer-cta__badge">Have Any Questions?</span>
-                <h2 class="disclaimer-cta__title">We're Here to Help</h2>
-                <p class="disclaimer-cta__subtitle">
-                    Reach out to our campus office for admissions, official certificates, or general assistance.
-                </p>
-                <div class="disclaimer-cta__actions">
-                    <a href="contact.php" class="btn btn--primary">Get in Touch</a>
-                    <a href="about.php" class="btn btn--secondary">About Our Campus</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Have Any Questions?',
+        'title' => "We're Here to Help",
+        'subtitle' => 'Reach out to our campus office for admissions, official certificates, or general assistance.',
+        'actions' => [
+            ['label' => 'Get in Touch', 'url' => 'contact.php', 'class' => 'btn--primary'],
+            ['label' => 'About Our Campus', 'url' => 'about.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->

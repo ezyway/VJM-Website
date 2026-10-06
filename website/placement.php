@@ -98,25 +98,20 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="placement-hero" id="placement-hero">
-        <div class="placement-hero__overlay">
-            <div class="placement-hero__content">
-                <nav class="placement-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="placement-hero__breadcrumb-sep">/</span>
-                    <span>More</span>
-                    <span class="placement-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Placements</span>
-                </nav>
-                <span class="placement-hero__badge">Career Guidance &amp; Placements</span>
-                <h1 class="placement-hero__title">Training &amp; Placement Cell</h1>
-                <p class="placement-hero__slogan">॥ उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः ॥</p>
-                <p class="placement-hero__subtitle">
-                    Empowering graduates with technical skills, mock interviews, corporate networking, and direct access to state and national career platforms.
-                </p>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => 'Training & Placement Cell',
+        'badge' => 'Career Guidance & Placements',
+        'slogan' => '॥ उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः ॥',
+        'subtitle' => 'Empowering graduates with technical skills, mock interviews, corporate networking, and direct access to state and national career platforms.',
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'More', 'url' => null],
+            ['label' => 'Placements', 'current' => true],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -200,21 +195,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="placement-cta" id="cta">
-        <div class="placement-cta__container">
-            <div class="placement-cta__box">
-                <span class="placement-cta__badge">Are You a Recruiter?</span>
-                <h2 class="placement-cta__title">Hire Our Industry-Ready Graduates</h2>
-                <p class="placement-cta__subtitle">
-                    Partner with Shri V. J. Modha College for on-campus and virtual hiring drives across BCA, B.Sc., BBA, B.Com, and M.Sc IT.
-                </p>
-                <div class="placement-cta__actions">
-                    <a href="contact.php" class="btn btn--primary">Partner With Us</a>
-                    <a href="courses.php" class="btn btn--secondary">Explore Student Programs</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Are You a Recruiter?',
+        'title' => 'Hire Our Industry-Ready Graduates',
+        'subtitle' => 'Partner with Shri V. J. Modha College for on-campus and virtual hiring drives across BCA, B.Sc., BBA, B.Com, and M.Sc IT.',
+        'actions' => [
+            ['label' => 'Partner With Us', 'url' => 'contact.php', 'class' => 'btn--primary'],
+            ['label' => 'Explore Student Programs', 'url' => 'courses.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->

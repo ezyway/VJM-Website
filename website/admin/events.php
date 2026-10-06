@@ -26,34 +26,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $badge_type  = trim($_POST['badge_type'] ?? 'confirmed');
         $description = trim($_POST['description'] ?? '');
         $event_type  = trim($_POST['event_type'] ?? 'event');
-        $sort_order  = (int)($_POST['sort_order'] ?? 0);
 
         if (empty($title)) {
-            setFlash('danger', 'Title is required.');
-            crudRedirect('events.php', $isDrawerMode);
+            crudFormFail('Title is required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE events SET title = :t, badge = :b, badge_type = :bt, description = :d, event_type = :et, sort_order = :s WHERE id = :id');
+            $stmt = $db->prepare('UPDATE events SET title = :t, badge = :b, badge_type = :bt, description = :d, event_type = :et WHERE id = :id');
             $stmt->execute([
                 ':t'  => $title,
                 ':b'  => $badge,
                 ':bt' => $badge_type,
                 ':d'  => $description,
                 ':et' => $event_type,
-                ':s'  => $sort_order,
                 ':id' => $id
             ]);
             setFlash('success', 'Event / Notice updated successfully.');
         } else {
-            $stmt = $db->prepare('INSERT INTO events (title, badge, badge_type, description, event_type, sort_order) VALUES (:t, :b, :bt, :d, :et, :s)');
+            $stmt = $db->prepare('INSERT INTO events (title, badge, badge_type, description, event_type, sort_order) VALUES (:t, :b, :bt, :d, :et, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM events))');
             $stmt->execute([
                 ':t'  => $title,
                 ':b'  => $badge,
                 ':bt' => $badge_type,
                 ':d'  => $description,
-                ':et' => $event_type,
-                ':s'  => $sort_order
+                ':et' => $event_type
             ]);
             setFlash('success', 'New item created successfully.');
         }
@@ -82,7 +78,6 @@ if ($editItem || $isCreate) {
             ['name' => 'event_type', 'label' => 'Category Section *', 'type' => 'select', 'options' => ['event' => 'Upcoming Event (Campus Life)', 'news' => 'Academic News &amp; Circular']],
             ['name' => 'badge', 'label' => 'Badge / Date Text', 'type' => 'text', 'default' => 'TBA', 'placeholder' => 'e.g. 15 Aug 2025 or TBA or Latest'],
             ['name' => 'badge_type', 'label' => 'Badge Visual Style', 'type' => 'select', 'default' => 'confirmed', 'options' => ['confirmed' => 'Confirmed / Highlighted (Green)', 'tba' => 'TBA / Neutral (Gray/Muted)', 'latest' => 'Latest / Notice (Blue/Purple)']],
-            ['name' => 'sort_order', 'label' => 'Display Order Priority', 'type' => 'number', 'default' => '1'],
             ['name' => 'description', 'label' => 'Summary / Content', 'type' => 'textarea', 'full' => true, 'rows' => 3, 'placeholder' => 'Provide a brief summary of the event or notice...'],
         ],
     ]);

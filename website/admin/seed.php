@@ -6,6 +6,12 @@
  */
 
 require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/auth.php';
+
+// Prevent unauthenticated web access to the seeder
+if (php_sapi_name() !== 'cli') {
+    requireAuth();
+}
 
 function runSeeder(): array {
     $db = getDB();
@@ -14,7 +20,7 @@ function runSeeder(): array {
     // 1. Seed Admin User
     $adminCount = $db->query('SELECT COUNT(*) FROM admins')->fetchColumn();
     if ($adminCount == 0) {
-        $defaultPassword = 'Admin@vjm2025!';
+        $defaultPassword = bin2hex(random_bytes(8));
         $hash = password_hash($defaultPassword, PASSWORD_DEFAULT);
         $stmt = $db->prepare('INSERT INTO admins (username, password_hash, name, email) VALUES (:u, :p, :n, :e)');
         $stmt->execute([
@@ -499,10 +505,8 @@ function runSeeder(): array {
     return $logs;
 }
 
-// If run from CLI or directly accessed
-if (php_sapi_name() === 'cli' || (isset($_GET['run']) && $_GET['run'] === '1')) {
+// Only allow CLI access for security
+if (php_sapi_name() === 'cli') {
     $results = runSeeder();
-    if (php_sapi_name() === 'cli') {
-        echo "=== Seeder Finished ===\n" . implode("\n", array_map('strip_tags', $results)) . "\n";
-    }
+    echo "=== Seeder Finished ===\n" . implode("\n", array_map('strip_tags', $results)) . "\n";
 }

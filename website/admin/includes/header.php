@@ -32,6 +32,8 @@ $navItems = [
     ['section' => 'Configuration'],
     ['slug' => 'scholarships.php', 'title' => 'Scholarships & Aid', 'icon' => '<circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path>'],
     ['slug' => 'popup_manager.php', 'title' => 'Popup Manager', 'icon' => '<path d="M2 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>'],
+    ['slug' => 'inquiries.php', 'title' => 'Student Inquiries', 'icon' => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>'],
+    ['slug' => 'deploy_test.php', 'title' => 'Deploy Self-Test', 'icon' => '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>'],
     ['slug' => 'settings.php', 'title' => 'Site Settings & Stats', 'icon' => '<circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>']
 ];
 ?>
@@ -62,7 +64,7 @@ $navItems = [
     <!-- Sidebar Navigation -->
     <aside class="admin-sidebar">
         <div class="sidebar-header">
-            <img src="../assets/logo.ico" alt="Logo" class="sidebar-logo">
+            <img src="../assets/logo.ico" alt="Logo" class="sidebar-logo" loading="lazy">
             <div>
                 <div class="sidebar-title">VJM College</div>
                 <div class="sidebar-subtitle">CMS Administration</div>

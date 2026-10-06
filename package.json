@@ -1,0 +1,16 @@
+{
+    "name": "vjm-website",
+    "version": "1.0.0",
+    "description": "Shri V.J. Modha College Website",
+    "private": true,
+    "scripts": {
+        "lint": "eslint website/scripts/",
+        "lint:fix": "eslint website/scripts/ --fix",
+        "format": "prettier --write \"website/**/*.{js,css,html}\"",
+        "format:check": "prettier --check \"website/**/*.{js,css,html}\""
+    },
+    "devDependencies": {
+        "eslint": "^8.57.0",
+        "prettier": "^3.2.0"
+    }
+}

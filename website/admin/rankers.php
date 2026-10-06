@@ -16,7 +16,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if ($action === 'delete') {
-        crudDelete($db, 'rankers', (int)($_POST['id'] ?? 0), 'Student ranker record removed.', $isDrawerMode, 'rankers.php');
+        $id = (int)($_POST['id'] ?? 0);
+        // Fetch the image path before deleting the DB record
+        $stmtImg = $db->prepare('SELECT image FROM rankers WHERE id = :id');
+        $stmtImg->execute([':id' => $id]);
+        $imagePath = $stmtImg->fetchColumn();
+        if ($imagePath) {
+            $fullPath = dirname(__DIR__) . '/' . $imagePath;
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
+            $webpSidecar = $fullPath . '.webp';
+            if (file_exists($webpSidecar)) {
+                @unlink($webpSidecar);
+            }
+        }
+        crudDelete($db, 'rankers', $id, 'Student ranker record removed.', $isDrawerMode, 'rankers.php');
     }
 
     if ($action === 'save') {
@@ -26,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $semester   = trim($_POST['semester'] ?? '');
         $language   = trim($_POST['language'] ?? '');
         $rank_text  = trim($_POST['rank_text'] ?? '');
-        $sort_order = (int)($_POST['sort_order'] ?? 0);
         $currentImg = trim($_POST['current_image'] ?? '');
 
         $imgPath = $currentImg;
@@ -34,19 +48,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $upload = handleAdminUpload($_FILES['image'], 'rankers');
             if ($upload['success']) {
                 $imgPath = $upload['path'];
+                if ($id > 0 && $currentImg && $currentImg !== $imgPath) {
+                    $oldFull = dirname(__DIR__) . '/' . $currentImg;
+                    if (file_exists($oldFull)) @unlink($oldFull);
+                    if (file_exists($oldFull . '.webp')) @unlink($oldFull . '.webp');
+                }
             } else {
-                setFlash('danger', 'Photo upload failed: ' . $upload['error']);
-                crudRedirect('rankers.php', $isDrawerMode);
+                crudFormFail('Photo upload failed: ' . $upload['error']);
             }
         }
 
         if (empty($name) || empty($course) || empty($rank_text)) {
-            setFlash('danger', 'Student name, course, and rank text are required.');
-            crudRedirect('rankers.php', $isDrawerMode);
+            crudFormFail('Student name, course, and rank text are required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE rankers SET name = :n, course = :c, semester = :s, language = :l, rank_text = :r, image = :img, sort_order = :so WHERE id = :id');
+            $stmt = $db->prepare('UPDATE rankers SET name = :n, course = :c, semester = :s, language = :l, rank_text = :r, image = :img WHERE id = :id');
             $stmt->execute([
                 ':n'   => $name,
                 ':c'   => $course,
@@ -54,12 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':l'   => $language,
                 ':r'   => $rank_text,
                 ':img' => $imgPath,
-                ':so'  => $sort_order,
                 ':id'  => $id
             ]);
             setFlash('success', 'Ranker details updated successfully.');
         } else {
-            $stmt = $db->prepare('INSERT INTO rankers (name, course, semester, language, rank_text, image, sort_order) VALUES (:n, :c, :s, :l, :r, :img, :so)');
+            $stmt = $db->prepare('INSERT INTO rankers (name, course, semester, language, rank_text, image, sort_order) VALUES (:n, :c, :s, :l, :r, :img, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM rankers))');
             $stmt->execute([
                 ':n'   => $name,
                 ':c'   => $course,
@@ -67,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':l'   => $language,
                 ':r'   => $rank_text,
                 ':img' => $imgPath,
-                ':so'  => $sort_order
             ]);
             setFlash('success', 'New student ranker added.');
         }
@@ -99,7 +114,6 @@ if ($editItem || $isCreate) {
             ['name' => 'semester', 'label' => 'Semester (Optional)', 'type' => 'text', 'placeholder' => 'e.g. 6'],
             ['name' => 'language', 'label' => 'Medium / Stream (Optional)', 'type' => 'text', 'placeholder' => 'e.g. English or Gujarati'],
             ['name' => 'rank_text', 'label' => 'Rank / Laurel Award *', 'type' => 'text', 'required' => true, 'createDefault' => 'BKNMU Rank 1^st', 'placeholder' => 'e.g. BKNMU Rank 1^st or University Rank 2^nd', 'hintHtml' => 'Tip: Use <code>^st</code>, <code>^nd</code>, <code>^rd</code>, or <code>^th</code> for superscript suffixes.'],
-            ['name' => 'sort_order', 'label' => 'Display Priority', 'type' => 'number', 'default' => '1'],
             ['name' => 'image', 'label' => 'Student Photo *', 'type' => 'file', 'full' => true, 'accept' => 'image/*', 'preview' => ['id' => 'rankerPhotoPreview', 'img' => fn($item) => ($item['image'] ?? '') ?: 'assets/logo.ico', 'hint' => 'Passport style photo or portrait image.']],
         ],
     ]);
@@ -120,7 +134,7 @@ crudListPanel([
         [
             'th' => 'Student',
             'td' => fn($r) => '<div style="display: flex; align-items: center; gap: 12px;">'
-                . '<img src="../' . htmlspecialchars($r['image'] ?: 'assets/logo.ico') . '" alt="" class="preview-avatar" onerror="this.src=\'../assets/logo.ico\'">'
+                . '<img src="../' . htmlspecialchars($r['image'] ?: 'assets/logo.ico') . '" alt="" class="preview-avatar" loading="lazy" onerror="this.src=\'../assets/logo.ico\'">'
                 . '<strong style="color: var(--text-main); font-size: 13.5px;">' . htmlspecialchars($r['name']) . '</strong>'
                 . '</div>',
         ],

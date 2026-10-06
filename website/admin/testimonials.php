@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $avatar_text = trim($_POST['avatar_text'] ?? '');
         $stars       = min(5, max(1, (int)($_POST['stars'] ?? 5)));
         $text        = trim($_POST['text'] ?? '');
-        $sort_order  = (int)($_POST['sort_order'] ?? 0);
 
         if (empty($avatar_text) && !empty($name)) {
             $parts = explode(' ', $name);
@@ -34,31 +33,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (empty($name) || empty($text)) {
-            setFlash('danger', 'Student name and testimonial text are required.');
-            crudRedirect('testimonials.php', $isDrawerMode);
+            crudFormFail('Student name and testimonial text are required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE testimonials SET name = :n, course = :c, avatar_text = :av, stars = :st, text = :txt, sort_order = :so WHERE id = :id');
+            $stmt = $db->prepare('UPDATE testimonials SET name = :n, course = :c, avatar_text = :av, stars = :st, text = :txt WHERE id = :id');
             $stmt->execute([
                 ':n'   => $name,
                 ':c'   => $course,
                 ':av'  => $avatar_text,
                 ':st'  => $stars,
                 ':txt' => $text,
-                ':so'  => $sort_order,
                 ':id'  => $id
             ]);
             setFlash('success', 'Testimonial updated.');
         } else {
-            $stmt = $db->prepare('INSERT INTO testimonials (name, course, avatar_text, stars, text, sort_order) VALUES (:n, :c, :av, :st, :txt, :so)');
+            $stmt = $db->prepare('INSERT INTO testimonials (name, course, avatar_text, stars, text, sort_order) VALUES (:n, :c, :av, :st, :txt, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM testimonials))');
             $stmt->execute([
                 ':n'   => $name,
                 ':c'   => $course,
                 ':av'  => $avatar_text,
                 ':st'  => $stars,
                 ':txt' => $text,
-                ':so'  => $sort_order
             ]);
             setFlash('success', 'New testimonial added.');
         }
@@ -86,8 +82,7 @@ if ($editItem || $isCreate) {
             ['name' => 'name', 'label' => 'Student Name *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. Sida Jay'],
             ['name' => 'course', 'label' => 'Program / Batch *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. B.B.A. Graduate'],
             ['name' => 'avatar_text', 'label' => 'Initials Avatar (2 letters)', 'type' => 'text', 'maxlength' => 3, 'placeholder' => 'e.g. SJ'],
-            ['name' => 'stars', 'label' => 'Star Rating', 'type' => 'select', 'createDefault' => 5, 'options' => [5 => '★★★★★ (5 Stars)', 4 => '★★★★☆ (4 Stars)', 3 => '★★★☆☆ (3 Stars)']],
-            ['name' => 'sort_order', 'label' => 'Display Priority', 'type' => 'number', 'default' => '1'],
+            ['name' => 'stars', 'label' => 'Star Rating', 'type' => 'rating', 'createDefault' => 5],
             ['name' => 'text', 'label' => 'Review Quote *', 'type' => 'textarea', 'full' => true, 'rows' => 3, 'required' => true, 'placeholder' => "Write the student's quote..."],
         ],
     ]);

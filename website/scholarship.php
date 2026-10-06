@@ -119,41 +119,25 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="scholarship-hero" id="scholarship-hero">
-        <div class="scholarship-hero__overlay">
-            <div class="scholarship-hero__content">
-                <nav class="scholarship-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="scholarship-hero__breadcrumb-sep">/</span>
-                    <span>Facilities</span>
-                    <span class="scholarship-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Scholarships</span>
-                </nav>
-                <span class="scholarship-hero__badge">Financial Aid &amp; Student Support</span>
-                <h1 class="scholarship-hero__title">Scholarships &amp; Grants</h1>
-                <p class="scholarship-hero__slogan">॥ विद्यादानं महत्पुण्यम् ॥</p>
-                <p class="scholarship-hero__subtitle">
-                    Dedicated to ensuring equal educational opportunities for every meritorious and deserving student through government schemes and institutional aid.
-                </p>
-
-                <!-- Hero Metric Badges -->
-                <div class="scholarship-hero__metrics">
-                    <div class="scholarship-metric-pill">
-                        <strong>₹ 2.05+ Crores</strong>
-                        <span>Total Aid Disbursed</span>
-                    </div>
-                    <div class="scholarship-metric-pill">
-                        <strong>13+ Years</strong>
-                        <span>Continuous Student Support</span>
-                    </div>
-                    <div class="scholarship-metric-pill">
-                        <strong>100% Direct</strong>
-                        <span>Government Direct Benefit Transfer (DBT)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => 'Scholarships & Grants',
+        'badge' => 'Financial Aid & Student Support',
+        'slogan' => '॥ विद्यादानं महत्पुण्यम् ॥',
+        'subtitle' => 'Dedicated to ensuring equal educational opportunities for every meritorious and deserving student through government schemes and institutional aid.',
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'Facilities', 'url' => null],
+            ['label' => 'Scholarships', 'current' => true],
+        ],
+        'metrics' => [
+            ['value' => '₹ 2.05+ Crores', 'label' => 'Total Aid Disbursed'],
+            ['value' => '13+ Years', 'label' => 'Continuous Student Support'],
+            ['value' => '100% Direct', 'label' => 'Government Direct Benefit Transfer (DBT)'],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -252,21 +236,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="scholarship-cta" id="cta">
-        <div class="scholarship-cta__container">
-            <div class="scholarship-cta__box">
-                <span class="scholarship-cta__badge">Scholarship Desk</span>
-                <h2 class="scholarship-cta__title">Need Help with Your Application?</h2>
-                <p class="scholarship-cta__subtitle">
-                    Our administrative cell provides full assistance with portal registration, document verification, and scholarship tracking.
-                </p>
-                <div class="scholarship-cta__actions">
-                    <a href="contact.php" class="btn btn--primary">Contact Scholarship Cell</a>
-                    <a href="about.php" class="btn btn--secondary">About Our Campus</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Scholarship Desk',
+        'title' => 'Need Help with Your Application?',
+        'subtitle' => 'Our administrative cell provides full assistance with portal registration, document verification, and scholarship tracking.',
+        'actions' => [
+            ['label' => 'Contact Scholarship Cell', 'url' => 'contact.php', 'class' => 'btn--primary'],
+            ['label' => 'About Our Campus', 'url' => 'about.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->

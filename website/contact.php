@@ -56,23 +56,19 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="contact-hero" id="contact-hero">
-        <div class="contact-hero__overlay">
-            <div class="contact-hero__content">
-                <nav class="contact-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="contact-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Contact Us</span>
-                </nav>
-                <span class="contact-hero__badge">Admissions &amp; Campus Helpdesk</span>
-                <h1 class="contact-hero__title">Get in Touch with Us</h1>
-                <p class="contact-hero__slogan">॥ सर्वस्य लोचनं शास्त्रम् ॥</p>
-                <p class="contact-hero__subtitle">
-                    Have questions regarding admissions, degree programs, fee structures, or campus visits? Reach out to our team or drop by our campus in Porbandar.
-                </p>
-            </div>
-        </div>
-    </header>
+<?php
+$hero = [
+    'title' => 'Get in Touch with Us',
+    'badge' => 'Admissions & Campus Helpdesk',
+    'slogan' => '॥ सर्वस्य लोचनं शास्त्रम् ॥',
+    'subtitle' => 'Have questions regarding admissions, degree programs, fee structures, or campus visits? Reach out to our team or drop by our campus in Porbandar.',
+    'breadcrumb' => [
+        ['label' => 'Home', 'url' => 'index.php'],
+        ['label' => 'Contact Us', 'current' => true],
+    ],
+];
+include('components/hero.php');
+?>
 
 
     <!-- ===================================================
@@ -168,8 +164,8 @@
                         <div class="map-card__header">
                             <div>
                                 <span class="section__eyebrow">Location &amp; Directions</span>
-                                <h2 class="contact-card__title" style="margin-bottom: 0.2rem;">Find Us on Google Maps</h2>
-                                <p class="contact-card__desc" style="margin-bottom: 0;">Located near Pakshi Abhiyaran on Chhaya-Birla Road, Porbandar.</p>
+                                <h2 class="contact-card__title contact-card__title--compact">Find Us on Google Maps</h2>
+                                <p class="contact-card__desc contact-card__desc--compact">Located near Pakshi Abhiyaran on Chhaya-Birla Road, Porbandar.</p>
                             </div>
                             <a href="https://maps.app.goo.gl/1KuyRCNiCoc7pfun9" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">
                                 <span>Get Directions</span>
@@ -193,15 +189,15 @@
                         
                         <div class="contact-social-grid">
                             <a href="https://www.instagram.com/vjmodhacollege/" target="_blank" rel="noopener noreferrer" class="contact-social-btn contact-social-btn--instagram">
-                                <img src="assets/icons/footer/instagram.png" alt="Instagram" width="22" height="22" />
+                                <img src="assets/icons/footer/instagram.png" alt="Instagram" width="22" height="22" loading="lazy" />
                                 <span>Instagram</span>
                             </a>
                             <a href="https://www.facebook.com/vjmodhacollege/" target="_blank" rel="noopener noreferrer" class="contact-social-btn contact-social-btn--facebook">
-                                <img src="assets/icons/footer/facebook.png" alt="Facebook" width="22" height="22" />
+                                <img src="assets/icons/footer/facebook.png" alt="Facebook" width="22" height="22" loading="lazy" />
                                 <span>Facebook</span>
                             </a>
                             <a href="https://www.linkedin.com/school/vjmodhacollege/" target="_blank" rel="noopener noreferrer" class="contact-social-btn contact-social-btn--linkedin">
-                                <img src="assets/icons/footer/linkedin.png" alt="LinkedIn" width="22" height="22" />
+                                <img src="assets/icons/footer/linkedin.png" alt="LinkedIn" width="22" height="22" loading="lazy" />
                                 <span>LinkedIn</span>
                             </a>
                         </div>

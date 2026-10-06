@@ -60,11 +60,24 @@ $image = trim($vjmPopup['image'] ?? '');
     @media (prefers-reduced-motion:reduce){
         .vjm-pop-overlay,.vjm-pop-card,.vjm-pop-btn{transition:none}
     }
+    [data-theme="dark"] .vjm-pop-overlay {
+        background: rgba(0, 0, 0, 0.7) !important;
+    }
+    [data-theme="dark"] .vjm-pop-card {
+        background: #1E293B !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    [data-theme="dark"] .vjm-pop-body {
+        color: #F1F5F9 !important;
+    }
+    [data-theme="dark"] .vjm-pop-message {
+        color: #CBD5E1 !important;
+    }
 </style>
 <div class="vjm-pop-overlay" id="vjmPopOverlay" role="dialog" aria-modal="true" aria-labelledby="vjmPopTitle" hidden>
     <div class="vjm-pop-card" id="vjmPopCard">
         <?php if ($image !== ''): ?>
-            <img class="vjm-pop-media" id="vjmPopMedia" src="<?= htmlspecialchars($image) ?>" alt="">
+            <img class="vjm-pop-media" id="vjmPopMedia" src="<?= htmlspecialchars($image) ?>" alt="" loading="lazy">
         <?php endif; ?>
         <button class="vjm-pop-close" id="vjmPopClose" type="button" aria-label="Close announcement"></button>
         <div class="vjm-pop-body">

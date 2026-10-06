@@ -27,7 +27,21 @@ function crudCsrfGuard(string $page): void
  */
 function crudRedirect(string $page, bool $isDrawerMode): void
 {
+    unset($_SESSION['form_repop']);
     header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : $page));
+    exit;
+}
+
+/**
+ * On validation failure: keep the user's submitted values so the re-rendered
+ * form is pre-filled (instead of silently wiping the form), show the error,
+ * and bounce back to the same form URL.
+ */
+function crudFormFail(string $message): void
+{
+    setFlash('danger', $message);
+    $_SESSION['form_repop'] = $_POST;
+    header('Location: ' . ($_SERVER['REQUEST_URI'] ?? 'index.php'));
     exit;
 }
 
@@ -36,6 +50,10 @@ function crudRedirect(string $page, bool $isDrawerMode): void
  */
 function crudLoadItem(PDO $db, string $table): ?array
 {
+    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos', 'inquiries'];
+    if (!in_array($table, $allowedTables, true)) {
+        throw new InvalidArgumentException("Invalid table name");
+    }
     if (!isset($_GET['edit'])) return null;
     $id = (int)$_GET['edit'];
     $stmt = $db->prepare("SELECT * FROM {$table} WHERE id = :id LIMIT 1");
@@ -57,6 +75,10 @@ function crudIsCreate(): bool
  */
 function crudDelete(PDO $db, string $table, int $id, string $flashMsg, bool $isDrawerMode, string $page): void
 {
+    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos', 'inquiries'];
+    if (!in_array($table, $allowedTables, true)) {
+        throw new InvalidArgumentException("Invalid table name");
+    }
     $stmt = $db->prepare("DELETE FROM {$table} WHERE id = :id");
     $stmt->execute([':id' => $id]);
     logAdminActivity('delete', $table, $id, "Deleted record #{$id} from {$table}");
@@ -81,6 +103,14 @@ function crudDelete(PDO $db, string $table, int $id, string $flashMsg, bool $isD
 function crudFormPanel(array $cfg): void
 {
     $item = $cfg['item'] ?? null;
+    // Re-populate with the user's last submitted values after a validation
+    // failure (set by crudFormFail) so nothing they typed is lost.
+    if (!empty($_SESSION['form_repop']) && is_array($_SESSION['form_repop'])) {
+        $repop = $_SESSION['form_repop'];
+        unset($repop['csrf_token'], $repop['action'], $repop['id'], $repop['photo_id'], $repop['album_id']);
+        $item = array_merge($item ?? [], $repop);
+        unset($_SESSION['form_repop']);
+    }
     $page = $cfg['page'];
     $param = $cfg['pageParam'] ?? '';
     $multipart = !empty($cfg['multipart']) ? ' enctype="multipart/form-data"' : '';
@@ -88,6 +118,24 @@ function crudFormPanel(array $cfg): void
     if (is_callable($hiddenHtml)) $hiddenHtml = $hiddenHtml($item);
 
     $title = $cfg['title']($item);
+    $previewType = $cfg['previewType'] ?? null;
+    if ($previewType === null) {
+        // Auto-detect preview type from base page filename
+        $base = basename($page, '.php');
+        $map = [
+            'faculties'    => 'faculty',
+            'courses'      => 'course',
+            'events'       => 'event',
+            'rankers'      => 'ranker',
+            'testimonials' => 'testimonial',
+            'labs'         => 'lab',
+            'gallery'      => 'gallery',
+            'magazines'    => 'magazine',
+            'scholarships' => 'scholarship',
+        ];
+        $previewType = $map[$base] ?? '';
+    }
+    $hasPreview = !empty($previewType) && $previewType !== 'none';
     ?>
     <div class="panel">
         <div class="panel-header">
@@ -95,7 +143,12 @@ function crudFormPanel(array $cfg): void
             <a href="<?= $page . $param ?>" class="btn btn-secondary btn-sm">← Back to List</a>
         </div>
         <div class="panel-body">
-            <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? $page) ?>"<?= $multipart ?>>
+            <?php if ($hasPreview): ?>
+            <div class="form-with-preview" data-live-preview="<?= htmlspecialchars($previewType) ?>">
+                <div class="form-fields-col">
+            <?php endif; ?>
+
+            <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? $page) ?>"<?= $multipart ?> id="crudAdminForm">
                 <?= csrfField() ?>
                 <input type="hidden" name="action" value="save">
                 <input type="hidden" name="id" value="<?= $item ? (int)$item['id'] : 0 ?>">
@@ -105,11 +158,32 @@ function crudFormPanel(array $cfg): void
                         <?= formField($field, $item) ?>
                     <?php endforeach; ?>
                 </div>
-                <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <?php if (empty($cfg['hideActions'])): ?>
+                <div style="margin-top: 22px; display: flex; gap: 12px;" class="form-actions-sticky">
                     <button type="submit" class="btn btn-primary"><?= $cfg['submitLabel'] ?></button>
                     <a href="<?= $page . $param ?>" class="btn btn-secondary">Cancel</a>
                 </div>
+                <?php endif; ?>
             </form>
+
+            <?php if ($hasPreview): ?>
+                </div>
+                <div class="live-preview-col">
+                    <div class="live-preview-sticky">
+                        <div class="live-preview-header">
+                            <div class="live-preview-title">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Live Visual Preview
+                            </div>
+                        </div>
+                        <div class="live-preview-stage" id="livePreviewContainer">
+                            <div style="color: var(--text-muted); font-size: 13px;">Generating live preview...</div>
+                        </div>
+                        <div class="live-preview-caption">Instant live preview of changes before saving</div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
     <?php

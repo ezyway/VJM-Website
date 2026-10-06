@@ -45,23 +45,19 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="about-hero" id="about-hero">
-        <div class="about-hero__overlay">
-            <div class="about-hero__content">
-                <nav class="about-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="about-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">About Us</span>
-                </nav>
-                <span class="about-hero__badge">Established in 2007 • Porbandar</span>
-                <h1 class="about-hero__title">Shri V. J. Modha College</h1>
-                <p class="about-hero__slogan">॥ विद्यार्थी लभते विद्यां ॥</p>
-                <p class="about-hero__subtitle">
-                    A premier institution dedicated to academic excellence, technological innovation, and holistic student development.
-                </p>
-            </div>
-        </div>
-    </header>
+<?php
+$hero = [
+    'title' => 'Shri V. J. Modha College',
+    'badge' => 'Established in 2007 • Porbandar',
+    'slogan' => '॥ विद्यार्थी लभते विद्यां ॥',
+    'subtitle' => 'A premier institution dedicated to academic excellence, technological innovation, and holistic student development.',
+    'breadcrumb' => [
+        ['label' => 'Home', 'url' => 'index.php'],
+        ['label' => 'About Us', 'current' => true],
+    ],
+];
+include('components/hero.php');
+?>
 
 
     <!-- ===================================================
@@ -168,7 +164,7 @@
     <!-- ===================================================
          3. Reusable Animated Metrics Counter
          =================================================== -->
-    <?php include("components/counter.html"); ?>
+    <?php include("components/counter.php"); ?>
 
 
     <!-- ===================================================
@@ -456,21 +452,18 @@
     <!-- ===================================================
          7. Call to Action Banner
          =================================================== -->
-    <section class="about-cta" id="cta">
-        <div class="about-cta__container">
-            <div class="about-cta__box">
-                <span class="about-cta__badge">Start Your Journey</span>
-                <h2 class="about-cta__title">Ready to Build a Bright Career?</h2>
-                <p class="about-cta__subtitle">
-                    Explore our industry-recognized programs or connect with our admissions counselors today.
-                </p>
-                <div class="about-cta__actions">
-                    <a href="courses.php" class="btn btn--primary">Explore Programs</a>
-                    <a href="contact.php" class="btn btn--secondary">Contact Admissions</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<?php
+$cta = [
+    'badge' => 'Start Your Journey',
+    'title' => 'Ready to Build a Bright Career?',
+    'subtitle' => 'Explore our industry-recognized programs or connect with our admissions counselors today.',
+    'actions' => [
+        ['label' => 'Explore Programs', 'url' => 'courses.php', 'class' => 'btn--primary'],
+        ['label' => 'Contact Admissions', 'url' => 'contact.php', 'class' => 'btn--secondary'],
+    ],
+];
+include('components/cta.php');
+?>
 
 
     <!-- Back to Top Button -->

@@ -101,6 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 0c. 1-Click Database Backup Export
     if ($action === 'download_db_backup') {
+        // Require explicit confirmation via POST parameter
+        if (($_POST['confirm_backup'] ?? '') !== 'yes') {
+            setFlash('danger', 'Please confirm the database backup download.');
+            header('Location: settings.php');
+            exit;
+        }
+
         if (!file_exists(DB_FILE_PATH)) {
             setFlash('danger', 'Database file not found.');
             header('Location: settings.php');
@@ -205,6 +212,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'message' => $message,
             'buttons' => $buttons,
         ];
+
+        // Keep the numbered-slot store (managed by Popup Manager) in sync so the
+        // two admin pages edit the same popup instead of clobbering each other.
+        $activeId = (int)getSetting('announcement_popup_active_id', '1');
+        if ($activeId <= 0) $activeId = 1;
+        $slotRaw = getSetting("announcement_popup_{$activeId}", '');
+        $slotData = json_decode($slotRaw, true);
+        if (is_array($slotData) && !empty($slotData['popup_name'])) {
+            $popup['popup_name'] = $slotData['popup_name'];
+        }
+        setSetting("announcement_popup_{$activeId}", json_encode($popup, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        setSetting('announcement_popup_active_id', (string)$activeId);
         setSetting('announcement_popup', json_encode($popup, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 
         setFlash('success', 'Announcement popup saved.');
@@ -537,9 +556,9 @@ $htaccessProtected = file_exists($htaccessDbPath);
                 <input type="hidden" name="current_image" value="<?= htmlspecialchars($popImage) ?>">
 
                 <div class="form-group" style="margin-bottom: 18px;">
-                    <label style="display: inline-flex; align-items: center; gap: 9px; font-size: 13.5px; cursor: pointer;">
+                    <label class="form-switch">
                         <input type="checkbox" name="enabled" value="1" <?= $popEnabled ? 'checked' : '' ?>>
-                        <strong>Show announcement popup on the homepage</strong>
+                        <span class="switch-label"><strong>Show announcement popup on the homepage</strong></span>
                     </label>
                     <div class="form-hint" style="margin-top: 5px;">Replaces the old header ticker. Visitors dismiss it with the &times; button; it returns automatically whenever you save new content.</div>
                 </div>
@@ -549,7 +568,7 @@ $htaccessProtected = file_exists($htaccessDbPath);
                         <label class="form-label">Optional Banner Image (top of popup)</label>
                         <input type="file" name="image" class="form-control image-preview-input" data-preview-target="popupImagePreview" accept="image/*">
                         <div style="margin-top: 8px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                            <img id="popupImagePreview" class="popup-image-preview" src="<?= $popImage !== '' ? '../' . htmlspecialchars($popImage) : '' ?>" alt="Popup banner preview" <?= $popImage === '' ? 'hidden' : '' ?> style="width: 140px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <img id="popupImagePreview" class="popup-image-preview" src="<?= $popImage !== '' ? '../' . htmlspecialchars($popImage) : '' ?>" alt="Popup banner preview" <?= $popImage === '' ? 'hidden' : '' ?> style="width: 140px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color);" loading="lazy">
                             <?php if ($popImage !== ''): ?>
                                 <label style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer;">
                                     <input type="checkbox" name="remove_image" value="1"> Remove current image
@@ -836,10 +855,13 @@ $htaccessProtected = file_exists($htaccessDbPath);
                                     data-confirm="Run SQLite VACUUM and index optimization? This may take a few seconds."
                                     data-confirm-form="#vacuum-form-settings">Run Optimize</button>
                         </form>
-                        <form method="POST" action="settings.php" style="display: inline;">
+                        <form method="POST" action="settings.php" style="display: inline;" id="backup-confirm-form">
                             <?= csrfField() ?>
                             <input type="hidden" name="action" value="download_db_backup">
-                            <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 8px;">
+                            <input type="hidden" name="confirm_backup" value="yes">
+                            <button type="button" class="btn btn-primary btn-sm" style="margin-left: 8px;"
+                                    data-confirm="Download a full backup of the database? This includes all admin credentials and site content."
+                                    data-confirm-form="#backup-confirm-form">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 Download DB Backup
                             </button>

@@ -74,25 +74,20 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="labs-hero" id="labs-hero">
-        <div class="labs-hero__overlay">
-            <div class="labs-hero__content">
-                <nav class="labs-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="labs-hero__breadcrumb-sep">/</span>
-                    <span>Facilities</span>
-                    <span class="labs-hero__breadcrumb-sep">/</span>
-                    <span id="labHeroBreadcrumb" aria-current="page"><?= htmlspecialchars($currentLab['code']) ?></span>
-                </nav>
-                <span id="labHeroBadge" class="labs-hero__badge"><?= htmlspecialchars($currentLab['badge']) ?></span>
-                <h1 id="labHeroTitle" class="labs-hero__title"><?= htmlspecialchars($currentLab['name']) ?></h1>
-                <p class="labs-hero__slogan">॥ क्रियासिद्धिः सत्त्वे भवति महतां नोपकरणे ॥</p>
-                <p id="labHeroSubtitle" class="labs-hero__subtitle">
-                    <?= htmlspecialchars($currentLab['tagline']) ?>
-                </p>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => htmlspecialchars($currentLab['name']),
+        'badge' => htmlspecialchars($currentLab['badge']),
+        'slogan' => '॥ क्रियासिद्धिः सत्त्वे भवति महतां नोपकरणे ॥',
+        'subtitle' => htmlspecialchars($currentLab['tagline']),
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'Facilities', 'url' => null],
+            ['label' => htmlspecialchars($currentLab['code']), 'current' => true],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -201,21 +196,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="labs-cta" id="cta">
-        <div class="labs-cta__container">
-            <div class="labs-cta__box">
-                <span class="labs-cta__badge">Hands-On Learning</span>
-                <h2 class="labs-cta__title">Experience Our Modern Infrastructure</h2>
-                <p class="labs-cta__subtitle">
-                    Discover why practical laboratory work at Shri V. J. Modha College builds superior technical competence.
-                </p>
-                <div class="labs-cta__actions">
-                    <a href="courses.php" class="btn btn--primary">Explore Programs</a>
-                    <a href="contact.php" class="btn btn--secondary">Schedule a Campus Visit</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Hands-On Learning',
+        'title' => 'Experience Our Modern Infrastructure',
+        'subtitle' => 'Discover why practical laboratory work at Shri V. J. Modha College builds superior technical competence.',
+        'actions' => [
+            ['label' => 'Explore Programs', 'url' => 'courses.php', 'class' => 'btn--primary'],
+            ['label' => 'Schedule a Campus Visit', 'url' => 'contact.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->

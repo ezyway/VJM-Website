@@ -42,65 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // 2. Animated Stats Counters (IntersectionObserver)
-    // ----------------------------------------------------
-    const counters = document.querySelectorAll('[data-target]');
-
-    function animateCount(element, duration = 2000) {
-        const targetString = element.getAttribute('data-target') || '0';
-        const isFloat = targetString.includes('.');
-        const percentSuffix = element.classList.contains('counter-section__pass-percentage');
-        const plusSuffix = element.classList.contains('counter-section__enrolled') ||
-                           element.classList.contains('counter-section__passouts');
-
-        const target = isFloat ? parseFloat(targetString) : parseInt(targetString, 10);
-        const decimalPlaces = isFloat ? (targetString.split('.')[1] || '').length : 0;
-        let startTime = null;
-
-        function easeOutQuad(t) {
-            return t * (2 - t);
-        }
-
-        function updateCount(timestamp) {
-            if (!startTime) startTime = timestamp;
-            const elapsed = timestamp - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easedProgress = easeOutQuad(progress);
-
-            if (progress < 1) {
-                const current = easedProgress * target;
-                element.textContent = isFloat ? current.toFixed(decimalPlaces) : Math.floor(current).toLocaleString();
-                requestAnimationFrame(updateCount);
-            } else {
-                element.textContent = isFloat ? target.toFixed(decimalPlaces) : target.toLocaleString();
-                if (plusSuffix) {
-                    element.textContent += '+';
-                }
-                if (percentSuffix) {
-                    element.textContent += '%';
-                }
-            }
-        }
-
-        requestAnimationFrame(updateCount);
-    }
-
-    if (counters.length > 0) {
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCount(entry.target, 2000);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        counters.forEach(counter => counterObserver.observe(counter));
-    }
-
-
-    // ----------------------------------------------------
-    // 3. Pride of College Slider (Fixed Auto & Manual Slide)
+    // 2. Pride of College Slider (Fixed Auto & Manual Slide)
     // ----------------------------------------------------
     const prideSliderWrapper = document.querySelector(".pride-section__slider-wrapper");
     const prideSlides = document.querySelectorAll(".pride-section__item");
@@ -261,34 +203,5 @@ document.addEventListener("DOMContentLoaded", () => {
         updateCarouselNavState();
     }
 
-
-    // ----------------------------------------------------
-    // 6. Back To Top Button
-    // ----------------------------------------------------
-    const backToTopButton = document.getElementById("backToTop");
-    const heroBanner = document.getElementById("video-banner");
-
-    function toggleBackToTop() {
-        if (!backToTopButton) return;
-        const triggerPoint = heroBanner ? heroBanner.offsetHeight * 0.7 : 400;
-
-        if (window.scrollY > triggerPoint) {
-            backToTopButton.classList.add("is-visible");
-        } else {
-            backToTopButton.classList.remove("is-visible");
-        }
-    }
-
-    window.addEventListener("scroll", toggleBackToTop, { passive: true });
-    toggleBackToTop();
-
-    if (backToTopButton) {
-        backToTopButton.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
 
 });

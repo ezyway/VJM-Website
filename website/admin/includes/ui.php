@@ -187,10 +187,17 @@ function formField(array $f, ?array $item): string
 
     $html = '<div class="form-group' . $full . '">';
 
-    if ($type === 'check') {
-        $html .= '<label style="display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; cursor: pointer;">'
-            . '<input type="checkbox" name="' . htmlspecialchars($name) . '" value="1"' . (!empty($raw) ? ' checked' : '') . '>'
-            . '<strong>' . ($f['checkText'] ?? '') . '</strong>'
+    if ($type === 'switch') {
+        $checked = !empty($raw) ? ' checked' : '';
+        $html .= '<label class="form-switch">'
+            . '<input type="checkbox" name="' . htmlspecialchars($name) . '" id="' . htmlspecialchars($name) . '" value="1"' . $checked . '>'
+            . '<span class="switch-label">' . ($f['checkText'] ?? $f['label'] ?? '') . '</span>'
+            . '</label>';
+    } elseif ($type === 'check') {
+        $checked = !empty($raw) ? ' checked' : '';
+        $html .= '<label style="display: inline-flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer; user-select: none;">'
+            . '<input type="checkbox" name="' . htmlspecialchars($name) . '" id="' . htmlspecialchars($name) . '" value="1"' . $checked . '>'
+            . '<span style="color: var(--text-main); font-weight: 600;">' . ($f['checkText'] ?? '') . '</span>'
             . '</label>';
     } else {
         $label = $f['label'] ?? '';
@@ -208,6 +215,17 @@ function formField(array $f, ?array $item): string
                     . $required
                     . (isset($f['placeholder']) ? ' placeholder="' . $f['placeholder'] . '"' : '')
                     . '>' . $value . '</textarea>';
+                break;
+
+            case 'rating':
+                $cur = (int)($raw ?? ($f['createDefault'] ?? 5));
+                $html .= '<input type="hidden" name="' . htmlspecialchars($name) . '" id="' . htmlspecialchars($name) . '" value="' . $cur . '">';
+                $html .= '<div class="rating-pills" role="radiogroup" aria-label="Star rating">';
+                for ($i = 1; $i <= 5; $i++) {
+                    $sel = $i <= $cur ? ' active' : '';
+                    $html .= '<button type="button" class="rating-star' . $sel . '" data-rating="' . $i . '" aria-label="' . $i . ' star' . ($i > 1 ? 's' : '') . '">★</button>';
+                }
+                $html .= '</div>';
                 break;
 
             case 'select':
@@ -243,7 +261,7 @@ function formField(array $f, ?array $item): string
         $imgPath = is_callable($p['img'] ?? null) ? $p['img']($item) : ($p['img'] ?? 'assets/logo.ico');
         $hint = $p['hint'] ?? 'Upload JPG, PNG or WebP image.';
         $html .= '<div style="margin-top: 8px; display: flex; align-items: center; gap: 12px;">'
-            . '<img id="' . htmlspecialchars($p['id'] ?? '') . '" class="preview-avatar" src="../' . htmlspecialchars($imgPath) . '" onerror="this.src=\'../assets/logo.ico\'">'
+            . '<img id="' . htmlspecialchars($p['id'] ?? '') . '" class="preview-avatar" src="../' . htmlspecialchars($imgPath) . '" loading="lazy" onerror="this.src=\'../assets/logo.ico\'">'
             . '<span class="form-hint">' . $hint . '</span>'
             . '</div>';
     }

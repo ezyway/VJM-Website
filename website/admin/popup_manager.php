@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // ---- Delete Popup ----
-    if ($action === 'delete_popup') {
+    if ($action === 'delete_popup' || $action === 'delete') {
         $popupId = isset($_POST['id']) && ctype_digit((string)$_POST['id'])
             ? (int)$_POST['id'] : 0;
 
@@ -259,13 +259,13 @@ if ($editItem || $isCreate) {
             <input type="hidden" name="current_image" id="currentImageField" value="<?= htmlspecialchars($itemImage) ?>">
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; background: var(--bg-input); padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-                <label style="display: inline-flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer;">
+                <label class="form-switch">
                     <input type="checkbox" name="enabled" value="1" id="popupEnabled" <?= $itemEnabled ? 'checked' : '' ?>>
-                    <span><strong>Enable this popup</strong> (Mark active)</span>
+                    <span class="switch-label"><strong>Enable this popup</strong> (Mark active)</span>
                 </label>
-                <label style="display: inline-flex; align-items: center; gap: 10px; font-size: 13.5px; cursor: pointer;">
+                <label class="form-switch">
                     <input type="checkbox" name="set_as_homepage" value="1" id="popupSetHomepage" <?= $itemIsLive ? 'checked' : '' ?>>
-                    <span><strong style="color: var(--primary);">Set as live homepage announcement</strong></span>
+                    <span class="switch-label"><strong style="color: var(--primary);">Set as live homepage announcement</strong></span>
                 </label>
             </div>
 
@@ -305,7 +305,7 @@ if ($editItem || $isCreate) {
                     <div style="margin-top: 10px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
                         <img id="popupImagePreview" class="preview-thumbnail" 
                              src="<?= $itemImage !== '' ? '../' . htmlspecialchars($itemImage) : '' ?>" 
-                             alt="Popup banner" 
+                             alt="Popup banner" loading="lazy"
                              style="width: 140px; height: 60px; object-fit: cover; border-radius: var(--radius-md); <?= $itemImage === '' ? 'display: none;' : '' ?>">
                         <?php if ($itemImage !== ''): ?>
                             <label style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer;">
@@ -360,20 +360,7 @@ if ($editItem || $isCreate) {
 
                 <div id="popupPreviewContainer" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; min-height: 300px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
                     <style>
-                        .vjm-pop-overlay-preview{position:relative;display:flex;align-items:center;justify-content:center;padding:10px;margin:0 auto;width:100%;max-width:440px}
-                        .vjm-pop-card-preview{position:relative;width:100%;background:#ffffff;border-radius:18px;box-shadow:0 20px 60px -10px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.1) inset;overflow:hidden}
-                        .vjm-pop-close-preview{position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.35);border:0;color:#fff;font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
-                        .vjm-pop-close-preview::before{content:"×"}
-                        .vjm-pop-media-preview{width:100%;height:120px;object-fit:cover;display:block}
-                        .vjm-pop-body-preview{padding:22px 24px 24px;color:#16302b;font-family:'Montserrat',sans-serif}
-                        .vjm-pop-badge-preview{display:inline-block;background:linear-gradient(90deg,#155C4F,#1c8a72);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:10px}
-                        .vjm-pop-title-preview{font-size:18px;font-weight:800;line-height:1.25;margin:0 0 8px;color:#0e2a24}
-                        .vjm-pop-message-preview{font-size:13px;line-height:1.65;color:#42534e;margin:0 0 18px;white-space:pre-line}
-                        .vjm-pop-actions-preview{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-                        .vjm-pop-btn-preview{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:12.5px;font-weight:700;padding:9px 18px;border-radius:8px;transition:transform .15s ease}
-                        .vjm-pop-btn-preview--primary{background:linear-gradient(90deg,#155C4F,#1c8a72);color:#fff;box-shadow:0 4px 14px -3px rgba(21,92,79,.5)}
-                        .vjm-pop-btn-preview--secondary{background:#0e2a24;color:#fff}
-                        .vjm-pop-btn-preview--outline{background:transparent;color:#155C4F;border:1.5px solid #155C4F}
+                        .vjm-pop-preview-container{position:relative;display:flex;align-items:center;justify-content:center;padding:10px;margin:0 auto;width:100%;max-width:440px}
                     </style>
                     <div id="previewContent" style="width: 100%;"></div>
                 </div>
@@ -487,36 +474,36 @@ if ($editItem || $isCreate) {
             return;
         }
 
-        var html = '<div class="vjm-pop-overlay-preview"><div class="vjm-pop-card-preview">';
+        var html = '<div class="vjm-pop-preview-container"><div class="vjm-pop-card">';
 
         if (data.image) {
             var rawImg = data.image;
             var src = (rawImg.startsWith('data:') || rawImg.startsWith('http://') || rawImg.startsWith('https://'))
                 ? rawImg
                 : ('../' + escapeHtml(rawImg.replace(/^\/+/, '')));
-            html += '<img class="vjm-pop-media-preview" src="' + src + '" alt="" onerror="this.style.display=\'none\'">';
+            html += '<img class="vjm-pop-media" src="' + src + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">';
         }
 
-        html += '<button class="vjm-pop-close-preview" type="button" aria-label="Close"></button>';
-        html += '<div class="vjm-pop-body-preview">';
+        html += '<button class="vjm-pop-close" type="button" aria-label="Close"></button>';
+        html += '<div class="vjm-pop-body">';
 
         if (data.badge) {
-            html += '<span class="vjm-pop-badge-preview">' + escapeHtml(data.badge) + '</span>';
+            html += '<span class="vjm-pop-badge">' + escapeHtml(data.badge) + '</span>';
         }
 
         if (data.title) {
-            html += '<h2 class="vjm-pop-title-preview">' + escapeHtml(data.title) + '</h2>';
+            html += '<h2 class="vjm-pop-title">' + escapeHtml(data.title) + '</h2>';
         }
 
         if (data.message) {
-            html += '<p class="vjm-pop-message-preview">' + escapeHtml(data.message).replace(/\n/g, '<br>') + '</p>';
+            html += '<p class="vjm-pop-message">' + escapeHtml(data.message).replace(/\n/g, '<br>') + '</p>';
         }
 
         if (data.buttons.length > 0) {
-            html += '<div class="vjm-pop-actions-preview">';
+            html += '<div class="vjm-pop-actions">';
             data.buttons.forEach(function(b) {
                 var btnStyle = b.style || 'primary';
-                html += '<a href="' + (escapeHtml(b.url) || '#') + '" class="vjm-pop-btn-preview vjm-pop-btn-preview--' + escapeHtml(btnStyle) + '">' + escapeHtml(b.label || 'Learn More') + '</a>';
+                html += '<a href="' + (escapeHtml(b.url) || '#') + '" class="vjm-pop-btn vjm-pop-btn--' + escapeHtml(btnStyle) + '">' + escapeHtml(b.label || 'Learn More') + '</a>';
             });
             html += '</div>';
         }
@@ -622,151 +609,60 @@ if (isset($popups[$activeHomepageId])) {
     </div>
 </div>
 
-<!-- Main Popups Table Panel -->
-<div class="panel">
-    <div class="panel-header">
-        <div style="display: flex; align-items: center; gap: 16px; flex: 1; flex-wrap: wrap;">
-            <div class="panel-title">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                Announcement Popups (<?= count($popups) ?>)
-            </div>
-            <input type="text" class="form-control" data-table-search="popupsTable" placeholder="Search popups by title, badge, message..." style="max-width: 320px; font-size: 13px;">
-        </div>
-        <a href="popup_manager.php?action=create<?= $drawerUrlSuffix ?>" 
-           data-drawer-url="popup_manager.php?action=create<?= $drawerUrlSuffix ?>" 
-           data-drawer-title="Create Announcement Popup" 
-           class="btn btn-primary btn-sm">
-            <?= icon('plus', 14) ?> Add New Popup
-        </a>
-    </div>
-
-    <div class="panel-body" style="padding: 0;">
-        <div class="table-responsive">
-            <table class="admin-table" id="popupsTable">
-                <thead>
-                    <tr>
-                        <th style="width: 60px;">Slot</th>
-                        <th>Popup Name</th>
-                        <th style="width: 100px;">Status</th>
-                        <th>Headline &amp; Eyebrow</th>
-                        <th>Message Preview</th>
-                        <th style="width: 80px;">Banner</th>
-                        <th style="width: 90px;">Buttons</th>
-                        <th style="text-align: right; min-width: 220px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($popups)): ?>
-                        <tr>
-                            <td colspan="8" class="empty-cell">
-                                No announcement popups configured yet. Click <strong>Add New Popup</strong> to create one.
-                            </td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($popups as $id => $popup): ?>
-                            <?php
-                            $isLive = ($id === $activeHomepageId);
-                            $isEnabled = !empty($popup['enabled']);
-                            $popupLabel = !empty($popup['popup_name'])
-                                ? htmlspecialchars($popup['popup_name'])
-                                : (!empty($popup['title']) ? htmlspecialchars($popup['title']) : "Popup #{$id}");
-                            $btnCount = isset($popup['buttons']) && is_array($popup['buttons']) ? count($popup['buttons']) : 0;
-                            $hasImage = !empty($popup['image']);
-                            ?>
-                            <tr>
-                                <td><span class="badge badge-secondary order-badge">#<?= (int)$id ?></span></td>
-                                <td>
-                                    <div style="font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
-                                        <span><?= $popupLabel ?></span>
-                                        <?php if ($isLive): ?>
-                                            <span class="badge badge-primary" title="Currently active on public website homepage">Homepage Live</span>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <?php if ($isEnabled): ?>
-                                        <span class="badge badge-success">Active</span>
-                                    <?php else: ?>
-                                        <span class="badge badge-secondary">Disabled</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <div style="font-size: 13.5px; font-weight: 600; color: var(--text-main);">
-                                        <?= !empty($popup['title']) ? htmlspecialchars($popup['title']) : '<span style="color: var(--text-muted); font-weight: 400;">(No headline)</span>' ?>
-                                    </div>
-                                    <?php if (!empty($popup['badge'])): ?>
-                                        <div style="margin-top: 3px;">
-                                            <span class="badge badge-info" style="font-size: 10px;"><?= htmlspecialchars($popup['badge']) ?></span>
-                                        </div>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <div style="color: var(--text-muted); font-size: 12.5px; max-width: 260px; line-height: 1.4;">
-                                        <?= !empty($popup['message']) ? htmlspecialchars(mb_strimwidth($popup['message'], 0, 75, '…')) : '<span style="color: var(--text-muted); font-style: italic;">No message body</span>' ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <?php if ($hasImage): ?>
-                                        <img src="../<?= htmlspecialchars($popup['image']) ?>" alt="Banner" style="width: 48px; height: 28px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);" onerror="this.style.display='none'">
-                                    <?php else: ?>
-                                        <span style="color: var(--text-muted); font-size: 12px;">—</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <?php if ($btnCount > 0): ?>
-                                        <span class="badge badge-secondary"><?= $btnCount ?> btn<?= $btnCount > 1 ? 's' : '' ?></span>
-                                    <?php else: ?>
-                                        <span style="color: var(--text-muted); font-size: 12px;">None</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td style="text-align: right;">
-                                    <div style="display: inline-flex; gap: 6px; align-items: center;">
-                                        <?php if (!$isLive): ?>
-                                            <form method="POST" action="popup_manager.php<?= $drawerParam ?>" style="display: inline;">
-                                                <?= csrfField() ?>
-                                                <input type="hidden" name="action" value="set_active">
-                                                <input type="hidden" name="id" value="<?= (int)$id ?>">
-                                                <button type="submit" class="btn btn-secondary btn-sm" title="Publish this popup to homepage">
-                                                    Make Live
-                                                </button>
-                                            </form>
-                                        <?php endif; ?>
-
-                                        <a href="popup_manager.php?edit=<?= (int)$id ?><?= $drawerUrlSuffix ?>" 
-                                           data-drawer-url="popup_manager.php?edit=<?= (int)$id ?><?= $drawerUrlSuffix ?>" 
-                                           data-drawer-title="Edit Popup #<?= (int)$id ?>" 
-                                           class="btn btn-secondary btn-sm">
-                                            Edit
-                                        </a>
-
-                                        <form method="POST" action="popup_manager.php<?= $drawerParam ?>" style="display: inline;">
-                                            <?= csrfField() ?>
-                                            <input type="hidden" name="action" value="duplicate_popup">
-                                            <input type="hidden" name="id" value="<?= (int)$id ?>">
-                                            <button type="submit" class="btn btn-secondary btn-sm btn-icon" title="Duplicate popup">
-                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                            </button>
-                                        </form>
-
-                                        <form method="POST" action="popup_manager.php<?= $drawerParam ?>" style="display: inline;" id="delete-popup-<?= (int)$id ?>">
-                                            <?= csrfField() ?>
-                                            <input type="hidden" name="action" value="delete_popup">
-                                            <input type="hidden" name="id" value="<?= (int)$id ?>">
-                                            <button type="button" class="btn btn-danger btn-sm" 
-                                                    data-confirm="Delete Popup #<?= (int)$id ?>? This cannot be undone." 
-                                                    data-confirm-form="#delete-popup-<?= (int)$id ?>">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<?php
+$popupRows = [];
+foreach ($popups as $pid => $p) {
+    $popupRows[] = array_merge(['id' => $pid], $p);
+}
+crudListPanel([
+    'page'              => 'popup_manager.php',
+    'pageParam'         => $drawerParam,
+    'suffix'            => $drawerUrlSuffix,
+    'listTitleHtml'     => 'Announcement Popups (' . count($popupRows) . ')',
+    'rows'              => $popupRows,
+    'tableId'           => 'popupsTable',
+    'searchPlaceholder' => 'Search popups by title, badge, message...',
+    'emptyText'         => 'No announcement popups configured yet. Click <strong>Add New Popup</strong> to create one.',
+    'add'               => ['url' => 'popup_manager.php?action=create', 'drawerTitle' => 'Create Announcement Popup', 'label' => 'Add New Popup'],
+    'columns'           => [
+        ['th' => 'Slot', 'td' => fn($r) => '<span class="badge badge-secondary order-badge">#' . (int)$r['id'] . '</span>'],
+        ['th' => 'Popup Name', 'td' => function ($r) use ($activeHomepageId) {
+            $label = !empty($r['popup_name']) ? htmlspecialchars($r['popup_name']) : (!empty($r['title']) ? htmlspecialchars($r['title']) : 'Popup #' . (int)$r['id']);
+            $live = ((int)$r['id'] === $activeHomepageId) ? ' <span class="badge badge-primary" title="Currently active on public website homepage">Homepage Live</span>' : '';
+            return '<div style="font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 8px;"><span>' . $label . '</span>' . $live . '</div>';
+        }],
+        ['th' => 'Status', 'td' => fn($r) => !empty($r['enabled']) ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">Disabled</span>'],
+        ['th' => 'Headline &amp; Eyebrow', 'td' => function ($r) {
+            $t = !empty($r['title']) ? htmlspecialchars($r['title']) : '<span style="color: var(--text-muted); font-weight: 400;">(No headline)</span>';
+            $b = !empty($r['badge']) ? '<div style="margin-top: 3px;"><span class="badge badge-info" style="font-size: 10px;">' . htmlspecialchars($r['badge']) . '</span></div>' : '';
+            return '<div style="font-size: 13.5px; font-weight: 600; color: var(--text-main);">' . $t . '</div>' . $b;
+        }],
+        ['th' => 'Message Preview', 'td' => fn($r) => '<div style="color: var(--text-muted); font-size: 12.5px; max-width: 260px; line-height: 1.4;">' . (!empty($r['message']) ? htmlspecialchars(mb_strimwidth($r['message'], 0, 75, '…')) : '<span style="color: var(--text-muted); font-style: italic;">No message body</span>') . '</div>'],
+        ['th' => 'Banner', 'td' => fn($r) => !empty($r['image']) ? '<img src="../' . htmlspecialchars($r['image']) . '" alt="Banner" loading="lazy" style="width: 48px; height: 28px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);" onerror="this.style.display=\'none\'">' : '<span style="color: var(--text-muted); font-size: 12px;">—</span>'],
+        ['th' => 'Buttons', 'td' => function ($r) {
+            $n = (isset($r['buttons']) && is_array($r['buttons'])) ? count($r['buttons']) : 0;
+            return $n > 0 ? '<span class="badge badge-secondary">' . $n . ' btn' . ($n > 1 ? 's' : '') . '</span>' : '<span style="color: var(--text-muted); font-size: 12px;">None</span>';
+        }],
+    ],
+    'editUrl'           => fn($r) => 'popup_manager.php?edit=' . (int)$r['id'],
+    'actions'           => ['edit' => ['drawerTitle' => 'Edit Popup'], 'delete' => true],
+    'deleteConfirm'     => fn($r) => 'Delete Popup #' . (int)$r['id'] . '? This cannot be undone.',
+    'formPrefix'        => 'popup',
+    'extraButtons'      => function ($r) use ($activeHomepageId, $drawerParam) {
+        $btns = [];
+        if ((int)$r['id'] !== $activeHomepageId) {
+            $btns[] = '<form method="POST" action="popup_manager.php' . $drawerParam . '" style="display: inline;">' . csrfField()
+                . '<input type="hidden" name="action" value="set_active">'
+                . '<input type="hidden" name="id" value="' . (int)$r['id'] . '">'
+                . '<button type="submit" class="btn btn-secondary btn-sm" title="Publish this popup to homepage">Make Live</button></form>';
+        }
+        $btns[] = '<form method="POST" action="popup_manager.php' . $drawerParam . '" style="display: inline;">' . csrfField()
+            . '<input type="hidden" name="action" value="duplicate_popup">'
+            . '<input type="hidden" name="id" value="' . (int)$r['id'] . '">'
+            . '<button type="submit" class="btn btn-secondary btn-sm btn-icon" title="Duplicate popup"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></form>';
+        return $btns;
+    },
+]);
+?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

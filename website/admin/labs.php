@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tagline     = trim($_POST['tagline'] ?? '');
         $badge       = trim($_POST['badge'] ?? '');
         $description = trim($_POST['description'] ?? '');
-        $sort_order  = (int)($_POST['sort_order'] ?? 0);
 
         // Features list
         $rawFeat = explode("\n", str_replace("\r", "", $_POST['features'] ?? ''));
@@ -48,12 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $specsJson = json_encode($specs);
 
         if (empty($slug) || empty($name)) {
-            setFlash('danger', 'Lab slug and name are required.');
-            crudRedirect('labs.php', $isDrawerMode);
+            crudFormFail('Lab slug and name are required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE labs SET slug = :s, name = :n, code = :c, tagline = :t, badge = :b, description = :d, features = :f, specs = :sp, sort_order = :so WHERE id = :id');
+            $stmt = $db->prepare('UPDATE labs SET slug = :s, name = :n, code = :c, tagline = :t, badge = :b, description = :d, features = :f, specs = :sp WHERE id = :id');
             $stmt->execute([
                 ':s'  => $slug,
                 ':n'  => $name,
@@ -63,12 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':d'  => $description,
                 ':f'  => $featuresJson,
                 ':sp' => $specsJson,
-                ':so' => $sort_order,
                 ':id' => $id
             ]);
             setFlash('success', 'Lab details updated successfully.');
         } else {
-            $stmt = $db->prepare('INSERT INTO labs (slug, name, code, tagline, badge, description, features, specs, sort_order) VALUES (:s, :n, :c, :t, :b, :d, :f, :sp, :so)');
+            $stmt = $db->prepare('INSERT INTO labs (slug, name, code, tagline, badge, description, features, specs, sort_order) VALUES (:s, :n, :c, :t, :b, :d, :f, :sp, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM labs))');
             $stmt->execute([
                 ':s'  => $slug,
                 ':n'  => $name,
@@ -78,7 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':d'  => $description,
                 ':f'  => $featuresJson,
                 ':sp' => $specsJson,
-                ':so' => $sort_order
             ]);
             setFlash('success', 'New lab facility created.');
         }
@@ -107,7 +103,6 @@ if ($editItem || $isCreate) {
             ['name' => 'name', 'label' => 'Laboratory Full Name *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. Computer &amp; Advanced IT Lab'],
             ['name' => 'code', 'label' => 'Short Code / Tab Label *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. Computer Lab'],
             ['name' => 'badge', 'label' => 'Department Badge', 'type' => 'text', 'placeholder' => 'e.g. IT &amp; Computer Applications'],
-            ['name' => 'sort_order', 'label' => 'Display Order', 'type' => 'number', 'default' => '1'],
             ['name' => 'tagline', 'label' => 'Tagline', 'type' => 'text', 'full' => true, 'placeholder' => 'e.g. High-Speed Computing, Modern IDEs &amp; Software Innovation'],
             ['name' => 'description', 'label' => 'Detailed Description', 'type' => 'textarea', 'full' => true, 'rows' => 3],
             ['name' => 'features', 'label' => 'Key Features (One feature per line)', 'type' => 'textarea', 'full' => true, 'rows' => 4, 'placeholder' => 'High-Speed Gigabit LAN &amp; Enterprise Wi-Fi&#10;Latest Development IDEs, Python, Java', 'load' => fn($item) => is_array($arr = json_decode($item['features'] ?? '[]', true)) ? implode("\n", $arr) : ''],

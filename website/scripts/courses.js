@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentActiveCourse = payload.initialCourse || null;
     let isTransitioning = false;
+    let renderTimer = null;
 
     /**
      * Strip HTML helper
@@ -62,6 +63,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const tmp = document.createElement("DIV");
         tmp.innerHTML = html;
         return tmp.textContent || tmp.innerText || "";
+    }
+
+    /**
+     * Safe HTML helper - escapes all but <sup> tags
+     */
+    function safeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        let html = div.innerHTML;
+        html = html.replace(/&lt;(\/?sup)&gt;/gi, '<$1>');
+        return html;
     }
 
     /**
@@ -104,7 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
             detailGrid.style.transform = "translateY(8px) scale(0.995)";
         }
 
-        setTimeout(() => {
+        if (renderTimer) {
+            clearTimeout(renderTimer);
+            renderTimer = null;
+        }
+
+        renderTimer = setTimeout(() => {
             // 1. Update Hero
             if (heroBreadcrumb) heroBreadcrumb.textContent = cMeta.code;
             if (heroBadge) heroBadge.textContent = `${cMeta.level} • ${cMeta.dept}`;
@@ -113,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const faq = cData.faq || [];
             if (heroDuration) heroDuration.textContent = faq[2] || cMeta.duration;
             if (heroMedium) heroMedium.textContent = stripHtml(faq[1] || cMeta.medium);
-            if (heroEligibility) heroEligibility.textContent = stripHtml(faq[0] || "12th Pass");
+            if (heroEligibility) heroEligibility.innerHTML = faq[0] || "12<sup>th</sup> Pass";
 
             // 2. Update Overview
             if (aboutTitle) aboutTitle.textContent = `About ${cMeta.code}`;
@@ -126,10 +144,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     const chip = document.createElement("div");
                     chip.className = "job-role-chip";
                     chip.style.animation = `facultyCardPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${Math.min(idx * 30, 200)}ms forwards`;
-                    chip.innerHTML = `
-                        <div class="job-role-chip__bullet"></div>
-                        <span>${role}</span>
-                    `;
+                    const bullet = document.createElement('div');
+                    bullet.className = 'job-role-chip__bullet';
+                    const span = document.createElement('span');
+                    span.textContent = role;
+                    chip.innerHTML = '';
+                    chip.appendChild(bullet);
+                    chip.appendChild(span);
                     jobRolesGrid.appendChild(chip);
                 });
             }
@@ -189,6 +210,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             }
+
+            renderTimer = null;
         }, 120);
     }
 
@@ -364,34 +387,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    // ----------------------------------------------------
-    // 4. Back To Top Button Handler
-    // ----------------------------------------------------
-    const backToTopBtn = document.getElementById("backToTop");
-    const heroSection = document.getElementById("course-hero") || document.getElementById("courses-hero");
-
-    function toggleBackToTop() {
-        if (!backToTopBtn) return;
-        const triggerPoint = heroSection ? heroSection.offsetHeight * 0.6 : 300;
-
-        if (window.scrollY > triggerPoint) {
-            backToTopBtn.classList.add("is-visible");
-        } else {
-            backToTopBtn.classList.remove("is-visible");
-        }
-    }
-
-    window.addEventListener("scroll", toggleBackToTop, { passive: true });
-    toggleBackToTop();
-
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
 
 });

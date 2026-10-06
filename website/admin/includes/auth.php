@@ -9,6 +9,7 @@ require_once __DIR__ . '/db.php';
 function startAdminSession(): void {
     if (!headers_sent()) {
         header('X-Frame-Options: SAMEORIGIN');
+        header("Content-Security-Policy: frame-ancestors 'self'");
         header('X-Content-Type-Options: nosniff');
         header('Referrer-Policy: strict-origin-when-cross-origin');
         header('X-XSS-Protection: 1; mode=block');
@@ -17,12 +18,10 @@ function startAdminSession(): void {
     if (session_status() === PHP_SESSION_NONE) {
         $lifetime = 3600 * 8; // 8 hours
         ini_set('session.cookie_lifetime', (string)$lifetime);
+        ini_set('session.cookie_secure', '1');
         ini_set('session.cookie_httponly', '1');
-        ini_set('session.cookie_samesite', 'Lax');
+        ini_set('session.cookie_samesite', 'Strict');
         ini_set('session.use_strict_mode', '1');
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            ini_set('session.cookie_secure', '1');
-        }
         session_start();
     }
 }
@@ -149,6 +148,14 @@ function handleAdminUpload(array $file, string $subDirectory, array $allowedExts
         return ['success' => false, 'error' => 'Invalid file format. Allowed: ' . implode(', ', $allowedExts)];
     }
 
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+    $allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'application/pdf'];
+    if (!in_array($mimeType, $allowedMimes, true)) {
+        return ['success' => false, 'error' => 'Invalid file type'];
+    }
+
     // Base uploads directory: website/assets/uploads/
     $baseUploadDir = dirname(__DIR__, 2) . '/assets/uploads/' . trim($subDirectory, '/') . '/';
     if (!is_dir($baseUploadDir)) {
@@ -191,14 +198,17 @@ function optimizeUploadedImage(string $filePath, string $ext, int $maxDimension 
     $src = null;
     switch ($type) {
         case IMAGETYPE_JPEG:
-            $src = @imagecreatefromjpeg($filePath);
+            $src = imagecreatefromjpeg($filePath);
+            if ($src === false) return;
             break;
         case IMAGETYPE_PNG:
-            $src = @imagecreatefrompng($filePath);
+            $src = imagecreatefrompng($filePath);
+            if ($src === false) return;
             break;
         case IMAGETYPE_WEBP:
             if (function_exists('imagecreatefromwebp')) {
-                $src = @imagecreatefromwebp($filePath);
+                $src = imagecreatefromwebp($filePath);
+                if ($src === false) return;
             }
             break;
     }
@@ -239,6 +249,12 @@ function optimizeUploadedImage(string $filePath, string $ext, int $maxDimension 
             break;
     }
 
+    // After optimizing, also create a WebP version
+    if (function_exists('imagewebp')) {
+        $webPPath = $filePath . '.webp';
+        imagewebp($dst, $webPPath, 80);
+    }
+
     imagedestroy($src);
     imagedestroy($dst);
 }
@@ -252,7 +268,7 @@ function logAdminActivity(string $action, string $entityType, int $entityId = 0,
         $admin = getCurrentAdmin();
         $adminId = $admin ? (int)$admin['id'] : 0;
         $adminUsername = $admin ? $admin['username'] : 'system';
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 
         $stmt = $db->prepare('INSERT INTO activity_logs (admin_id, admin_username, action, entity_type, entity_id, details, ip_address) VALUES (:aid, :u, :act, :ent, :eid, :det, :ip)');
         $stmt->execute([
@@ -264,7 +280,9 @@ function logAdminActivity(string $action, string $entityType, int $entityId = 0,
             ':det' => $details,
             ':ip'  => $ip
         ]);
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+        error_log('Activity log failed: ' . $e->getMessage());
+    }
 }
 
 /**

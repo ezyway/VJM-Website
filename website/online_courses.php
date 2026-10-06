@@ -82,25 +82,20 @@
     <!-- ===================================================
          1. Hero Header Banner
          =================================================== -->
-    <header class="online-hero" id="online-hero">
-        <div class="online-hero__overlay">
-            <div class="online-hero__content">
-                <nav class="online-hero__breadcrumb" aria-label="Breadcrumb">
-                    <a href="index.php">Home</a>
-                    <span class="online-hero__breadcrumb-sep">/</span>
-                    <span>More</span>
-                    <span class="online-hero__breadcrumb-sep">/</span>
-                    <span aria-current="page">Online Courses</span>
-                </nav>
-                <span class="online-hero__badge">Value Added E-Learning &amp; Certifications</span>
-                <h1 class="online-hero__title">Free Online Courses &amp; MOOCs</h1>
-                <p class="online-hero__slogan">॥ विद्या सर्वधनं प्रधानम् ॥</p>
-                <p class="online-hero__subtitle">
-                    Expand your horizons, gain industry-ready skills, and earn certified academic credits with premier government-backed digital learning platforms.
-                </p>
-            </div>
-        </div>
-    </header>
+    <?php
+    $hero = [
+        'title' => 'Free Online Courses & MOOCs',
+        'badge' => 'Value Added E-Learning & Certifications',
+        'slogan' => '॥ विद्या सर्वधनं प्रधानम् ॥',
+        'subtitle' => 'Expand your horizons, gain industry-ready skills, and earn certified academic credits with premier government-backed digital learning platforms.',
+        'breadcrumb' => [
+            ['label' => 'Home', 'url' => 'index.php'],
+            ['label' => 'More', 'url' => null],
+            ['label' => 'Online Courses', 'current' => true],
+        ],
+    ];
+    include('components/hero.php');
+    ?>
 
 
     <!-- ===================================================
@@ -148,21 +143,18 @@
     <!-- ===================================================
          3. Reusable Call to Action
          =================================================== -->
-    <section class="online-cta" id="cta">
-        <div class="online-cta__container">
-            <div class="online-cta__box">
-                <span class="online-cta__badge">Continuous Learning</span>
-                <h2 class="online-cta__title">Empower Your Career with In-Demand Skills</h2>
-                <p class="online-cta__subtitle">
-                    Complement your college degree with verified MOOC certificates and real-world project portfolios.
-                </p>
-                <div class="online-cta__actions">
-                    <a href="courses.php" class="btn btn--primary">View College Programs</a>
-                    <a href="contact.php" class="btn btn--secondary">Contact Career Counseling</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <?php
+    $cta = [
+        'badge' => 'Continuous Learning',
+        'title' => 'Empower Your Career with In-Demand Skills',
+        'subtitle' => 'Complement your college degree with verified MOOC certificates and real-world project portfolios.',
+        'actions' => [
+            ['label' => 'View College Programs', 'url' => 'courses.php', 'class' => 'btn--primary'],
+            ['label' => 'Contact Career Counseling', 'url' => 'contact.php', 'class' => 'btn--secondary'],
+        ],
+    ];
+    include('components/cta.php');
+    ?>
 
 
     <!-- Back to Top Button -->

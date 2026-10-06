@@ -16,7 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if ($action === 'delete') {
-        crudDelete($db, 'magazines', (int)($_POST['id'] ?? 0), 'Magazine edition deleted.', $isDrawerMode, 'magazines.php');
+        $id = (int)($_POST['id'] ?? 0);
+        // Fetch the file path before deleting the DB record
+        $stmtFile = $db->prepare('SELECT file_path FROM magazines WHERE id = :id');
+        $stmtFile->execute([':id' => $id]);
+        $filePath = $stmtFile->fetchColumn();
+        if ($filePath) {
+            $fullPath = dirname(__DIR__) . '/' . $filePath;
+            if (file_exists($fullPath)) {
+                @unlink($fullPath);
+            }
+        }
+        crudDelete($db, 'magazines', $id, 'Magazine edition deleted.', $isDrawerMode, 'magazines.php');
     }
 
     if ($action === 'save') {
@@ -28,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $file_size   = trim($_POST['file_size'] ?? '');
         $pages       = trim($_POST['pages'] ?? 'Full Edition');
         $badge       = trim($_POST['badge'] ?? '');
-        $sort_order  = (int)($_POST['sort_order'] ?? 0);
         $currentFile = trim($_POST['current_file'] ?? '');
 
         $filePath = $currentFile;
@@ -36,21 +46,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $upload = handleAdminUpload($_FILES['pdf_file'], 'emag', ['pdf']);
             if ($upload['success']) {
                 $filePath = $upload['path'];
+                if ($id > 0 && $currentFile && $currentFile !== $filePath) {
+                    $oldFull = dirname(__DIR__) . '/' . $currentFile;
+                    if (file_exists($oldFull)) @unlink($oldFull);
+                }
                 $bytes = $_FILES['pdf_file']['size'];
                 $file_size = '~' . round($bytes / (1024 * 1024), 1) . ' MB';
             } else {
-                setFlash('danger', 'PDF upload failed: ' . $upload['error']);
-                crudRedirect('magazines.php', $isDrawerMode);
+                crudFormFail('PDF upload failed: ' . $upload['error']);
             }
         }
 
         if (empty($title) || empty($year) || empty($filePath)) {
-            setFlash('danger', 'Title, Year, and PDF file are required.');
-            crudRedirect('magazines.php', $isDrawerMode);
+            crudFormFail('Title, Year, and PDF file are required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE magazines SET year = :yr, title = :t, edition = :ed, theme = :th, file_path = :fp, file_size = :fs, pages = :pg, badge = :b, sort_order = :so WHERE id = :id');
+            $stmt = $db->prepare('UPDATE magazines SET year = :yr, title = :t, edition = :ed, theme = :th, file_path = :fp, file_size = :fs, pages = :pg, badge = :b WHERE id = :id');
             $stmt->execute([
                 ':yr' => $year,
                 ':t'  => $title,
@@ -60,12 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':fs' => $file_size,
                 ':pg' => $pages,
                 ':b'  => $badge,
-                ':so' => $sort_order,
                 ':id' => $id
             ]);
             setFlash('success', 'Magazine details updated.');
         } else {
-            $stmt = $db->prepare('INSERT INTO magazines (year, title, edition, theme, file_path, file_size, pages, badge, sort_order) VALUES (:yr, :t, :ed, :th, :fp, :fs, :pg, :b, :so)');
+            $stmt = $db->prepare('INSERT INTO magazines (year, title, edition, theme, file_path, file_size, pages, badge, sort_order) VALUES (:yr, :t, :ed, :th, :fp, :fs, :pg, :b, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM magazines))');
             $stmt->execute([
                 ':yr' => $year,
                 ':t'  => $title,
@@ -75,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':fs' => $file_size,
                 ':pg' => $pages,
                 ':b'  => $badge,
-                ':so' => $sort_order
             ]);
             setFlash('success', 'New magazine publication added.');
         }
@@ -108,7 +118,6 @@ if ($editItem || $isCreate) {
             ['name' => 'theme', 'label' => 'Edition Theme / Subtitle', 'type' => 'text', 'full' => true, 'placeholder' => 'e.g. Resilience, Innovation &amp; Digital Transformation'],
             ['name' => 'badge', 'label' => 'Badge', 'type' => 'text', 'createDefault' => 'Latest Edition', 'placeholder' => 'e.g. Latest Edition or Archive'],
             ['name' => 'file_size', 'label' => 'File Size Label', 'type' => 'text', 'placeholder' => 'e.g. ~31.6 MB (auto-calculated on upload)'],
-            ['name' => 'sort_order', 'label' => 'Display Priority', 'type' => 'number', 'default' => '1'],
             [
                 'name'     => 'pdf_file',
                 'label'    => 'Upload Magazine PDF Document *',
@@ -131,6 +140,7 @@ crudListPanel([
     'listTitleHtml'     => 'E-Magazines &amp; Publications (' . count($magazines) . ')',
     'rows'              => $magazines,
     'tableId'           => 'magazinesTable',
+    'reorder'           => 'magazines',
     'searchPlaceholder' => 'Search magazines...',
     'emptyText'         => 'No magazines uploaded yet. Click <strong>Upload New Magazine</strong> to publish an edition.',
     'add'               => ['url' => 'magazines.php?action=create', 'drawerTitle' => 'Upload New E-Magazine', 'label' => 'Upload New Magazine'],

@@ -17,7 +17,7 @@ $error = '';
 $username = '';
 
 // Check login attempt throttling
-$clientIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$clientIp = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 $ipHash = substr(md5($clientIp), 0, 12);
 $rateKey = "login_throttle_{$ipHash}";
 $throttleData = json_decode(getSetting($rateKey, '{}'), true);
@@ -51,6 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 setSetting($rateKey, ''); // Clear failed attempts on success
                 logAdminActivity('login', 'admin', (int)$_SESSION['admin_id'], "Admin signed in as {$username}");
                 $return = $_GET['return'] ?? 'index.php';
+                if (!preg_match('/^[a-z_][a-z0-9_]*\.php$/i', $return)) {
+                    $return = 'index.php';
+                }
                 header('Location: ' . $return);
                 exit;
             } else {
@@ -85,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="login-card">
     <div class="login-header">
-        <img src="../assets/logo.ico" alt="Logo" class="login-logo">
+        <img src="../assets/logo.ico" alt="Logo" class="login-logo" loading="lazy">
         <h1 class="login-title">VJM College Admin</h1>
         <p class="login-subtitle">Content Management &amp; Administration</p>
     </div>

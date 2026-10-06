@@ -96,13 +96,13 @@ $vjmFooterPhoneDigits = preg_replace('/\D/', '', $vjmFooterPhone);
                 <h5 class="footer__social-heading">Follow Us</h5>
                 <div class="footer__social-links">
                     <a href="https://www.instagram.com/vjmodhacollege/" target="_blank" rel="noopener noreferrer" class="footer__social-btn footer__social-btn--instagram" aria-label="Instagram">
-                        <img src="assets/icons/footer/instagram.png" alt="Instagram" width="22" height="22" />
+                        <img src="assets/icons/footer/instagram.png" alt="Instagram" width="22" height="22" loading="lazy" />
                     </a>
                     <a href="https://www.facebook.com/vjmodhacollege/" target="_blank" rel="noopener noreferrer" class="footer__social-btn footer__social-btn--facebook" aria-label="Facebook">
-                        <img src="assets/icons/footer/facebook.png" alt="Facebook" width="22" height="22" />
+                        <img src="assets/icons/footer/facebook.png" alt="Facebook" width="22" height="22" loading="lazy" />
                     </a>
                     <a href="https://www.linkedin.com/school/vjmodhacollege/" target="_blank" rel="noopener noreferrer" class="footer__social-btn footer__social-btn--linkedin" aria-label="LinkedIn">
-                        <img src="assets/icons/footer/linkedin.png" alt="LinkedIn" width="22" height="22" />
+                        <img src="assets/icons/footer/linkedin.png" alt="LinkedIn" width="22" height="22" loading="lazy" />
                     </a>
                 </div>
             </div>

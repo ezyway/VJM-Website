@@ -22,6 +22,15 @@ if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
     exit;
 }
 
+// Rate limiting: prevent rapid-fire reorder requests
+$lastOrder = $_SESSION['last_reorder'] ?? 0;
+if (time() - $lastOrder < 2) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'error' => 'Please wait before reordering again']);
+    exit;
+}
+$_SESSION['last_reorder'] = time();
+
 $table = preg_replace('/[^a-z_]/', '', (string)($_POST['table'] ?? ''));
 
 $allowed = [
@@ -84,15 +93,15 @@ try {
     $db = getDB();
     $db->beginTransaction();
 
-    $check = $db->prepare("SELECT COUNT(*) FROM {$table} WHERE id = :id");
+    // Fetch all valid IDs in one query before the loop
+    $validIds = $db->query("SELECT id FROM {$table}")->fetchAll(PDO::FETCH_COLUMN);
+    $validIdSet = array_flip($validIds);
 
     $update = $db->prepare("UPDATE {$table} SET sort_order = :so WHERE id = :id");
 
     $position = 1;
     foreach ($ids as $id) {
-        $check->execute([':id' => $id]);
-        if (!$check->fetchColumn()) {
-            // ID does not exist for this table; skip silently
+        if (!isset($validIdSet[$id])) {
             continue;
         }
         $update->execute([':so' => $position, ':id' => $id]);
