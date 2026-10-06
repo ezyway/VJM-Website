@@ -212,6 +212,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'message' => $message,
             'buttons' => $buttons,
         ];
+
+        // Keep the numbered-slot store (managed by Popup Manager) in sync so the
+        // two admin pages edit the same popup instead of clobbering each other.
+        $activeId = (int)getSetting('announcement_popup_active_id', '1');
+        if ($activeId <= 0) $activeId = 1;
+        $slotRaw = getSetting("announcement_popup_{$activeId}", '');
+        $slotData = json_decode($slotRaw, true);
+        if (is_array($slotData) && !empty($slotData['popup_name'])) {
+            $popup['popup_name'] = $slotData['popup_name'];
+        }
+        setSetting("announcement_popup_{$activeId}", json_encode($popup, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        setSetting('announcement_popup_active_id', (string)$activeId);
         setSetting('announcement_popup', json_encode($popup, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 
         setFlash('success', 'Announcement popup saved.');
