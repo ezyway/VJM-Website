@@ -23,19 +23,23 @@
         $db = getDB();
         $dbAlbums = $db->query('SELECT * FROM gallery_albums ORDER BY sort_order ASC, id ASC')->fetchAll();
         if (!empty($dbAlbums)) {
-            $allPhotos = $db->query('SELECT album_id, image_path FROM gallery_photos ORDER BY sort_order ASC, id ASC')->fetchAll();
+            $allPhotos = $db->query('SELECT album_id, image_path, caption FROM gallery_photos ORDER BY sort_order ASC, id ASC')->fetchAll();
             $photosByAlbum = [];
+            $captionsByAlbum = [];
             foreach ($allPhotos as $photo) {
                 $photosByAlbum[$photo['album_id']][] = $photo['image_path'];
+                $captionsByAlbum[$photo['album_id']][] = $photo['caption'] ?? '';
             }
             foreach ($dbAlbums as $alb) {
                 $photos = $photosByAlbum[$alb['id']] ?? [];
+                $captions = $captionsByAlbum[$alb['id']] ?? [];
 
                 // Fallback to disk scan if no photos in DB yet
                 if (empty($photos)) {
                     $folder = "$galleryDir/{$alb['slug']}";
                     if (is_dir($folder)) {
                         $photos = getImageURLs($folder);
+                        $captions = array_fill(0, count($photos), '');
                     }
                 }
 
@@ -48,6 +52,7 @@
                     "category_label" => $alb['category_label'] ?: $alb['category'],
                     "description" => $alb['description'],
                     "images" => $photos,
+                    "captions" => $captions,
                     "cover" => $cover,
                     "count" => count($photos)
                 ];
@@ -116,6 +121,7 @@
                     "category_label" => $meta['category_label'],
                     "description" => $meta['description'],
                     "images" => $imgs,
+                    "captions" => array_fill(0, count($imgs), ''),
                     "cover" => $imgs[0] ?? 'assets/background.png',
                     "count" => count($imgs)
                 ];
@@ -320,6 +326,7 @@
                 <div class="gallery-modal__image-wrapper">
                     <img id="modalMainImage" src="" alt="Album photo" class="gallery-modal__main-image" loading="lazy" />
                     <div id="modalLoadingSpinner" class="gallery-modal__spinner" style="display: none;"></div>
+                    <div id="modalPhotoCaption" class="gallery-modal__photo-caption" style="display: none;"></div>
                 </div>
 
                 <button type="button" class="gallery-modal__nav-btn gallery-modal__nav-btn--next" id="modalNextBtn" title="Next Slide (Right Arrow)" aria-label="Next Photo">

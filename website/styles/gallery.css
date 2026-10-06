@@ -702,3 +702,22 @@
     color: #FFFFFF !important;
     border-color: transparent !important;
 }
+.gallery-modal__photo-caption {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #E2E8F0;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 6;
+}

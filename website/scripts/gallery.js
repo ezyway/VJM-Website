@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentAlbumKey = null;
     let currentPhotos = [];
+    let currentCaptions = [];
     let currentIndex = 0;
 
     // Slideshow state
@@ -98,6 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
             tempImg.src = nextSrc;
             tempImg.onload = () => {
                 modalMainImage.src = nextSrc;
+                var cap = currentCaptions[currentIndex] || '';
+                modalMainImage.alt = cap || ('Photo ' + (currentIndex + 1));
+                var capEl = document.getElementById('modalPhotoCaption');
+                if (capEl) { capEl.textContent = cap; capEl.style.display = cap ? 'block' : 'none'; }
                 modalMainImage.style.opacity = "1";
                 modalMainImage.style.transform = "scale(1)";
                 if (modalLoadingSpinner) modalLoadingSpinner.style.display = "none";
@@ -220,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         currentAlbumKey = albumKey;
         currentPhotos = album.images;
+        currentCaptions = album.captions || [];
         currentIndex = 0;
 
         if (modalAlbumTitle) {
@@ -233,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const thumb = document.createElement("div");
                 thumb.className = `gallery-thumb-item ${idx === 0 ? 'is-active' : ''}`;
                 thumb.setAttribute("title", `Slide ${idx + 1}`);
-                thumb.innerHTML = `<img src="${src}" alt="Thumbnail ${idx + 1}" loading="lazy" />`;
+                thumb.innerHTML = `<img src="${src}" alt="${(album.captions && album.captions[idx]) ? album.captions[idx] : 'Thumbnail ' + (idx + 1)}" loading="lazy" />`;
                 thumb.addEventListener("click", () => {
                     pauseSlideshow();
                     updateLightbox(idx);
