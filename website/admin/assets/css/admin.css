@@ -1053,30 +1053,54 @@ input[type="file"].form-control { padding: 7px 12px; }
 /* ===== Gallery ===== */
 .gallery-admin-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
   margin-top: 16px;
 }
 
 .gallery-admin-item {
   position: relative;
-  aspect-ratio: 4/3;
+  display: flex;
+  flex-direction: column;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--border-color);
   background: var(--bg-input);
 }
 
+.gallery-admin-item .gci-img {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
 .gallery-admin-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.gallery-admin-item .gci-caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-top: 1px solid var(--border-color);
+}
+
+.gallery-admin-item .gci-caption input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  font-size: 12px;
+  padding: 4px 8px;
 }
 
 .gallery-item-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(2, 8, 16, 0.7);
+  background: rgba(2, 8, 16, 0.65);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
@@ -1333,7 +1357,8 @@ input[type="file"].form-control { padding: 7px 12px; }
   height: 520px;
   border: none;
   background: transparent;
-  flex-shrink: 0;
+  flex: 0 1 auto;
+  min-height: 240px;
 }
 
 @media (max-width: 768px) {
@@ -2344,3 +2369,30 @@ th.reorder-col, td.reorder-col {
   grid-column: 1 / -1;
 }
 
+
+/* Sticky action bar inside long edit forms */
+.form-actions-sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  padding: 14px 2px 6px;
+  margin-top: 22px !important;
+}
+
+/* ===== Rating stars ===== */
+.rating-pills { display: flex; gap: 4px; flex-wrap: wrap; }
+.rating-star {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  line-height: 1;
+  padding: 2px;
+  cursor: pointer;
+  opacity: 0.35;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+.rating-star:hover { opacity: 0.75; transform: scale(1.15); }
+.rating-star.active { color: #fbbf24; opacity: 1; }

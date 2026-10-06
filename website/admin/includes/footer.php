@@ -35,8 +35,9 @@
 <?php endif; ?>
 <script src="assets/js/admin.js?v=<?= @filemtime(__DIR__ . '/../assets/js/admin.js') ?: 1 ?>"></script>
 
-<?php if ($isDrawerMode && isset($flash) && !empty($flash)): ?>
-<!-- Tell the parent drawer to close + show feedback after a successful save -->
+<?php if ($isDrawerMode && isset($flash) && !empty($flash) && in_array($flash['type'], ['success', 'danger'], true)): ?>
+<!-- Tell the parent drawer to close + show feedback after a successful save.
+     Non-blocking flashes (e.g. 'info') stay inside the drawer iframe. -->
 <script>
 (function () {
     var toastType = '<?= htmlspecialchars($flash['type'], ENT_QUOTES) ?>';

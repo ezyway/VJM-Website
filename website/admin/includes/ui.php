@@ -217,6 +217,17 @@ function formField(array $f, ?array $item): string
                     . '>' . $value . '</textarea>';
                 break;
 
+            case 'rating':
+                $cur = (int)($raw ?? ($f['createDefault'] ?? 5));
+                $html .= '<input type="hidden" name="' . htmlspecialchars($name) . '" id="' . htmlspecialchars($name) . '" value="' . $cur . '">';
+                $html .= '<div class="rating-pills" role="radiogroup" aria-label="Star rating">';
+                for ($i = 1; $i <= 5; $i++) {
+                    $sel = $i <= $cur ? ' active' : '';
+                    $html .= '<button type="button" class="rating-star' . $sel . '" data-rating="' . $i . '" aria-label="' . $i . ' star' . ($i > 1 ? 's' : '') . '">★</button>';
+                }
+                $html .= '</div>';
+                break;
+
             case 'select':
                 $selectedVal = $raw ?? '';
                 $html .= '<select id="' . htmlspecialchars($name) . '" name="' . htmlspecialchars($name) . '" ' . $classes . '>';

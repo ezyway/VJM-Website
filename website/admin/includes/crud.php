@@ -27,7 +27,21 @@ function crudCsrfGuard(string $page): void
  */
 function crudRedirect(string $page, bool $isDrawerMode): void
 {
+    unset($_SESSION['form_repop']);
     header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : $page));
+    exit;
+}
+
+/**
+ * On validation failure: keep the user's submitted values so the re-rendered
+ * form is pre-filled (instead of silently wiping the form), show the error,
+ * and bounce back to the same form URL.
+ */
+function crudFormFail(string $message): void
+{
+    setFlash('danger', $message);
+    $_SESSION['form_repop'] = $_POST;
+    header('Location: ' . ($_SERVER['REQUEST_URI'] ?? 'index.php'));
     exit;
 }
 
@@ -36,7 +50,7 @@ function crudRedirect(string $page, bool $isDrawerMode): void
  */
 function crudLoadItem(PDO $db, string $table): ?array
 {
-    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos'];
+    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos', 'inquiries'];
     if (!in_array($table, $allowedTables, true)) {
         throw new InvalidArgumentException("Invalid table name");
     }
@@ -61,7 +75,7 @@ function crudIsCreate(): bool
  */
 function crudDelete(PDO $db, string $table, int $id, string $flashMsg, bool $isDrawerMode, string $page): void
 {
-    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos'];
+    $allowedTables = ['courses', 'faculties', 'labs', 'events', 'rankers', 'pass_rates', 'testimonials', 'magazines', 'scholarships', 'scholarship_portals', 'gallery_albums', 'gallery_photos', 'inquiries'];
     if (!in_array($table, $allowedTables, true)) {
         throw new InvalidArgumentException("Invalid table name");
     }
@@ -89,6 +103,14 @@ function crudDelete(PDO $db, string $table, int $id, string $flashMsg, bool $isD
 function crudFormPanel(array $cfg): void
 {
     $item = $cfg['item'] ?? null;
+    // Re-populate with the user's last submitted values after a validation
+    // failure (set by crudFormFail) so nothing they typed is lost.
+    if (!empty($_SESSION['form_repop']) && is_array($_SESSION['form_repop'])) {
+        $repop = $_SESSION['form_repop'];
+        unset($repop['csrf_token'], $repop['action'], $repop['id'], $repop['photo_id'], $repop['album_id']);
+        $item = array_merge($item ?? [], $repop);
+        unset($_SESSION['form_repop']);
+    }
     $page = $cfg['page'];
     $param = $cfg['pageParam'] ?? '';
     $multipart = !empty($cfg['multipart']) ? ' enctype="multipart/form-data"' : '';
@@ -136,10 +158,12 @@ function crudFormPanel(array $cfg): void
                         <?= formField($field, $item) ?>
                     <?php endforeach; ?>
                 </div>
-                <div style="margin-top: 22px; display: flex; gap: 12px;">
+                <?php if (empty($cfg['hideActions'])): ?>
+                <div style="margin-top: 22px; display: flex; gap: 12px;" class="form-actions-sticky">
                     <button type="submit" class="btn btn-primary"><?= $cfg['submitLabel'] ?></button>
                     <a href="<?= $page . $param ?>" class="btn btn-secondary">Cancel</a>
                 </div>
+                <?php endif; ?>
             </form>
 
             <?php if ($hasPreview): ?>

@@ -93,11 +93,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Rating star pickers: clicking a star writes the value into its hidden input.
+    document.querySelectorAll('.rating-pills').forEach(group => {
+        const hidden = group.parentElement.querySelector('input[type="hidden"]');
+        group.querySelectorAll('.rating-star').forEach(star => {
+            star.addEventListener('click', () => {
+                const val = Number(star.getAttribute('data-rating')) || 0;
+                group.querySelectorAll('.rating-star').forEach(s => {
+                    s.classList.toggle('active', Number(s.getAttribute('data-rating')) <= val);
+                });
+                if (hidden) {
+                    hidden.value = String(val);
+                    hidden.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            });
+        });
+    });
+
     // 7. Generic Confirmation Modal (replaces inline confirm())
     const confirmModal = document.getElementById('confirmModal');
     const confirmMessageEl = document.getElementById('confirmMessage');
     const confirmActionBtn = document.getElementById('confirmActionBtn');
     let pendingForm = null;
+    let pendingCallback = null;
+
+    // Unsaved-changes tracking: any "main" edit form is marked dirty on input.
+    document.querySelectorAll('#crudAdminForm, #popupForm, form:has(.form-grid)').forEach(form => {
+        form.dataset.dirty = '0';
+        form.addEventListener('input', () => { form.dataset.dirty = '1'; });
+        form.addEventListener('change', () => { form.dataset.dirty = '1'; });
+        form.addEventListener('submit', () => { form.dataset.dirty = '0'; }, true);
+    });
+
+    // Inside the drawer iframe itself: warn on hard navigation while dirty.
+    if (document.body.classList.contains('drawer-mode')) {
+        window.addEventListener('beforeunload', (e) => {
+            const dirty = document.querySelector('#crudAdminForm[data-dirty="1"], #popupForm[data-dirty="1"], form[data-dirty="1"]:has(.form-grid)');
+            if (dirty) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    }
 
     document.querySelectorAll('[data-confirm]').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -115,7 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (confirmActionBtn) {
         confirmActionBtn.addEventListener('click', () => {
-            if (pendingForm) {
+            if (pendingCallback) {
+                const cb = pendingCallback;
+                pendingCallback = null;
+                cb();
+            } else if (pendingForm) {
                 // Native submit: the server redirect re-renders with its own flash toast,
                 // so no stashing is needed here. (Drawer saves use postMessage instead.)
                 pendingForm.submit();
@@ -130,8 +171,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === confirmModal) {
                 confirmModal.classList.remove('active');
                 pendingForm = null;
+                pendingCallback = null;
             }
         });
+    }
+
+    // Ask for confirmation before discarding a dirty form inside the drawer.
+    function requestDrawerClose(reload) {
+        let dirty = false;
+        try {
+            const doc = drawerFrame && drawerFrame.contentDocument;
+            if (doc) {
+                dirty = !!doc.querySelector('form[data-dirty="1"]');
+            }
+        } catch (e) { /* cross-origin or about:blank */ }
+        if (dirty && confirmModal) {
+            confirmMessageEl.textContent = 'You have unsaved changes. Discard them?';
+            pendingCallback = () => closeDrawer(reload);
+            confirmModal.classList.add('active');
+        } else {
+            closeDrawer(reload);
+        }
     }
 
     // Esc closes modal, drawer, or dropdown
@@ -140,9 +200,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (confirmModal && confirmModal.classList.contains('active')) {
             confirmModal.classList.remove('active');
             pendingForm = null;
+            pendingCallback = null;
         }
         if (drawer && drawer.classList.contains('active')) {
-            closeDrawer(false);
+            requestDrawerClose(false);
         }
     });
 
@@ -186,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             frameResizeQueued = false;
             const doc = drawerFrame.contentDocument;
             if (!doc || !doc.documentElement) return;
-            const cap = Math.floor(window.innerHeight - 120); // modal header + viewport margins
+            const cap = Math.floor(window.innerHeight - 160); // modal header + margins + footer breathing room
             // Collapse the frame before measuring: scrollHeight is clamped to
             // the iframe's own viewport, so measuring while tall would never
             // shrink the modal to a short form. Setting 1px first (same task,
@@ -261,10 +322,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (drawerCloseBtn) {
-        drawerCloseBtn.addEventListener('click', () => closeDrawer(false));
+        drawerCloseBtn.addEventListener('click', () => requestDrawerClose(false));
     }
     if (drawerOverlay) {
-        drawerOverlay.addEventListener('click', () => closeDrawer(false));
+        drawerOverlay.addEventListener('click', () => requestDrawerClose(false));
     }
 
     // Pending toast: if a session-stashed flash exists (set by a drawer/confirm save),
