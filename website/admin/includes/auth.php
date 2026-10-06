@@ -9,7 +9,7 @@ require_once __DIR__ . '/db.php';
 function startAdminSession(): void {
     if (!headers_sent()) {
         header('X-Frame-Options: SAMEORIGIN');
-        header("Content-Security-Policy: frame-ancestors 'none'");
+        header("Content-Security-Policy: frame-ancestors 'self'");
         header('X-Content-Type-Options: nosniff');
         header('Referrer-Policy: strict-origin-when-cross-origin');
         header('X-XSS-Protection: 1; mode=block');
