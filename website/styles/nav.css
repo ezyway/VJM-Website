@@ -1185,6 +1185,11 @@
     border-left: 4px solid #38BDF8;
 }
 
+.site-toast--error,
+.site-toast--danger {
+    border-left: 4px solid #EF4444;
+}
+
 @media screen and (max-width: 600px) {
     .inquiry_form__grid {
         grid-template-columns: 1fr;

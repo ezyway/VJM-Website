@@ -591,15 +591,35 @@ document.addEventListener("DOMContentLoaded", () => {
             if (inquirySubmitBtn) inquirySubmitBtn.disabled = true;
             if (inquirySubmitText) inquirySubmitText.textContent = "Submitting Inquiry...";
 
-            setTimeout(() => {
-                if (inquiryForm) inquiryForm.style.display = "none";
-                if (inquirySuccessBox) inquirySuccessBox.style.display = "flex";
-                if (inquirySubmitBtn) inquirySubmitBtn.disabled = false;
-                if (inquirySubmitText) inquirySubmitText.textContent = "Submit Inquiry Online";
-
-                showToast("Inquiry submitted successfully! We'll call you shortly.", "success");
-                inquiryForm.reset();
-            }, 600);
+            const fd = new FormData(inquiryForm);
+            fetch("api/inquiry.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: fd.get("name") || "",
+                    phone: fd.get("phone") || "",
+                    program: fd.get("program") || "",
+                    stream: fd.get("stream") || "",
+                    message: fd.get("message") || "",
+                    source_page: window.location.pathname
+                })
+            })
+                .then(r => r.json())
+                .then(res => {
+                    if (res && res.success) {
+                        if (inquiryForm) inquiryForm.style.display = "none";
+                        if (inquirySuccessBox) inquirySuccessBox.style.display = "flex";
+                        showToast("Inquiry submitted successfully! We'll call you shortly.", "success");
+                        inquiryForm.reset();
+                    } else {
+                        showToast(res.error || "Could not submit your inquiry. Please try again.", "error");
+                    }
+                })
+                .catch(() => showToast("Network error. Please try again.", "error"))
+                .finally(() => {
+                    if (inquirySubmitBtn) inquirySubmitBtn.disabled = false;
+                    if (inquirySubmitText) inquirySubmitText.textContent = "Submit Inquiry Online";
+                });
         });
     }
 

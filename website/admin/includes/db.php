@@ -240,6 +240,21 @@ function initSchema(PDO $pdo): void {
     CREATE INDEX IF NOT EXISTS idx_magazines_sort ON magazines(sort_order, id);
     CREATE INDEX IF NOT EXISTS idx_scholarships_sort ON scholarships(sort_order, id);
     CREATE INDEX IF NOT EXISTS idx_scholarship_portals_sort ON scholarship_portals(sort_order, id);
+
+    CREATE TABLE IF NOT EXISTS inquiries (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        phone TEXT NOT NULL,
+        program TEXT NOT NULL,
+        stream TEXT,
+        message TEXT,
+        source_page TEXT,
+        ip_address TEXT,
+        is_read INTEGER DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_inquiries_created ON inquiries(created_at DESC);
     ";
 
     $pdo->exec($schema);
