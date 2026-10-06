@@ -111,6 +111,5 @@
 # 5. Protect Sensitive Files & Directories
 # ----------------------------------------------------
 <FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </FilesMatch>
