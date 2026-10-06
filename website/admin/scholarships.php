@@ -4,7 +4,7 @@
  */
 
 require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/ui.php';
+require_once __DIR__ . '/includes/crud.php';
 requireAuth();
 
 $db = getDB();
@@ -12,21 +12,21 @@ $isDrawerMode = isset($_GET['drawer']) && $_GET['drawer'] === '1';
 
 // Handle POST actions BEFORE header output
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verifyCSRFToken($_POST['csrf_token'] ?? '')) {
-        setFlash('danger', 'Security token expired. Please try again.');
-        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
-        exit;
-    }
+    crudCsrfGuard('scholarships.php');
 
     $action = $_POST['action'] ?? '';
 
+    // The shared list panel posts a generic 'delete'; dispatch by tab.
+    if ($action === 'delete') {
+        $action = (strpos($_SERVER['REQUEST_URI'] ?? '', 'tab=portals') !== false) ? 'delete_portal' : 'delete_record';
+    }
+
     if ($action === 'delete_record') {
-        $id = (int)($_POST['id'] ?? 0);
-        $stmt = $db->prepare('DELETE FROM scholarships WHERE id = :id');
-        $stmt->execute([':id' => $id]);
-        setFlash('success', 'Scholarship year record removed.');
-        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
-        exit;
+        crudDelete($db, 'scholarships', (int)($_POST['id'] ?? 0), 'Scholarship year record removed.', $isDrawerMode, 'scholarships.php?tab=records');
+    }
+
+    if ($action === 'delete_portal') {
+        crudDelete($db, 'scholarship_portals', (int)($_POST['id'] ?? 0), 'Portal removed.', $isDrawerMode, 'scholarships.php?tab=portals');
     }
 
     if ($action === 'save_record') {
@@ -35,48 +35,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $amount_str = trim($_POST['amount_str'] ?? '');
         $numeric    = (int)preg_replace('/[^0-9]/', '', $amount_str);
         $status     = trim($_POST['status'] ?? 'Completed');
-        $sort_order = (int)($_POST['sort_order'] ?? 0);
 
         if (empty($year) || empty($amount_str)) {
-            setFlash('danger', 'Year and Amount are required.');
-            header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
-            exit;
+            crudFormFail('Year and Amount are required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE scholarships SET year = :yr, amount_str = :amt, amount_numeric = :num, status = :st, sort_order = :so WHERE id = :id');
-            $stmt->execute([
-                ':yr'  => $year,
-                ':amt' => $amount_str,
-                ':num' => $numeric,
-                ':st'  => $status,
-                ':so'  => $sort_order,
-                ':id'  => $id
-            ]);
+            $stmt = $db->prepare('UPDATE scholarships SET year = :yr, amount_str = :amt, amount_numeric = :num, status = :st WHERE id = :id');
+            $stmt->execute([':yr' => $year, ':amt' => $amount_str, ':num' => $numeric, ':st' => $status, ':id' => $id]);
             setFlash('success', 'Scholarship record updated.');
         } else {
-            $stmt = $db->prepare('INSERT INTO scholarships (year, amount_str, amount_numeric, status, sort_order) VALUES (:yr, :amt, :num, :st, :so)');
-            $stmt->execute([
-                ':yr'  => $year,
-                ':amt' => $amount_str,
-                ':num' => $numeric,
-                ':st'  => $status,
-                ':so'  => $sort_order
-            ]);
+            $stmt = $db->prepare('INSERT INTO scholarships (year, amount_str, amount_numeric, status, sort_order) VALUES (:yr, :amt, :num, :st, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM scholarships))');
+            $stmt->execute([':yr' => $year, ':amt' => $amount_str, ':num' => $numeric, ':st' => $status]);
             setFlash('success', 'New scholarship year added.');
         }
 
-        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php'));
-        exit;
-    }
-
-    // Portals CRUD
-    if ($action === 'delete_portal') {
-        $id = (int)($_POST['id'] ?? 0);
-        $stmt = $db->prepare('DELETE FROM scholarship_portals WHERE id = :id');
-        $stmt->execute([':id' => $id]);
-        setFlash('success', 'Portal removed.');
-        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php?tab=portals'));
+        header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php?tab=records'));
         exit;
     }
 
@@ -88,38 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description'] ?? '');
         $link        = trim($_POST['link'] ?? '');
         $icon        = trim($_POST['icon'] ?? 'shield');
-        $sort_order  = (int)($_POST['sort_order'] ?? 0);
 
         if (empty($name) || empty($link)) {
-            setFlash('danger', 'Portal name and link are required.');
-            header('Location: ' . ($isDrawerMode ? $_SERVER['REQUEST_URI'] : 'scholarships.php?tab=portals'));
-            exit;
+            crudFormFail('Portal name and link are required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE scholarship_portals SET name = :n, provider = :p, badge = :b, description = :d, link = :l, icon = :i, sort_order = :so WHERE id = :id');
-            $stmt->execute([
-                ':n'  => $name,
-                ':p'  => $provider,
-                ':b'  => $badge,
-                ':d'  => $description,
-                ':l'  => $link,
-                ':i'  => $icon,
-                ':so' => $sort_order,
-                ':id' => $id
-            ]);
+            $stmt = $db->prepare('UPDATE scholarship_portals SET name = :n, provider = :p, badge = :b, description = :d, link = :l, icon = :i WHERE id = :id');
+            $stmt->execute([':n' => $name, ':p' => $provider, ':b' => $badge, ':d' => $description, ':l' => $link, ':i' => $icon, ':id' => $id]);
             setFlash('success', 'Portal updated.');
         } else {
-            $stmt = $db->prepare('INSERT INTO scholarship_portals (name, provider, badge, description, link, icon, sort_order) VALUES (:n, :p, :b, :d, :l, :i, :so)');
-            $stmt->execute([
-                ':n'  => $name,
-                ':p'  => $provider,
-                ':b'  => $badge,
-                ':d'  => $description,
-                ':l'  => $link,
-                ':i'  => $icon,
-                ':so' => $sort_order
-            ]);
+            $stmt = $db->prepare('INSERT INTO scholarship_portals (name, provider, badge, description, link, icon, sort_order) VALUES (:n, :p, :b, :d, :l, :i, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM scholarship_portals))');
+            $stmt->execute([':n' => $name, ':p' => $provider, ':b' => $badge, ':d' => $description, ':l' => $link, ':i' => $icon]);
             setFlash('success', 'New portal added.');
         }
 
@@ -190,270 +144,101 @@ $totalDisbursed = $db->query('SELECT SUM(amount_numeric) FROM scholarships')->fe
 </div>
 
 <?php if (($editRecord || $isCreateRecord) && $tab === 'records'): ?>
-<div class="panel">
-    <div class="panel-header">
-        <div class="panel-title"><?= $editRecord ? 'Edit Scholarship Year' : 'Add Scholarship Year Record' ?></div>
-        <a href="scholarships.php?tab=records<?= $drawerSuffix ?>" class="btn btn-secondary btn-sm">← Back to List</a>
-    </div>
-    <div class="panel-body">
-        <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'scholarships.php') ?>">
-            <?= csrfField() ?>
-            <input type="hidden" name="action" value="save_record">
-            <input type="hidden" name="id" value="<?= $editRecord ? (int)$editRecord['id'] : 0 ?>">
-
-            <div class="form-grid">
-                <div class="form-group">
-                    <label class="form-label" for="year">Academic Year *</label>
-                    <input type="text" id="year" name="year" class="form-control" required value="<?= htmlspecialchars($editRecord['year'] ?? '') ?>" placeholder="e.g. 2024 - 2025">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="amount_str">Disbursed Amount String *</label>
-                    <input type="text" id="amount_str" name="amount_str" class="form-control" required value="<?= htmlspecialchars($editRecord['amount_str'] ?? '') ?>" placeholder="e.g. ₹ 21,22,000">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="status">Status Badge</label>
-                    <input type="text" id="status" name="status" class="form-control" value="<?= htmlspecialchars($editRecord['status'] ?? 'Completed') ?>" placeholder="e.g. Latest, Completed, Peak">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="sort_order">Display Priority</label>
-                    <input type="number" id="sort_order" name="sort_order" class="form-control" value="<?= htmlspecialchars($editRecord['sort_order'] ?? '1') ?>">
-                </div>
-            </div>
-
-            <div style="margin-top: 20px; display: flex; gap: 12px;">
-                <button type="submit" class="btn btn-primary">Save Record</button>
-                <a href="scholarships.php?tab=records<?= $drawerSuffix ?>" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
-    </div>
-</div>
+<?php
+crudFormPanel([
+    'page'        => 'scholarships.php',
+    'pageParam'   => $isDrawerMode ? '?tab=records&drawer=1' : '?tab=records',
+    'item'        => $editRecord,
+    'creating'    => $isCreateRecord,
+    'title'       => fn($item) => $item && isset($item['year']) ? 'Edit Scholarship Year' : 'Add Scholarship Year Record',
+    'submitLabel' => 'Save Record',
+    'previewType' => 'none',
+    'hiddenHtml'  => '<input type="hidden" name="action" value="save_record">',
+    'fields'      => [
+        ['name' => 'year', 'label' => 'Academic Year *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. 2024 - 2025'],
+        ['name' => 'amount_str', 'label' => 'Disbursed Amount String *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. ₹ 21,22,000'],
+        ['name' => 'status', 'label' => 'Status Badge', 'type' => 'text', 'default' => 'Completed', 'placeholder' => 'e.g. Latest, Completed, Peak'],
+    ],
+]);
+?>
 <?php endif; ?>
 
 <?php if (($editPortal || $isCreatePortal) && $tab === 'portals'): ?>
-<div class="panel">
-    <div class="panel-header">
-        <div class="panel-title"><?= $editPortal ? 'Edit Portal' : 'Add Scholarship Portal' ?></div>
-        <a href="scholarships.php?tab=portals<?= $drawerSuffix ?>" class="btn btn-secondary btn-sm">← Back to List</a>
-    </div>
-    <div class="panel-body">
-        <form method="POST" action="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? 'scholarships.php') ?>">
-            <?= csrfField() ?>
-            <input type="hidden" name="action" value="save_portal">
-            <input type="hidden" name="id" value="<?= $editPortal ? (int)$editPortal['id'] : 0 ?>">
-
-            <div class="form-grid">
-                <div class="form-group">
-                    <label class="form-label" for="name">Portal Name *</label>
-                    <input type="text" id="name" name="name" class="form-control" required value="<?= htmlspecialchars($editPortal['name'] ?? '') ?>" placeholder="e.g. Digital Gujarat Scholarship Portal">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="provider">Provider Authority</label>
-                    <input type="text" id="provider" name="provider" class="form-control" value="<?= htmlspecialchars($editPortal['provider'] ?? '') ?>" placeholder="e.g. Government of Gujarat">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="badge">Badge Label</label>
-                    <input type="text" id="badge" name="badge" class="form-control" value="<?= htmlspecialchars($editPortal['badge'] ?? '') ?>" placeholder="e.g. State Government">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="icon">Icon</label>
-                    <select id="icon" name="icon" class="form-control">
-                        <option value="shield" <?= ($editPortal['icon'] ?? 'shield') === 'shield' ? 'selected' : '' ?>>Shield (Shield)</option>
-                        <option value="award" <?= ($editPortal['icon'] ?? '') === 'award' ? 'selected' : '' ?>>Award (Award)</option>
-                        <option value="cap" <?= ($editPortal['icon'] ?? '') === 'cap' ? 'selected' : '' ?>>Cap (Graduation)</option>
-                        <option value="briefcase" <?= ($editPortal['icon'] ?? '') === 'briefcase' ? 'selected' : '' ?>>Briefcase (Career)</option>
-                        <option value="globe" <?= ($editPortal['icon'] ?? '') === 'globe' ? 'selected' : '' ?>>Globe (National)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="sort_order">Display Priority</label>
-                    <input type="number" id="sort_order" name="sort_order" class="form-control" value="<?= htmlspecialchars($editPortal['sort_order'] ?? '1') ?>">
-                </div>
-
-                <div class="form-group full-width">
-                    <label class="form-label" for="description">Description</label>
-                    <textarea id="description" name="description" class="form-control" rows="3" placeholder="Brief description of the portal and eligibility..."><?= htmlspecialchars($editPortal['description'] ?? '') ?></textarea>
-                </div>
-
-                <div class="form-group full-width">
-                    <label class="form-label" for="link">Portal URL *</label>
-                    <input type="url" id="link" name="link" class="form-control" required value="<?= htmlspecialchars($editPortal['link'] ?? '') ?>" placeholder="https://...">
-                </div>
-            </div>
-
-            <div style="margin-top: 20px; display: flex; gap: 12px;">
-                <button type="submit" class="btn btn-primary">Save Portal</button>
-                <a href="scholarships.php?tab=portals<?= $drawerSuffix ?>" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
-    </div>
-</div>
+<?php
+crudFormPanel([
+    'page'        => 'scholarships.php',
+    'pageParam'   => $isDrawerMode ? '?tab=portals&drawer=1' : '?tab=portals',
+    'item'        => $editPortal,
+    'creating'    => $isCreatePortal,
+    'title'       => fn($item) => $item && isset($item['name']) ? 'Edit Portal' : 'Add Scholarship Portal',
+    'submitLabel' => 'Save Portal',
+    'previewType' => 'none',
+    'hiddenHtml'  => '<input type="hidden" name="action" value="save_portal">',
+    'fields'      => [
+        ['name' => 'name', 'label' => 'Portal Name *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. Digital Gujarat Scholarship Portal'],
+        ['name' => 'provider', 'label' => 'Provider Authority', 'type' => 'text', 'placeholder' => 'e.g. Government of Gujarat'],
+        ['name' => 'badge', 'label' => 'Badge Label', 'type' => 'text', 'placeholder' => 'e.g. State Government'],
+        ['name' => 'icon', 'label' => 'Icon', 'type' => 'select', 'default' => 'shield', 'options' => [
+            'shield' => 'Shield', 'award' => 'Award', 'cap' => 'Cap (Graduation)', 'briefcase' => 'Briefcase (Career)', 'globe' => 'Globe (National)',
+        ]],
+        ['name' => 'description', 'label' => 'Description', 'type' => 'textarea', 'full' => true, 'rows' => 3, 'placeholder' => 'Brief description of the portal and eligibility...'],
+        ['name' => 'link', 'label' => 'Portal URL *', 'type' => 'url', 'full' => true, 'required' => true, 'placeholder' => 'https://...'],
+    ],
+]);
+?>
 <?php endif; ?>
 
-<?php if ($tab === 'records'): ?>
-<!-- Records Table -->
-<div class="panel">
-    <div class="panel-header">
-        <div style="display: flex; align-items: center; gap: 16px; flex: 1;">
-            <div class="panel-title">Yearly Disbursement Records (<?= count($records) ?> years)</div>
-            <input type="text" class="form-control" data-table-search="scholarshipsRecordsTable" placeholder="Search years or status..." style="max-width: 280px; font-size: 13px;">
-        </div>
-        <a href="scholarships.php?tab=records&action=create_record<?= $drawerUrlSuffix ?>" 
-           data-drawer-url="scholarships.php?tab=records&action=create_record<?= $drawerUrlSuffix ?>" 
-           data-drawer-title="Add Academic Year" 
-           class="btn btn-primary btn-sm">
-            <?= icon('plus', 14) ?>
-            Add Academic Year
-        </a>
-    </div>
-
-    <div class="panel-body" style="padding: 0;">
-        <div class="table-responsive">
-            <table class="admin-table" id="scholarshipsRecordsTable" data-reorder="scholarships">
-                <thead>
-                    <tr>
-                        <th class="reorder-col" style="width: 48px;"></th>
-                        <th style="width: 60px;">Order</th>
-                        <th>Academic Year</th>
-                        <th>Amount Disbursed</th>
-                        <th>Status</th>
-                        <th style="text-align: right;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($records)): ?>
-                        <tr><td colspan="6" class="empty-cell">No scholarship records yet. Click <strong>Add Academic Year</strong> to start tracking aid.</td></tr>
-                    <?php else: ?>
-                        <?php foreach ($records as $r): ?>
-                        <tr data-reorder-id="<?= (int)$r['id'] ?>">
-                            <td class="reorder-col">
-                                <button type="button" class="sortable-handle" aria-label="Drag to reorder" title="Drag to reorder">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
-                                </button>
-                            </td>
-                            <td><span class="badge badge-secondary order-badge">#<?= (int)$r['sort_order'] ?></span></td>
-                            <td><strong style="color: var(--text-main);"><?= htmlspecialchars($r['year']) ?></strong></td>
-                            <td style="color: var(--success); font-weight: 600; font-size: 14px;"><?= htmlspecialchars($r['amount_str']) ?></td>
-                            <td>
-                                <span class="badge badge-<?= $r['status'] === 'Latest' ? 'success' : ($r['status'] === 'Peak' ? 'warning' : 'secondary') ?>">
-                                    <?= htmlspecialchars($r['status']) ?>
-                                </span>
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: inline-flex; gap: 6px;">
-                                    <a href="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?><?= $drawerUrlSuffix ?>" 
-                                       data-drawer-url="scholarships.php?tab=records&edit_record=<?= (int)$r['id'] ?><?= $drawerUrlSuffix ?>" 
-                                       data-drawer-title="Edit Scholarship Year" 
-                                       class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="scholarships.php<?= $drawerParam ?>" style="display: inline;" id="delete-record-<?= (int)$r['id'] ?>">
-                                        <?= csrfField() ?>
-                                        <input type="hidden" name="action" value="delete_record">
-                                        <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
-                                        <button type="button" class="btn btn-danger btn-sm" 
-                                                data-confirm="Delete this scholarship record?" 
-                                                data-confirm-form="#delete-record-<?= (int)$r['id'] ?>">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<?php if ($tab === 'records' && !$editRecord && !$isCreateRecord): ?>
+<?php
+crudListPanel([
+    'page'              => 'scholarships.php',
+    'pageParam'         => $isDrawerMode ? '?tab=records&drawer=1' : '?tab=records',
+    'suffix'            => $drawerUrlSuffix,
+    'listTitleHtml'     => 'Yearly Disbursement Records (' . count($records) . ' years)',
+    'rows'              => $records,
+    'tableId'           => 'scholarshipsRecordsTable',
+    'reorder'           => 'scholarships',
+    'searchPlaceholder' => 'Search years or status...',
+    'emptyText'         => 'No scholarship records yet. Click <strong>Add Academic Year</strong> to start tracking aid.',
+    'add'               => ['url' => 'scholarships.php?tab=records&action=create_record', 'drawerTitle' => 'Add Academic Year', 'label' => 'Add Academic Year'],
+    'columns'           => [
+        ['th' => 'Academic Year', 'td' => fn($r) => '<strong style="color: var(--text-main);">' . htmlspecialchars($r['year']) . '</strong>'],
+        ['th' => 'Amount Disbursed', 'td' => fn($r) => '<span style="color: var(--success); font-weight: 600; font-size: 14px;">' . htmlspecialchars($r['amount_str']) . '</span>'],
+        ['th' => 'Status', 'td' => fn($r) => '<span class="badge badge-' . ($r['status'] === 'Latest' ? 'success' : ($r['status'] === 'Peak' ? 'warning' : 'secondary')) . '">' . htmlspecialchars($r['status']) . '</span>'],
+    ],
+    'editUrl'           => fn($r) => 'scholarships.php?tab=records&edit_record=' . $r['id'],
+    'actions'           => ['edit' => ['drawerTitle' => 'Edit Scholarship Year'], 'delete' => true],
+    'deleteConfirm'     => fn() => 'Delete this scholarship record?',
+    'formPrefix'        => 'record',
+]);
+?>
 <?php endif; ?>
 
-<?php if ($tab === 'portals'): ?>
-<!-- Portals Table -->
-<div class="panel">
-    <div class="panel-header">
-        <div style="display: flex; align-items: center; gap: 16px; flex: 1;">
-            <div class="panel-title">Government Scholarship Portals (<?= count($portals) ?>)</div>
-            <input type="text" class="form-control" data-table-search="scholarshipPortalsTable" placeholder="Search portals..." style="max-width: 280px; font-size: 13px;">
-        </div>
-        <a href="scholarships.php?tab=portals&action=create_portal<?= $drawerUrlSuffix ?>" 
-           data-drawer-url="scholarships.php?tab=portals&action=create_portal<?= $drawerUrlSuffix ?>" 
-           data-drawer-title="Add Portal" 
-           class="btn btn-primary btn-sm">
-            <?= icon('plus', 14) ?>
-            Add Portal
-        </a>
-    </div>
-
-    <div class="panel-body" style="padding: 0;">
-        <div class="table-responsive">
-            <table class="admin-table" id="scholarshipPortalsTable" data-reorder="scholarship_portals">
-                <thead>
-                    <tr>
-                        <th class="reorder-col" style="width: 48px;"></th>
-                        <th style="width: 60px;">Order</th>
-                        <th>Portal Name</th>
-                        <th>Provider</th>
-                        <th>Badge</th>
-                        <th>Link</th>
-                        <th style="text-align: right;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($portals)): ?>
-                        <tr><td colspan="7" class="empty-cell">No scholarship portals configured yet. Click <strong>Add Portal</strong> to link one.</td></tr>
-                    <?php else: ?>
-                        <?php foreach ($portals as $p): ?>
-                        <tr data-reorder-id="<?= (int)$p['id'] ?>">
-                            <td class="reorder-col">
-                                <button type="button" class="sortable-handle" aria-label="Drag to reorder" title="Drag to reorder">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
-                                </button>
-                            </td>
-                            <td><span class="badge badge-secondary order-badge">#<?= (int)$p['sort_order'] ?></span></td>
-                            <td><strong style="color: var(--text-main);"><?= htmlspecialchars($p['name']) ?></strong></td>
-                            <td><?= htmlspecialchars($p['provider'] ?: '—') ?></td>
-                            <td>
-                                <?php if (!empty($p['badge'])): ?>
-                                    <span class="badge badge-info"><?= htmlspecialchars($p['badge']) ?></span>
-                                <?php else: ?>
-                                    <span style="color: var(--text-muted); font-size: 12px;">—</span>
-                                <?php endif; ?>
-                            </td>
-                            <td style="max-width: 250px; font-size: 12.5px; color: var(--text-muted);">
-                                <a href="<?= htmlspecialchars($p['link']) ?>" target="_blank" rel="noopener noreferrer"><?= htmlspecialchars($p['link']) ?></a>
-                            </td>
-                            <td style="text-align: right;">
-                                <div style="display: inline-flex; gap: 6px;">
-                                    <a href="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?><?= $drawerUrlSuffix ?>" 
-                                       data-drawer-url="scholarships.php?tab=portals&edit_portal=<?= (int)$p['id'] ?><?= $drawerUrlSuffix ?>" 
-                                       data-drawer-title="Edit Portal" 
-                                       class="btn btn-secondary btn-sm">Edit</a>
-                                    <form method="POST" action="scholarships.php<?= $drawerParam ?>" style="display: inline;" id="delete-portal-<?= (int)$p['id'] ?>">
-                                        <?= csrfField() ?>
-                                        <input type="hidden" name="action" value="delete_portal">
-                                        <input type="hidden" name="id" value="<?= (int)$p['id'] ?>">
-                                        <button type="button" class="btn btn-danger btn-sm" 
-                                                data-confirm="Delete this portal?" 
-                                                data-confirm-form="#delete-portal-<?= (int)$p['id'] ?>">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+<?php if ($tab === 'portals' && !$editPortal && !$isCreatePortal): ?>
+<?php
+crudListPanel([
+    'page'              => 'scholarships.php',
+    'pageParam'         => $isDrawerMode ? '?tab=portals&drawer=1' : '?tab=portals',
+    'suffix'            => $drawerUrlSuffix,
+    'listTitleHtml'     => 'Government Scholarship Portals (' . count($portals) . ')',
+    'rows'              => $portals,
+    'tableId'           => 'scholarshipPortalsTable',
+    'reorder'           => 'scholarship_portals',
+    'searchPlaceholder' => 'Search portals...',
+    'emptyText'         => 'No scholarship portals configured yet. Click <strong>Add Portal</strong> to link one.',
+    'add'               => ['url' => 'scholarships.php?tab=portals&action=create_portal', 'drawerTitle' => 'Add Portal', 'label' => 'Add Portal'],
+    'columns'           => [
+        ['th' => 'Portal Name', 'td' => fn($r) => '<strong style="color: var(--text-main);">' . htmlspecialchars($r['name']) . '</strong>'],
+        ['th' => 'Provider', 'td' => fn($r) => htmlspecialchars($r['provider'] ?: '—')],
+        ['th' => 'Badge', 'td' => fn($r) => !empty($r['badge']) ? '<span class="badge badge-info">' . htmlspecialchars($r['badge']) . '</span>' : '<span style="color: var(--text-muted); font-size: 12px;">—</span>'],
+        ['th' => 'Link', 'td' => fn($r) => '<span style="max-width: 250px; font-size: 12.5px; color: var(--text-muted);"><a href="' . htmlspecialchars($r['link']) . '" target="_blank" rel="noopener noreferrer">' . htmlspecialchars($r['link']) . '</a></span>'],
+    ],
+    'editUrl'           => fn($r) => 'scholarships.php?tab=portals&edit_portal=' . $r['id'],
+    'actions'           => ['edit' => ['drawerTitle' => 'Edit Portal'], 'delete' => true],
+    'deleteConfirm'     => fn() => 'Delete this portal?',
+    'formPrefix'        => 'portal',
+]);
+?>
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

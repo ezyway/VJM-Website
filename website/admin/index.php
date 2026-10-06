@@ -70,7 +70,7 @@ $quickActions = [
     ['href' => 'events.php?action=create',      'title' => 'Post Event',      'icon' => 'plus'],
     ['href' => 'rankers.php?action=create',     'title' => 'Add Ranker',      'icon' => 'plus'],
     ['href' => 'testimonials.php?action=create','title' => 'Add Testimonial', 'icon' => 'plus'],
-    ['href' => 'gallery.php?action=create_album','title' => 'New Album',      'icon' => 'folder'],
+    ['href' => 'gallery.php?action=create','title' => 'New Album',      'icon' => 'folder'],
     ['href' => 'magazines.php?action=create',   'title' => 'Upload Magazine', 'icon' => 'upload'],
     ['href' => 'labs.php?action=create',        'title' => 'Add Lab',         'icon' => 'plus'],
 ];
@@ -149,7 +149,20 @@ $healthRows = [
 ];
 
 $firstName = explode(' ', $currentAdmin['name'])[0];
+
+// New student inquiries notification
+$newInquiries = (int)$db->query('SELECT COUNT(*) FROM inquiries WHERE is_read = 0')->fetchColumn();
 ?>
+
+<?php if ($newInquiries > 0): ?>
+<div style="margin-bottom: 18px; padding: 14px 18px; background: rgba(16,185,129,0.08); border: 1px solid var(--primary); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+    <div>
+        <strong style="color: var(--primary);">🔔 <?= $newInquiries ?> new student <?= $newInquiries === 1 ? 'inquiry' : 'inquiries' ?></strong>
+        <span style="color: var(--text-muted); font-size: 13px;"> submitted since your last review.</span>
+    </div>
+    <a href="inquiries.php" class="btn btn-primary btn-sm">Review Inquiries</a>
+</div>
+<?php endif; ?>
 
 <!-- Welcome Banner -->
 <div class="welcome-banner">
