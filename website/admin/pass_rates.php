@@ -32,11 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mcom       = trim($_POST['mcom'] ?? '—');
         $msc_chem   = trim($_POST['msc_chem'] ?? '—');
         $is_latest  = !empty($_POST['is_latest']) ? 1 : 0;
-        $sort_order = (int)($_POST['sort_order'] ?? 0);
 
         if (empty($year)) {
-            setFlash('danger', 'Academic Year is required.');
-            crudRedirect('pass_rates.php', $isDrawerMode);
+            crudFormFail('Academic Year is required.');
         }
 
         if ($is_latest) {
@@ -44,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE pass_rates SET year = :yr, bca = :bca, bsc = :bsc, bba = :bba, bcom = :bcom, bsw = :bsw, pgdca = :pg, msc_it = :it, mcom = :mc, msc_chem = :ch, is_latest = :lat, sort_order = :so WHERE id = :id');
+            $stmt = $db->prepare('UPDATE pass_rates SET year = :yr, bca = :bca, bsc = :bsc, bba = :bba, bcom = :bcom, bsw = :bsw, pgdca = :pg, msc_it = :it, mcom = :mc, msc_chem = :ch, is_latest = :lat WHERE id = :id');
             $stmt->execute([
                 ':yr'   => $year,
                 ':bca'  => $bca,
@@ -57,12 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':mc'   => $mcom,
                 ':ch'   => $msc_chem,
                 ':lat'  => $is_latest,
-                ':so'   => $sort_order,
                 ':id'   => $id
             ]);
             setFlash('success', 'Pass rates updated.');
         } else {
-            $stmt = $db->prepare('INSERT INTO pass_rates (year, bca, bsc, bba, bcom, bsw, pgdca, msc_it, mcom, msc_chem, is_latest, sort_order) VALUES (:yr, :bca, :bsc, :bba, :bcom, :bsw, :pg, :it, :mc, :ch, :lat, :so)');
+            $stmt = $db->prepare('INSERT INTO pass_rates (year, bca, bsc, bba, bcom, bsw, pgdca, msc_it, mcom, msc_chem, is_latest, sort_order) VALUES (:yr, :bca, :bsc, :bba, :bcom, :bsw, :pg, :it, :mc, :ch, :lat, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM pass_rates))');
             $stmt->execute([
                 ':yr'   => $year,
                 ':bca'  => $bca,
@@ -75,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':mc'   => $mcom,
                 ':ch'   => $msc_chem,
                 ':lat'  => $is_latest,
-                ':so'   => $sort_order
             ]);
             setFlash('success', 'New academic pass rate year added.');
         }
@@ -101,7 +97,6 @@ if ($editItem || $isCreate) {
         'submitLabel' => 'Save Pass Rates',
         'fields'      => [
             ['name' => 'year', 'label' => 'Academic Year *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. 2026 or 2025-26'],
-            ['name' => 'sort_order', 'label' => 'Display Order', 'type' => 'number', 'default' => '1'],
             ['name' => 'bca', 'label' => 'BCA Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 98.40% or —'],
             ['name' => 'bsc', 'label' => 'B.Sc. Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 100.00%'],
             ['name' => 'bba', 'label' => 'BBA Rate', 'type' => 'text', 'default' => '—', 'placeholder' => 'e.g. 96.87%'],
@@ -123,6 +118,7 @@ crudListPanel([
     'listTitleHtml'     => 'Academic Pass Rate History (' . count($records) . ' years)',
     'rows'              => $records,
     'tableId'           => 'passRatesTable',
+    'reorder'           => 'pass_rates',
     'searchPlaceholder' => 'Search years...',
     'emptyText'         => 'No pass rate records yet. Click <strong>Add Academic Year</strong> to start.',
     'add'               => ['url' => 'pass_rates.php?action=create', 'drawerTitle' => 'Add New Academic Year', 'label' => 'Add Academic Year'],

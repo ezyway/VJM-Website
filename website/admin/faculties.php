@@ -30,14 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtImg = $db->prepare('SELECT image FROM faculties WHERE id = :id');
         $stmtImg->execute([':id' => $id]);
         $imagePath = $stmtImg->fetchColumn();
-        crudDelete($db, 'faculties', $id, 'Faculty member removed successfully.', $isDrawerMode, 'faculties.php');
-        // Delete the physical file from disk
+        // Delete the physical file from disk BEFORE crudDelete()'s exit
         if ($imagePath) {
             $fullPath = dirname(__DIR__) . '/' . $imagePath;
             if (file_exists($fullPath)) {
                 @unlink($fullPath);
             }
+            $webpSidecar = $fullPath . '.webp';
+            if (file_exists($webpSidecar)) {
+                @unlink($webpSidecar);
+            }
         }
+        crudDelete($db, 'faculties', $id, 'Faculty member removed successfully.', $isDrawerMode, 'faculties.php');
     }
 
     if ($action === 'save') {
@@ -48,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $badge       = trim($_POST['badge'] ?? '');
         $dept_label  = trim($_POST['dept_label'] ?? '');
         $featured    = !empty($_POST['featured']) ? 1 : 0;
-        $sort_order  = (int)($_POST['sort_order'] ?? 0);
         $currentImg  = trim($_POST['current_image'] ?? '');
 
         // Handle Image Upload
@@ -57,19 +60,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $upload = handleAdminUpload($_FILES['image'], 'faculties');
             if ($upload['success']) {
                 $imgPath = $upload['path'];
+                // Remove the previous image from disk when replacing on edit
+                if ($id > 0 && $currentImg && $currentImg !== $imgPath) {
+                    $oldFull = dirname(__DIR__) . '/' . $currentImg;
+                    if (file_exists($oldFull)) @unlink($oldFull);
+                    if (file_exists($oldFull . '.webp')) @unlink($oldFull . '.webp');
+                }
             } else {
-                setFlash('danger', 'Image upload failed: ' . $upload['error']);
-                crudRedirect('faculties.php', $isDrawerMode);
+                crudFormFail('Image upload failed: ' . $upload['error']);
             }
         }
 
         if (empty($name) || empty($designation)) {
-            setFlash('danger', 'Name and Designation are required.');
-            crudRedirect('faculties.php', $isDrawerMode);
+            crudFormFail('Name and Designation are required.');
         }
 
         if ($id > 0) {
-            $stmt = $db->prepare('UPDATE faculties SET name = :n, designation = :d, depts = :dept, badge = :b, dept_label = :dl, image = :img, featured = :f, sort_order = :s WHERE id = :id');
+            $stmt = $db->prepare('UPDATE faculties SET name = :n, designation = :d, depts = :dept, badge = :b, dept_label = :dl, image = :img, featured = :f WHERE id = :id');
             $stmt->execute([
                 ':n'    => $name,
                 ':d'    => $designation,
@@ -78,12 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':dl'   => $dept_label,
                 ':img'  => $imgPath,
                 ':f'    => $featured,
-                ':s'    => $sort_order,
                 ':id'   => $id
             ]);
             setFlash('success', 'Faculty details updated successfully.');
         } else {
-            $stmt = $db->prepare('INSERT INTO faculties (name, designation, depts, badge, dept_label, image, featured, sort_order) VALUES (:n, :d, :dept, :b, :dl, :img, :f, :s)');
+            $stmt = $db->prepare('INSERT INTO faculties (name, designation, depts, badge, dept_label, image, featured, sort_order) VALUES (:n, :d, :dept, :b, :dl, :img, :f, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM faculties))');
             $stmt->execute([
                 ':n'    => $name,
                 ':d'    => $designation,
@@ -92,7 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':dl'   => $dept_label,
                 ':img'  => $imgPath,
                 ':f'    => $featured,
-                ':s'    => $sort_order
             ]);
             setFlash('success', 'New faculty member added successfully.');
         }
@@ -123,7 +128,6 @@ if ($editItem || $isCreate) {
             ['name' => 'designation', 'label' => 'Designation *', 'type' => 'text', 'required' => true, 'placeholder' => 'e.g. Incharge Principal &amp; Associate Professor'],
             ['name' => 'badge', 'label' => 'Badge Text', 'type' => 'text', 'placeholder' => 'e.g. Leadership • IT'],
             ['name' => 'dept_label', 'label' => 'Department Display Label', 'type' => 'text', 'placeholder' => 'e.g. Administration &amp; IT'],
-            ['name' => 'sort_order', 'label' => 'Sort Order Priority', 'type' => 'number', 'default' => '1'],
             ['name' => 'image', 'label' => 'Profile Photo', 'type' => 'file', 'accept' => 'image/*', 'preview' => ['id' => 'facultyPhotoPreview', 'img' => fn($item) => ($item['image'] ?? '') ?: 'assets/photos/faculties/placeholder.jpg', 'hint' => 'Upload JPG, PNG or WebP image.']],
             [
                 'name'  => 'depts',
@@ -156,11 +160,11 @@ crudListPanel([
     'listTitleHtml'     => 'All Faculty Members (' . count($faculties) . ')',
     'rows'              => $faculties,
     'tableId'           => 'facultyTable',
+    'reorder'           => 'faculties',
     'searchPlaceholder' => 'Search by name, designation, department...',
     'emptyText'         => 'No faculty members yet. Click <strong>Add New Faculty</strong> to build your directory.',
     'add'               => ['url' => 'faculties.php?action=create', 'drawerTitle' => 'Add New Faculty Member', 'label' => 'Add New Faculty'],
     'columns'           => [
-        ['th' => 'Order', 'td' => fn($r) => '<span class="badge badge-secondary">#' . (int)$r['sort_order'] . '</span>'],
         [
             'th' => 'Member',
             'td' => fn($r) => '<div style="display: flex; align-items: center; gap: 12px;">'
